@@ -123,6 +123,11 @@ class PowerUp extends ScoringItem {
 }
 class Question extends ScoringItem {
 }
+console.log("The game is working");
+let init = () => {
+    new Start(document.getElementById("canvas"));
+};
+window.addEventListener("load", init);
 class Start {
     constructor(canvasId) {
         this.loop = () => {
@@ -159,9 +164,4 @@ class Start {
         return img;
     }
 }
-console.log("The game is working");
-let init = () => {
-    new Start(document.getElementById("canvas"));
-};
-window.addEventListener("load", init);
 //# sourceMappingURL=app.js.map
