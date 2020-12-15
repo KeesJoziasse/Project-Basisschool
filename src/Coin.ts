@@ -2,4 +2,7 @@
 
 class Coin extends ScoringItem {
 
+    public constructor(){
+        super()
+    }
 }
