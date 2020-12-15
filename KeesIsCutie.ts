@@ -1,3 +1,7 @@
 class KeesIsCute {
-    private WilJeVerkering: null
+    private WilJeVerkering: 
+    
+    yesIdo() {
+        if(Rob && Thomas === ringdragers){
+            console.log(I am yours)
 }
