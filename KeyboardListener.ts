@@ -1,3 +1,19 @@
+/**
+ * This class handles the keyboard events. It knows the last known state of its
+ * keys
+ *
+ * Some parts of this class are pretty complex, but the class itself is fairly
+ * easy to use. You just instantiate one object in your game and us the method
+ * `isKeyDown()` to check if a specific key is currently pressed down by the
+ * user.
+ *
+ * It is also possible to check whether a key is typed in the previous frame.
+ * A key is typed when it was down for at least one frame time and the
+ * released. In order to make this work, the `onFrameStart()` method must be
+ * called at each animationFrame.
+ *
+ * @author BugSlayer
+ */
 class KeyboardListener {
   // Some convenient key codes already defined here. If you need a specific
   // keycode, see:https://keycode.info/
