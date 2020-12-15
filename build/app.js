@@ -1,25 +1,42 @@
-<<<<<<< HEAD
-=======
-let init = () => {
-    new Start(document.getElementById("canvas"));
-};
-window.addEventListener("load", init);
->>>>>>> 3826d183d4bceb149079ea87a1a60268942de8bf
+class Button {
+    constructor(name, xPos, yPos, image) {
+        this.name = name;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.image = this.loadNewImage(image);
+    }
+    getName() {
+        return this.name;
+    }
+    getXPos() {
+        return this.xPos;
+    }
+    getYPos() {
+        return this.yPos;
+    }
+    getImage() {
+        return this.image;
+    }
+    getImageWidth() {
+        return this.image.width;
+    }
+    getImageHeight() {
+        return this.image.height;
+    }
+    draw(ctx) {
+        ctx.drawImage(this.image, this.xPos, this.yPos);
+    }
+    loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
+}
 class GameItem {
 }
 class ScoringItem extends GameItem {
 }
 class Coin extends ScoringItem {
-}
-class Game {
-<<<<<<< HEAD
-    constructor(canvasId) {
-        this.canvas = canvasId;
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-    }
-=======
->>>>>>> 3826d183d4bceb149079ea87a1a60268942de8bf
 }
 class InGame {
 }
@@ -100,22 +117,51 @@ KeyboardListener.KEY_Y = 89;
 KeyboardListener.KEY_Z = 90;
 class Obstacle extends ScoringItem {
 }
-<<<<<<< HEAD
-=======
-class Player {
+class Player extends GameItem {
 }
->>>>>>> 3826d183d4bceb149079ea87a1a60268942de8bf
 class PowerUp extends ScoringItem {
 }
 class Question extends ScoringItem {
 }
-<<<<<<< HEAD
-=======
 class Start {
-    constructor(canvas) {
+    constructor(canvasId) {
+        this.loop = () => {
+            this.draw();
+            this.wallet++;
+            requestAnimationFrame(this.loop);
+        };
+        this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
+        this.wallet = 0;
+        this.image = Start.loadNewImage("./assets/img/amongus.png");
+        this.loop();
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        Start.writeTextToCanvas(ctx, "Top center text", 60, this.canvas.width / 2, 80, "center");
+        Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
+        ctx.drawImage(Start.loadNewImage("./assets/img/start-button.png"), (this.canvas.width / 2) - 180, (this.canvas.height / 5) * 4);
+    }
+    static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
+        ctx.font = `${fontSize}px Minecraft`;
+        ctx.fillStyle = color;
+        ctx.textAlign = alignment;
+        ctx.fillText(text, xCoordinate, yCoordinate);
+    }
+    static randomNumber(min, max) {
+        return Math.round(Math.random() * (max - min) + min);
+    }
+    static loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
     }
 }
->>>>>>> 3826d183d4bceb149079ea87a1a60268942de8bf
+console.log("The game is working");
+let init = () => {
+    new Start(document.getElementById("canvas"));
+};
+window.addEventListener("load", init);
 //# sourceMappingURL=app.js.map
