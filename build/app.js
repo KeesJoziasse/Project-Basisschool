@@ -89,8 +89,6 @@ KeyboardListener.KEY_Y = 89;
 KeyboardListener.KEY_Z = 90;
 class Obstacle extends ScoringItem {
 }
-class Player extends GameItem {
-}
 class PowerUp extends ScoringItem {
 }
 class Question extends ScoringItem {
