@@ -46,9 +46,6 @@ class Start {
 
     // in the first loop no images are loaded
     requestAnimationFrame(this.loop);
-
-    console.log(this.getImageHeight());
-    console.log(this.getImageWidth());
   };
 
   /**
@@ -74,10 +71,18 @@ class Start {
     Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
 
     //Draws the start button #TODO Fix the centering, make getters for the image width and height, make it center based on that.
-    ctx.drawImage(
-      this.image,
-      (this.canvas.width / 2) - (this.getImageWidth()/2), //Makes it so the image is always in the center of the screen.
-      (this.canvas.height / 5) * 4 //Makes it so the image is always on 4/5 of the screen.
+    // ctx.drawImage(
+    //   this.image,
+    //   this.canvas.width / 2 - this.getImageWidth() / 2, //Makes it so the image is always in the center of the screen.
+    //   (this.canvas.height / 5) * 4 //Makes it so the image is always on 4/5 of the screen.
+    // );
+
+    new StartGameButton(
+      "StartTheGame",
+      this.canvas.width / 2 - this.getImageWidth() / 2,
+      (this.canvas.height / 5) * 4,
+      "./assets/img/buttons/start-button.png"
+      //assets\img\buttons\
     );
   }
 

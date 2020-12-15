@@ -128,14 +128,47 @@ class Button {
         return img;
     }
 }
+class HighscoreButton extends Button {
+    constructor(name, xPos, yPos, image) {
+        super(name, xPos, yPos, image);
+    }
+}
+class NextSelector extends Button {
+    constructor(name, xPos, yPos, image) {
+        super(name, xPos, yPos, image);
+    }
+}
+class PreviousSelector extends Button {
+    constructor(name, xPos, yPos, image) {
+        super(name, xPos, yPos, image);
+    }
+}
+class QuestionsAnswersButton extends Button {
+    constructor(name, xPos, yPos, image) {
+        super(name, xPos, yPos, image);
+    }
+}
+class ShopButton extends Button {
+    constructor(name, xPos, yPos, image) {
+        super(name, xPos, yPos, image);
+    }
+}
+class ShowStartScreen extends Button {
+    constructor(name, xPos, yPos, image) {
+        super(name, xPos, yPos, image);
+    }
+}
+class StartGameButton extends Button {
+    constructor(name, xPos, yPos, image) {
+        super(name, xPos, yPos, image);
+    }
+}
 class Start {
     constructor(canvasId) {
         this.loop = () => {
             this.draw();
             this.wallet++;
             requestAnimationFrame(this.loop);
-            console.log(this.getImageHeight());
-            console.log(this.getImageWidth());
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
@@ -155,7 +188,7 @@ class Start {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         Start.writeTextToCanvas(ctx, "Danger Dash", 60, this.canvas.width / 2, 80, "center");
         Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
-        ctx.drawImage(this.image, (this.canvas.width / 2) - (this.getImageWidth() / 2), (this.canvas.height / 5) * 4);
+        new StartGameButton("StartTheGame", this.canvas.width / 2 - this.getImageWidth() / 2, (this.canvas.height / 5) * 4, "./assets/img/buttons/start-button.png");
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
         ctx.font = `${fontSize}px Minecraft`;
