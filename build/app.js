@@ -5,7 +5,8 @@ class ScoringItem extends GameItem {
 class Coin extends ScoringItem {
 }
 class Game {
-    constructor(canvas) {
+    constructor(canvasId) {
+        this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
     }
