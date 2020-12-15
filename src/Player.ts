@@ -1,5 +1,5 @@
 /// <reference path = "GameItem.ts"/>
 
-class Player {
-    
+class Player extends GameItem {
+
 }
