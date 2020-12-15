@@ -1,7 +1,10 @@
+<<<<<<< HEAD
+=======
 let init = () => {
     new Start(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
+>>>>>>> 3826d183d4bceb149079ea87a1a60268942de8bf
 class GameItem {
 }
 class ScoringItem extends GameItem {
@@ -9,6 +12,14 @@ class ScoringItem extends GameItem {
 class Coin extends ScoringItem {
 }
 class Game {
+<<<<<<< HEAD
+    constructor(canvasId) {
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+=======
+>>>>>>> 3826d183d4bceb149079ea87a1a60268942de8bf
 }
 class InGame {
 }
@@ -89,14 +100,22 @@ KeyboardListener.KEY_Y = 89;
 KeyboardListener.KEY_Z = 90;
 class Obstacle extends ScoringItem {
 }
+<<<<<<< HEAD
+=======
+class Player {
+}
+>>>>>>> 3826d183d4bceb149079ea87a1a60268942de8bf
 class PowerUp extends ScoringItem {
 }
 class Question extends ScoringItem {
 }
+<<<<<<< HEAD
+=======
 class Start {
     constructor(canvas) {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
     }
 }
+>>>>>>> 3826d183d4bceb149079ea87a1a60268942de8bf
 //# sourceMappingURL=app.js.map
