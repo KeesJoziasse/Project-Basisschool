@@ -1,37 +1,3 @@
-class Button {
-    constructor(name, xPos, yPos, image) {
-        this.name = name;
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.image = this.loadNewImage(image);
-    }
-    getName() {
-        return this.name;
-    }
-    getXPos() {
-        return this.xPos;
-    }
-    getYPos() {
-        return this.yPos;
-    }
-    getImage() {
-        return this.image;
-    }
-    getImageWidth() {
-        return this.image.width;
-    }
-    getImageHeight() {
-        return this.image.height;
-    }
-    draw(ctx) {
-        ctx.drawImage(this.image, this.xPos, this.yPos);
-    }
-    loadNewImage(source) {
-        const img = new Image();
-        img.src = source;
-        return img;
-    }
-}
 class GameItem {
 }
 class ScoringItem extends GameItem {
@@ -128,26 +94,68 @@ let init = () => {
     new Start(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
+class Button {
+    constructor(name, xPos, yPos, image) {
+        this.name = name;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.image = this.loadNewImage(image);
+    }
+    getName() {
+        return this.name;
+    }
+    getXPos() {
+        return this.xPos;
+    }
+    getYPos() {
+        return this.yPos;
+    }
+    getImage() {
+        return this.image;
+    }
+    getImageWidth() {
+        return this.image.width;
+    }
+    getImageHeight() {
+        return this.image.height;
+    }
+    draw(ctx) {
+        ctx.drawImage(this.image, this.xPos, this.yPos);
+    }
+    loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
+}
 class Start {
     constructor(canvasId) {
         this.loop = () => {
             this.draw();
             this.wallet++;
             requestAnimationFrame(this.loop);
+            console.log(this.getImageHeight());
+            console.log(this.getImageWidth());
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.wallet = 0;
-        this.image = Start.loadNewImage("./assets/img/amongus.png");
+        this.image = Start.loadNewImage("./assets/img/start-button.png");
         this.loop();
+    }
+    getImageWidth() {
+        return this.image.width;
+    }
+    getImageHeight() {
+        return this.image.height;
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        Start.writeTextToCanvas(ctx, "Top center text", 60, this.canvas.width / 2, 80, "center");
+        Start.writeTextToCanvas(ctx, "Danger Dash", 60, this.canvas.width / 2, 80, "center");
         Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
-        ctx.drawImage(Start.loadNewImage("./assets/img/start-button.png"), (this.canvas.width / 2) - 180, (this.canvas.height / 5) * 4);
+        ctx.drawImage(this.image, (this.canvas.width / 2) - (this.getImageWidth() / 2), (this.canvas.height / 5) * 4);
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
         ctx.font = `${fontSize}px Minecraft`;
