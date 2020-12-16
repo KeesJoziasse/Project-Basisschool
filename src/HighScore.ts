@@ -37,8 +37,8 @@ class HighScore {
     //The text at the top center.
     HighScore.writeTextToCanvas(
       ctx,
-      "HighScore Test",
-      60,
+      "Highscores",
+      65,
       this.canvas.width / 2,
       80,
       "center"
@@ -47,7 +47,7 @@ class HighScore {
     //rank list of the highscores first to fifth
     HighScore.writeTextToCanvas(
       ctx,
-      "Your Highscore:",
+      "First:",
       40,
       this.canvas.width / 3,
       200,
@@ -58,7 +58,7 @@ class HighScore {
       ctx,
       "Second:",
       40,
-      (this.canvas.width / 3) * 1.13,
+      (this.canvas.width / 3) * 0.96,
       260,
       "center"
     );
@@ -67,7 +67,7 @@ class HighScore {
       ctx,
       "Thrid:",
       40,
-      (this.canvas.width / 3) * 1.16,
+      (this.canvas.width / 3) * 0.99,
       320,
       "center"
     );
@@ -76,7 +76,7 @@ class HighScore {
       ctx,
       "Fourth:",
       40,
-      (this.canvas.width / 3) * 1.14,
+      (this.canvas.width / 3) * 0.97,
       380,
       "center"
     );
@@ -85,7 +85,7 @@ class HighScore {
       ctx,
       "Fifth:",
       40,
-      (this.canvas.width / 3) * 1.17,
+      this.canvas.width / 3,
       440,
       "center"
     );
@@ -93,8 +93,8 @@ class HighScore {
     //Draws the start button #TODO Fix the centering, make getters for the image width and height, make it center based on that.
     ctx.drawImage(
       Start.loadNewImage("./assets/img/start-button.png"),
-      (this.canvas.width / 5* 0,7),
-      (this.canvas.height / 5* 0,7)
+      ((this.canvas.width / 5) * 0, 7),
+      ((this.canvas.height / 5) * 0, 7)
     );
   }
 
@@ -114,7 +114,7 @@ class HighScore {
     xCoordinate: number,
     yCoordinate: number,
     alignment: CanvasTextAlign = "center",
-    color: string = "red"
+    color: string = "black"
   ) {
     ctx.font = `${fontSize}px Minecraft`;
     ctx.fillStyle = color;

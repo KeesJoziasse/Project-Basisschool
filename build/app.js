@@ -58,15 +58,15 @@ class HighScore {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        HighScore.writeTextToCanvas(ctx, "HighScore Test", 60, this.canvas.width / 2, 80, "center");
-        HighScore.writeTextToCanvas(ctx, "Your Highscore:", 40, this.canvas.width / 3, 200, "center");
-        HighScore.writeTextToCanvas(ctx, "Second:", 40, (this.canvas.width / 3) * 1.13, 260, "center");
-        HighScore.writeTextToCanvas(ctx, "Thrid:", 40, (this.canvas.width / 3) * 1.16, 320, "center");
-        HighScore.writeTextToCanvas(ctx, "Fourth:", 40, (this.canvas.width / 3) * 1.14, 380, "center");
-        HighScore.writeTextToCanvas(ctx, "Fifth:", 40, (this.canvas.width / 3) * 1.17, 440, "center");
-        ctx.drawImage(Start.loadNewImage("./assets/img/start-button.png"), (this.canvas.width / 5 * 0, 7), (this.canvas.height / 5 * 0, 7));
+        HighScore.writeTextToCanvas(ctx, "Highscores", 65, this.canvas.width / 2, 80, "center");
+        HighScore.writeTextToCanvas(ctx, "First:", 40, this.canvas.width / 3, 200, "center");
+        HighScore.writeTextToCanvas(ctx, "Second:", 40, (this.canvas.width / 3) * 0.96, 260, "center");
+        HighScore.writeTextToCanvas(ctx, "Thrid:", 40, (this.canvas.width / 3) * 0.99, 320, "center");
+        HighScore.writeTextToCanvas(ctx, "Fourth:", 40, (this.canvas.width / 3) * 0.97, 380, "center");
+        HighScore.writeTextToCanvas(ctx, "Fifth:", 40, this.canvas.width / 3, 440, "center");
+        ctx.drawImage(Start.loadNewImage("./assets/img/start-button.png"), ((this.canvas.width / 5) * 0, 7), ((this.canvas.height / 5) * 0, 7));
     }
-    static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
+    static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "black") {
         ctx.font = `${fontSize}px Minecraft`;
         ctx.fillStyle = color;
         ctx.textAlign = alignment;
