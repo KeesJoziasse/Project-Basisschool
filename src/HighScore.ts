@@ -1,7 +1,7 @@
 class HighScore {
   private canvas: HTMLCanvasElement;
   private image: HTMLImageElement;
-  private test: any;
+  private leftArrow: Button;
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
@@ -11,7 +11,7 @@ class HighScore {
     this.canvas.height = window.innerHeight;
 
     // backButton image
-    this.test = new StartGameButton(
+    this.leftArrow = new PreviousSelector(
       "Start",
       (this.canvas.width / 5) * 0.05,
       (this.canvas.height / 5) * 0.09,
@@ -20,7 +20,7 @@ class HighScore {
 
     // add an mouse event
     document.addEventListener("click", this.mouseHandler);
-
+     
     this.loop();
   }
 
@@ -57,7 +57,7 @@ class HighScore {
     this.rankList(ctx);
 
     //draws the button
-    this.test.draw(ctx);
+    this.leftArrow.draw(ctx);
   }
 
   // function to get a ranklist from first to fifth
@@ -148,7 +148,8 @@ class HighScore {
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandler = (event: MouseEvent) => {
-    console.log("test");
-
+    new Start (document.getElementById("canvas") as HTMLCanvasElement);
+    console.log("Hey");
   };
 }
+

@@ -10,12 +10,13 @@ class HighScore {
             requestAnimationFrame(this.loop);
         };
         this.mouseHandler = (event) => {
-            console.log("test");
+            new Start(document.getElementById("canvas"));
+            console.log("Hey");
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.test = new StartGameButton("Start", (this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09, "./assets/img/buttons/left-arrow.png");
+        this.leftArrow = new PreviousSelector("Start", (this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09, "./assets/img/buttons/left-arrow.png");
         document.addEventListener("click", this.mouseHandler);
         this.loop();
     }
@@ -24,7 +25,7 @@ class HighScore {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         HighScore.writeTextToCanvas(ctx, "Highscores", 65, this.canvas.width / 2, 80, "center");
         this.rankList(ctx);
-        this.test.draw(ctx);
+        this.leftArrow.draw(ctx);
     }
     rankList(ctx) {
         HighScore.writeTextToCanvas(ctx, "First:", 40, this.canvas.width / 3, 200, "center");
@@ -214,7 +215,7 @@ class Start {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.wallet = 0;
-        this.image = Start.loadNewImage("./assets/img/start-button.png");
+        this.image = Start.loadNewImage("./assets/img/buttons/start-button.png");
         this.draw();
     }
     getImageWidth() {

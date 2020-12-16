@@ -14,16 +14,16 @@ class Start {
     this.wallet = 0;
 
     //#TODO refine, this is just a test
-    this.image = Start.loadNewImage("./assets/img/start-button.png");
+    this.image = Start.loadNewImage("./assets/img/buttons/start-button.png");
     this.draw();
 
     //this.loop();
   }
 
-  /**
-   * Returns the width of the image
-   * @returns {number} - image width
-   */
+  // /**
+  //  * Returns the width of the image
+  //  * @returns {number} - image width
+  //  */
   public getImageWidth(): number {
     return this.image.width;
   }
