@@ -12,6 +12,10 @@ class HighScore {
     //#TODO take the backimage instead of the start-button.png
     this.image = Start.loadNewImage("./assets/img/start-button.png");
 
+    // add an mouse event
+    const image:HTMLImageElement = Start.loadNewImage("./assets/img/start-button.png");
+    image.addEventListener("click", this.mouseHandler);
+
     this.loop();
   }
 
@@ -132,4 +136,12 @@ class HighScore {
     img.src = source;
     return img;
   }
+
+  /**
+   * Method to handle the mouse event
+   * @param {MouseEvent} event - mouse event
+   */
+  public mouseHandler = (event: MouseEvent) => {
+ console.log("test");
+  };
 }

@@ -49,10 +49,15 @@ class HighScore {
             this.draw();
             requestAnimationFrame(this.loop);
         };
+        this.mouseHandler = (event) => {
+            console.log("test");
+        };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.image = Start.loadNewImage("./assets/img/start-button.png");
+        const image = Start.loadNewImage("./assets/img/start-button.png");
+        image.addEventListener("click", this.mouseHandler);
         this.loop();
     }
     draw() {
