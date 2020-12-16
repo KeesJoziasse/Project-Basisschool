@@ -56,8 +56,15 @@ class Start {
       
       //Draws the start button #TODO Fix the centering, make getters for the image width and height, make it center based on that.
       ctx.drawImage(Start.loadNewImage("./assets/img/start-button.png"), (this.canvas.width/2) - 180, (this.canvas.height/5)*4);
+
+      // Draw example to check of the button works
+      ctx.drawImage(Start.loadNewImage("./assets/img_zonder_whitespace/info-button.png"), (this.canvas.width / 2) + 700, (this.canvas.height / 5) * 0.25);
+
+      
   
     }
+
+   
   
     /**
      * Writes text to the canvas

@@ -1,3 +1,8 @@
+console.log("The game is working");
+let init = () => {
+    new Start(document.getElementById("canvas"));
+};
+window.addEventListener("load", init);
 class Button {
     constructor(name, xPos, yPos, image) {
         this.name = name;
@@ -35,8 +40,43 @@ class Button {
 class GameItem {
 }
 class ScoringItem extends GameItem {
+    constructor() {
+        super();
+        this.upperLane = this.canvas.width / 4;
+        this.middleLane = this.canvas.width / 2;
+        this.lowerLane = this.canvas.width / 4 * 3;
+        const random = this.randomInteger(1, 3);
+        if (random === 1) {
+            this.XPosition = this.upperLane;
+        }
+        if (random === 2) {
+            this.XPosition = this.middleLane;
+        }
+        if (random === 3) {
+            this.XPosition = this.lowerLane;
+        }
+    }
+    removeFromArray() {
+    }
+    draw(ctx) {
+    }
+    move() {
+    }
+    loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
+    randomInteger(min, max) {
+        return Math.round(Math.random() * (max - min) + min);
+    }
 }
 class Coin extends ScoringItem {
+    constructor(canvas) {
+        super();
+        this.canvas = canvas;
+        this.image = this.loadNewImage("./assets/img/coin.png");
+    }
 }
 class InGame {
 }
@@ -116,12 +156,32 @@ KeyboardListener.KEY_X = 88;
 KeyboardListener.KEY_Y = 89;
 KeyboardListener.KEY_Z = 90;
 class Obstacle extends ScoringItem {
+    constructor(canvas) {
+        super();
+        this.canvas = canvas;
+        this.image = this.loadNewImage("./assets/img/obstacle.png");
+    }
 }
-class Player extends GameItem {
+class Player extends ScoringItem {
+    constructor(canvas) {
+        super();
+        this.canvas = canvas;
+        this.image = this.loadNewImage("./assets/img/amongus.png");
+    }
 }
 class PowerUp extends ScoringItem {
+    constructor(canvas) {
+        super();
+        this.canvas = canvas;
+        this.image = this.loadNewImage("./assets/img/powerup.png");
+    }
 }
-class Question extends ScoringItem {
+class QuestionBox extends ScoringItem {
+    constructor(canvas) {
+        super();
+        this.canvas = canvas;
+        this.image = this.loadNewImage("./assets/img/questionbox.png");
+    }
 }
 class Start {
     constructor(canvasId) {
@@ -143,6 +203,7 @@ class Start {
         Start.writeTextToCanvas(ctx, "Top center text", 60, this.canvas.width / 2, 80, "center");
         Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
         ctx.drawImage(Start.loadNewImage("./assets/img/start-button.png"), (this.canvas.width / 2) - 180, (this.canvas.height / 5) * 4);
+        ctx.drawImage(Start.loadNewImage("./assets/img_zonder_whitespace/info-button.png"), (this.canvas.width / 2) + 700, (this.canvas.height / 5) * 0.25);
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
         ctx.font = `${fontSize}px Minecraft`;
@@ -159,9 +220,4 @@ class Start {
         return img;
     }
 }
-console.log("The game is working");
-let init = () => {
-    new Start(document.getElementById("canvas"));
-};
-window.addEventListener("load", init);
 //# sourceMappingURL=app.js.map
