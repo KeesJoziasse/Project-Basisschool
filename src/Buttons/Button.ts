@@ -1,4 +1,4 @@
-class Button {
+abstract class Button {
   private name: string;
   private xPos: number;
   private yPos: number;
