@@ -15,8 +15,9 @@ class Start {
 
     //#TODO refine, this is just a test
     this.image = Start.loadNewImage("./assets/img/start-button.png");
+    this.draw();
 
-    this.loop();
+    //this.loop();
   }
 
   /**

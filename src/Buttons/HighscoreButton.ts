@@ -2,9 +2,9 @@
 
 class HighscoreButton extends Button {
   // image (zodat deze button zelf verantwoordelijk is voor zijn eigen image).
-  // private image: HTMLImageElement
+  //private image: HTMLImageElement
 
-  public constructor(name: string, xPos: number, yPos: number, image: string) {
+  public constructor(name: string, xPos: number, yPos: number, image : string) {
     super(name, xPos, yPos, image);
     // #TODO loadNewImage verplaatsen naar Screen
     // #TODO source path afmaken + images toevoegen in aparte map in img
