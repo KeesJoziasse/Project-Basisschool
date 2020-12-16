@@ -1,3 +1,8 @@
+console.log("The game is working");
+let init = () => {
+    new HighScore(document.getElementById("canvas"));
+};
+window.addEventListener("load", init);
 class Button {
     constructor(name, xPos, yPos, image) {
         this.name = name;
@@ -37,6 +42,41 @@ class GameItem {
 class ScoringItem extends GameItem {
 }
 class Coin extends ScoringItem {
+}
+class HighScore {
+    constructor(canvasId) {
+        this.loop = () => {
+            this.draw();
+            requestAnimationFrame(this.loop);
+        };
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.image = Start.loadNewImage("./assets/img/start-button.png");
+        this.loop();
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        HighScore.writeTextToCanvas(ctx, "HighScore Test", 60, this.canvas.width / 2, 80, "center");
+        HighScore.writeTextToCanvas(ctx, "Your Highscore:", 40, this.canvas.width / 3, 200, "center");
+        HighScore.writeTextToCanvas(ctx, "Second:", 40, (this.canvas.width / 3) * 1.13, 260, "center");
+        HighScore.writeTextToCanvas(ctx, "Thrid:", 40, (this.canvas.width / 3) * 1.16, 320, "center");
+        HighScore.writeTextToCanvas(ctx, "Fourth:", 40, (this.canvas.width / 3) * 1.14, 380, "center");
+        HighScore.writeTextToCanvas(ctx, "Fifth:", 40, (this.canvas.width / 3) * 1.17, 440, "center");
+        ctx.drawImage(Start.loadNewImage("./assets/img/start-button.png"), (this.canvas.width / 5 * 0, 7), (this.canvas.height / 5 * 0, 7));
+    }
+    static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
+        ctx.font = `${fontSize}px Minecraft`;
+        ctx.fillStyle = color;
+        ctx.textAlign = alignment;
+        ctx.fillText(text, xCoordinate, yCoordinate);
+    }
+    static loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
 }
 class InGame {
 }
@@ -159,9 +199,4 @@ class Start {
         return img;
     }
 }
-console.log("The game is working");
-let init = () => {
-    new Start(document.getElementById("canvas"));
-};
-window.addEventListener("load", init);
 //# sourceMappingURL=app.js.map
