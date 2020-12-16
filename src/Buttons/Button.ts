@@ -1,35 +1,35 @@
 abstract class Button {
-  private name: string;
-  private xPos: number;
-  private yPos: number;
-  private image: HTMLImageElement;
+  // private name: string; #MERGEFIX Button altijd dezelfde naam meegeven d.m.v. de button daarvoor verantwoordelijk te laten zijn ?
+  // #MERGEFIX DIT OOK VOOR DE IMG DOEN , dan hoef je alleen de x en y pos te fixen.
 
-  constructor(
-    name: string,
-    xPos: number,
-    yPos: number,
-    image: string
-  ) {
-    this.name = name;
+  protected xPos: number;
+  protected yPos: number;
+  protected image: HTMLImageElement;
+  protected name: string;
+  protected xVelocity: number;
+
+  constructor(xPos: number, yPos: number) {
     this.xPos = xPos;
     this.yPos = yPos;
-    this.image = this.loadNewImage(image);
   }
 
-  public getName(): string {
+  public move(canvas: HTMLCanvasElement) {}
+
+  public reloadImage(canvas: HTMLCanvasElement) {}
+
+  public getButtonName(): string {
     return this.name;
   }
 
-
-  public getXPos(): number {
+  public getButtonXPos(): number {
     return this.xPos;
   }
 
-  public getYPos(): number {
+  public getButtonYPos(): number {
     return this.yPos;
   }
 
-  public getImage(): HTMLImageElement {
+  public getButtonImage(): HTMLImageElement {
     return this.image;
   }
 
@@ -37,7 +37,7 @@ abstract class Button {
    * Returns the width of the image
    * @returns {number} - image width
    */
-  public getImageWidth(): number {
+  public getButtonImageWidth(): number {
     return this.image.width;
   }
 
@@ -45,22 +45,11 @@ abstract class Button {
    * Returns the height of the image
    * @returns {number} - image height
    */
-  public getImageHeight(): number {
+  public getButtonImageHeight(): number {
     return this.image.height;
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
     ctx.drawImage(this.image, this.xPos, this.yPos);
-  }
-
-  /**
-   * Loads an image so it doesn't flicker
-   * @param {HTMLImageElement} source
-   * @return HTMLImageElement - returns an image
-   */
-  public loadNewImage(source: string): HTMLImageElement {
-    const img = new Image();
-    img.src = source;
-    return img;
   }
 }
