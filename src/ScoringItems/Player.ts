@@ -1,4 +1,4 @@
-/// <reference path = "ScoringItem.ts"/>
+/// <reference path = "ScoringItem.ts"/> 
 
 class Player extends ScoringItem {
 
@@ -6,8 +6,8 @@ class Player extends ScoringItem {
         super();
 
         this.canvas = canvas;
-        
-        this.image = this.loadNewImage("./assets/img/amongus.png");
+
+        this.image = this.loadNewImage("./assets/img/amongus.png")
     }
 
 }

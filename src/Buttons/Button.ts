@@ -1,4 +1,5 @@
-class Button {
+abstract class Button {
+  private canvas: HTMLCanvasElement;
   private name: string;
   private xPos: number;
   private yPos: number;
@@ -8,12 +9,30 @@ class Button {
     name: string,
     xPos: number,
     yPos: number,
-    image: string
+    image: string,
+    canvasId: HTMLCanvasElement
   ) {
     this.name = name;
     this.xPos = xPos;
     this.yPos = yPos;
     this.image = this.loadNewImage(image);
+
+    // Construct all of the canvas
+    this.canvas = canvasId;
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+
+    window.addEventListener("click", this.clickHandler)
+  }
+
+  public clickHandler(event: MouseEvent){
+    console.log(`xPos = ${event.screenX}`);
+    console.log(`yPos = ${event.screenY}`);
+
+    if(event.screenX >= this.xPos && event.screenX <= this.image.width
+      && event.screenY >= this.yPos && event.screenY <= this.image.height){
+      console.log("This works!");
+    }
   }
 
   public getName(): string {
@@ -50,6 +69,7 @@ class Button {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
+    this.canvas.getContext("2d");
     ctx.drawImage(this.image, this.xPos, this.yPos);
   }
 
