@@ -3,6 +3,40 @@ let init = () => {
     new Start(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
+class Game {
+    constructor(canvasId) {
+        this.loop = () => {
+            this.frame++;
+            console.log(this.frame);
+            this.writeGoodLuck();
+            if (this.gameState === "level-1") {
+            }
+            else if (this.gameState === "Level-2") {
+            }
+            requestAnimationFrame(this.loop);
+        };
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.gameItems = [];
+        this.score = 0;
+        this.frame = 0;
+        this.gameState = "Begin";
+        this.loop();
+    }
+    writeGoodLuck() {
+        if (this.frame >= 0 && this.frame <= 150) {
+            const ctx = this.canvas.getContext("2d");
+            this.writeTextToCanvas(ctx, "Succes!", 40, this.canvas.width / 2, this.canvas.height / 2);
+        }
+    }
+    writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
+        ctx.font = `${fontSize}px Minecraft`;
+        ctx.fillStyle = color;
+        ctx.textAlign = alignment;
+        ctx.fillText(text, xCoordinate, yCoordinate);
+    }
+}
 class KeyboardListener {
     constructor() {
         this.keyCodeStates = new Array();
@@ -80,8 +114,17 @@ KeyboardListener.KEY_Y = 89;
 KeyboardListener.KEY_Z = 90;
 class Button {
     constructor(xPos, yPos) {
+        this.mouseHandler = (event) => {
+            if (event.clientX >= this.getButtonXPos() &&
+                event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
+                event.clientY >= this.getButtonYPos() &&
+                event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()) {
+                console.log(`User clicked the: ${this.getButtonName()} button`);
+            }
+        };
         this.xPos = xPos;
         this.yPos = yPos;
+        document.addEventListener("click", this.mouseHandler);
     }
     move(canvas) { }
     reloadImage(canvas) { }
@@ -182,18 +225,89 @@ class StartGameButton extends Button {
     }
 }
 class GameItem {
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.earnedCoins = 0;
+        this.topLane = this.canvas.height / 4;
+        this.middleLane = this.canvas.height / 2;
+        this.lowerLane = this.canvas.height / 4 * 3;
+    }
+    getTotalCoins() {
+        this.earnedCoins++;
+        console.log(this.earnedCoins);
+    }
+    static loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
+    static randomInteger(min, max) {
+        return Math.round(Math.random() * (max - min) + min);
+    }
 }
 class ScoringItem extends GameItem {
+    constructor(canvas) {
+        super(canvas);
+        this.xPosition = 120;
+        this.createRandomYpos();
+        this.canvas = canvas;
+    }
+    createRandomYpos() {
+        const random = GameItem.randomInteger(1, 3);
+        if (random === 1) {
+            this.yPosition = this.topLane;
+        }
+        if (random === 2) {
+            this.yPosition = this.middleLane;
+        }
+        if (random === 3) {
+            this.yPosition = this.lowerLane;
+        }
+    }
+    collisionDetection() {
+    }
+    move() {
+    }
 }
 class Coin extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.name = "Coin";
+        this.image = GameItem.loadNewImage("");
+        this.speed = 15;
+        this.points = 1;
+    }
 }
 class Obstacle extends ScoringItem {
-}
-class Player extends GameItem {
 }
 class PowerUp extends ScoringItem {
 }
 class Question extends ScoringItem {
+}
+class Player extends GameItem {
+    constructor(canvas) {
+        super(canvas);
+        this.name = "Player";
+        this.image = GameItem.loadNewImage("../assets/img/Characters/amongus.png");
+        this.keyboardListener = new KeyboardListener;
+        this.yPos = this.canvas.height / 2;
+    }
+    move() {
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_W) && this.yPos !== this.topLane) {
+            this.yPos = this.topLane;
+        }
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_X) && this.yPos !== this.middleLane) {
+            this.yPos = this.middleLane;
+        }
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_S) && this.yPos !== this.lowerLane) {
+            this.yPos = this.lowerLane;
+        }
+    }
+    draw(ctx) {
+        ctx.drawImage(this.image, this.yPos - this.image.height / 2, this.canvas.width - 150);
+    }
+    collidesWithGameItem(GameItem) {
+    }
 }
 class World {
 }
@@ -247,16 +361,6 @@ class Start {
             this.wallet++;
             requestAnimationFrame(this.loop);
         };
-        this.mouseHandler = (event) => {
-            this.buttons.forEach((button) => {
-                if (event.clientX >= button.getButtonXPos() &&
-                    event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
-                    event.clientY >= button.getButtonYPos() &&
-                    event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
-                    console.log(`User clicked the: ${button.getButtonName()} button`);
-                }
-            });
-        };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
@@ -264,7 +368,6 @@ class Start {
         this.wallet = 0;
         this.buttonMaker();
         this.loop();
-        document.addEventListener("click", this.mouseHandler);
     }
     draw() {
         const ctx = this.canvas.getContext("2d");

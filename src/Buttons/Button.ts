@@ -10,6 +10,7 @@ abstract class Button {
   constructor(xPos: number, yPos: number) {
     this.xPos = xPos;
     this.yPos = yPos;
+    document.addEventListener("click", this.mouseHandler);
   }
 
   public move(canvas: HTMLCanvasElement) {}
@@ -31,6 +32,22 @@ abstract class Button {
   public getButtonImage(): HTMLImageElement {
     return this.image;
   }
+
+  /**
+   * Method to handle the mouse event
+   * @param {MouseEvent} event - mouse event
+   */
+  public mouseHandler = (event: MouseEvent) => {
+    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    if (
+      event.clientX >= this.getButtonXPos() &&
+      event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
+      event.clientY >= this.getButtonYPos() &&
+      event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()
+    ) {
+      console.log(`User clicked the: ${this.getButtonName()} button`);
+    }
+  };
 
   /**
    * Returns the width of the image

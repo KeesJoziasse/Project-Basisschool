@@ -17,7 +17,6 @@ class Start {
 
     //The button array
     this.buttons = [];
-    //Get img widht and height. #TODO Fix this, you cant use it in the this.startButton = new StartGameButton decleration
 
     //Your total coin value
     this.wallet = 0;
@@ -29,8 +28,6 @@ class Start {
     this.loop();
 
     //TEST AREA
-    // add an mouse event
-    document.addEventListener("click", this.mouseHandler);
   }
 
   /**
@@ -47,24 +44,6 @@ class Start {
     requestAnimationFrame(this.loop);
 
     //TEST AREA
-  };
-
-  /**
-   * Method to handle the mouse event
-   * @param {MouseEvent} event - mouse event
-   */
-  public mouseHandler = (event: MouseEvent) => {
-    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the canvas
-    this.buttons.forEach((button) => {
-      if (
-        event.clientX >= button.getButtonXPos() &&
-        event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
-        event.clientY >= button.getButtonYPos() &&
-        event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
-      ) {
-        console.log(`User clicked the: ${button.getButtonName()} button`);
-      }
-    });
   };
 
   /**
