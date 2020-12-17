@@ -79,72 +79,106 @@ KeyboardListener.KEY_X = 88;
 KeyboardListener.KEY_Y = 89;
 KeyboardListener.KEY_Z = 90;
 class Button {
-    constructor(name, xPos, yPos, image) {
-        this.name = name;
+    constructor(xPos, yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
-        this.image = this.loadNewImage(image);
     }
-    getName() {
+    move(canvas) { }
+    reloadImage(canvas) { }
+    getButtonName() {
         return this.name;
     }
-    getXPos() {
+    getButtonXPos() {
         return this.xPos;
     }
-    getYPos() {
+    getButtonYPos() {
         return this.yPos;
     }
-    getImage() {
+    getButtonImage() {
         return this.image;
     }
-    getImageWidth() {
+    getButtonImageWidth() {
         return this.image.width;
     }
-    getImageHeight() {
+    getButtonImageHeight() {
         return this.image.height;
     }
     draw(ctx) {
         ctx.drawImage(this.image, this.xPos, this.yPos);
     }
-    loadNewImage(source) {
-        const img = new Image();
-        img.src = source;
-        return img;
+}
+class Background extends Button {
+    constructor(xPos, yPos, xVelocity) {
+        super(xPos, yPos);
+        this.name = "Cloud";
+        this.image = Start.loadNewImage("./assets/img/background/cloud.png");
+        this.xVelocity = xVelocity;
+    }
+    move(canvas) {
+        this.xPos += this.xVelocity;
+    }
+    reloadImage(canvas) {
+        if ((this.xPos + this.getButtonImageWidth() < canvas.width + 0.75 &&
+            this.xPos + this.getButtonImageWidth() > canvas.width - 0.75) ||
+            this.xPos < 0) {
+            this.xVelocity = -this.xVelocity;
+        }
     }
 }
 class HighscoreButton extends Button {
-    constructor(name, xPos, yPos, image) {
-        super(name, xPos, yPos, image);
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "HighScore";
+        this.image = Start.loadNewImage("./assets/img/buttons/high-score-button.png");
     }
 }
 class NextSelector extends Button {
-    constructor(name, xPos, yPos, image) {
-        super(name, xPos, yPos, image);
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "ArrowRight";
+        this.image = Start.loadNewImage("./assets/img/buttons/arrow-right.png");
     }
 }
 class PreviousSelector extends Button {
-    constructor(name, xPos, yPos, image) {
-        super(name, xPos, yPos, image);
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "ArrowLeft";
+        this.image = Start.loadNewImage("./assets/img/buttons/left-arrow.png");
     }
 }
 class QuestionsAnswersButton extends Button {
-    constructor(name, xPos, yPos, image) {
-        super(name, xPos, yPos, image);
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "QandA";
+        this.image = Start.loadNewImage("./assets/img/buttons/info-button.png");
+    }
+}
+class SettingsButton extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Shop";
+        this.image = Start.loadNewImage("./assets/img/buttons/settings-button.png");
     }
 }
 class ShopButton extends Button {
-    constructor(name, xPos, yPos, image) {
-        super(name, xPos, yPos, image);
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Shop";
+        this.image = Start.loadNewImage("./assets/img/buttons/shop-button.png");
     }
 }
 class ShowStartScreen extends Button {
-    constructor(name, xPos, yPos, image) {
-        super(name, xPos, yPos, image);
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "StartScreen";
+        this.image = Start.loadNewImage("./assets/img/buttons/start-button.png");
     }
 }
 class StartGameButton extends Button {
-    constructor(name, xPos, yPos, image) {
-        super(name, xPos, yPos, image);
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "StartGame";
+        this.image = Start.loadNewImage("./assets/img/buttons/start-button.png");
     }
 }
 class GameItem {
@@ -161,6 +195,51 @@ class PowerUp extends ScoringItem {
 }
 class Question extends ScoringItem {
 }
+class World {
+}
+class HighScore {
+    constructor(canvasId) {
+        this.loop = () => {
+            this.draw();
+            requestAnimationFrame(this.loop);
+        };
+        this.mouseHandler = (event) => {
+            new Start(document.getElementById("canvas"));
+            console.log("Hey");
+        };
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.leftArrow = new PreviousSelector((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09);
+        document.addEventListener("click", this.mouseHandler);
+        this.loop();
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        HighScore.writeTextToCanvas(ctx, "Highscores", 65, this.canvas.width / 2, 80, "center");
+        this.rankList(ctx);
+        this.leftArrow.draw(ctx);
+    }
+    rankList(ctx) {
+        HighScore.writeTextToCanvas(ctx, "First:", 40, this.canvas.width / 3, 200, "center");
+        HighScore.writeTextToCanvas(ctx, "Second:", 40, (this.canvas.width / 3) * 0.96, 260, "center");
+        HighScore.writeTextToCanvas(ctx, "Thrid:", 40, (this.canvas.width / 3) * 0.99, 320, "center");
+        HighScore.writeTextToCanvas(ctx, "Fourth:", 40, (this.canvas.width / 3) * 0.97, 380, "center");
+        HighScore.writeTextToCanvas(ctx, "Fifth:", 40, this.canvas.width / 3, 440, "center");
+    }
+    static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "black") {
+        ctx.font = `${fontSize}px Minecraft`;
+        ctx.fillStyle = color;
+        ctx.textAlign = alignment;
+        ctx.fillText(text, xCoordinate, yCoordinate);
+    }
+    static loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
+}
 class Start {
     constructor(canvasId) {
         this.loop = () => {
@@ -168,25 +247,47 @@ class Start {
             this.wallet++;
             requestAnimationFrame(this.loop);
         };
+        this.mouseHandler = (event) => {
+            this.buttons.forEach((button) => {
+                if (event.clientX >= button.getButtonXPos() &&
+                    event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
+                    event.clientY >= button.getButtonYPos() &&
+                    event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
+                    console.log(`User clicked the: ${button.getButtonName()} button`);
+                }
+            });
+        };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
+        this.buttons = [];
         this.wallet = 0;
-        this.image = Start.loadNewImage("./assets/img/start-button.png");
-        this.draw();
-    }
-    getImageWidth() {
-        return this.image.width;
-    }
-    getImageHeight() {
-        return this.image.height;
+        this.buttonMaker();
+        this.loop();
+        document.addEventListener("click", this.mouseHandler);
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         Start.writeTextToCanvas(ctx, "Danger Dash", 60, this.canvas.width / 2, 80, "center");
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+            button.move(this.canvas);
+            button.reloadImage(this.canvas);
+        });
         Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
-        new StartGameButton("StartTheGame", this.canvas.width / 2 - this.getImageWidth() / 2, (this.canvas.height / 5) * 4, "./assets/img/buttons/start-button.png");
+    }
+    buttonMaker() {
+        this.buttons.push(new StartGameButton(this.canvas.width / 2 - 329 / 2, (this.canvas.height / 5) * 4 - 100 / 2));
+        this.buttons.push(new ShopButton(this.canvas.width / 5 - 329 / 2, (this.canvas.height / 6) * 4));
+        this.buttons.push(new HighscoreButton((this.canvas.width / 5) * 4 - 329 / 2, (this.canvas.height / 6) * 4));
+        this.buttons.push(new PreviousSelector(this.canvas.width / 4, this.canvas.height / 2 - 89));
+        this.buttons.push(new NextSelector((this.canvas.width / 4) * 3 - 143, this.canvas.height / 2 - 89));
+        this.buttons.push(new PreviousSelector((this.canvas.width / 7) * 2, this.canvas.height / 3 - 89));
+        this.buttons.push(new NextSelector((this.canvas.width / 7) * 5 - 143, this.canvas.height / 3 - 89));
+        this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
+        this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
+        this.buttons.push(new Background(this.canvas.width / 4, 0, 1));
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
         ctx.font = `${fontSize}px Minecraft`;

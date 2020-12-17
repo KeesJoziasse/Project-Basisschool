@@ -1,14 +1,14 @@
 /// <reference path="Button.ts" />
 
 class PreviousSelector extends Button {
-   // image (zodat deze button zelf verantwoordelijk is voor zijn eigen image).
-  // private image: HTMLImageElement
+  // image (zodat deze button zelf verantwoordelijk is voor zijn eigen image).
 
-  public constructor(name: string, xPos: number, yPos: number, image: string) {
-    super(name, xPos, yPos, image);
+  public constructor(xPos: number, yPos: number) {
+    super(xPos, yPos);
+    this.name = "ArrowLeft";
+    this.image = Start.loadNewImage("./assets/img/buttons/left-arrow.png");
     // #TODO loadNewImage verplaatsen naar Screen
     // #TODO source path afmaken + images toevoegen in aparte map in img
-    //this.image = Start.loadNewImage("./assets/img/buttons/");
   }
 
   // #TODO method maken zodat deze functie je doorverwijst naar de game (playingscreen)

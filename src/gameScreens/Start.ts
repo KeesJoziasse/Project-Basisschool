@@ -1,7 +1,12 @@
 class Start {
   private canvas: HTMLCanvasElement;
   private wallet: number;
-  private image: HTMLImageElement;
+  private buttons: Button[];
+  private player: Player; //#TODO
+  private level: World; //#TODO
+
+  //Attribute to test stuff
+  private background: HTMLImageElement; //#TODO
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
@@ -10,36 +15,29 @@ class Start {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
+    //The button array
+    this.buttons = [];
+    //Get img widht and height. #TODO Fix this, you cant use it in the this.startButton = new StartGameButton decleration
+
     //Your total coin value
     this.wallet = 0;
 
-    //#TODO refine, this is just a test
-    this.image = Start.loadNewImage("./assets/img/start-button.png");
-    this.draw();
+    //Calling the button maker method.
+    this.buttonMaker();
 
-    //this.loop();
-  }
+    //The game loop.
+    this.loop();
 
-  /**
-   * Returns the width of the image
-   * @returns {number} - image width
-   */
-  public getImageWidth(): number {
-    return this.image.width;
-  }
-
-  /**
-   * Returns the height of the image
-   * @returns {number} - image height
-   */
-  public getImageHeight(): number {
-    return this.image.height;
+    //TEST AREA
+    // add an mouse event
+    document.addEventListener("click", this.mouseHandler);
   }
 
   /**
    * Method for the Game Loop
    */
   public loop = () => {
+    //Draws everythin while in the loop
     this.draw();
 
     //#TODO you can remove this after you are fine with the code, for now there is a counter in the top left of your screen.
@@ -47,6 +45,26 @@ class Start {
 
     // in the first loop no images are loaded
     requestAnimationFrame(this.loop);
+
+    //TEST AREA
+  };
+
+  /**
+   * Method to handle the mouse event
+   * @param {MouseEvent} event - mouse event
+   */
+  public mouseHandler = (event: MouseEvent) => {
+    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the canvas
+    this.buttons.forEach((button) => {
+      if (
+        event.clientX >= button.getButtonXPos() &&
+        event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
+        event.clientY >= button.getButtonYPos() &&
+        event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
+      ) {
+        console.log(`User clicked the: ${button.getButtonName()} button`);
+      }
+    });
   };
 
   /**
@@ -68,23 +86,82 @@ class Start {
       "center"
     );
 
+    //Drawing the buttons
+    this.buttons.forEach((button) => {
+      button.draw(ctx);
+      button.move(this.canvas);
+      button.reloadImage(this.canvas); //#TODO
+    });
+
     //Writing the total amount of coins to the top left of your screen
     Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
 
-    //Draws the start button #TODO Fix the centering, make getters for the image width and height, make it center based on that.
-    // ctx.drawImage(
-    //   this.image,
-    //   this.canvas.width / 2 - this.getImageWidth() / 2, //Makes it so the image is always in the center of the screen.
-    //   (this.canvas.height / 5) * 4 //Makes it so the image is always on 4/5 of the screen.
-    // );
+    //TEST AREA
+  }
 
-    new StartGameButton(
-      "StartTheGame",
-      this.canvas.width / 2 - this.getImageWidth() / 2,
-      (this.canvas.height / 5) * 4,
-      "./assets/img/buttons/start-button.png"
-      //assets\img\buttons\
+  private buttonMaker() {
+    //Initializing the buttons and pushing them to the array
+    //Making the start button
+    this.buttons.push(
+      new StartGameButton(
+        this.canvas.width / 2 - 329 / 2, //Fix this secton for centering no magic numbers #TODO
+        (this.canvas.height / 5) * 4 - 100 / 2 //Fix this secton for centering no magic numbers #TODO
+      )
     );
+
+    //Making the shop button
+    this.buttons.push(
+      new ShopButton(
+        this.canvas.width / 5 - 329 / 2,
+        (this.canvas.height / 6) * 4
+      )
+    );
+
+    //Making the highscore button
+    this.buttons.push(
+      new HighscoreButton(
+        (this.canvas.width / 5) * 4 - 329 / 2,
+        (this.canvas.height / 6) * 4
+      )
+    );
+
+    //Making the left arrow for character selector
+    this.buttons.push(
+      new PreviousSelector(this.canvas.width / 4, this.canvas.height / 2 - 89)
+    );
+
+    //Making the right arrow for character selector
+    this.buttons.push(
+      new NextSelector(
+        (this.canvas.width / 4) * 3 - 143,
+        this.canvas.height / 2 - 89
+      )
+    );
+
+    //Making the left arrow for level selector
+    this.buttons.push(
+      new PreviousSelector(
+        (this.canvas.width / 7) * 2,
+        this.canvas.height / 3 - 89
+      )
+    );
+
+    //Making the right arrow for level selector
+    this.buttons.push(
+      new NextSelector(
+        (this.canvas.width / 7) * 5 - 143,
+        this.canvas.height / 3 - 89
+      )
+    );
+
+    //QandA Button
+    this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
+
+    //Settings Button
+    this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
+
+    //Background test
+    this.buttons.push(new Background(this.canvas.width / 4, 0, 1));
   }
 
   /**
