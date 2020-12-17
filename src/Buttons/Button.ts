@@ -1,5 +1,4 @@
 abstract class Button {
-  // private name: string; #MERGEFIX Button altijd dezelfde naam meegeven d.m.v. de button daarvoor verantwoordelijk te laten zijn ?
   // #MERGEFIX DIT OOK VOOR DE IMG DOEN , dan hoef je alleen de x en y pos te fixen.
 
   protected xPos: number;

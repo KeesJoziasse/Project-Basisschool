@@ -1,12 +1,12 @@
 class Start {
   private canvas: HTMLCanvasElement;
   private wallet: number;
-  public buttons: Button[]; //#TODO make private
-  private player: Player;
-  private level: World;
+  private buttons: Button[];
+  private player: Player; //#TODO
+  private level: World; //#TODO
 
   //Attribute to test stuff
-  private background: HTMLImageElement;
+  private background: HTMLImageElement; //#TODO
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
@@ -70,7 +70,7 @@ class Start {
     this.buttons.forEach((button) => {
       button.draw(ctx);
       button.move(this.canvas);
-      button.reloadImage(this.canvas);
+      button.reloadImage(this.canvas); //#TODO
     });
 
     //Writing the total amount of coins to the top left of your screen
