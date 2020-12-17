@@ -354,6 +354,29 @@ class HighScore {
         return img;
     }
 }
+class Shop {
+    constructor(canvasId) {
+        this.loop = () => {
+            this.draw();
+            requestAnimationFrame(this.loop);
+        };
+        this.mouseHandler = (event) => {
+            new Start(document.getElementById("canvas"));
+            console.log("Hey");
+        };
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.leftArrow = new PreviousSelector((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09);
+        document.addEventListener("click", this.mouseHandler);
+        this.loop();
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        HighScore.writeTextToCanvas(ctx, "Shop", 65, this.canvas.width / 2, 80, "center");
+    }
+}
 class Start {
     constructor(canvasId) {
         this.loop = () => {
