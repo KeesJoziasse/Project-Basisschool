@@ -1,62 +1,59 @@
 abstract class Button {
-  private canvas: HTMLCanvasElement;
-  private name: string;
-  private xPos: number;
-  private yPos: number;
-  private image: HTMLImageElement;
+  // #MERGEFIX DIT OOK VOOR DE IMG DOEN , dan hoef je alleen de x en y pos te fixen.
 
-  constructor(
-    name: string,
-    xPos: number,
-    yPos: number,
-    image: string,
-    canvasId: HTMLCanvasElement
-  ) {
-    this.name = name;
+  protected xPos: number;
+  protected yPos: number;
+  protected image: HTMLImageElement;
+  protected name: string;
+  protected xVelocity: number;
+
+  constructor(xPos: number, yPos: number) {
     this.xPos = xPos;
     this.yPos = yPos;
-    this.image = this.loadNewImage(image);
-
-    // Construct all of the canvas
-    this.canvas = canvasId;
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-
-    window.addEventListener("click", this.clickHandler)
+    document.addEventListener("click", this.mouseHandler);
   }
 
-  public clickHandler(event: MouseEvent){
-    console.log(`xPos = ${event.screenX}`);
-    console.log(`yPos = ${event.screenY}`);
+  public move(canvas: HTMLCanvasElement) {}
 
-    if(event.screenX >= this.xPos && event.screenX <= this.image.width
-      && event.screenY >= this.yPos && event.screenY <= this.image.height){
-      console.log("This works!");
-    }
-  }
+  public reloadImage(canvas: HTMLCanvasElement) {}
 
-  public getName(): string {
+  public getButtonName(): string {
     return this.name;
   }
 
-
-  public getXPos(): number {
+  public getButtonXPos(): number {
     return this.xPos;
   }
 
-  public getYPos(): number {
+  public getButtonYPos(): number {
     return this.yPos;
   }
 
-  public getImage(): HTMLImageElement {
+  public getButtonImage(): HTMLImageElement {
     return this.image;
   }
+
+  /**
+   * Method to handle the mouse event
+   * @param {MouseEvent} event - mouse event
+   */
+  public mouseHandler = (event: MouseEvent) => {
+    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    if (
+      event.clientX >= this.getButtonXPos() &&
+      event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
+      event.clientY >= this.getButtonYPos() &&
+      event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()
+    ) {
+      console.log(`User clicked the: ${this.getButtonName()} button`);
+    }
+  };
 
   /**
    * Returns the width of the image
    * @returns {number} - image width
    */
-  public getImageWidth(): number {
+  public getButtonImageWidth(): number {
     return this.image.width;
   }
 
@@ -64,23 +61,11 @@ abstract class Button {
    * Returns the height of the image
    * @returns {number} - image height
    */
-  public getImageHeight(): number {
+  public getButtonImageHeight(): number {
     return this.image.height;
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
-    this.canvas.getContext("2d");
     ctx.drawImage(this.image, this.xPos, this.yPos);
-  }
-
-  /**
-   * Loads an image so it doesn't flicker
-   * @param {HTMLImageElement} source
-   * @return HTMLImageElement - returns an image
-   */
-  public loadNewImage(source: string): HTMLImageElement {
-    const img = new Image();
-    img.src = source;
-    return img;
   }
 }

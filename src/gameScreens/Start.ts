@@ -1,9 +1,12 @@
 class Start {
   private canvas: HTMLCanvasElement;
   private wallet: number;
-  public image: HTMLImageElement;
+  private buttons: Button[];
+  private player: Player; //#TODO
+  private level: World; //#TODO
 
-  public test: any;
+  //Attribute to test stuff
+  private background: HTMLImageElement; //#TODO
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
@@ -12,27 +15,26 @@ class Start {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
+    //The button array
+    this.buttons = [];
 
-   
     //Your total coin value
     this.wallet = 0;
 
-    //#TODO refine, this is just a test
+    //Calling the button maker method.
+    this.buttonMaker();
 
-    this.test = new StartGameButton("Start", this.canvas.width/2, this.canvas.height/2,"./assets/img/buttons/start-button.png", canvasId);
-
-    this.draw()
-
+    //The game loop.
     this.loop();
 
-    
+    //TEST AREA
   }
-
 
   /**
    * Method for the Game Loop
    */
   public loop = () => {
+    //Draws everythin while in the loop
     this.draw();
 
     //#TODO you can remove this after you are fine with the code, for now there is a counter in the top left of your screen.
@@ -40,8 +42,9 @@ class Start {
 
     // in the first loop no images are loaded
     requestAnimationFrame(this.loop);
-  };
 
+    //TEST AREA
+  };
 
   /**
    * Draws all the necessary elements to the canvas
@@ -62,16 +65,83 @@ class Start {
       "center"
     );
 
+    //Drawing the buttons
+    this.buttons.forEach((button) => {
+      button.draw(ctx);
+      button.move(this.canvas);
+      button.reloadImage(this.canvas); //#TODO
+    });
+
     //Writing the total amount of coins to the top left of your screen
     Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
 
-    this.test.draw(ctx);
-
-    
+    //TEST AREA
   }
 
+  private buttonMaker() {
+    //Initializing the buttons and pushing them to the array
+    //Making the start button
+    this.buttons.push(
+      new StartGameButton(
+        this.canvas.width / 2 - 329 / 2, //Fix this secton for centering no magic numbers #TODO
+        (this.canvas.height / 5) * 4 - 100 / 2 //Fix this secton for centering no magic numbers #TODO
+      )
+    );
 
+    //Making the shop button
+    this.buttons.push(
+      new ShopButton(
+        this.canvas.width / 5 - 329 / 2,
+        (this.canvas.height / 6) * 4
+      )
+    );
 
+    //Making the highscore button
+    this.buttons.push(
+      new HighscoreButton(
+        (this.canvas.width / 5) * 4 - 329 / 2,
+        (this.canvas.height / 6) * 4
+      )
+    );
+
+    //Making the left arrow for character selector
+    this.buttons.push(
+      new PreviousSelector(this.canvas.width / 4, this.canvas.height / 2 - 89)
+    );
+
+    //Making the right arrow for character selector
+    this.buttons.push(
+      new NextSelector(
+        (this.canvas.width / 4) * 3 - 143,
+        this.canvas.height / 2 - 89
+      )
+    );
+
+    //Making the left arrow for level selector
+    this.buttons.push(
+      new PreviousSelector(
+        (this.canvas.width / 7) * 2,
+        this.canvas.height / 3 - 89
+      )
+    );
+
+    //Making the right arrow for level selector
+    this.buttons.push(
+      new NextSelector(
+        (this.canvas.width / 7) * 5 - 143,
+        this.canvas.height / 3 - 89
+      )
+    );
+
+    //QandA Button
+    this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
+
+    //Settings Button
+    this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
+
+    //Background test
+    this.buttons.push(new Background(this.canvas.width / 4, 0, 1));
+  }
 
   /**
    * Writes text to the canvas

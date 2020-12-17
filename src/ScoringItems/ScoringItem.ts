@@ -1,72 +1,48 @@
-/// <reference path = "GameItem.ts"/>
+/// <reference path = "GameItems/GameItem.ts"/>
 
 abstract class ScoringItem extends GameItem {
-
-    protected canvas: HTMLCanvasElement;
-
-    private points: number;
-
+    protected points: number;
     protected image: HTMLImageElement;
+    protected speed: number;
+    private xPosition: number;
+    private yPosition: number;
 
-    private upperLane: number;
+    public constructor(canvas:HTMLCanvasElement){
+        super(canvas);
+        this.xPosition = 120;
 
-    private middleLane: number;
+        this.createRandomYpos(); 
 
-    private lowerLane: number;
+        this.canvas = canvas;
+    }
 
-    private XPosition: number;
-
-    private YPosition: number;
-
-    public constructor(){
-        super();
-
-        this.upperLane = this.canvas.width / 4;
-        this.middleLane = this.canvas.width / 2;
-        this.lowerLane = this.canvas.width / 4 * 3;
-
-        const random = this.randomInteger(1, 3);
+    /**
+     * This method creates a random integer of 1 2 3 and decides what lane the ScoringItem will appear
+     */
+    private createRandomYpos() {
+        const random = GameItem.randomInteger(1, 3);
         if (random === 1) {
-            this.XPosition = this.upperLane;
+            this.yPosition = this.topLane;
         }
         if (random === 2) {
-            this.XPosition = this.middleLane;
+            this.yPosition = this.middleLane;
         }
         if (random === 3) {
-            this.XPosition = this.lowerLane;
+            this.yPosition = this.lowerLane;
         }
     }
 
-    public removeFromArray(){
-
+    /**
+     * Method that removes an scoringItem after it collides with the player or the left side of the canvas (out of screen);
+     */
+    public collisionDetection(){
+        
     }
 
-    public draw(ctx: CanvasRenderingContext2D){
-
-    }
-
+    /**
+     * Method that moves the scoringItem on the canvas
+     */
     public move(){
-
+        
     }
-
-        /**
-    * Loads an image in such a way that the screen doesn't constantly flicker
-    * @param {HTMLImageElement} source
-    * @return HTMLImageElement - returns an image
-    */
-   protected loadNewImage(source: string): HTMLImageElement {
-    const img = new Image();
-    img.src = source;
-    return img;
-}
-
-/**
-* Generates a random integer number between min and max
-*
-* @param {number} min - minimal time
-* @param {number} max - maximal time
-*/
-private randomInteger(min: number, max: number): number {
-    return Math.round(Math.random() * (max - min) + min);
-}
 }
