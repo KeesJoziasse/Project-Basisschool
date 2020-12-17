@@ -151,3 +151,5 @@ class HighScore {
       console.log("Hey");
     };
   }
+  
+  
