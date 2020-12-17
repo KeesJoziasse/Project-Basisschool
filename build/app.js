@@ -165,6 +165,7 @@ class Background extends Button {
             this.xPos + this.getButtonImageWidth() > canvas.width - 0.75) ||
             this.xPos < 0) {
             this.xVelocity = -this.xVelocity;
+            Start.loadNewImage("./assets/img/background/cloud.png");
         }
     }
 }
@@ -365,6 +366,7 @@ class Start {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.buttons = [];
+        this.images = [];
         this.wallet = 0;
         this.buttonMaker();
         this.loop();
@@ -390,7 +392,6 @@ class Start {
         this.buttons.push(new NextSelector((this.canvas.width / 7) * 5 - 143, this.canvas.height / 3 - 89));
         this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
         this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
-        this.buttons.push(new Background(this.canvas.width / 4, 0, 1));
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
         ctx.font = `${fontSize}px Minecraft`;

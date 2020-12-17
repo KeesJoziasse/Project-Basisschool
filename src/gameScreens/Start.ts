@@ -2,6 +2,7 @@ class Start {
   private canvas: HTMLCanvasElement;
   private wallet: number;
   private buttons: Button[];
+  private images: HTMLImageElement[];
   private player: Player; //#TODO
   private level: World; //#TODO
 
@@ -17,6 +18,9 @@ class Start {
 
     //The button array
     this.buttons = [];
+
+    //The images array
+    this.images = [];
 
     //Your total coin value
     this.wallet = 0;
@@ -71,6 +75,8 @@ class Start {
       button.move(this.canvas);
       button.reloadImage(this.canvas); //#TODO
     });
+
+    //Drawing the images
 
     //Writing the total amount of coins to the top left of your screen
     Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
@@ -140,7 +146,7 @@ class Start {
     this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
 
     //Background test
-    this.buttons.push(new Background(this.canvas.width / 4, 0, 1));
+    //this.buttons.push(new Background(this.canvas.width / 4, 0, 1)); #TODO Uncomment
   }
 
   /**

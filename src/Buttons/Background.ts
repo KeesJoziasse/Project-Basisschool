@@ -25,6 +25,8 @@ class Background extends Button {
       this.xPos < 0
     ) {
       this.xVelocity = -this.xVelocity;
+      Start.loadNewImage("./assets/img/background/cloud.png")
+      
     }
   }
   // #TODO method maken zodat deze functie je doorverwijst naar de game (playingscreen)
