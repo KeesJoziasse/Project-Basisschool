@@ -10,6 +10,5 @@ class QuestionsAnswersButton extends Button {
     // #TODO loadNewImage verplaatsen naar Screen
     // #TODO source path afmaken + images toevoegen in aparte map in img
   }
-
   // #TODO method maken zodat deze functie je doorverwijst naar de game (playingscreen)
 }
