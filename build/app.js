@@ -119,6 +119,15 @@ class Button {
                 event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
                 event.clientY >= this.getButtonYPos() &&
                 event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()) {
+                if (this.getButtonName() === "HighScore") {
+                    new HighScore(document.getElementById("canvas"));
+                }
+                else if (this.getButtonName() === "BackToStart") {
+                    new Start(document.getElementById("canvas"));
+                }
+                else {
+                    return null;
+                }
                 console.log(`User clicked the: ${this.getButtonName()} button`);
             }
         };
@@ -148,6 +157,13 @@ class Button {
     }
     draw(ctx) {
         ctx.drawImage(this.image, this.xPos, this.yPos);
+    }
+}
+class BackToStart extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "BackToStart";
+        this.image = Start.loadNewImage("./assets/img/buttons/left-arrow.png");
     }
 }
 class Background extends Button {
@@ -317,15 +333,11 @@ class HighScore {
             this.draw();
             requestAnimationFrame(this.loop);
         };
-        this.mouseHandler = (event) => {
-            new Start(document.getElementById("canvas"));
-            console.log("Hey");
-        };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.leftArrow = new PreviousSelector((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09);
-        document.addEventListener("click", this.mouseHandler);
+        this.buttons = [];
+        this.buttonMaker();
         this.loop();
     }
     draw() {
@@ -333,7 +345,11 @@ class HighScore {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         HighScore.writeTextToCanvas(ctx, "Highscores", 65, this.canvas.width / 2, 80, "center");
         this.rankList(ctx);
-        this.leftArrow.draw(ctx);
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+            button.move(this.canvas);
+            button.reloadImage(this.canvas);
+        });
     }
     rankList(ctx) {
         HighScore.writeTextToCanvas(ctx, "First:", 40, this.canvas.width / 3, 200, "center");
@@ -352,6 +368,9 @@ class HighScore {
         const img = new Image();
         img.src = source;
         return img;
+    }
+    buttonMaker() {
+        this.buttons.push(new BackToStart((this.canvas.width / 7) * 0.09, (this.canvas.height / 3) * 0.08));
     }
 }
 class Start {
