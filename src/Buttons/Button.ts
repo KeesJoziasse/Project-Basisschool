@@ -13,10 +13,6 @@ abstract class Button {
     document.addEventListener("click", this.mouseHandler);
   }
 
-  public move(canvas: HTMLCanvasElement) {}
-
-  public reloadImage(canvas: HTMLCanvasElement) {}
-
   public getButtonName(): string {
     return this.name;
   }
@@ -45,7 +41,9 @@ abstract class Button {
       event.clientY >= this.getButtonYPos() &&
       event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()
     ) {
-      console.log(`User clicked the: ${this.getButtonName()} button`);
+      console.log(this.getButtonName());
+    } else {
+      null;
     }
   };
 

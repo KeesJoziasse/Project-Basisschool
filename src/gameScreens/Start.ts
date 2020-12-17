@@ -2,12 +2,10 @@ class Start {
   private canvas: HTMLCanvasElement;
   private wallet: number;
   private buttons: Button[];
-  private images: HTMLImageElement[];
-  private player: Player; //#TODO
-  private level: World; //#TODO
-
-  //Attribute to test stuff
-  private background: HTMLImageElement; //#TODO
+  private worldImages: Images[];
+  private characterImages: Images[];
+  private background: Images;
+  private indexCounterWorld: number;
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
@@ -19,19 +17,32 @@ class Start {
     //The button array
     this.buttons = [];
 
-    //The images array
-    this.images = [];
+    //The world images array
+    this.worldImages = [];
+
+    //The world images array
+    this.worldImages = [];
 
     //Your total coin value
     this.wallet = 0;
 
+    //Index counter for world
+    this.indexCounterWorld = 0;
+
+    //Background
+    this.background = new Background(this.canvas.width / 4, 0, 1);
+
     //Calling the button maker method.
     this.buttonMaker();
+
+    //Calling the IMG maker method
+    this.worldImageMaker();
 
     //The game loop.
     this.loop();
 
     //TEST AREA
+    document.addEventListener("click", this.mouseHandler);
   }
 
   /**
@@ -39,6 +50,7 @@ class Start {
    */
   public loop = () => {
     //Draws everythin while in the loop
+
     this.draw();
 
     //#TODO you can remove this after you are fine with the code, for now there is a counter in the top left of your screen.
@@ -48,6 +60,7 @@ class Start {
     requestAnimationFrame(this.loop);
 
     //TEST AREA
+    console.log(this.indexCounterWorld);
   };
 
   /**
@@ -59,6 +72,14 @@ class Start {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    this.background.draw(ctx);
+    this.background.move(this.canvas);
+    this.background.reloadImage(this.canvas);
+    //Drawing the buttons
+    this.buttons.forEach((button) => {
+      button.draw(ctx);
+    });
+
     //The text at the top center.
     Start.writeTextToCanvas(
       ctx,
@@ -69,19 +90,18 @@ class Start {
       "center"
     );
 
-    //Drawing the buttons
-    this.buttons.forEach((button) => {
-      button.draw(ctx);
-      button.move(this.canvas);
-      button.reloadImage(this.canvas); //#TODO
+    //Drawing the images
+    this.worldImages.forEach((image) => {
+      image.move(this.canvas);
+      image.reloadImage(this.canvas);
     });
 
-    //Drawing the images
+    for (let i = 0; i < this.worldImages.length; i++) {
+      this.worldImages[this.indexCounterWorld].draw(ctx);
+    }
 
     //Writing the total amount of coins to the top left of your screen
     Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
-
-    //TEST AREA
   }
 
   private buttonMaker() {
@@ -119,7 +139,8 @@ class Start {
     this.buttons.push(
       new NextSelector(
         (this.canvas.width / 4) * 3 - 143,
-        this.canvas.height / 2 - 89
+        this.canvas.height / 2 - 89,
+        1
       )
     );
 
@@ -135,7 +156,8 @@ class Start {
     this.buttons.push(
       new NextSelector(
         (this.canvas.width / 7) * 5 - 143,
-        this.canvas.height / 3 - 89
+        this.canvas.height / 3 - 89,
+        1
       )
     );
 
@@ -144,10 +166,45 @@ class Start {
 
     //Settings Button
     this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
-
-    //Background test
-    //this.buttons.push(new Background(this.canvas.width / 4, 0, 1)); #TODO Uncomment
   }
+
+  private worldImageMaker() {
+    this.worldImages.push(
+      new OceanImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 80)
+    );
+
+    this.worldImages.push(
+      new DesertImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 80)
+    );
+
+    this.worldImages.push(
+      new Goosebumps(this.canvas.width / 2 - 202, this.canvas.height / 3 - 80)
+    );
+  }
+
+  /**
+   * Method to handle the mouse event
+   * @param {MouseEvent} event - mouse event
+   */
+  public mouseHandler = (event: MouseEvent): void => {
+    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    this.buttons.forEach((button) => {
+      if (
+        event.clientX >= button.getButtonXPos() &&
+        event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
+        event.clientY >= button.getButtonYPos() &&
+        event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
+      ) {
+        if (this.indexCounterWorld == this.worldImages.length - 1) {
+          this.indexCounterWorld = 0;
+        } else if (button.getButtonName() == "ArrowLeft") {
+          this.indexCounterWorld -= 1;
+        } else if (button.getButtonName() == "ArrowRight") {
+          this.indexCounterWorld += 1;
+        }
+      }
+    });
+  };
 
   /**
    * Writes text to the canvas
