@@ -1,3 +1,8 @@
+console.log("The game is working");
+let init = () => {
+    new Start(document.getElementById("canvas"));
+};
+window.addEventListener("load", init);
 class KeyboardListener {
     constructor() {
         this.keyCodeStates = new Array();
@@ -73,11 +78,6 @@ KeyboardListener.KEY_W = 87;
 KeyboardListener.KEY_X = 88;
 KeyboardListener.KEY_Y = 89;
 KeyboardListener.KEY_Z = 90;
-console.log("The game is working");
-let init = () => {
-    new Start(document.getElementById("canvas"));
-};
-window.addEventListener("load", init);
 class Button {
     constructor(name, xPos, yPos, image) {
         this.name = name;
