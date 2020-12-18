@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Start(document.getElementById("canvas"));
+    new Game(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
