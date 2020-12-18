@@ -1,7 +1,7 @@
 class Shop {
     private canvas: HTMLCanvasElement;
     private image: HTMLImageElement;
-    private leftArrow: Button;
+  
     private scoringItems: ScoringItem[];
     private buttons: Button[];
 
@@ -13,21 +13,13 @@ class Shop {
       this.canvas.width = window.innerWidth;
       this.canvas.height = window.innerHeight;
 
-      // backButton image
-      this.leftArrow = new PreviousSelector(
-        (this.canvas.width / 5) * 0.05,
-        (this.canvas.height / 5) * 0.09,
-      );
-
       // The button array
       this.buttons = [];
 
       // The scoring item array
       this.scoringItems = [];
 
-     
-
-      this.buttonMaker();
+     this.buttonMaker();
 
       // add an mouse event
       document.addEventListener("click", this.mouseHandler);
@@ -40,6 +32,7 @@ class Shop {
      */
     public loop = () => {
         this.draw();
+        this.buttonMaker();
         
         // in the first loop no images are loaded
         requestAnimationFrame(this.loop);
@@ -54,6 +47,8 @@ class Shop {
 
         //Clears the canvas every frame
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.buttonMaker();
 
         //The text at the top center.
         Start.writeTextToCanvas(
@@ -86,22 +81,6 @@ private buttonMaker() {
       )
   );
 
-  //QandA Button
-  this.buttons.push(
-    new QuestionsAnswersButton(
-      this.canvas.width / 2 - 1400 / 2, //Fix this secton for centering no magic numbers #TODO
-      (this.canvas.height / 5) * 4 - 1250 / 2 //Fix this secton for centering no magic numbers #TODO
-    )
-  );
-
-  //Settings Button
-  this.buttons.push(
-    new SettingsButton(
-      this.canvas.width / 2 - 1400 / 2, //Fix this secton for centering no magic numbers #TODO
-      (this.canvas.height / 5) * 4 - 1000 / 2 //Fix this secton for centering no magic numbers #TODO
-    )
-  );
-
   //Go back button
   // this.buttons.push(new NextSelector(this.canvas.width -145, 20))
 
@@ -118,8 +97,7 @@ private buttonMaker() {
      * @param {MouseEvent} event - mouse event
      */
     public mouseHandler = (event: MouseEvent) => {
-        new Start (document.getElementById("canvas") as HTMLCanvasElement);
-        console.log("Hey");
+        
       };
 
           /**

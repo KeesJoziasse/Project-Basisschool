@@ -434,16 +434,14 @@ class Shop {
     constructor(canvasId) {
         this.loop = () => {
             this.draw();
+            this.buttonMaker();
             requestAnimationFrame(this.loop);
         };
         this.mouseHandler = (event) => {
-            new Start(document.getElementById("canvas"));
-            console.log("Hey");
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.leftArrow = new PreviousSelector((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09);
         this.buttons = [];
         this.scoringItems = [];
         this.buttonMaker();
@@ -453,6 +451,7 @@ class Shop {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.buttonMaker();
         Start.writeTextToCanvas(ctx, "Shop", 60, this.canvas.width / 2, 80, "center");
         this.scoringItems.forEach((scoringItem) => {
             scoringItem.draw(ctx);
@@ -462,8 +461,6 @@ class Shop {
     }
     buttonMaker() {
         this.scoringItems.push(new Coin(100, 0, this.canvas));
-        this.buttons.push(new QuestionsAnswersButton(this.canvas.width / 2 - 1400 / 2, (this.canvas.height / 5) * 4 - 1250 / 2));
-        this.buttons.push(new SettingsButton(this.canvas.width / 2 - 1400 / 2, (this.canvas.height / 5) * 4 - 1000 / 2));
         this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
         this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
     }
