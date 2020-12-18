@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Start(document.getElementById("canvas"));
+    new Shop(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -248,9 +248,14 @@ class GameItem {
 class ScoringItem extends GameItem {
     constructor(canvas) {
         super(canvas);
-        this.xPosition = 120;
+        this.canvas = this.canvas;
         this.createRandomYpos();
-        this.canvas = canvas;
+    }
+    getImageWidth() {
+        return this.image.width;
+    }
+    getImageHeight() {
+        return this.image.height;
     }
     createRandomYpos() {
         const random = GameItem.randomInteger(1, 3);
@@ -264,17 +269,20 @@ class ScoringItem extends GameItem {
             this.yPosition = this.lowerLane;
         }
     }
+    draw(ctx) {
+        ctx.drawImage(this.image, this.xPosition, this.yPosition);
+    }
+    reloadImage(canvas) { }
     collisionDetection() {
     }
-    move() {
+    move(canvas) {
     }
 }
 class Coin extends ScoringItem {
-    constructor(canvas) {
+    constructor(xPosition, yPosition, canvas) {
         super(canvas);
         this.name = "Coin";
-        this.image = GameItem.loadNewImage("");
-        this.speed = 15;
+        this.image = GameItem.loadNewImage("./assets/img/coin.png");
         this.points = 1;
     }
 }
@@ -368,13 +376,37 @@ class Shop {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.leftArrow = new PreviousSelector((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09);
+        this.buttons = [];
+        this.scoringItems = [];
+        this.buttonMaker();
         document.addEventListener("click", this.mouseHandler);
         this.loop();
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        HighScore.writeTextToCanvas(ctx, "Shop", 65, this.canvas.width / 2, 80, "center");
+        Start.writeTextToCanvas(ctx, "Shop", 60, this.canvas.width / 2, 80, "center");
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+            button.move(this.canvas);
+            button.reloadImage(this.canvas);
+        });
+        this.scoringItems.forEach((scoringItem) => {
+            scoringItem.draw(ctx);
+            scoringItem.move(this.canvas);
+            scoringItem.reloadImage(this.canvas);
+        });
+    }
+    buttonMaker() {
+        this.scoringItems.push(new Coin(100, 0, this.canvas));
+        this.buttons.push(new QuestionsAnswersButton(this.canvas.width / 2 - 1400 / 2, (this.canvas.height / 5) * 4 - 1250 / 2));
+        this.buttons.push(new SettingsButton(this.canvas.width / 2 - 1400 / 2, (this.canvas.height / 5) * 4 - 1000 / 2));
+        this.buttons.push(new NextSelector(this.canvas.width - 145, 20));
+    }
+    loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
     }
 }
 class Start {
