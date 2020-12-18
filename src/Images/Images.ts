@@ -1,4 +1,5 @@
 abstract class Images {
+  
   protected xPos: number;
   protected yPos: number;
   protected image: HTMLImageElement;

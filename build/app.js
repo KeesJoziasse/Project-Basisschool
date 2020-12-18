@@ -7,9 +7,10 @@ class Game {
     constructor(canvasId) {
         this.loop = () => {
             this.frame++;
-            console.log(this.frame);
-            this.writeGoodLuck();
+            this.draw();
             if (this.gameState === "level-1") {
+                console.log("level 1");
+                this.player.move();
             }
             else if (this.gameState === "Level-2") {
             }
@@ -19,22 +20,17 @@ class Game {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.gameItems = [];
+        this.player = new Player(this.canvas);
         this.score = 0;
         this.frame = 0;
-        this.gameState = "Begin";
+        this.gameState = "level-1";
         this.loop();
     }
-    writeGoodLuck() {
-        if (this.frame >= 0 && this.frame <= 150) {
-            const ctx = this.canvas.getContext("2d");
-            this.writeTextToCanvas(ctx, "Succes!", 40, this.canvas.width / 2, this.canvas.height / 2);
-        }
-    }
-    writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
-        ctx.font = `${fontSize}px Minecraft`;
-        ctx.fillStyle = color;
-        ctx.textAlign = alignment;
-        ctx.fillText(text, xCoordinate, yCoordinate);
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        Start.writeTextToCanvas(ctx, "Danger Dash", 60, this.canvas.width / 2, 80, "center");
+        this.player.draw(ctx);
     }
 }
 class KeyboardListener {
@@ -338,23 +334,43 @@ class Player extends GameItem {
     constructor(canvas) {
         super(canvas);
         this.name = "Player";
-        this.image = GameItem.loadNewImage("../assets/img/Characters/amongus.png");
+        this.image = GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-1.png");
         this.keyboardListener = new KeyboardListener;
         this.yPos = this.canvas.height / 2;
+        this.xPos = this.canvas.width / 3;
+        this.animationFrame = 0;
     }
     move() {
         if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_W) && this.yPos !== this.topLane) {
             this.yPos = this.topLane;
+            console.log("W is pressed");
         }
         if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_X) && this.yPos !== this.middleLane) {
             this.yPos = this.middleLane;
+            console.log("X is pressed");
         }
         if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_S) && this.yPos !== this.lowerLane) {
             this.yPos = this.lowerLane;
+            console.log("S is pressed");
         }
     }
     draw(ctx) {
-        ctx.drawImage(this.image, this.yPos - this.image.height / 2, this.canvas.width - 150);
+        this.animationFrame++;
+        if (this.animationFrame >= 60) {
+            this.animationFrame -= 59;
+        }
+        if (this.animationFrame <= 15) {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-1.png"), this.xPos, this.yPos);
+        }
+        else if (this.animationFrame >= 15 && this.animationFrame <= 30) {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-2.png"), this.xPos, this.yPos);
+        }
+        else if (this.animationFrame >= 30 && this.animationFrame <= 45) {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-3.png"), this.xPos, this.yPos);
+        }
+        else if (this.animationFrame >= 45 && this.animationFrame <= 60) {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-2.png"), this.xPos, this.yPos);
+        }
     }
     collidesWithGameItem(GameItem) {
     }

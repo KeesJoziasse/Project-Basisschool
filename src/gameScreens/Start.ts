@@ -75,6 +75,7 @@ class Start {
     this.background.draw(ctx);
     this.background.move(this.canvas);
     this.background.reloadImage(this.canvas);
+
     //Drawing the buttons
     this.buttons.forEach((button) => {
       button.draw(ctx);
