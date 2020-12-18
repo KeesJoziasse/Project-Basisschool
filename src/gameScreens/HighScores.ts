@@ -147,8 +147,6 @@ class HighScore {
      * @param {MouseEvent} event - mouse event
      */
     public mouseHandler = (event: MouseEvent) => {
-      new Start (document.getElementById("canvas") as HTMLCanvasElement);
-      console.log("Hey");
     };
   }
   
