@@ -249,6 +249,13 @@ class Background extends Images {
         }
     }
 }
+class Coin extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Coin";
+        this.image = Start.loadNewImage("./assets/img/GameItems/coin.png");
+    }
+}
 class Goosebumps extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -315,7 +322,7 @@ class ScoringItem extends GameItem {
     move() {
     }
 }
-class Coin extends ScoringItem {
+class IngameCoin extends ScoringItem {
     constructor(canvas) {
         super(canvas);
         this.name = "Coin";
@@ -385,10 +392,7 @@ class HighScore {
             this.draw();
             requestAnimationFrame(this.loop);
         };
-        this.mouseHandler = (event) => {
-            new Start(document.getElementById("canvas"));
-            console.log("Hey");
-        };
+        this.mouseHandler = (event) => { };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
@@ -422,6 +426,42 @@ class HighScore {
         return img;
     }
 }
+class Shop {
+    constructor(canvasId) {
+        this.loop = () => {
+            this.draw();
+            requestAnimationFrame(this.loop);
+        };
+        this.mouseHandler = (event) => { };
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.buttons = [];
+        this.images = [];
+        this.buttonMaker();
+        this.loop();
+        document.addEventListener("click", this.mouseHandler);
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+        });
+        Start.writeTextToCanvas(ctx, "Shop", 60, this.canvas.width / 2, 80, "center");
+    }
+    buttonMaker() {
+        this.buttons.push(new PreviousSelector((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09));
+        this.images.push(new Coin(100, 0));
+        this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
+        this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
+    }
+    loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
+}
 class Start {
     constructor(canvasId) {
         this.loop = () => {
@@ -436,10 +476,16 @@ class Start {
                     event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
                     event.clientY >= button.getButtonYPos() &&
                     event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
-                    if (this.indexCounterWorld == this.worldImages.length - 1) {
+                    if (this.indexCounterWorld == this.worldImages.length - 1 &&
+                        button.getButtonName() == "ArrowRight") {
                         this.indexCounterWorld = 0;
                     }
-                    else if (button.getButtonName() == "ArrowLeft") {
+                    else if (this.indexCounterWorld == 0 &&
+                        button.getButtonName() == "ArrowLeft") {
+                        this.indexCounterWorld += this.worldImages.length - 1;
+                    }
+                    else if (button.getButtonName() == "ArrowLeft" &&
+                        this.indexCounterWorld > 0) {
                         this.indexCounterWorld -= 1;
                     }
                     else if (button.getButtonName() == "ArrowRight") {
