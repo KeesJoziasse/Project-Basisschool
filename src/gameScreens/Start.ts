@@ -60,7 +60,7 @@ class Start {
     requestAnimationFrame(this.loop);
 
     //TEST AREA
-    console.log(this.indexCounterWorld);
+    // console.log(this.indexCounterWorld);
   };
 
   /**
@@ -196,9 +196,20 @@ class Start {
         event.clientY >= button.getButtonYPos() &&
         event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
       ) {
-        if (this.indexCounterWorld == this.worldImages.length - 1) {
+        if (
+          this.indexCounterWorld == this.worldImages.length - 1 &&
+          button.getButtonName() == "ArrowRight"
+        ) {
           this.indexCounterWorld = 0;
-        } else if (button.getButtonName() == "ArrowLeft") {
+        } else if (
+          this.indexCounterWorld == 0 &&
+          button.getButtonName() == "ArrowLeft"
+        ) {
+          this.indexCounterWorld += this.worldImages.length - 1;
+        } else if (
+          button.getButtonName() == "ArrowLeft" &&
+          this.indexCounterWorld > 0
+        ) {
           this.indexCounterWorld -= 1;
         } else if (button.getButtonName() == "ArrowRight") {
           this.indexCounterWorld += 1;

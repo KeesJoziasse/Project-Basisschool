@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Shop(document.getElementById("canvas"));
+    new HighScore(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -115,16 +115,24 @@ class Button {
                 event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
                 event.clientY >= this.getButtonYPos() &&
                 event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()) {
-                console.log(this.getButtonName());
-            }
-            else {
-                null;
+                if (this.getButtonName() === "HighScore") {
+                    new HighScore(document.getElementById("canvas"));
+                }
+                else if (this.getButtonName() === "BackToStart") {
+                    new Start(document.getElementById("canvas"));
+                }
+                else {
+                    return null;
+                }
+                console.log(`User clicked the: ${this.getButtonName()} button`);
             }
         };
         this.xPos = xPos;
         this.yPos = yPos;
         document.addEventListener("click", this.mouseHandler);
     }
+    move(canvas) { }
+    reloadImage(canvas) { }
     getButtonName() {
         return this.name;
     }
@@ -145,6 +153,13 @@ class Button {
     }
     draw(ctx) {
         ctx.drawImage(this.image, this.xPos, this.yPos);
+    }
+}
+class BackToStart extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "BackToStart";
+        this.image = Start.loadNewImage("./assets/img/buttons/left-arrow.png");
     }
 }
 class HighscoreButton extends Button {
@@ -249,6 +264,13 @@ class Background extends Images {
         }
     }
 }
+class Coin extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Coin";
+        this.image = Start.loadNewImage("./assets/img/GameItems/coin.png");
+    }
+}
 class Goosebumps extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -324,7 +346,7 @@ class ScoringItem extends GameItem {
     move(canvas) {
     }
 }
-class Coin extends ScoringItem {
+class IngameCoin extends ScoringItem {
     constructor(canvas) {
         super(canvas);
         this.name = "Coin";
@@ -393,15 +415,11 @@ class HighScore {
             this.draw();
             requestAnimationFrame(this.loop);
         };
-        this.mouseHandler = (event) => {
-            new Start(document.getElementById("canvas"));
-            console.log("Hey");
-        };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.leftArrow = new PreviousSelector((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09);
-        document.addEventListener("click", this.mouseHandler);
+        this.buttons = [];
+        this.buttonMaker();
         this.loop();
     }
     draw() {
@@ -409,7 +427,11 @@ class HighScore {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         HighScore.writeTextToCanvas(ctx, "Highscores", 65, this.canvas.width / 2, 80, "center");
         this.rankList(ctx);
-        this.leftArrow.draw(ctx);
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+            button.move(this.canvas);
+            button.reloadImage(this.canvas);
+        });
     }
     rankList(ctx) {
         HighScore.writeTextToCanvas(ctx, "First:", 40, this.canvas.width / 3, 200, "center");
@@ -425,6 +447,45 @@ class HighScore {
         ctx.fillText(text, xCoordinate, yCoordinate);
     }
     static loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
+    buttonMaker() {
+        this.buttons.push(new BackToStart((this.canvas.width / 7) * 0.09, (this.canvas.height / 3) * 0.08));
+    }
+}
+class Shop {
+    constructor(canvasId) {
+        this.loop = () => {
+            this.draw();
+            requestAnimationFrame(this.loop);
+        };
+        this.mouseHandler = (event) => { };
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.buttons = [];
+        this.images = [];
+        this.buttonMaker();
+        this.loop();
+        document.addEventListener("click", this.mouseHandler);
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+        });
+        Start.writeTextToCanvas(ctx, "Shop", 60, this.canvas.width / 2, 80, "center");
+    }
+    buttonMaker() {
+        this.buttons.push(new PreviousSelector((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09));
+        this.images.push(new Coin(100, 0));
+        this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
+        this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
+    }
+    loadNewImage(source) {
         const img = new Image();
         img.src = source;
         return img;
@@ -475,7 +536,6 @@ class Start {
             this.draw();
             this.wallet++;
             requestAnimationFrame(this.loop);
-            console.log(this.indexCounterWorld);
         };
         this.mouseHandler = (event) => {
             this.buttons.forEach((button) => {
@@ -483,10 +543,16 @@ class Start {
                     event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
                     event.clientY >= button.getButtonYPos() &&
                     event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
-                    if (this.indexCounterWorld == this.worldImages.length - 1) {
+                    if (this.indexCounterWorld == this.worldImages.length - 1 &&
+                        button.getButtonName() == "ArrowRight") {
                         this.indexCounterWorld = 0;
                     }
-                    else if (button.getButtonName() == "ArrowLeft") {
+                    else if (this.indexCounterWorld == 0 &&
+                        button.getButtonName() == "ArrowLeft") {
+                        this.indexCounterWorld += this.worldImages.length - 1;
+                    }
+                    else if (button.getButtonName() == "ArrowLeft" &&
+                        this.indexCounterWorld > 0) {
                         this.indexCounterWorld -= 1;
                     }
                     else if (button.getButtonName() == "ArrowRight") {

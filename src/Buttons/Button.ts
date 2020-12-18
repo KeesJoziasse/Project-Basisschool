@@ -13,6 +13,10 @@ abstract class Button {
     document.addEventListener("click", this.mouseHandler);
   }
 
+  public move(canvas: HTMLCanvasElement) {}
+
+  public reloadImage(canvas: HTMLCanvasElement) {}
+
   public getButtonName(): string {
     return this.name;
   }
@@ -33,7 +37,7 @@ abstract class Button {
    * Method to handle the mouse event
    * @param {MouseEvent} event - mouse event
    */
-  public mouseHandler = (event: MouseEvent) => {
+  public mouseHandler = (event: MouseEvent): void => {
     // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
     if (
       event.clientX >= this.getButtonXPos() &&
@@ -41,9 +45,16 @@ abstract class Button {
       event.clientY >= this.getButtonYPos() &&
       event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()
     ) {
-      console.log(this.getButtonName());
-    } else {
-      null;
+      // looks if the buttons name macth and get you to the right page
+      if (this.getButtonName() === "HighScore") {
+        new HighScore(document.getElementById("canvas") as HTMLCanvasElement);
+      } 
+      else if (this.getButtonName() === "BackToStart") {
+        new Start(document.getElementById("canvas") as HTMLCanvasElement);
+      } else {
+        return null;
+      }
+      console.log(`User clicked the: ${this.getButtonName()} button`);
     }
   };
 
