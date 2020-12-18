@@ -1,54 +1,101 @@
-/// <reference path = "GameItem.ts"/> 
+/// <reference path = "GameItem.ts"/>
 
 class Player extends GameItem {
+  private keyboardListener: KeyboardListener;
+  private image: HTMLImageElement;
+  private yPos: number;
+  private xPos: number;
+  private animationFrame: number;
 
-    private keyboardListener: KeyboardListener;
-    private image: HTMLImageElement;
-    private yPos: number;
+  constructor(canvas: HTMLCanvasElement) {
+    super(canvas);
+    this.name = "Player";
+    this.image = GameItem.loadNewImage(
+      "./assets/img/Characters/Amongus/among-us-walk-1.png"
+    );
+    this.keyboardListener = new KeyboardListener();
+    this.yPos = this.canvas.height / 2;
+    this.xPos = this.canvas.width / 3;
+    this.animationFrame = 0;
+  }
 
-    constructor(canvas:HTMLCanvasElement){
-        super(canvas);
-        this.name = "Player";
-        // #TODO check if image path is correct
-        this.image = GameItem.loadNewImage("../assets/img/Characters/amongus.png");
-        this.keyboardListener = new KeyboardListener;
-        this.yPos = this.canvas.height / 2;
+  /**
+   * method to move the player between the lanes
+   */
+  public move() {
+    // #TODO bepaal welke keys je moet gebruiken in de game
+    if (
+      this.keyboardListener.isKeyDown(KeyboardListener.KEY_W) &&
+      this.yPos !== this.topLane
+    ) {
+      this.yPos = this.topLane;
+      console.log("W is pressed");
+    }
+    if (
+      this.keyboardListener.isKeyDown(KeyboardListener.KEY_X) &&
+      this.yPos !== this.middleLane
+    ) {
+      this.yPos = this.middleLane;
+      console.log("X is pressed");
+    }
+    if (
+      this.keyboardListener.isKeyDown(KeyboardListener.KEY_S) &&
+      this.yPos !== this.lowerLane
+    ) {
+      this.yPos = this.lowerLane;
+      console.log("S is pressed");
+    }
+  }
+
+  public draw(ctx: CanvasRenderingContext2D) {
+    // #TODO 5 images reverse 2 gebruiken en met 100 frames werken per 20 image change
+
+    //Animationframe goes to 1 if its 76
+    this.animationFrame++;
+    if (this.animationFrame >= 40) {
+      this.animationFrame -= 39;
     }
 
-    /**
-     * method to move the player between the lanes 
-     * #TODO move functie wordt nog niet aangeroepen
-     */
-    public move(){
-        // #TODO bepaal welke keys je moet gebruiken in de game
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_W) && this.yPos !== this.topLane){
-            this.yPos = this.topLane;
-        }
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_X) && this.yPos !== this.middleLane){
-            this.yPos = this.middleLane;
-        }
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_S) && this.yPos !== this.lowerLane){
-            this.yPos = this.lowerLane;
-        }
+    //animated so the images will change at a certain amount of frames
+    if (this.animationFrame <= 10) {
+      ctx.drawImage(
+        GameItem.loadNewImage(
+          "./assets/img/Characters/Amongus/among-us-walk-1.png"
+        ),
+        this.xPos,
+        this.yPos
+      );
+    } else if (this.animationFrame >= 10 && this.animationFrame <= 20) {
+      ctx.drawImage(
+        GameItem.loadNewImage(
+          "./assets/img/Characters/Amongus/among-us-walk-2.png"
+        ),
+        this.xPos,
+        this.yPos
+      );
+    } else if (this.animationFrame >= 20 && this.animationFrame <= 30) {
+      ctx.drawImage(
+        GameItem.loadNewImage(
+          "./assets/img/Characters/Amongus/among-us-walk-3.png"
+        ),
+        this.xPos,
+        this.yPos
+      );
+    } else if (this.animationFrame >= 30 && this.animationFrame <= 40) {
+      ctx.drawImage(
+        GameItem.loadNewImage(
+          "./assets/img/Characters/Amongus/among-us-walk-2.png"
+        ),
+        this.xPos,
+        this.yPos
+      );
     }
+  }
 
-    /**
-     * method to draw the player on the canvas
-     * #TODO draw functie wordt nog niet aangeroepen
-     */
-    public draw(ctx: CanvasRenderingContext2D){
-        ctx.drawImage(
-            this.image,
-            this.yPos - this.image.height / 2,
-            this.canvas.width - 150
-        )
-    }
-
-    /**
-     * Method that checks if a gameItem collides with the player 
-     * @param GameItem 
-     */
-    public collidesWithGameItem(GameItem:GameItem[]){
-
-    }
+  /**
+   * Method that checks if a gameItem collides with the player
+   * #TODO wordt nog niet aangesproken
+   * @param GameItem
+   */
+  public collidesWithGameItem(GameItem: GameItem[]) {}
 }

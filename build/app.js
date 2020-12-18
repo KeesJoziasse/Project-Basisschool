@@ -7,9 +7,10 @@ class Game {
     constructor(canvasId) {
         this.loop = () => {
             this.frame++;
-            console.log(this.frame);
-            this.writeGoodLuck();
+            this.draw();
             if (this.gameState === "level-1") {
+                console.log("level 1");
+                this.player.move();
             }
             else if (this.gameState === "Level-2") {
             }
@@ -19,22 +20,17 @@ class Game {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.gameItems = [];
+        this.player = new Player(this.canvas);
         this.score = 0;
         this.frame = 0;
-        this.gameState = "Begin";
+        this.gameState = "level-1";
         this.loop();
     }
-    writeGoodLuck() {
-        if (this.frame >= 0 && this.frame <= 150) {
-            const ctx = this.canvas.getContext("2d");
-            this.writeTextToCanvas(ctx, "Succes!", 40, this.canvas.width / 2, this.canvas.height / 2);
-        }
-    }
-    writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
-        ctx.font = `${fontSize}px Minecraft`;
-        ctx.fillStyle = color;
-        ctx.textAlign = alignment;
-        ctx.fillText(text, xCoordinate, yCoordinate);
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        Start.writeTextToCanvas(ctx, "Danger Dash", 60, this.canvas.width / 2, 80, "center");
+        this.player.draw(ctx);
     }
 }
 class KeyboardListener {
@@ -119,15 +115,16 @@ class Button {
                 event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
                 event.clientY >= this.getButtonYPos() &&
                 event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()) {
-                console.log(`User clicked the: ${this.getButtonName()} button`);
+                console.log(this.getButtonName());
+            }
+            else {
+                null;
             }
         };
         this.xPos = xPos;
         this.yPos = yPos;
         document.addEventListener("click", this.mouseHandler);
     }
-    move(canvas) { }
-    reloadImage(canvas) { }
     getButtonName() {
         return this.name;
     }
@@ -150,24 +147,6 @@ class Button {
         ctx.drawImage(this.image, this.xPos, this.yPos);
     }
 }
-class Background extends Button {
-    constructor(xPos, yPos, xVelocity) {
-        super(xPos, yPos);
-        this.name = "Cloud";
-        this.image = Start.loadNewImage("./assets/img/background/cloud.png");
-        this.xVelocity = xVelocity;
-    }
-    move(canvas) {
-        this.xPos += this.xVelocity;
-    }
-    reloadImage(canvas) {
-        if ((this.xPos + this.getButtonImageWidth() < canvas.width + 0.75 &&
-            this.xPos + this.getButtonImageWidth() > canvas.width - 0.75) ||
-            this.xPos < 0) {
-            this.xVelocity = -this.xVelocity;
-        }
-    }
-}
 class HighscoreButton extends Button {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -176,7 +155,7 @@ class HighscoreButton extends Button {
     }
 }
 class NextSelector extends Button {
-    constructor(xPos, yPos) {
+    constructor(xPos, yPos, index) {
         super(xPos, yPos);
         this.name = "ArrowRight";
         this.image = Start.loadNewImage("./assets/img/buttons/arrow-right.png");
@@ -222,6 +201,73 @@ class StartGameButton extends Button {
         super(xPos, yPos);
         this.name = "StartGame";
         this.image = Start.loadNewImage("./assets/img/buttons/start-button.png");
+    }
+}
+class Images {
+    constructor(xPos, yPos) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+    }
+    move(canvas) { }
+    reloadImage(canvas) { }
+    getImageName() {
+        return this.name;
+    }
+    getImageXPos() {
+        return this.xPos;
+    }
+    getImageYPos() {
+        return this.yPos;
+    }
+    getImageImage() {
+        return this.image;
+    }
+    getImageImageWidth() {
+        return this.image.width;
+    }
+    getImageImageHeight() {
+        return this.image.height;
+    }
+    draw(ctx) {
+        ctx.drawImage(this.image, this.xPos, this.yPos);
+    }
+}
+class Background extends Images {
+    constructor(xPos, yPos, xVelocity) {
+        super(xPos, yPos);
+        this.image = Start.loadNewImage("./assets/img/background/cloud.png");
+        this.xVelocity = xVelocity;
+    }
+    move(canvas) {
+        this.xPos += this.xVelocity;
+    }
+    reloadImage(canvas) {
+        if ((this.xPos + this.getImageImageWidth() < canvas.width + 0.75 &&
+            this.xPos + this.getImageImageWidth() > canvas.width - 0.75) ||
+            this.xPos < 0) {
+            this.xVelocity = -this.xVelocity;
+        }
+    }
+}
+class Goosebumps extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Desert";
+        this.image = Start.loadNewImage("./assets/img/world/goosebumps.png");
+    }
+}
+class DesertImage extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Desert";
+        this.image = Start.loadNewImage("./assets/img/world/desert.png");
+    }
+}
+class OceanImage extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Ocean";
+        this.image = Start.loadNewImage("./assets/img/world/ocean.png");
     }
 }
 class GameItem {
@@ -296,26 +342,48 @@ class Player extends GameItem {
     constructor(canvas) {
         super(canvas);
         this.name = "Player";
-        this.image = GameItem.loadNewImage("../assets/img/Characters/amongus.png");
-        this.keyboardListener = new KeyboardListener;
+        this.image = GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-1.png");
+        this.keyboardListener = new KeyboardListener();
         this.yPos = this.canvas.height / 2;
+        this.xPos = this.canvas.width / 3;
+        this.animationFrame = 0;
     }
     move() {
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_W) && this.yPos !== this.topLane) {
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_W) &&
+            this.yPos !== this.topLane) {
             this.yPos = this.topLane;
+            console.log("W is pressed");
         }
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_X) && this.yPos !== this.middleLane) {
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_X) &&
+            this.yPos !== this.middleLane) {
             this.yPos = this.middleLane;
+            console.log("X is pressed");
         }
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_S) && this.yPos !== this.lowerLane) {
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_S) &&
+            this.yPos !== this.lowerLane) {
             this.yPos = this.lowerLane;
+            console.log("S is pressed");
         }
     }
     draw(ctx) {
-        ctx.drawImage(this.image, this.yPos - this.image.height / 2, this.canvas.width - 150);
+        this.animationFrame++;
+        if (this.animationFrame >= 40) {
+            this.animationFrame -= 39;
+        }
+        if (this.animationFrame <= 10) {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-1.png"), this.xPos, this.yPos);
+        }
+        else if (this.animationFrame >= 10 && this.animationFrame <= 20) {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-2.png"), this.xPos, this.yPos);
+        }
+        else if (this.animationFrame >= 20 && this.animationFrame <= 30) {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-3.png"), this.xPos, this.yPos);
+        }
+        else if (this.animationFrame >= 30 && this.animationFrame <= 40) {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-2.png"), this.xPos, this.yPos);
+        }
     }
-    collidesWithGameItem(GameItem) {
-    }
+    collidesWithGameItem(GameItem) { }
 }
 class World {
 }
@@ -386,11 +454,6 @@ class Shop {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         Start.writeTextToCanvas(ctx, "Shop", 60, this.canvas.width / 2, 80, "center");
-        this.buttons.forEach((button) => {
-            button.draw(ctx);
-            button.move(this.canvas);
-            button.reloadImage(this.canvas);
-        });
         this.scoringItems.forEach((scoringItem) => {
             scoringItem.draw(ctx);
             scoringItem.move(this.canvas);
@@ -401,7 +464,8 @@ class Shop {
         this.scoringItems.push(new Coin(100, 0, this.canvas));
         this.buttons.push(new QuestionsAnswersButton(this.canvas.width / 2 - 1400 / 2, (this.canvas.height / 5) * 4 - 1250 / 2));
         this.buttons.push(new SettingsButton(this.canvas.width / 2 - 1400 / 2, (this.canvas.height / 5) * 4 - 1000 / 2));
-        this.buttons.push(new NextSelector(this.canvas.width - 145, 20));
+        this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
+        this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
     }
     loadNewImage(source) {
         const img = new Image();
@@ -415,24 +479,57 @@ class Start {
             this.draw();
             this.wallet++;
             requestAnimationFrame(this.loop);
+            console.log(this.indexCounterWorld);
+        };
+        this.mouseHandler = (event) => {
+            this.buttons.forEach((button) => {
+                if (event.clientX >= button.getButtonXPos() &&
+                    event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
+                    event.clientY >= button.getButtonYPos() &&
+                    event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
+                    if (this.indexCounterWorld == this.worldImages.length - 1) {
+                        this.indexCounterWorld = 0;
+                    }
+                    else if (button.getButtonName() == "ArrowLeft") {
+                        this.indexCounterWorld -= 1;
+                    }
+                    else if (button.getButtonName() == "ArrowRight") {
+                        this.indexCounterWorld += 1;
+                    }
+                }
+            });
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.buttons = [];
+        this.worldImages = [];
+        this.worldImages = [];
         this.wallet = 0;
+        this.indexCounterWorld = 0;
+        this.background = new Background(this.canvas.width / 4, 0, 1);
         this.buttonMaker();
+        this.worldImageMaker();
         this.loop();
+        document.addEventListener("click", this.mouseHandler);
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        Start.writeTextToCanvas(ctx, "Danger Dash", 60, this.canvas.width / 2, 80, "center");
+        this.background.draw(ctx);
+        this.background.move(this.canvas);
+        this.background.reloadImage(this.canvas);
         this.buttons.forEach((button) => {
             button.draw(ctx);
-            button.move(this.canvas);
-            button.reloadImage(this.canvas);
         });
+        Start.writeTextToCanvas(ctx, "Danger Dash", 60, this.canvas.width / 2, 80, "center");
+        this.worldImages.forEach((image) => {
+            image.move(this.canvas);
+            image.reloadImage(this.canvas);
+        });
+        for (let i = 0; i < this.worldImages.length; i++) {
+            this.worldImages[this.indexCounterWorld].draw(ctx);
+        }
         Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
     }
     buttonMaker() {
@@ -440,12 +537,16 @@ class Start {
         this.buttons.push(new ShopButton(this.canvas.width / 5 - 329 / 2, (this.canvas.height / 6) * 4));
         this.buttons.push(new HighscoreButton((this.canvas.width / 5) * 4 - 329 / 2, (this.canvas.height / 6) * 4));
         this.buttons.push(new PreviousSelector(this.canvas.width / 4, this.canvas.height / 2 - 89));
-        this.buttons.push(new NextSelector((this.canvas.width / 4) * 3 - 143, this.canvas.height / 2 - 89));
+        this.buttons.push(new NextSelector((this.canvas.width / 4) * 3 - 143, this.canvas.height / 2 - 89, 1));
         this.buttons.push(new PreviousSelector((this.canvas.width / 7) * 2, this.canvas.height / 3 - 89));
-        this.buttons.push(new NextSelector((this.canvas.width / 7) * 5 - 143, this.canvas.height / 3 - 89));
+        this.buttons.push(new NextSelector((this.canvas.width / 7) * 5 - 143, this.canvas.height / 3 - 89, 1));
         this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
         this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
-        this.buttons.push(new Background(this.canvas.width / 4, 0, 1));
+    }
+    worldImageMaker() {
+        this.worldImages.push(new OceanImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 80));
+        this.worldImages.push(new DesertImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 80));
+        this.worldImages.push(new Goosebumps(this.canvas.width / 2 - 202, this.canvas.height / 3 - 80));
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
         ctx.font = `${fontSize}px Minecraft`;
