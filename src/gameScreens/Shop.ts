@@ -75,25 +75,6 @@ class Shop {
     this.images.push(new Coin(100, 0));
 
     //QandA Button
-    this.buttons.push(
-      new QuestionsAnswersButton(
-        this.canvas.width / 2 - 1400 / 2, //Fix this secton for centering no magic numbers #TODO
-        (this.canvas.height / 5) * 4 - 1250 / 2 //Fix this secton for centering no magic numbers #TODO
-      )
-    );
-
-    //Settings Button
-    this.buttons.push(
-      new SettingsButton(
-        this.canvas.width / 2 - 1400 / 2, //Fix this secton for centering no magic numbers #TODO
-        (this.canvas.height / 5) * 4 - 1000 / 2 //Fix this secton for centering no magic numbers #TODO
-      )
-    );
-
-    //Go back button
-    // this.buttons.push(new NextSelector(this.canvas.width -145, 20))
-
-    //QandA Button
     this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
 
     //Settings Button

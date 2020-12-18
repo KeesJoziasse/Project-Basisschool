@@ -454,8 +454,6 @@ class Shop {
     buttonMaker() {
         this.buttons.push(new PreviousSelector((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09));
         this.images.push(new Coin(100, 0));
-        this.buttons.push(new QuestionsAnswersButton(this.canvas.width / 2 - 1400 / 2, (this.canvas.height / 5) * 4 - 1250 / 2));
-        this.buttons.push(new SettingsButton(this.canvas.width / 2 - 1400 / 2, (this.canvas.height / 5) * 4 - 1000 / 2));
         this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
         this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
     }
