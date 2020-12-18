@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Start(document.getElementById("canvas"));
+    new Game(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -335,45 +335,47 @@ class Player extends GameItem {
         super(canvas);
         this.name = "Player";
         this.image = GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-1.png");
-        this.keyboardListener = new KeyboardListener;
+        this.keyboardListener = new KeyboardListener();
         this.yPos = this.canvas.height / 2;
         this.xPos = this.canvas.width / 3;
         this.animationFrame = 0;
     }
     move() {
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_W) && this.yPos !== this.topLane) {
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_W) &&
+            this.yPos !== this.topLane) {
             this.yPos = this.topLane;
             console.log("W is pressed");
         }
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_X) && this.yPos !== this.middleLane) {
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_X) &&
+            this.yPos !== this.middleLane) {
             this.yPos = this.middleLane;
             console.log("X is pressed");
         }
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_S) && this.yPos !== this.lowerLane) {
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_S) &&
+            this.yPos !== this.lowerLane) {
             this.yPos = this.lowerLane;
             console.log("S is pressed");
         }
     }
     draw(ctx) {
         this.animationFrame++;
-        if (this.animationFrame >= 60) {
-            this.animationFrame -= 59;
+        if (this.animationFrame >= 40) {
+            this.animationFrame -= 39;
         }
-        if (this.animationFrame <= 15) {
+        if (this.animationFrame <= 10) {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-1.png"), this.xPos, this.yPos);
         }
-        else if (this.animationFrame >= 15 && this.animationFrame <= 30) {
+        else if (this.animationFrame >= 10 && this.animationFrame <= 20) {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-2.png"), this.xPos, this.yPos);
         }
-        else if (this.animationFrame >= 30 && this.animationFrame <= 45) {
+        else if (this.animationFrame >= 20 && this.animationFrame <= 30) {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-3.png"), this.xPos, this.yPos);
         }
-        else if (this.animationFrame >= 45 && this.animationFrame <= 60) {
+        else if (this.animationFrame >= 30 && this.animationFrame <= 40) {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-2.png"), this.xPos, this.yPos);
         }
     }
-    collidesWithGameItem(GameItem) {
-    }
+    collidesWithGameItem(GameItem) { }
 }
 class World {
 }
