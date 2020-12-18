@@ -65,13 +65,7 @@ class Shop {
         "center"
     );
 
-        //Drawing the buttons
-        this.buttons.forEach((button) => {
-        button.draw(ctx);
-        button.move(this.canvas);
-        button.reloadImage(this.canvas); //#TODO
-    });
-
+   
     //Drawing the images
     this.scoringItems.forEach((scoringItem) => {
       scoringItem.draw(ctx);
@@ -109,7 +103,13 @@ private buttonMaker() {
   );
 
   //Go back button
-  this.buttons.push(new NextSelector(this.canvas.width -145, 20))
+  // this.buttons.push(new NextSelector(this.canvas.width -145, 20))
+
+  //QandA Button
+  this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
+
+  //Settings Button
+  this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
 
   }
 
