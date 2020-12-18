@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Start(document.getElementById("canvas"));
+    new HighScore(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -115,16 +115,24 @@ class Button {
                 event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
                 event.clientY >= this.getButtonYPos() &&
                 event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()) {
-                console.log(this.getButtonName());
-            }
-            else {
-                null;
+                if (this.getButtonName() === "HighScore") {
+                    new HighScore(document.getElementById("canvas"));
+                }
+                else if (this.getButtonName() === "BackToStart") {
+                    new Start(document.getElementById("canvas"));
+                }
+                else {
+                    return null;
+                }
+                console.log(`User clicked the: ${this.getButtonName()} button`);
             }
         };
         this.xPos = xPos;
         this.yPos = yPos;
         document.addEventListener("click", this.mouseHandler);
     }
+    move(canvas) { }
+    reloadImage(canvas) { }
     getButtonName() {
         return this.name;
     }
@@ -145,6 +153,13 @@ class Button {
     }
     draw(ctx) {
         ctx.drawImage(this.image, this.xPos, this.yPos);
+    }
+}
+class BackToStart extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "BackToStart";
+        this.image = Start.loadNewImage("./assets/img/buttons/left-arrow.png");
     }
 }
 class HighscoreButton extends Button {
@@ -392,12 +407,11 @@ class HighScore {
             this.draw();
             requestAnimationFrame(this.loop);
         };
-        this.mouseHandler = (event) => { };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.leftArrow = new PreviousSelector((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09);
-        document.addEventListener("click", this.mouseHandler);
+        this.buttons = [];
+        this.buttonMaker();
         this.loop();
     }
     draw() {
@@ -405,7 +419,11 @@ class HighScore {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         HighScore.writeTextToCanvas(ctx, "Highscores", 65, this.canvas.width / 2, 80, "center");
         this.rankList(ctx);
-        this.leftArrow.draw(ctx);
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+            button.move(this.canvas);
+            button.reloadImage(this.canvas);
+        });
     }
     rankList(ctx) {
         HighScore.writeTextToCanvas(ctx, "First:", 40, this.canvas.width / 3, 200, "center");
@@ -424,6 +442,9 @@ class HighScore {
         const img = new Image();
         img.src = source;
         return img;
+    }
+    buttonMaker() {
+        this.buttons.push(new BackToStart((this.canvas.width / 7) * 0.09, (this.canvas.height / 3) * 0.08));
     }
 }
 class Shop {
@@ -468,7 +489,6 @@ class Start {
             this.draw();
             this.wallet++;
             requestAnimationFrame(this.loop);
-            console.log(this.indexCounterWorld);
         };
         this.mouseHandler = (event) => {
             this.buttons.forEach((button) => {

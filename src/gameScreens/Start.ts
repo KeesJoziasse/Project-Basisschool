@@ -60,7 +60,7 @@ class Start {
     requestAnimationFrame(this.loop);
 
     //TEST AREA
-    console.log(this.indexCounterWorld);
+    // console.log(this.indexCounterWorld);
   };
 
   /**
