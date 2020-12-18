@@ -72,14 +72,7 @@ class Shop {
 
 private buttonMaker() {
 
-  //Coin image
-  this.scoringItems.push(
-    new Coin(
-       100,
-      0,
-      this.canvas
-      )
-  );
+
 
   //Go back button
   // this.buttons.push(new NextSelector(this.canvas.width -145, 20))

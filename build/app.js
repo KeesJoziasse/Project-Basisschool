@@ -325,7 +325,7 @@ class ScoringItem extends GameItem {
     }
 }
 class Coin extends ScoringItem {
-    constructor(xPosition, yPosition, canvas) {
+    constructor(canvas) {
         super(canvas);
         this.name = "Coin";
         this.image = GameItem.loadNewImage("./assets/img/coin.png");
@@ -460,7 +460,6 @@ class Shop {
         });
     }
     buttonMaker() {
-        this.scoringItems.push(new Coin(100, 0, this.canvas));
         this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
         this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
     }

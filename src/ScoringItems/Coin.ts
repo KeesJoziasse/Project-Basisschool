@@ -2,7 +2,7 @@
 
 class Coin extends ScoringItem {
 
-    public constructor(xPosition: number, yPosition: number, canvas: HTMLCanvasElement){
+    public constructor(canvas: HTMLCanvasElement){
         super(canvas);
         this.name = "Coin";
         this.image = GameItem.loadNewImage("./assets/img/coin.png")
