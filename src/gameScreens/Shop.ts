@@ -65,7 +65,7 @@ class Shop {
 
   private buttonMaker() {
     this.buttons.push(
-      new PreviousSelector(
+      new PreviousWorld(
         (this.canvas.width / 5) * 0.05,
         (this.canvas.height / 5) * 0.09
       )

@@ -1,11 +1,11 @@
 /// <reference path="Images.ts" />
 
-class Goosebumps extends Images {
+class Stickman extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "Desert";
+      this.name = "Stickman";
       this.image = Start.loadNewImage(
-        "./assets/img/world/goosebumps.png"
+        "./assets/img/Characters/Stickman/stickman.png"
       );
     }
   
