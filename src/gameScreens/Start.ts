@@ -1,11 +1,13 @@
 class Start {
+  //Attributes
   private canvas: HTMLCanvasElement;
   private wallet: number;
   private buttons: Button[];
   private worldImages: Images[];
   private characterImages: Images[];
-  private background: Images;
+  private images: Images[];
   private indexCounterWorld: number;
+  private indexCounterCharacter: number;
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
@@ -21,7 +23,10 @@ class Start {
     this.worldImages = [];
 
     //The world images array
-    this.worldImages = [];
+    this.characterImages = [];
+
+    //The overall image array
+    this.images = [];
 
     //Your total coin value
     this.wallet = 0;
@@ -29,8 +34,8 @@ class Start {
     //Index counter for world
     this.indexCounterWorld = 0;
 
-    //Background
-    this.background = new Background(this.canvas.width / 4, 0, 1);
+    //Index counter for charachter
+    this.indexCounterCharacter = 0;
 
     //Calling the button maker method.
     this.buttonMaker();
@@ -38,11 +43,19 @@ class Start {
     //Calling the IMG maker method
     this.worldImageMaker();
 
+    //Calling the character maker method.
+    this.charachterMaker();
+
+    //Calling the image maker method
+    this.imageMaker();
+
     //The game loop.
     this.loop();
 
-    //TEST AREA
+    //The clickhandler
     document.addEventListener("click", this.mouseHandler);
+
+    //TEST AREA
   }
 
   /**
@@ -60,7 +73,6 @@ class Start {
     requestAnimationFrame(this.loop);
 
     //TEST AREA
-    // console.log(this.indexCounterWorld);
   };
 
   /**
@@ -72,31 +84,24 @@ class Start {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.background.draw(ctx);
-    this.background.move(this.canvas);
-    this.background.reloadImage(this.canvas);
-
-    //Drawing the buttons
-    this.buttons.forEach((button) => {
-      button.draw(ctx);
-    });
-
-    //The text at the top center.
-    Start.writeTextToCanvas(
-      ctx,
-      "Danger Dash",
-      60,
-      this.canvas.width / 2,
-      80,
-      "center"
-    );
-
-    //Drawing the images
-    this.worldImages.forEach((image) => {
+    //Draws all the images
+    this.images.forEach((image) => {
+      image.draw(ctx);
       image.move(this.canvas);
       image.reloadImage(this.canvas);
     });
 
+    //Draws all the buttons
+    this.buttons.forEach((button) => {
+      button.draw(ctx);
+    });
+
+    //Drawing the characters
+    for (let i = 0; i < this.characterImages.length; i++) {
+      this.characterImages[this.indexCounterCharacter].draw(ctx);
+    }
+
+    //Forloop to decide what world img is goint to be drawed
     for (let i = 0; i < this.worldImages.length; i++) {
       this.worldImages[this.indexCounterWorld].draw(ctx);
     }
@@ -133,12 +138,12 @@ class Start {
 
     //Making the left arrow for character selector
     this.buttons.push(
-      new PreviousSelector(this.canvas.width / 4, this.canvas.height / 2 - 89)
+      new PreviousCharacter(this.canvas.width / 4, this.canvas.height / 2 - 89)
     );
 
     //Making the right arrow for character selector
     this.buttons.push(
-      new NextSelector(
+      new NextCharacter(
         (this.canvas.width / 4) * 3 - 143,
         this.canvas.height / 2 - 89,
         1
@@ -147,7 +152,7 @@ class Start {
 
     //Making the left arrow for level selector
     this.buttons.push(
-      new PreviousSelector(
+      new PreviousWorld(
         (this.canvas.width / 7) * 2,
         this.canvas.height / 3 - 89
       )
@@ -155,7 +160,7 @@ class Start {
 
     //Making the right arrow for level selector
     this.buttons.push(
-      new NextSelector(
+      new NextWorld(
         (this.canvas.width / 7) * 5 - 143,
         this.canvas.height / 3 - 89,
         1
@@ -171,7 +176,7 @@ class Start {
 
   private worldImageMaker() {
     this.worldImages.push(
-      new OceanImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 80)
+      new OceanImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 130)
     );
 
     this.worldImages.push(
@@ -179,8 +184,27 @@ class Start {
     );
 
     this.worldImages.push(
-      new Goosebumps(this.canvas.width / 2 - 202, this.canvas.height / 3 - 80)
+      new Swamp(this.canvas.width / 2 - 202, this.canvas.height / 3 - 90)
     );
+
+    this.worldImages.push(
+      new Artic(this.canvas.width / 2 - 202, this.canvas.height / 3 - 110)
+    );
+  }
+
+  private charachterMaker() {
+    this.characterImages.push(
+      new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+    );
+
+    this.characterImages.push(
+      new Stickman(this.canvas.width / 2 - 48, this.canvas.height / 2 - 120)
+    );
+  }
+
+  private imageMaker() {
+    this.images.push(new Cloud(this.canvas.width / 4, 0, 1));
+    this.images.push(new Titel(this.canvas.width / 4, -40));
   }
 
   /**
@@ -196,27 +220,53 @@ class Start {
         event.clientY >= button.getButtonYPos() &&
         event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
       ) {
-        if (
-          this.indexCounterWorld == this.worldImages.length - 1 &&
-          button.getButtonName() == "ArrowRight"
-        ) {
-          this.indexCounterWorld = 0;
-        } else if (
-          this.indexCounterWorld == 0 &&
-          button.getButtonName() == "ArrowLeft"
-        ) {
-          this.indexCounterWorld += this.worldImages.length - 1;
-        } else if (
-          button.getButtonName() == "ArrowLeft" &&
-          this.indexCounterWorld > 0
-        ) {
-          this.indexCounterWorld -= 1;
-        } else if (button.getButtonName() == "ArrowRight") {
-          this.indexCounterWorld += 1;
-        }
+        this.worldSelector(button);
+        this.characterSelector(button);
       }
     });
   };
+
+  private worldSelector(button: Button) {
+    if (
+      this.indexCounterWorld == this.worldImages.length - 1 &&
+      button.getButtonName() == "NextWorld"
+    ) {
+      this.indexCounterWorld = 0;
+    } else if (
+      this.indexCounterWorld == 0 &&
+      button.getButtonName() == "PreviousWorld"
+    ) {
+      this.indexCounterWorld += this.worldImages.length - 1;
+    } else if (
+      button.getButtonName() == "PreviousWorld" &&
+      this.indexCounterWorld > 0
+    ) {
+      this.indexCounterWorld -= 1;
+    } else if (button.getButtonName() == "NextWorld") {
+      this.indexCounterWorld += 1;
+    }
+  }
+
+  private characterSelector(button: Button) {
+    if (
+      this.indexCounterCharacter == this.characterImages.length - 1 &&
+      button.getButtonName() == "NextCharacter"
+    ) {
+      this.indexCounterCharacter = 0;
+    } else if (
+      this.indexCounterCharacter == 0 &&
+      button.getButtonName() == "PreviousCharacter"
+    ) {
+      this.indexCounterCharacter += this.characterImages.length - 1;
+    } else if (
+      button.getButtonName() == "PreviousCharacter" &&
+      this.indexCounterCharacter > 0
+    ) {
+      this.indexCounterCharacter -= 1;
+    } else if (button.getButtonName() == "NextCharacter") {
+      this.indexCounterCharacter += 1;
+    }
+  }
 
   /**
    * Writes text to the canvas
