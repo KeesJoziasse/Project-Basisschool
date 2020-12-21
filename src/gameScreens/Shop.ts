@@ -107,6 +107,7 @@ class Shop {
 
   public drawImages(){
     // Draw coins
+    // #TODO fix code duplication
     this.images.push(new Coin(this.canvas.width / 2 - 120, this.canvas.height / 3 + 560));
     this.images.push(new Coin(this.canvas.width / 2 - 520, this.canvas.height / 3 + 560));
     this.images.push(new Coin(this.canvas.width / 2 + 270, this.canvas.height / 3 + 560));
@@ -192,6 +193,7 @@ class Shop {
     this.buttons.push(new Unlock(this.canvas.width - 1100, 1000, 1));
 
     /// Unlock buttons for the characters
+    // #TODO fix code duplication
     this.buttons.push(new Unlock(this.canvas.width - 1710, 500, 1));
     this.buttons.push(new Unlock(this.canvas.width - 1300, 500, 1));
     this.buttons.push(new Unlock(this.canvas.width - 890, 500, 1));
