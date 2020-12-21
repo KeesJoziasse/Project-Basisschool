@@ -108,13 +108,13 @@ class Shop {
   public drawImages(){
     // Draw coins
     // #TODO fix code duplication
-    this.images.push(new Coin(this.canvas.width / 2 - 120, this.canvas.height / 3 + 560));
-    this.images.push(new Coin(this.canvas.width / 2 - 520, this.canvas.height / 3 + 560));
-    this.images.push(new Coin(this.canvas.width / 2 + 270, this.canvas.height / 3 + 560));
-    this.images.push(new Coin(this.canvas.width / 2 - 330, this.canvas.height / 3 + 60));
-    this.images.push(new Coin(this.canvas.width / 2 + 480, this.canvas.height / 3 + 60));
-    this.images.push(new Coin(this.canvas.width / 2 - 750, this.canvas.height / 3 + 60));
-    this.images.push(new Coin(this.canvas.width / 2 + 80, this.canvas.height / 3 + 60));
+    this.images.push(new coinForShop(this.canvas.width / 2 - 120, this.canvas.height / 3 + 560));
+    this.images.push(new coinForShop(this.canvas.width / 2 - 520, this.canvas.height / 3 + 560));
+    this.images.push(new coinForShop(this.canvas.width / 2 + 270, this.canvas.height / 3 + 560));
+    this.images.push(new coinForShop(this.canvas.width / 2 - 330, this.canvas.height / 3 + 60));
+    this.images.push(new coinForShop(this.canvas.width / 2 + 480, this.canvas.height / 3 + 60));
+    this.images.push(new coinForShop(this.canvas.width / 2 - 750, this.canvas.height / 3 + 60));
+    this.images.push(new coinForShop(this.canvas.width / 2 + 80, this.canvas.height / 3 + 60));
 
     
   }
@@ -167,7 +167,7 @@ class Shop {
 
   private buttonMaker() {
     this.buttons.push(
-      new PreviousSelector(
+      new BackToStart(
         (this.canvas.width / 5) * 0.05,
         (this.canvas.height / 5) * 0.09
       )
@@ -181,11 +181,11 @@ class Shop {
     //Settings Button
     this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
 
-    // Left button
-    this.buttons.push(new PreviousSelector(this.canvas.width - 1680, 740));
+    // // Left button
+    // this.buttons.push(new PreviousSelector(this.canvas.width - 1680, 740)); ##TODO ADD if you want more characters/worlds
 
-    // Right button
-    this.buttons.push(new NextSelector(this.canvas.width - 380, 740, 1));
+    // // Right button
+    // this.buttons.push(new NextSelector(this.canvas.width - 380, 740, 1)); ##TODO ADD if you want more characters/worlds
 
     // Unlock buttons for the worlds
     this.buttons.push(new Unlock(this.canvas.width - 1500, 1000, 1));
