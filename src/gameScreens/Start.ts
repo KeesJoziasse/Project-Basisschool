@@ -6,6 +6,7 @@ class Start {
   private worldImages: Images[];
   private characterImages: Images[];
   private images: Images[];
+  private background: Images[];
   private indexCounterWorld: number;
   private indexCounterCharacter: number;
 
@@ -28,6 +29,9 @@ class Start {
     //The overall image array
     this.images = [];
 
+    //Background cloud array
+    this.background = [];
+
     //Your total coin value
     this.wallet = 0;
 
@@ -49,6 +53,8 @@ class Start {
     //Calling the image maker method
     this.imageMaker();
 
+    //Background loop
+    this.backgroundLoop();
     //The game loop.
     this.loop();
 
@@ -87,13 +93,18 @@ class Start {
     //Draws all the images
     this.images.forEach((image) => {
       image.draw(ctx);
-      image.move(this.canvas);
-      image.reloadImage(this.canvas);
     });
 
     //Draws all the buttons
     this.buttons.forEach((button) => {
       button.draw(ctx);
+    });
+
+    //Background cloud #TODO Make it reload
+    this.background.forEach((backgroundImage) => {
+      backgroundImage.draw(ctx);
+      backgroundImage.move(this.canvas);
+      backgroundImage.reloadImage(this.canvas);
     });
 
     //Drawing the characters
@@ -203,8 +214,11 @@ class Start {
   }
 
   private imageMaker() {
-    this.images.push(new Cloud(this.canvas.width / 4, 0, 1));
     this.images.push(new Titel(this.canvas.width / 4, -40));
+  }
+
+  private backgroundLoop() {
+    this.background.push(new Cloud(this.canvas.width / 4, 0, 1));
   }
 
   /**
