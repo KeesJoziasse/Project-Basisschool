@@ -550,6 +550,7 @@ class Start {
         this.worldImages = [];
         this.characterImages = [];
         this.images = [];
+        this.background = [];
         this.wallet = 0;
         this.indexCounterWorld = 0;
         this.indexCounterCharacter = 0;
@@ -557,6 +558,7 @@ class Start {
         this.worldImageMaker();
         this.charachterMaker();
         this.imageMaker();
+        this.backgroundLoop();
         this.loop();
         document.addEventListener("click", this.mouseHandler);
     }
@@ -565,11 +567,14 @@ class Start {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.images.forEach((image) => {
             image.draw(ctx);
-            image.move(this.canvas);
-            image.reloadImage(this.canvas);
         });
         this.buttons.forEach((button) => {
             button.draw(ctx);
+        });
+        this.background.forEach((backgroundImage) => {
+            backgroundImage.draw(ctx);
+            backgroundImage.move(this.canvas);
+            backgroundImage.reloadImage(this.canvas);
         });
         for (let i = 0; i < this.characterImages.length; i++) {
             this.characterImages[this.indexCounterCharacter].draw(ctx);
@@ -601,8 +606,10 @@ class Start {
         this.characterImages.push(new Stickman(this.canvas.width / 2 - 48, this.canvas.height / 2 - 120));
     }
     imageMaker() {
-        this.images.push(new Cloud(this.canvas.width / 4, 0, 1));
         this.images.push(new Titel(this.canvas.width / 4, -40));
+    }
+    backgroundLoop() {
+        this.background.push(new Cloud(this.canvas.width / 4, 0, 1));
     }
     worldSelector(button) {
         if (this.indexCounterWorld == this.worldImages.length - 1 &&
