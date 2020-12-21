@@ -1,4 +1,4 @@
-/// <reference path="Button.ts" />
+/// <reference path="../Button.ts" />
 
 class HighscoreButton extends Button {
   public constructor(xPos: number, yPos: number) {
