@@ -3,7 +3,7 @@
 class Morty extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "Coin";
+      this.name = "Morty";
       this.image = Start.loadNewImage(
         "./assets/img/players/morty.png"
       );

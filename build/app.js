@@ -257,7 +257,7 @@ class Images {
 class Ash extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "Coin";
+        this.name = "Ash";
         this.image = Start.loadNewImage("./assets/img/players/ash.png");
     }
 }
@@ -309,28 +309,28 @@ class Moon extends Images {
 class Morty extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "Coin";
+        this.name = "Morty";
         this.image = Start.loadNewImage("./assets/img/players/morty.png");
     }
 }
 class Sonic extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "Moon";
+        this.name = "Sonic";
         this.image = Start.loadNewImage("./assets/img/players/sonic.png");
     }
 }
 class Unlockable extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "Among Us Red";
+        this.name = "Among Us Yellow";
         this.image = Start.loadNewImage("./assets/img/players/yellowAU.png");
     }
 }
 class Venus extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "Moon";
+        this.name = "Venus";
         this.image = Start.loadNewImage("./assets/img/world/venus.png");
     }
 }

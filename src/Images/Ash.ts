@@ -3,7 +3,7 @@
 class Ash extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "Coin";
+      this.name = "Ash";
       this.image = Start.loadNewImage(
         "./assets/img/players/ash.png"
       );
