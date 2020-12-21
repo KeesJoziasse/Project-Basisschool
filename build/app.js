@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Shop(document.getElementById("canvas"));
+    new Start(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -675,16 +675,16 @@ class Start {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.background.forEach((backgroundImage) => {
+            backgroundImage.draw(ctx);
+            backgroundImage.move(this.canvas);
+            backgroundImage.reloadImage(this.canvas);
+        });
         this.images.forEach((image) => {
             image.draw(ctx);
         });
         this.buttons.forEach((button) => {
             button.draw(ctx);
-        });
-        this.background.forEach((backgroundImage) => {
-            backgroundImage.draw(ctx);
-            backgroundImage.move(this.canvas);
-            backgroundImage.reloadImage(this.canvas);
         });
         for (let i = 0; i < this.characterImages.length; i++) {
             this.characterImages[this.indexCounterCharacter].draw(ctx);
@@ -719,7 +719,7 @@ class Start {
         this.images.push(new Titel(this.canvas.width / 4, -40));
     }
     backgroundLoop() {
-        this.background.push(new Cloud(this.canvas.width / 4, 0, 1));
+        this.background.push(new Cloud(0, this.canvas.height / 4, 0.5));
     }
     worldSelector(button) {
         if (this.indexCounterWorld == this.worldImages.length - 1 &&

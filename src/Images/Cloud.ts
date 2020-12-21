@@ -20,8 +20,8 @@ class Cloud extends Images {
         this.xPos < 0
       ) {
         this.xVelocity = -this.xVelocity;
+        
       }
     }
-    // #TODO method maken zodat deze functie je doorverwijst naar de game (playingscreen)
   }
   

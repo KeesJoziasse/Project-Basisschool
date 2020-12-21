@@ -90,6 +90,13 @@ class Start {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    //Background cloud #TODO Make it reload
+    this.background.forEach((backgroundImage) => {
+      backgroundImage.draw(ctx);
+      backgroundImage.move(this.canvas);
+      backgroundImage.reloadImage(this.canvas);
+    });
+
     //Draws all the images
     this.images.forEach((image) => {
       image.draw(ctx);
@@ -98,13 +105,6 @@ class Start {
     //Draws all the buttons
     this.buttons.forEach((button) => {
       button.draw(ctx);
-    });
-
-    //Background cloud #TODO Make it reload
-    this.background.forEach((backgroundImage) => {
-      backgroundImage.draw(ctx);
-      backgroundImage.move(this.canvas);
-      backgroundImage.reloadImage(this.canvas);
     });
 
     //Drawing the characters
@@ -218,7 +218,7 @@ class Start {
   }
 
   private backgroundLoop() {
-    this.background.push(new Cloud(this.canvas.width / 4, 0, 1));
+    this.background.push(new Cloud(0, this.canvas.height / 4, 0.5));
   }
 
   /**
