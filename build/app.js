@@ -504,6 +504,26 @@ class Player extends GameItem {
     }
     collidesWithGameItem(GameItem) { }
 }
+class ArticWorld extends Game {
+    constructor(canvas, worldName) {
+        super(canvas, worldName);
+    }
+}
+class DesertWorld extends Game {
+    constructor(canvas, worldName) {
+        super(canvas, worldName);
+    }
+}
+class OceanWorld extends Game {
+    constructor(canvas, worldName) {
+        super(canvas, worldName);
+    }
+}
+class SwampWorld extends Game {
+    constructor(canvas, worldName) {
+        super(canvas, worldName);
+    }
+}
 class HighScore {
     constructor(canvasId) {
         this.loop = () => {
@@ -805,19 +825,19 @@ class Start {
     startLevel(button) {
         if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Ocean") {
-            new Game(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
+            new ArticWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
         }
         else if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Artic") {
-            new Game(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
+            new ArticWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
         }
         else if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Desert") {
-            new Game(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
+            new DesertWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
         }
         else if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Swamp") {
-            new Game(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
+            new SwampWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
         }
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {

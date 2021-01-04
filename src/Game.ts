@@ -1,7 +1,7 @@
 /**
  * Class Game: Responsible for the gameloop and will activate the class: GameItem, Player, ScoringItem
  */
-class Game {
+abstract class Game {
   private canvas: HTMLCanvasElement;
   private player: Player;
   // #TODO screen: Screen[];

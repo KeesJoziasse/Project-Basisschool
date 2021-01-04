@@ -296,7 +296,7 @@ class Start {
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
     ) {
-      new Game(
+      new ArticWorld(
         this.canvas,
         this.worldImages[this.indexCounterWorld].getImageName()
       );
@@ -304,7 +304,7 @@ class Start {
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Artic"
     ) {
-      new Game(
+      new ArticWorld(
         this.canvas,
         this.worldImages[this.indexCounterWorld].getImageName()
       );
@@ -312,7 +312,7 @@ class Start {
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
     ) {
-      new Game(
+      new DesertWorld(
         this.canvas,
         this.worldImages[this.indexCounterWorld].getImageName()
       );
@@ -320,7 +320,7 @@ class Start {
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Swamp"
     ) {
-      new Game(
+      new SwampWorld(
         this.canvas,
         this.worldImages[this.indexCounterWorld].getImageName()
       );
