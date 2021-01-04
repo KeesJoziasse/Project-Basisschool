@@ -826,7 +826,7 @@ class Start {
     startLevel(button) {
         if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Ocean") {
-            new ArticWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
+            new OceanWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
         }
         else if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Artic") {
