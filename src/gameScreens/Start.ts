@@ -225,7 +225,7 @@ class Start {
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandler = (event: MouseEvent): void => {
-    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    //console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
     this.buttons.forEach((button) => {
       if (
         event.clientX >= button.getButtonXPos() &&
@@ -235,10 +235,15 @@ class Start {
       ) {
         this.worldSelector(button);
         this.characterSelector(button);
+        this.startLevel(button);
       }
     });
   };
 
+  /**
+   * Method to select the world you want to play.
+   * @param button
+   */
   private worldSelector(button: Button) {
     if (
       this.indexCounterWorld == this.worldImages.length - 1 &&
@@ -260,6 +265,11 @@ class Start {
     }
   }
 
+  /**
+   * Method to select the character you want to play.
+   * @param button
+   */
+
   private characterSelector(button: Button) {
     if (
       this.indexCounterCharacter == this.characterImages.length - 1 &&
@@ -278,6 +288,42 @@ class Start {
       this.indexCounterCharacter -= 1;
     } else if (button.getButtonName() == "NextCharacter") {
       this.indexCounterCharacter += 1;
+    }
+  }
+
+  private startLevel(button: Button) {
+    if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
+    ) {
+      new Game(
+        this.canvas,
+        this.worldImages[this.indexCounterWorld].getImageName()
+      );
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Artic"
+    ) {
+      new Game(
+        this.canvas,
+        this.worldImages[this.indexCounterWorld].getImageName()
+      );
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
+    ) {
+      new Game(
+        this.canvas,
+        this.worldImages[this.indexCounterWorld].getImageName()
+      );
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Swamp"
+    ) {
+      new Game(
+        this.canvas,
+        this.worldImages[this.indexCounterWorld].getImageName()
+      );
     }
   }
 
