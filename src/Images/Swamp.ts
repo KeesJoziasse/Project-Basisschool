@@ -1,9 +1,9 @@
 /// <reference path="Images.ts" />
 
-class Swamp extends Images {
+class SwampImage extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "Desert";
+      this.name = "Swamp";
       this.image = Start.loadNewImage(
         "./assets/img/world/swamp.png"
       );
