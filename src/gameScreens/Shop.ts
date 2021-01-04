@@ -67,7 +67,7 @@ class Shop {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.drawUnlockableCharacter();
+    // this.drawUnlockableCharacter();
 
     this.buttons.forEach((button) => {
       button.draw(ctx);

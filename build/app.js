@@ -697,7 +697,6 @@ class Shop {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.drawUnlockableCharacter();
         this.buttons.forEach((button) => {
             button.draw(ctx);
         });
