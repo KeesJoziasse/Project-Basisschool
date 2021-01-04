@@ -45,10 +45,12 @@ abstract class Game {
 
     console.log(this.worldName);
 
+    this.player.move();
+    
     // #TODO hiervan aparte methode maken: checkGameState()
-    if (this.worldName === "level-1") {
-      console.log("level 1");
-      this.player.move();
+    if (this.worldName === "Ocean") {
+      console.log("Ocean");
+      
       // #TODO draw gameitems
       // #TOOD draw player
       // #TODO add randomly gameItems to the game and draw them
