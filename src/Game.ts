@@ -7,8 +7,9 @@ class Game {
     // #TODO screen: Screen[];
     private gameItems: GameItem[];
     private score: number;
-    private gameState: string;
+    private worldName: string;
     private frame: number;
+    private test: Start;
 
     /**
      * Constructor
@@ -27,7 +28,7 @@ class Game {
         
         this.score = 0;
         this.frame = 0;
-        this.gameState = "level-1";
+        this.worldName;
 
         this.loop();
     }
@@ -40,21 +41,19 @@ class Game {
         this.frame++;
         //console.log(this.frame);
         this.draw()
-        
+
+        //player is able to move
+        this.player.move();
 
         // #TODO hiervan aparte methode maken: checkGameState()
-        if (this.gameState === "level-1"){
-            console.log("level 1");
-            this.player.move();
+        // checks if the selected worldname is Ocean
+        if (this.worldName === "Ocean"){            
             // #TODO draw gameitems
-            // #TOOD draw player
             // #TODO add randomly gameItems to the game and draw them
             // #TODO make the gameItems move horizontal to the left
             // #TODO create a background
             
-        } else if(this.gameState === "Level-2"){
-            
-        }
+        } 
 
 
         requestAnimationFrame(this.loop);
@@ -65,11 +64,14 @@ class Game {
      */
     public draw(){
         const ctx = this.canvas.getContext("2d");
+        
+        //clears the canvas
         ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
 
+        //test text write Danger Dash
         Start.writeTextToCanvas(
             ctx,
-            "Danger Dash",
+            "Run!",
             60,
             this.canvas.width / 2,
             80,

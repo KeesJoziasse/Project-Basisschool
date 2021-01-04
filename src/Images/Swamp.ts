@@ -1,6 +1,6 @@
 /// <reference path="Images.ts" />
 
-class Swamp extends Images {
+class SwampImage extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
       this.name = "Desert";

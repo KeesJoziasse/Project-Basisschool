@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Start(document.getElementById("canvas"));
+    new Game(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -8,11 +8,8 @@ class Game {
         this.loop = () => {
             this.frame++;
             this.draw();
-            if (this.gameState === "level-1") {
-                console.log("level 1");
-                this.player.move();
-            }
-            else if (this.gameState === "Level-2") {
+            this.player.move();
+            if (this.worldName === "Ocean") {
             }
             requestAnimationFrame(this.loop);
         };
@@ -23,13 +20,13 @@ class Game {
         this.player = new Player(this.canvas);
         this.score = 0;
         this.frame = 0;
-        this.gameState = "level-1";
+        this.worldName;
         this.loop();
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        Start.writeTextToCanvas(ctx, "Danger Dash", 60, this.canvas.width / 2, 80, "center");
+        Start.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
         this.player.draw(ctx);
     }
 }
@@ -275,7 +272,7 @@ class AmongUsChar extends Images {
         this.image = Start.loadNewImage("./assets/img/Characters/AmongUs/amongUsLime.png");
     }
 }
-class Artic extends Images {
+class ArticImage extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "Artic";
@@ -348,7 +345,7 @@ class Stickman extends Images {
         this.image = Start.loadNewImage("./assets/img/Characters/Stickman/stickman.png");
     }
 }
-class Swamp extends Images {
+class SwampImage extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "Desert";
@@ -504,7 +501,25 @@ class Player extends GameItem {
     }
     collidesWithGameItem(GameItem) { }
 }
-class World {
+class Artic extends Game {
+    constructor(canvas) {
+        super(canvas);
+    }
+}
+class Desert extends Game {
+    constructor(canvas) {
+        super(canvas);
+    }
+}
+class Ocean extends Game {
+    constructor(canvas) {
+        super(canvas);
+    }
+}
+class Swamp extends Game {
+    constructor(canvas) {
+        super(canvas);
+    }
 }
 class HighScore {
     constructor(canvasId) {
@@ -756,8 +771,8 @@ class Start {
     worldImageMaker() {
         this.worldImages.push(new OceanImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 130));
         this.worldImages.push(new DesertImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 80));
-        this.worldImages.push(new Swamp(this.canvas.width / 2 - 202, this.canvas.height / 3 - 90));
-        this.worldImages.push(new Artic(this.canvas.width / 2 - 202, this.canvas.height / 3 - 110));
+        this.worldImages.push(new SwampImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 90));
+        this.worldImages.push(new ArticImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 110));
     }
     charachterMaker() {
         this.characterImages.push(new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));

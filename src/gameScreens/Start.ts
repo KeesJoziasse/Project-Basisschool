@@ -194,11 +194,11 @@ class Start {
     );
 
     this.worldImages.push(
-      new Swamp(this.canvas.width / 2 - 202, this.canvas.height / 3 - 90)
+      new SwampImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 90)
     );
 
     this.worldImages.push(
-      new Artic(this.canvas.width / 2 - 202, this.canvas.height / 3 - 110)
+      new ArticImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 110)
     );
   }
 
