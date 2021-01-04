@@ -9,6 +9,7 @@ abstract class Game {
   private score: number;
   private worldName: string;
   private frame: number;
+  private test: Start;
 
   /**
    * Constructor
@@ -42,6 +43,8 @@ abstract class Game {
     //console.log(this.frame);
     this.draw();
 
+    console.log(this.worldName);
+
     // #TODO hiervan aparte methode maken: checkGameState()
     if (this.worldName === "level-1") {
       console.log("level 1");
@@ -62,11 +65,14 @@ abstract class Game {
    */
   public draw() {
     const ctx = this.canvas.getContext("2d");
+
+    //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    //test text write Danger Dash
     Start.writeTextToCanvas(
       ctx,
-      "Danger Dash",
+      "Run!",
       60,
       this.canvas.width / 2,
       80,
