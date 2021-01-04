@@ -8,9 +8,10 @@ class Game {
         this.loop = () => {
             this.frame++;
             this.draw();
-            if (this.worldName === "level-1") {
-                console.log("level 1");
-                this.player.move();
+            console.log(this.worldName);
+            this.player.move();
+            if (this.worldName === "Ocean") {
+                console.log("Ocean");
             }
             else if (this.worldName === "Level-2") {
             }
@@ -29,7 +30,7 @@ class Game {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        Start.writeTextToCanvas(ctx, "Danger Dash", 60, this.canvas.width / 2, 80, "center");
+        Start.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
         this.player.draw(ctx);
     }
 }
