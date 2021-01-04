@@ -23,7 +23,7 @@ class Game {
         this.player = new Player(this.canvas);
         this.score = 0;
         this.frame = 0;
-        this.worldName;
+        this.worldName = worldName;
         this.loop();
     }
     draw() {

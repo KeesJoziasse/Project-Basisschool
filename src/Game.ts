@@ -28,7 +28,7 @@ class Game {
 
     this.score = 0;
     this.frame = 0;
-    this.worldName;
+    this.worldName = worldName;
 
     this.loop();
   }
