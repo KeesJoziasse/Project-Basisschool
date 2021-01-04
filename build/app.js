@@ -8,6 +8,7 @@ class Game {
         this.loop = () => {
             this.frame++;
             this.draw();
+            console.log(this.worldName);
             if (this.worldName === "level-1") {
                 console.log("level 1");
                 this.player.move();

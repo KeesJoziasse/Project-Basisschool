@@ -40,6 +40,8 @@ class Game {
     //console.log(this.frame);
     this.draw();
 
+    console.log(this.worldName);
+    
     // #TODO hiervan aparte methode maken: checkGameState()
     if (this.worldName === "level-1") {
       console.log("level 1");
