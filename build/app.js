@@ -203,7 +203,7 @@ class StartGameButton extends Button {
 class Unlock extends Button {
     constructor(xPos, yPos, index) {
         super(xPos, yPos);
-        this.name = "ArrowRight";
+        this.name = "Unlock";
         this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
     }
 }
