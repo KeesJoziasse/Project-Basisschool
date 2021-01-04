@@ -30,6 +30,8 @@ abstract class Game {
     this.worldName = worldName;
 
     this.loop();
+
+    //TEST AREA
   }
 
   /**
