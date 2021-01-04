@@ -8,7 +8,6 @@ class Game {
     private gameItems: GameItem[];
     private score: number;
     private gameState: string;
-    private ctx: CanvasRenderingContext2D;
     private frame: number;
 
     /**
@@ -22,12 +21,13 @@ class Game {
         this.canvas.height = window.innerHeight;
 
         this.gameItems = [];
+        this.player = new Player(this.canvas);
 
         // #TODO zorg dat gameitems worden ingeladen
         
         this.score = 0;
         this.frame = 0;
-        this.gameState = "Begin";
+        this.gameState = "level-1";
 
         this.loop();
     }
@@ -36,19 +36,22 @@ class Game {
      * Method that checks the gamestate
      */
     public loop = () => {
-        this.frame++;
-        console.log(this.frame);
         
-        this.writeGoodLuck();
+        this.frame++;
+        //console.log(this.frame);
+        this.draw()
+        
 
         // #TODO hiervan aparte methode maken: checkGameState()
         if (this.gameState === "level-1"){
+            console.log("level 1");
+            this.player.move();
             // #TODO draw gameitems
             // #TOOD draw player
             // #TODO add randomly gameItems to the game and draw them
             // #TODO make the gameItems move horizontal to the left
             // #TODO create a background
-            // #TODO create connection with player that the player is able to move during the game
+            
         } else if(this.gameState === "Level-2"){
             
         }
@@ -58,44 +61,22 @@ class Game {
     }
 
     /**
-     * Method that writes the player goodluck (test)
+     * Method that writes gameItems on the canvas
      */
-    private writeGoodLuck() {
-        if (this.frame >= 0 && this.frame <= 150) {
-            const ctx = this.canvas.getContext("2d");
-            this.writeTextToCanvas(
-                ctx,
-                "Succes!",
-                40, 
-                this.canvas.width / 2,
-                this.canvas.height /2,
-            );
-        }
-    }
+    public draw(){
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
 
-    /**
-     * Writes text to the canvas
-     * @param {string} text - Text to write
-     * @param {number} fontSize - Font size in pixels
-     * @param {number} xCoordinate - Horizontal coordinate in pixels
-     * @param {number} yCoordinate - Vertical coordinate in pixels
-     * @param {string} alignment - Where to align the text
-     * @param {string} color - The color of the text
-     */
-    public writeTextToCanvas(
-        ctx: CanvasRenderingContext2D,
-        text: string,
-        fontSize: number = 20,
-        xCoordinate: number,
-        yCoordinate: number,
-        alignment: CanvasTextAlign = "center",
-        color: string = "red"
-    ) {
-        ctx.font = `${fontSize}px Minecraft`;
-        ctx.fillStyle = color;
-        ctx.textAlign = alignment;
-        ctx.fillText(text, xCoordinate, yCoordinate);
-    }
+        Start.writeTextToCanvas(
+            ctx,
+            "Danger Dash",
+            60,
+            this.canvas.width / 2,
+            80,
+            "center"
+        );
 
+        this.player.draw(ctx);
+    }
 
 }

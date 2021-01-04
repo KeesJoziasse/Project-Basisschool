@@ -1,6 +1,6 @@
 /// <reference path = "ScoringItem.ts"/>
 
-class Coin extends ScoringItem {
+class IngameCoin extends ScoringItem {
 
     public constructor(canvas:HTMLCanvasElement){
         super(canvas);

@@ -51,11 +51,7 @@ abstract class Button {
       } 
       else if (this.getButtonName() === "BackToStart") {
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
-      } 
-      else if (this.getButtonName() === "QandA") {
-        new QuestionAndAnswer(document.getElementById("canvas") as HTMLCanvasElement);
-      }
-      else {
+      } else {
         return null;
       }
       console.log(`User clicked the: ${this.getButtonName()} button`);

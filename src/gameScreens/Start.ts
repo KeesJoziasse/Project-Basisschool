@@ -1,12 +1,14 @@
 class Start {
+  //Attributes
   private canvas: HTMLCanvasElement;
   private wallet: number;
   private buttons: Button[];
-  private player: Player; //#TODO
-  private level: World; //#TODO
-
-  //Attribute to test stuff
-  private background: HTMLImageElement; //#TODO
+  private worldImages: Images[];
+  private characterImages: Images[];
+  private images: Images[];
+  private background: Images[];
+  private indexCounterWorld: number;
+  private indexCounterCharacter: number;
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
@@ -18,14 +20,46 @@ class Start {
     //The button array
     this.buttons = [];
 
+    //The world images array
+    this.worldImages = [];
+
+    //The world images array
+    this.characterImages = [];
+
+    //The overall image array
+    this.images = [];
+
+    //Background cloud array
+    this.background = [];
+
     //Your total coin value
     this.wallet = 0;
+
+    //Index counter for world
+    this.indexCounterWorld = 0;
+
+    //Index counter for charachter
+    this.indexCounterCharacter = 0;
 
     //Calling the button maker method.
     this.buttonMaker();
 
+    //Calling the IMG maker method
+    this.worldImageMaker();
+
+    //Calling the character maker method.
+    this.charachterMaker();
+
+    //Calling the image maker method
+    this.imageMaker();
+
+    //Background loop
+    this.backgroundLoop();
     //The game loop.
     this.loop();
+
+    //The clickhandler
+    document.addEventListener("click", this.mouseHandler);
 
     //TEST AREA
   }
@@ -55,32 +89,39 @@ class Start {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    //The text at the top center.
-    Start.writeTextToCanvas(
-      ctx,
-      "Danger Dash",
-      60,
-      this.canvas.width / 2,
-      80,
-      "center"
-    );
+    //Background cloud #TODO Make it reload
+    this.background.forEach((backgroundImage) => {
+      backgroundImage.draw(ctx);
+      backgroundImage.move(this.canvas);
+      backgroundImage.reloadImage(this.canvas);
+    });
 
-    //Drawing the buttons
+    //Draws all the buttons
     this.buttons.forEach((button) => {
       button.draw(ctx);
-      button.move(this.canvas);
-      button.reloadImage(this.canvas); //#TODO
     });
+
+    //Draws all the images
+    this.images.forEach((image) => {
+      image.draw(ctx);
+    });
+
+    //Drawing the characters
+    for (let i = 0; i < this.characterImages.length; i++) {
+      this.characterImages[this.indexCounterCharacter].draw(ctx);
+    }
+
+    //Forloop to decide what world img is goint to be drawed
+    for (let i = 0; i < this.worldImages.length; i++) {
+      this.worldImages[this.indexCounterWorld].draw(ctx);
+    }
 
     //Writing the total amount of coins to the top left of your screen
     Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
-
-    //TEST AREA
   }
 
   private buttonMaker() {
-     //Background test
-     this.buttons.push(new Background(this.canvas.width / 4, 0, 1));
+    
      
     //Initializing the buttons and pushing them to the array
     //Making the start button
@@ -109,20 +150,21 @@ class Start {
 
     //Making the left arrow for character selector
     this.buttons.push(
-      new PreviousSelector(this.canvas.width / 4, this.canvas.height / 2 - 89)
+      new PreviousCharacter(this.canvas.width / 4, this.canvas.height / 2 - 89)
     );
 
     //Making the right arrow for character selector
     this.buttons.push(
-      new NextSelector(
+      new NextCharacter(
         (this.canvas.width / 4) * 3 - 143,
-        this.canvas.height / 2 - 89
+        this.canvas.height / 2 - 89,
+        1
       )
     );
 
     //Making the left arrow for level selector
     this.buttons.push(
-      new PreviousSelector(
+      new PreviousWorld(
         (this.canvas.width / 7) * 2,
         this.canvas.height / 3 - 89
       )
@@ -130,9 +172,10 @@ class Start {
 
     //Making the right arrow for level selector
     this.buttons.push(
-      new NextSelector(
+      new NextWorld(
         (this.canvas.width / 7) * 5 - 143,
-        this.canvas.height / 3 - 89
+        this.canvas.height / 3 - 89,
+        1
       )
     );
 
@@ -141,8 +184,103 @@ class Start {
 
     //Settings Button
     this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
+  }
 
-   
+  private worldImageMaker() {
+    this.worldImages.push(
+      new OceanImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 130)
+    );
+
+    this.worldImages.push(
+      new DesertImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 80)
+    );
+
+    this.worldImages.push(
+      new Swamp(this.canvas.width / 2 - 202, this.canvas.height / 3 - 90)
+    );
+
+    this.worldImages.push(
+      new Artic(this.canvas.width / 2 - 202, this.canvas.height / 3 - 110)
+    );
+  }
+
+  private charachterMaker() {
+    this.characterImages.push(
+      new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+    );
+
+    this.characterImages.push(
+      new Stickman(this.canvas.width / 2 - 48, this.canvas.height / 2 - 120)
+    );
+  }
+
+  private imageMaker() {
+    this.images.push(new Titel(this.canvas.width / 4, -40));
+  }
+
+  private backgroundLoop() {
+    this.background.push(new Cloud(this.canvas.width / 4, 0, 1));
+  }
+
+  /**
+   * Method to handle the mouse event
+   * @param {MouseEvent} event - mouse event
+   */
+  public mouseHandler = (event: MouseEvent): void => {
+    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    this.buttons.forEach((button) => {
+      if (
+        event.clientX >= button.getButtonXPos() &&
+        event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
+        event.clientY >= button.getButtonYPos() &&
+        event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
+      ) {
+        this.worldSelector(button);
+        this.characterSelector(button);
+      }
+    });
+  };
+
+  private worldSelector(button: Button) {
+    if (
+      this.indexCounterWorld == this.worldImages.length - 1 &&
+      button.getButtonName() == "NextWorld"
+    ) {
+      this.indexCounterWorld = 0;
+    } else if (
+      this.indexCounterWorld == 0 &&
+      button.getButtonName() == "PreviousWorld"
+    ) {
+      this.indexCounterWorld += this.worldImages.length - 1;
+    } else if (
+      button.getButtonName() == "PreviousWorld" &&
+      this.indexCounterWorld > 0
+    ) {
+      this.indexCounterWorld -= 1;
+    } else if (button.getButtonName() == "NextWorld") {
+      this.indexCounterWorld += 1;
+    }
+  }
+
+  private characterSelector(button: Button) {
+    if (
+      this.indexCounterCharacter == this.characterImages.length - 1 &&
+      button.getButtonName() == "NextCharacter"
+    ) {
+      this.indexCounterCharacter = 0;
+    } else if (
+      this.indexCounterCharacter == 0 &&
+      button.getButtonName() == "PreviousCharacter"
+    ) {
+      this.indexCounterCharacter += this.characterImages.length - 1;
+    } else if (
+      button.getButtonName() == "PreviousCharacter" &&
+      this.indexCounterCharacter > 0
+    ) {
+      this.indexCounterCharacter -= 1;
+    } else if (button.getButtonName() == "NextCharacter") {
+      this.indexCounterCharacter += 1;
+    }
   }
 
   /**
