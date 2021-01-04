@@ -1,6 +1,6 @@
 /// <reference path="Images.ts" />
 
-class Artic extends Images {
+class ArticImage extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
       this.name = "Artic";

@@ -96,14 +96,14 @@ class Start {
       backgroundImage.reloadImage(this.canvas);
     });
 
-    //Draws all the buttons
-    this.buttons.forEach((button) => {
-      button.draw(ctx);
-    });
-
     //Draws all the images
     this.images.forEach((image) => {
       image.draw(ctx);
+    });
+
+    //Draws all the buttons
+    this.buttons.forEach((button) => {
+      button.draw(ctx);
     });
 
     //Drawing the characters
@@ -196,11 +196,11 @@ class Start {
     );
 
     this.worldImages.push(
-      new Swamp(this.canvas.width / 2 - 202, this.canvas.height / 3 - 90)
+      new SwampImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 90)
     );
 
     this.worldImages.push(
-      new Artic(this.canvas.width / 2 - 202, this.canvas.height / 3 - 110)
+      new ArticImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 110)
     );
   }
 
@@ -219,7 +219,7 @@ class Start {
   }
 
   private backgroundLoop() {
-    this.background.push(new Cloud(this.canvas.width / 4, 0, 1));
+    this.background.push(new Cloud(0, this.canvas.height / 4, 0.5));
   }
 
   /**
@@ -227,7 +227,7 @@ class Start {
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandler = (event: MouseEvent): void => {
-    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    //console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
     this.buttons.forEach((button) => {
       if (
         event.clientX >= button.getButtonXPos() &&
@@ -237,10 +237,15 @@ class Start {
       ) {
         this.worldSelector(button);
         this.characterSelector(button);
+        this.startLevel(button);
       }
     });
   };
 
+  /**
+   * Method to select the world you want to play.
+   * @param button
+   */
   private worldSelector(button: Button) {
     if (
       this.indexCounterWorld == this.worldImages.length - 1 &&
@@ -262,6 +267,11 @@ class Start {
     }
   }
 
+  /**
+   * Method to select the character you want to play.
+   * @param button
+   */
+
   private characterSelector(button: Button) {
     if (
       this.indexCounterCharacter == this.characterImages.length - 1 &&
@@ -280,6 +290,42 @@ class Start {
       this.indexCounterCharacter -= 1;
     } else if (button.getButtonName() == "NextCharacter") {
       this.indexCounterCharacter += 1;
+    }
+  }
+
+  private startLevel(button: Button) {
+    if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
+    ) {
+      new OceanWorld(
+        this.canvas,
+        this.worldImages[this.indexCounterWorld].getImageName()
+      );
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Artic"
+    ) {
+      new ArticWorld(
+        this.canvas,
+        this.worldImages[this.indexCounterWorld].getImageName()
+      );
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
+    ) {
+      new DesertWorld(
+        this.canvas,
+        this.worldImages[this.indexCounterWorld].getImageName()
+      );
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Swamp"
+    ) {
+      new SwampWorld(
+        this.canvas,
+        this.worldImages[this.indexCounterWorld].getImageName()
+      );
     }
   }
 

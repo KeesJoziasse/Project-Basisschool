@@ -20,6 +20,7 @@ class Cloud extends Images {
         this.xPos < 0
       ) {
         this.xVelocity = -this.xVelocity;
+        
       }
     }
   }
