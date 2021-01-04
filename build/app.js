@@ -118,6 +118,8 @@ class Button {
                 if (this.getButtonName() === "HighScore") {
                     new HighScore(document.getElementById("canvas"));
                 }
+                if (this.getButtonName() === "Unlock") {
+                }
                 if (this.getButtonName() === "Settings") {
                     new Settings(document.getElementById("canvas"));
                 }

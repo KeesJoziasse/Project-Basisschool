@@ -49,6 +49,9 @@ abstract class Button {
       if (this.getButtonName() === "HighScore") {
         new HighScore(document.getElementById("canvas") as HTMLCanvasElement);
       } 
+      if (this.getButtonName() === "Unlock") {
+        
+      }
       
       if (this.getButtonName() === "Settings") {
         new Settings(document.getElementById("canvas") as HTMLCanvasElement);
