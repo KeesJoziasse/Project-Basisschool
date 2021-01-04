@@ -118,6 +118,12 @@ class Button {
                 if (this.getButtonName() === "HighScore") {
                     new HighScore(document.getElementById("canvas"));
                 }
+                if (this.getButtonName() === "Settings") {
+                    new Settings(document.getElementById("canvas"));
+                }
+                if (this.getButtonName() === "QandA") {
+                    new GeneralQuestions(document.getElementById("canvas"));
+                }
                 if (this.getButtonName() === "Shop") {
                     new Shop(document.getElementById("canvas"));
                 }
@@ -175,7 +181,7 @@ class QuestionsAnswersButton extends Button {
 class SettingsButton extends Button {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "Shop";
+        this.name = "Settings";
         this.image = Start.loadNewImage("./assets/img/buttons/settings-button.png");
     }
 }
@@ -517,6 +523,33 @@ class Player extends GameItem {
 }
 class World {
 }
+class GeneralQuestions {
+    constructor(canvasId) {
+        this.loop = () => {
+            this.draw();
+            requestAnimationFrame(this.loop);
+        };
+        this.mouseHandler = (event) => { };
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.buttons = [];
+        this.buttonMaker();
+        this.loop();
+        document.addEventListener("click", this.mouseHandler);
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+        });
+        Start.writeTextToCanvas(ctx, "Questions", 60, this.canvas.width / 2, 80, "center");
+    }
+    buttonMaker() {
+        this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09));
+    }
+}
 class HighScore {
     constructor(canvasId) {
         this.loop = () => {
@@ -562,6 +595,8 @@ class HighScore {
     buttonMaker() {
         this.buttons.push(new BackToStart((this.canvas.width / 7) * 0.09, (this.canvas.height / 3) * 0.08));
     }
+}
+class InGameQuestions {
 }
 class QuestionAndAnswer {
     constructor(canvasId) {
@@ -609,6 +644,33 @@ class QuestionAndAnswer {
     }
     buttonMaker() {
         this.buttons.push(new BackToStart((this.canvas.width / 7) * 0.09, (this.canvas.height / 3) * 0.08));
+    }
+}
+class Settings {
+    constructor(canvasId) {
+        this.loop = () => {
+            this.draw();
+            requestAnimationFrame(this.loop);
+        };
+        this.mouseHandler = (event) => { };
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.buttons = [];
+        this.buttonMaker();
+        this.loop();
+        document.addEventListener("click", this.mouseHandler);
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+        });
+        Start.writeTextToCanvas(ctx, "Settings", 60, this.canvas.width / 2, 80, "center");
+    }
+    buttonMaker() {
+        this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09));
     }
 }
 class Shop {
