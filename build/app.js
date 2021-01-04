@@ -118,6 +118,9 @@ class Button {
                 if (this.getButtonName() === "HighScore") {
                     new HighScore(document.getElementById("canvas"));
                 }
+                if (this.getButtonName() === "Shop") {
+                    new Shop(document.getElementById("canvas"));
+                }
                 else if (this.getButtonName() === "BackToStart") {
                     new Start(document.getElementById("canvas"));
                 }
