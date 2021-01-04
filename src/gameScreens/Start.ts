@@ -69,7 +69,6 @@ class Start {
    */
   public loop = () => {
     //Draws everythin while in the loop
-
     this.draw();
 
     //#TODO you can remove this after you are fine with the code, for now there is a counter in the top left of your screen.
