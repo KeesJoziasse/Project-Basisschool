@@ -90,9 +90,11 @@ class Start {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    //Draws all the images
-    this.images.forEach((image) => {
-      image.draw(ctx);
+    //Background cloud #TODO Make it reload
+    this.background.forEach((backgroundImage) => {
+      backgroundImage.draw(ctx);
+      backgroundImage.move(this.canvas);
+      backgroundImage.reloadImage(this.canvas);
     });
 
     //Draws all the buttons
@@ -100,11 +102,9 @@ class Start {
       button.draw(ctx);
     });
 
-    //Background cloud #TODO Make it reload
-    this.background.forEach((backgroundImage) => {
-      backgroundImage.draw(ctx);
-      backgroundImage.move(this.canvas);
-      backgroundImage.reloadImage(this.canvas);
+    //Draws all the images
+    this.images.forEach((image) => {
+      image.draw(ctx);
     });
 
     //Drawing the characters
