@@ -79,6 +79,9 @@ class Start {
   }
 
   private buttonMaker() {
+     //Background test
+     this.buttons.push(new Background(this.canvas.width / 4, 0, 1));
+     
     //Initializing the buttons and pushing them to the array
     //Making the start button
     this.buttons.push(
@@ -139,8 +142,7 @@ class Start {
     //Settings Button
     this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
 
-    //Background test
-    this.buttons.push(new Background(this.canvas.width / 4, 0, 1));
+   
   }
 
   /**
