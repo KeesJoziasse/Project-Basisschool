@@ -9,7 +9,6 @@ abstract class Game {
   private score: number;
   private worldName: string;
   private frame: number;
-  private test: Start;
 
   /**
    * Constructor
@@ -43,19 +42,20 @@ abstract class Game {
     //console.log(this.frame);
     this.draw();
 
-    console.log(this.worldName);
+    //makes the player move
+    this.player.move();
 
     // #TODO hiervan aparte methode maken: checkGameState()
     if (this.worldName === "level-1") {
       console.log("level 1");
-      this.player.move();
       // #TODO draw gameitems
-      // #TOOD draw player
       // #TODO add randomly gameItems to the game and draw them
       // #TODO make the gameItems move horizontal to the left
       // #TODO create a background
     } else if (this.worldName === "Level-2") {
     }
+
+    requestAnimationFrame(this.loop);
   };
 
   /**
@@ -68,15 +68,6 @@ abstract class Game {
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     //test text write Danger Dash
-    Start.writeTextToCanvas(
-      ctx,
-      "Run!",
-      60,
-      this.canvas.width / 2,
-      80,
-      "center"
-    );
-
     Start.writeTextToCanvas(
       ctx,
       "Danger Dash",

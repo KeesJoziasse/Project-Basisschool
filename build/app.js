@@ -8,13 +8,13 @@ class Game {
         this.loop = () => {
             this.frame++;
             this.draw();
-            console.log(this.worldName);
+            this.player.move();
             if (this.worldName === "level-1") {
                 console.log("level 1");
-                this.player.move();
             }
             else if (this.worldName === "Level-2") {
             }
+            requestAnimationFrame(this.loop);
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
@@ -29,7 +29,6 @@ class Game {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        Start.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
         Start.writeTextToCanvas(ctx, "Danger Dash", 60, this.canvas.width / 2, 80, "center");
         this.player.draw(ctx);
     }
@@ -826,7 +825,7 @@ class Start {
     startLevel(button) {
         if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Ocean") {
-            new ArticWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
+            new OceanWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
         }
         else if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Artic") {
