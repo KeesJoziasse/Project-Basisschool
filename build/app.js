@@ -680,11 +680,11 @@ class Start {
             backgroundImage.move(this.canvas);
             backgroundImage.reloadImage(this.canvas);
         });
-        this.images.forEach((image) => {
-            image.draw(ctx);
-        });
         this.buttons.forEach((button) => {
             button.draw(ctx);
+        });
+        this.images.forEach((image) => {
+            image.draw(ctx);
         });
         for (let i = 0; i < this.characterImages.length; i++) {
             this.characterImages[this.indexCounterCharacter].draw(ctx);
