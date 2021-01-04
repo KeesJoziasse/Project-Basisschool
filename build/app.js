@@ -675,16 +675,16 @@ class Start {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.images.forEach((image) => {
-            image.draw(ctx);
-        });
-        this.buttons.forEach((button) => {
-            button.draw(ctx);
-        });
         this.background.forEach((backgroundImage) => {
             backgroundImage.draw(ctx);
             backgroundImage.move(this.canvas);
             backgroundImage.reloadImage(this.canvas);
+        });
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+        });
+        this.images.forEach((image) => {
+            image.draw(ctx);
         });
         for (let i = 0; i < this.characterImages.length; i++) {
             this.characterImages[this.indexCounterCharacter].draw(ctx);
