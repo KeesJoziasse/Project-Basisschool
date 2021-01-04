@@ -79,15 +79,6 @@ abstract class Game {
       "center"
     );
 
-    Start.writeTextToCanvas(
-      ctx,
-      "Danger Dash",
-      60,
-      this.canvas.width / 2,
-      80,
-      "center"
-    );
-
     this.player.draw(ctx);
   }
 }
