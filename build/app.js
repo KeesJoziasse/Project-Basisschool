@@ -15,6 +15,7 @@ class Game {
             }
             else if (this.worldName === "Level-2") {
             }
+            requestAnimationFrame(this.loop);
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;

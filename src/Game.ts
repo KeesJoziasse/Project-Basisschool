@@ -56,6 +56,8 @@ abstract class Game {
       // #TODO create a background
     } else if (this.worldName === "Level-2") {
     }
+
+    requestAnimationFrame(this.loop);
   };
 
   /**
