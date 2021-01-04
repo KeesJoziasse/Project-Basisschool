@@ -1,8 +1,7 @@
 /// <reference path="../Game.ts" />
 
-class Swamp extends Game{
+class SwampWorld extends Game{
     constructor(canvas:HTMLCanvasElement, worldName:string){
-        super(canvas, worldName)
+        super(canvas, worldName);
     }
-    
 }
