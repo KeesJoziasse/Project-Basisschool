@@ -296,7 +296,7 @@ class Start {
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
     ) {
-      new ArticWorld(
+      new OceanWorld(
         this.canvas,
         this.worldImages[this.indexCounterWorld].getImageName()
       );
