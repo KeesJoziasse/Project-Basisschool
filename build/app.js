@@ -1,17 +1,20 @@
 console.log("The game is working");
 let init = () => {
-    new Game(document.getElementById("canvas"));
+    new Start(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
-    constructor(canvasId) {
+    constructor(canvasId, worldName) {
         this.loop = () => {
             this.frame++;
             this.draw();
-            this.player.move();
-            if (this.worldName === "Ocean") {
+            console.log(this.worldName);
+            if (this.worldName === "level-1") {
+                console.log("level 1");
+                this.player.move();
             }
-            requestAnimationFrame(this.loop);
+            else if (this.worldName === "Level-2") {
+            }
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
@@ -27,6 +30,7 @@ class Game {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         Start.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
+        Start.writeTextToCanvas(ctx, "Danger Dash", 60, this.canvas.width / 2, 80, "center");
         this.player.draw(ctx);
     }
 }
@@ -348,7 +352,7 @@ class Stickman extends Images {
 class SwampImage extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "Desert";
+        this.name = "Swamp";
         this.image = Start.loadNewImage("./assets/img/world/swamp.png");
     }
 }
@@ -502,23 +506,23 @@ class Player extends GameItem {
     collidesWithGameItem(GameItem) { }
 }
 class Artic extends Game {
-    constructor(canvas) {
-        super(canvas);
+    constructor(canvas, worldName) {
+        super(canvas, worldName);
     }
 }
 class Desert extends Game {
-    constructor(canvas) {
-        super(canvas);
+    constructor(canvas, worldName) {
+        super(canvas, worldName);
     }
 }
 class Ocean extends Game {
-    constructor(canvas) {
-        super(canvas);
+    constructor(canvas, worldName) {
+        super(canvas, worldName);
     }
 }
 class Swamp extends Game {
-    constructor(canvas) {
-        super(canvas);
+    constructor(canvas, worldName) {
+        super(canvas, worldName);
     }
 }
 class HighScore {
@@ -713,6 +717,7 @@ class Start {
                     event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
                     this.worldSelector(button);
                     this.characterSelector(button);
+                    this.startLevel(button);
                 }
             });
         };
@@ -816,6 +821,24 @@ class Start {
         }
         else if (button.getButtonName() == "NextCharacter") {
             this.indexCounterCharacter += 1;
+        }
+    }
+    startLevel(button) {
+        if (button.getButtonName() == "StartGame" &&
+            this.worldImages[this.indexCounterWorld].getImageName() == "Ocean") {
+            new Game(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
+        }
+        else if (button.getButtonName() == "StartGame" &&
+            this.worldImages[this.indexCounterWorld].getImageName() == "Artic") {
+            new Game(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
+        }
+        else if (button.getButtonName() == "StartGame" &&
+            this.worldImages[this.indexCounterWorld].getImageName() == "Desert") {
+            new Game(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
+        }
+        else if (button.getButtonName() == "StartGame" &&
+            this.worldImages[this.indexCounterWorld].getImageName() == "Swamp") {
+            new Game(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
         }
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
