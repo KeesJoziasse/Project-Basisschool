@@ -4,16 +4,22 @@ abstract class ScoringItem extends GameItem {
     protected points: number;
     protected image: HTMLImageElement;
     protected speed: number;
-    private xPosition: number;
-    private yPosition: number;
+    protected xPosition: number;
+    protected yPosition: number;
 
-    public constructor(canvas:HTMLCanvasElement){
+    public constructor(canvas: HTMLCanvasElement){
         super(canvas);
-        this.xPosition = 120;
+        this.canvas = this.canvas;
 
         this.createRandomYpos(); 
+}
 
-        this.canvas = canvas;
+    public getImageWidth(): number {
+        return this.image.width;
+    }
+
+    public getImageHeight(): number {
+        return this.image.height;
     }
 
     /**
@@ -32,6 +38,15 @@ abstract class ScoringItem extends GameItem {
         }
     }
 
+    public draw(ctx: CanvasRenderingContext2D) {
+        ctx.drawImage(this.image, this.xPosition, this.yPosition);
+      }
+
+      
+
+  public reloadImage(canvas: HTMLCanvasElement) {}
+
+
     /**
      * Method that removes an scoringItem after it collides with the player or the left side of the canvas (out of screen);
      */
@@ -42,7 +57,7 @@ abstract class ScoringItem extends GameItem {
     /**
      * Method that moves the scoringItem on the canvas
      */
-    public move(){
+    public move(canvas: HTMLCanvasElement){
         
     }
 }
