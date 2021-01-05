@@ -1,4 +1,4 @@
-/// <reference path = "GameItem.ts"/>
+/// <reference path = "../GameItem.ts"/>
 
 class Player extends GameItem {
   private keyboardListener: KeyboardListener;
@@ -15,7 +15,7 @@ class Player extends GameItem {
     );
     this.keyboardListener = new KeyboardListener();
     this.yPos = this.canvas.height / 2;
-    this.xPos = this.canvas.width / 3;
+    this.xPos = this.canvas.width / 7;
     this.animationFrame = 0;
   }
 
@@ -23,32 +23,34 @@ class Player extends GameItem {
    * method to move the player between the lanes
    */
   public move() {
-    // #TODO bepaal welke keys je moet gebruiken in de game
+    //IF up key is pressed the player will go down if possible
     if (
-      this.keyboardListener.isKeyDown(KeyboardListener.KEY_W) &&
-      this.yPos !== this.topLane
+      this.keyboardListener.isKeyDown(KeyboardListener.KEY_UP) &&
+      this.yPos === this.middleLane
     ) {
       this.yPos = this.topLane;
-      console.log("W is pressed");
-    }
-    if (
-      this.keyboardListener.isKeyDown(KeyboardListener.KEY_X) &&
-      this.yPos !== this.middleLane
+    } else if (
+      this.keyboardListener.isKeyDown(KeyboardListener.KEY_UP) &&
+      this.yPos === this.lowerLane
     ) {
       this.yPos = this.middleLane;
-      console.log("X is pressed");
     }
+
+    //IF down key is pressed the player will go down if possible
     if (
-      this.keyboardListener.isKeyDown(KeyboardListener.KEY_S) &&
-      this.yPos !== this.lowerLane
+      this.keyboardListener.isKeyDown(KeyboardListener.KEY_DOWN) &&
+      this.yPos === this.topLane
+    ) {
+      this.yPos = this.middleLane;
+    } else if (
+      this.keyboardListener.isKeyDown(KeyboardListener.KEY_DOWN) &&
+      this.yPos === this.middleLane
     ) {
       this.yPos = this.lowerLane;
-      console.log("S is pressed");
     }
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
-    // #TODO 5 images reverse 2 gebruiken en met 100 frames werken per 20 image change
 
     //Animationframe goes to 1 if its 76
     this.animationFrame++;
