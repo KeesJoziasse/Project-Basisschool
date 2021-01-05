@@ -8,39 +8,39 @@ class Game {
         this.loop = () => {
             this.frame++;
             this.draw();
+            this.frameIndex();
+            this.forScoringItems();
             if (this.frame % 10 === 0) {
                 this.player.move();
             }
-            this.player.move();
-            if (this.worldName === "level-1") {
-                console.log("level 1");
-            }
-            else if (this.worldName === "Level-2") {
-            }
-            if (this.worldName === "Desert") {
-                new DesertWorld(this.canvas, "Desert");
-            }
             requestAnimationFrame(this.loop);
-            console.log(this.test);
-            if (this.frame > 10) {
-                this.scoringItems.forEach(scoringItem => scoringItem.move());
-            }
+            console.log(this.scoringItems);
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.gameItems = [];
         this.player = new Player(this.canvas);
         this.score = 0;
         this.frame = 0;
         this.worldName = worldName;
         this.loop();
-        this.random = Start.randomNumber(1, 1);
-        this.scoringItems = [new Shark(this.canvas)];
+        this.scoringItems = [];
     }
-    scoringItemsArticWorld() {
-        if (this.random === 1) {
-            this.scoringItems.push(new Shark(this.canvas));
+    scoringItemsOceanWorld() { }
+    frameIndex() { }
+    forScoringItems() {
+        if (this.frame > 1) {
+            this.scoringItems.forEach((scoringItem) => {
+                scoringItem.move();
+            });
+            for (let i = 0; i < this.scoringItems.length; i++) {
+                if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
+                    this.scoringItems.splice(i, 1);
+                }
+                else if (this.scoringItems[i].outOfCanvas()) {
+                    this.scoringItems.splice(i, 1);
+                }
+            }
         }
     }
     draw() {
@@ -48,8 +48,8 @@ class Game {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         Start.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
         this.player.draw(ctx);
-        if (this.frame > 10) {
-            this.scoringItems.forEach(scoringItem => scoringItem.draw(ctx));
+        if (this.frame > 1) {
+            this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
         }
     }
 }
@@ -452,9 +452,21 @@ class GameItem {
 class ScoringItem {
     constructor(canvas) {
         this.canvas = canvas;
-        this.xPosition = 500;
-        this.yPosition = 1080;
-        this.speed = -5;
+        this.topLane = this.canvas.height / 4;
+        this.middleLane = this.canvas.height / 2;
+        this.lowerLane = (this.canvas.height / 4) * 3;
+        const random = GameItem.randomInteger(1, 3);
+        if (random === 1) {
+            this.yPosition = this.topLane;
+        }
+        if (random === 2) {
+            this.yPosition = this.middleLane;
+        }
+        if (random === 3) {
+            this.yPosition = this.lowerLane;
+        }
+        this.speed = -3;
+        this.xPosition = this.canvas.width;
     }
     getPositionX() {
         return this.xPosition;
@@ -471,26 +483,17 @@ class ScoringItem {
     getPoints() {
         return this.points;
     }
-    scoringItemsArticWorld() { }
     move() {
         this.xPosition += this.speed;
     }
     draw(ctx) {
         ctx.drawImage(this.image, this.xPosition - this.image.width / 2, this.yPosition);
     }
-    collisionDetection() {
-    }
-    createRandomYpos() {
-        const random = GameItem.randomInteger(1, 3);
-        if (random === 1) {
-            this.yPosition = this.topLane;
+    outOfCanvas() {
+        if (this.xPosition + this.image.width < 0) {
+            return true;
         }
-        if (random === 2) {
-            this.yPosition = this.middleLane;
-        }
-        if (random === 3) {
-            this.yPosition = this.lowerLane;
-        }
+        return false;
     }
     loadNewImage(source) {
         const img = new Image();
@@ -555,7 +558,30 @@ class Player extends GameItem {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-2.png"), this.xPos, this.yPos);
         }
     }
-    collidesWithGameItem(GameItem) { }
+    collidesWithScoringItem(ScoringItem) {
+        if (this.xPos < ScoringItem.getPositionX() + ScoringItem.getImageWidth() &&
+            this.xPos + this.image.width > ScoringItem.getPositionX() &&
+            this.canvas.width - 200 <
+                ScoringItem.getPositionY() + ScoringItem.getImageHeight() &&
+            this.canvas.width - 200 + this.image.width > ScoringItem.getPositionY()) {
+            return true;
+        }
+        return false;
+    }
+}
+class Fish extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanFish.png");
+        this.points = -5;
+    }
+}
+class Pearl extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanParelBooster.png");
+        this.points = -5;
+    }
 }
 class Shark extends ScoringItem {
     constructor(canvas) {
@@ -578,6 +604,23 @@ class DesertWorld extends Game {
 class OceanWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
+    }
+    frameIndex() {
+        if (this.frame % 100 === 0) {
+            this.scoringItemsOceanWorld();
+        }
+    }
+    scoringItemsOceanWorld() {
+        const random = GameItem.randomInteger(1, 3);
+        if (random === 1) {
+            this.scoringItems.push(new Shark(this.canvas));
+        }
+        if (random === 2) {
+            this.scoringItems.push(new Fish(this.canvas));
+        }
+        if (random === 3) {
+            this.scoringItems.push(new Pearl(this.canvas));
+        }
     }
 }
 class SwampWorld extends Game {

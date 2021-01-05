@@ -4,12 +4,12 @@
 abstract class Game {
   //The canvas
   protected canvas: HTMLCanvasElement;
-  
+
   //The ingame player
   private player: Player;
   // #TODO screen: Screen[]
-  //Array of game items ?? 
-  private gameItems: GameItem[];
+  //Array of game items ??
+  private gameItems: GameItem[]; //Probs remove it.
 
   //The score of the player
   private score: number;
@@ -18,7 +18,7 @@ abstract class Game {
   private worldName: string;
 
   //Amount of frames that have passed
-  private frame: number;
+  protected frame: number;
 
   //RNG
   protected random: number;
@@ -35,13 +35,13 @@ abstract class Game {
    */
   public constructor(canvasId: HTMLCanvasElement, worldName: string) {
     this.canvas = canvasId;
-    
+
     //Making the canvas width + canvas height
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
-    
+
     //Array of the gameItems
-    this.gameItems = [];
+    //this.gameItems = [];
 
     //Making the player
     this.player = new Player(this.canvas);
@@ -58,69 +58,54 @@ abstract class Game {
     //Calling the loop
     this.loop();
 
-    //RNG
-    this.random = Start.randomNumber(1,1)//TODO make it so the max number is the length of the array or all the world have the same amount of objects.
-
     //Scoringitems array
-    this.scoringItems = [new Shark(this.canvas)];
-
-    //TEST AREA
-    // if (this.frame > 10){
-    // this.test.scoringItemsArticWorld();
-    // }
-    // this.test = new Shark(this.canvas);
+    this.scoringItems = [];
   }
 
-  //Creates the scoring items for the articworld
-  public scoringItemsArticWorld() : void {
-    if(this.random === 1){
-        this.scoringItems.push(new Shark(this.canvas));
-    }
-}
+  //Creates the scoring items for the ocean world
+  public scoringItemsOceanWorld(): void {}
+
+  //Frameindex for the worlds.
+  public frameIndex() {}
 
   /**
    * Method that checks the gamestate
    */
   public loop = () => {
     this.frame++;
-    
+
     this.draw();
 
-    //makes the player move
-    //ifstatement makes sure the buttons are not spammable
-    if(this.frame % 10 === 0){
+    this.frameIndex();
+
+    this.forScoringItems();
+
+    //makes the player move, ifstatement makes sure the buttons are not spammable
+    if (this.frame % 10 === 0) {
       this.player.move();
-    }
-    
-
-    this.player.move();
-    
-    // #TODO hiervan aparte methode maken: checkGameState()
-    if (this.worldName === "level-1") {
-      console.log("level 1");
-      // #TODO draw gameitems
-      // #TODO add randomly gameItems to the game and draw them
-      // #TODO make the gameItems move horizontal to the left
-      // #TODO create a background
-    } else if (this.worldName === "Level-2") {
-    }
-
-    if(this.worldName === "Desert"){
-      new DesertWorld(this.canvas, "Desert");
     }
 
     requestAnimationFrame(this.loop);
 
-    //TEST AREA
-    //console.log(this.frame);
-    // console.log(this.scoringItems);
-    // console.log(this.random);
-    console.log(this.test);
-    
-    if(this.frame > 10){
-    this.scoringItems.forEach(scoringItem => scoringItem.move());
-    }
+    console.log(this.scoringItems);
   };
+
+  //Handles everything for the scoringitems.
+  private forScoringItems() {
+    if (this.frame > 1) {
+      this.scoringItems.forEach((scoringItem) => {
+        scoringItem.move();
+      });
+
+      for (let i = 0; i < this.scoringItems.length; i++) {
+        if (this.player.collidesWithScoringItem(this.scoringItems[i])) { //#TODO fix first if statement
+          this.scoringItems.splice(i, 1);
+        } else if (this.scoringItems[i].outOfCanvas()) {
+          this.scoringItems.splice(i, 1);
+        }
+      }
+    }
+  }
 
   /**
    * Method that writes gameItems on the canvas
@@ -140,13 +125,13 @@ abstract class Game {
       80,
       "center"
     );
-    
+
     //Drawing the player
     this.player.draw(ctx);
 
-    //Test area
-    if(this.frame > 10){
-      this.scoringItems.forEach(scoringItem => scoringItem.draw(ctx));
+    //Draws all the scoring items.
+    if (this.frame > 1) {
+      this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
     }
   }
 }

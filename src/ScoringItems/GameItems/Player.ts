@@ -51,7 +51,6 @@ class Player extends GameItem {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
-
     //Animationframe goes to 1 if its 76
     this.animationFrame++;
     if (this.animationFrame >= 40) {
@@ -99,5 +98,16 @@ class Player extends GameItem {
    * #TODO wordt nog niet aangesproken
    * @param GameItem
    */
-  public collidesWithGameItem(GameItem: GameItem[]) {}
+  public collidesWithScoringItem(ScoringItem: ScoringItem): boolean {
+    if (
+      this.xPos < ScoringItem.getPositionX() + ScoringItem.getImageWidth() &&
+      this.xPos + this.image.width > ScoringItem.getPositionX() &&
+      this.canvas.width - 200 <
+        ScoringItem.getPositionY() + ScoringItem.getImageHeight() &&
+      this.canvas.width - 200 + this.image.width > ScoringItem.getPositionY()
+    ) {
+      return true;
+    }
+    return false;
+  }
 }
