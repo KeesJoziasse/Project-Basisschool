@@ -345,7 +345,7 @@ class Start {
     xCoordinate: number,
     yCoordinate: number,
     alignment: CanvasTextAlign = "center",
-    color: string = "red"
+    color: string = "black"
   ) {
     ctx.font = `${fontSize}px Minecraft`;
     ctx.fillStyle = color;

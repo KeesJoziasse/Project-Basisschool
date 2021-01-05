@@ -346,6 +346,20 @@ class Morty extends Images {
         this.image = Start.loadNewImage("./assets/img/players/morty.png");
     }
 }
+class RocketBooster extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "rocketBooster";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/rocketBooster.png");
+    }
+}
+class ShieldBooster extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "shieldBooster";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/shieldBooster.png");
+    }
+}
 class Sonic extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -365,6 +379,34 @@ class SwampImage extends Images {
         super(xPos, yPos);
         this.name = "Swamp";
         this.image = Start.loadNewImage("./assets/img/world/swamp.png");
+    }
+}
+class TextCoin extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "textCoin";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/textCoin.png");
+    }
+}
+class TextObstacle extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "textObstacle";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/textObstacle.png");
+    }
+}
+class TextRocketBooster extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "textRocketBooster";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/textRocketBooster.png");
+    }
+}
+class TextShieldBooster extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "textShieldBooster";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/textShieldBooster.png");
     }
 }
 class Titel extends Images {
@@ -554,8 +596,10 @@ class GeneralQuestions {
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
+        this.images = [];
         this.buttons = [];
         this.buttonMaker();
+        this.imageMaker();
         this.loop();
         document.addEventListener("click", this.mouseHandler);
     }
@@ -565,10 +609,26 @@ class GeneralQuestions {
         this.buttons.forEach((button) => {
             button.draw(ctx);
         });
+        this.images.forEach((image) => {
+            image.draw(ctx);
+        });
         Start.writeTextToCanvas(ctx, "Questions", 60, this.canvas.width / 2, 80, "center");
+        Start.writeTextToCanvas(ctx, "Besturing:", 50, this.canvas.width / 12, 140, "center");
+        Start.writeTextToCanvas(ctx, "Beweeg omhoog ⬆️", 40, this.canvas.width / 8, 220, "center");
+        Start.writeTextToCanvas(ctx, "Beweeg omlaag  ⬇️", 40, (this.canvas.width / 9) * 1.12, 290, "center");
+        Start.writeTextToCanvas(ctx, "Rocket booster", 35, (this.canvas.width / 3) * 1.02, 140, "center");
+        Start.writeTextToCanvas(ctx, "Shield booster", 35, (this.canvas.width / 3) * 1, 440, "center");
     }
     buttonMaker() {
         this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09));
+    }
+    imageMaker() {
+        this.images.push(new TextRocketBooster((this.canvas.width / 3) * 0.75, 135));
+        this.images.push(new RocketBooster((this.canvas.width / 2) * 1.10, 180));
+        this.images.push(new TextShieldBooster((this.canvas.width / 3) * 0.75, 430));
+        this.images.push(new ShieldBooster((this.canvas.width / 2) * 1.10, 490));
+        this.images.push(new TextCoin((this.canvas.width / 2) * 1.34, 442));
+        this.images.push(new TextObstacle((this.canvas.width / 2) * 1.34, 150));
     }
 }
 class HighScore {
@@ -915,7 +975,7 @@ class Start {
             new SwampWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
         }
     }
-    static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "red") {
+    static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "black") {
         ctx.font = `${fontSize}px Minecraft`;
         ctx.fillStyle = color;
         ctx.textAlign = alignment;
