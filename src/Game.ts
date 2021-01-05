@@ -116,6 +116,42 @@ abstract class Game {
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+
+    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD 
+    //Sets the background
+    if(this.worldName === "Ocean"){
+      ctx.drawImage(
+        GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"),
+        0,
+        -100
+      )
+    }
+
+    if(this.worldName === "Desert"){
+      ctx.drawImage(
+        GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"),
+        0,
+        0
+      )
+    }
+
+    if(this.worldName === "Artic"){
+      ctx.drawImage(
+        GameItem.loadNewImage("./assets/img/world/ArticBG.jpg"),
+        0,
+        0
+      )
+    }
+
+    if(this.worldName === "Swamp"){
+      ctx.drawImage(
+        GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"),
+        0,
+        -100
+      )
+    }
+
+
     //test text write Danger Dash
     Start.writeTextToCanvas(
       ctx,
