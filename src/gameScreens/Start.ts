@@ -121,6 +121,8 @@ class Start {
   }
 
   private buttonMaker() {
+    
+     
     //Initializing the buttons and pushing them to the array
     //Making the start button
     this.buttons.push(
@@ -343,7 +345,7 @@ class Start {
     xCoordinate: number,
     yCoordinate: number,
     alignment: CanvasTextAlign = "center",
-    color: string = "red"
+    color: string = "black"
   ) {
     ctx.font = `${fontSize}px Minecraft`;
     ctx.fillStyle = color;

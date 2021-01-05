@@ -1,7 +1,7 @@
 class QuestionAndAnswer {
     private canvas: HTMLCanvasElement;
-    private image: HTMLImageElement;
-    private button: Button;
+    // private image: HTMLImageElement;
+    // private button: Button;
     private buttons: Button[];
     // private buttons: Button[];
   
