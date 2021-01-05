@@ -8,14 +8,23 @@ class Game {
         this.loop = () => {
             this.frame++;
             this.draw();
-            console.log(this.worldName);
+            if (this.frame % 10 === 0) {
+                this.player.move();
+            }
             this.player.move();
-            if (this.worldName === "Ocean") {
-                console.log("Ocean");
+            if (this.worldName === "level-1") {
+                console.log("level 1");
             }
             else if (this.worldName === "Level-2") {
             }
+            if (this.worldName === "Desert") {
+                new DesertWorld(this.canvas, "Desert");
+            }
             requestAnimationFrame(this.loop);
+            console.log(this.test);
+            if (this.frame > 10) {
+                this.scoringItems.forEach(scoringItem => scoringItem.move());
+            }
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
@@ -26,12 +35,22 @@ class Game {
         this.frame = 0;
         this.worldName = worldName;
         this.loop();
+        this.random = Start.randomNumber(1, 1);
+        this.scoringItems = [new Shark(this.canvas)];
+    }
+    scoringItemsArticWorld() {
+        if (this.random === 1) {
+            this.scoringItems.push(new Shark(this.canvas));
+        }
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         Start.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
         this.player.draw(ctx);
+        if (this.frame > 10) {
+            this.scoringItems.forEach(scoringItem => scoringItem.draw(ctx));
+        }
     }
 }
 class KeyboardListener {
@@ -430,17 +449,36 @@ class GameItem {
         return Math.round(Math.random() * (max - min) + min);
     }
 }
-class ScoringItem extends GameItem {
+class ScoringItem {
     constructor(canvas) {
-        super(canvas);
-        this.canvas = this.canvas;
-        this.createRandomYpos();
+        this.canvas = canvas;
+        this.xPosition = 500;
+        this.yPosition = 1080;
+        this.speed = -5;
+    }
+    getPositionX() {
+        return this.xPosition;
+    }
+    getPositionY() {
+        return this.yPosition;
     }
     getImageWidth() {
         return this.image.width;
     }
     getImageHeight() {
         return this.image.height;
+    }
+    getPoints() {
+        return this.points;
+    }
+    scoringItemsArticWorld() { }
+    move() {
+        this.xPosition += this.speed;
+    }
+    draw(ctx) {
+        ctx.drawImage(this.image, this.xPosition - this.image.width / 2, this.yPosition);
+    }
+    collisionDetection() {
     }
     createRandomYpos() {
         const random = GameItem.randomInteger(1, 3);
@@ -454,21 +492,15 @@ class ScoringItem extends GameItem {
             this.yPosition = this.lowerLane;
         }
     }
-    draw(ctx) {
-        ctx.drawImage(this.image, this.xPosition, this.yPosition);
-    }
-    reloadImage(canvas) { }
-    collisionDetection() {
-    }
-    move(canvas) {
+    loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
     }
 }
 class IngameCoin extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.name = "Coin";
-        this.image = GameItem.loadNewImage("./assets/img/coin.png");
-        this.points = 1;
     }
 }
 class Obstacle extends ScoringItem {
@@ -484,24 +516,25 @@ class Player extends GameItem {
         this.image = GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-1.png");
         this.keyboardListener = new KeyboardListener();
         this.yPos = this.canvas.height / 2;
-        this.xPos = this.canvas.width / 3;
+        this.xPos = this.canvas.width / 7;
         this.animationFrame = 0;
     }
     move() {
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_W) &&
-            this.yPos !== this.topLane) {
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_UP) &&
+            this.yPos === this.middleLane) {
             this.yPos = this.topLane;
-            console.log("W is pressed");
         }
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_X) &&
-            this.yPos !== this.middleLane) {
+        else if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_UP) &&
+            this.yPos === this.lowerLane) {
             this.yPos = this.middleLane;
-            console.log("X is pressed");
         }
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_S) &&
-            this.yPos !== this.lowerLane) {
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_DOWN) &&
+            this.yPos === this.topLane) {
+            this.yPos = this.middleLane;
+        }
+        else if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_DOWN) &&
+            this.yPos === this.middleLane) {
             this.yPos = this.lowerLane;
-            console.log("S is pressed");
         }
     }
     draw(ctx) {
@@ -524,6 +557,13 @@ class Player extends GameItem {
     }
     collidesWithGameItem(GameItem) { }
 }
+class Shark extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanShark.png");
+        this.points = -5;
+    }
+}
 class ArticWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
@@ -532,6 +572,7 @@ class ArticWorld extends Game {
 class DesertWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
+        this.image = GameItem.loadNewImage("./assets/img/world/DesertBG.jpg");
     }
 }
 class OceanWorld extends Game {
