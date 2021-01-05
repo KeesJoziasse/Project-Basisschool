@@ -5,6 +5,8 @@ class Shop {
   private buttons: Button[];
   private characters: Images[];
   private newWorlds: Images[];
+  public name: string;
+  private money: number;
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
@@ -37,6 +39,11 @@ class Shop {
     // Calls the image drawer function
     this.drawImages();
 
+    this.getButtonName();
+
+    // Amount of money
+    this.money = 1000; 
+
     
 
     //Calls the loop.
@@ -45,6 +52,12 @@ class Shop {
     // add an mouse event
     document.addEventListener("click", this.mouseHandler);
   }
+
+  public getButtonName(): string {
+    return this.name;
+  }
+
+  
 
   /**
    * Method for the Game Loop
@@ -67,7 +80,9 @@ class Shop {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    
     // this.drawUnlockableCharacter();
+    // this.drawUnlockableWorlds();
 
     this.buttons.forEach((button) => {
       button.draw(ctx);
@@ -82,6 +97,10 @@ class Shop {
       80,
       "center"
     );
+
+    this.money;
+
+    
 
     // Drawing the images
     this.images.forEach((image)=> {
@@ -115,6 +134,7 @@ class Shop {
     this.images.push(new coinForShop(this.canvas.width / 2 + 480, this.canvas.height / 3 + 60));
     this.images.push(new coinForShop(this.canvas.width / 2 - 750, this.canvas.height / 3 + 60));
     this.images.push(new coinForShop(this.canvas.width / 2 + 80, this.canvas.height / 3 + 60));
+    this.images.push(new coinForShop(this.canvas.width / 2 -950, this.canvas.height / 3 + 625));
 
     
   }
@@ -138,13 +158,17 @@ class Shop {
 
   public drawUnlockableCharacter(){
     // #TODO draw characters that are actually compatible for drawing, these are examples
-
     this.characters.push(
-      new Sonic(this.canvas.width / 2 - 700, this.canvas.height / 3 - 210)
+      new Stewie(this.canvas.width / 2 - 700, this.canvas.height / 3 - 180)
     )
+    
+    if(this.getButtonName() === "UnlockStewie"){
+    this.characters.push(
+      new StewieUnlocked(this.canvas.width / 2 - 700, this.canvas.height / 3 - 180)
+    )}
 
     this.characters.push(
-      new Unlockable(this.canvas.width / 2 - 300, this.canvas.height / 3 - 190)
+      new YellowAmongUs(this.canvas.width / 2 - 300, this.canvas.height / 3 - 190)
     );
 
     
@@ -188,16 +212,16 @@ class Shop {
     // this.buttons.push(new NextSelector(this.canvas.width - 380, 740, 1)); ##TODO ADD if you want more characters/worlds
 
     // Unlock buttons for the worlds
-    this.buttons.push(new Unlock(this.canvas.width - 1500, 1000, 1));
-    this.buttons.push(new Unlock(this.canvas.width - 700, 1000, 1));
-    this.buttons.push(new Unlock(this.canvas.width - 1100, 1000, 1));
+    this.buttons.push(new UnlockMoon(this.canvas.width - 1500, 1000));
+    this.buttons.push(new UnlockVenus(this.canvas.width - 700, 1000));
+    this.buttons.push(new UnlockMars(this.canvas.width - 1100, 1000));
 
     /// Unlock buttons for the characters
     // #TODO fix code duplication
-    this.buttons.push(new Unlock(this.canvas.width - 1710, 500, 1));
-    this.buttons.push(new Unlock(this.canvas.width - 1300, 500, 1));
-    this.buttons.push(new Unlock(this.canvas.width - 890, 500, 1));
-    this.buttons.push(new Unlock(this.canvas.width - 480, 500, 1));
+    this.buttons.push(new UnlockStewie(this.canvas.width - 1710, 500));
+    this.buttons.push(new UnlockAmongUs(this.canvas.width - 1300, 500));
+    this.buttons.push(new UnlockAsh(this.canvas.width - 890, 500));
+    this.buttons.push(new UnlockMorty(this.canvas.width - 480, 500));
     
   }
 
