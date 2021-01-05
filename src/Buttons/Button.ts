@@ -45,10 +45,23 @@ abstract class Button {
       event.clientY >= this.getButtonYPos() &&
       event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()
     ) {
-      // looks if the buttons name macth and get you to the right page
+      // looks if the buttons name match and get you to the right page
       if (this.getButtonName() === "HighScore") {
         new HighScore(document.getElementById("canvas") as HTMLCanvasElement);
       } 
+      if (this.getButtonName() === "Unlock") {
+        
+      }
+      
+      if (this.getButtonName() === "Settings") {
+        //new Settings(document.getElementById("canvas") as HTMLCanvasElement);
+      }
+      if (this.getButtonName() === "QandA") {
+        //new GeneralQuestions(document.getElementById("canvas") as HTMLCanvasElement);
+      }
+      if (this.getButtonName() === "Shop") {
+        new Shop(document.getElementById("canvas") as HTMLCanvasElement);
+      }
       else if (this.getButtonName() === "BackToStart") {
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
       } else {
