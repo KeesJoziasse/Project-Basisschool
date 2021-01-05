@@ -140,6 +140,7 @@ class Button {
                 if (this.getButtonName() === "Unlock") {
                 }
                 if (this.getButtonName() === "Settings") {
+                    new Settings(document.getElementById("canvas"));
                 }
                 if (this.getButtonName() === "QandA") {
                 }

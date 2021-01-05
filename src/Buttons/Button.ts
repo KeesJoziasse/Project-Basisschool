@@ -54,10 +54,10 @@ abstract class Button {
       }
       
       if (this.getButtonName() === "Settings") {
-        //new Settings(document.getElementById("canvas") as HTMLCanvasElement);
+        new Settings(document.getElementById("canvas") as HTMLCanvasElement);
       }
       if (this.getButtonName() === "QandA") {
-        //new GeneralQuestions(document.getElementById("canvas") as HTMLCanvasElement);
+        // new GeneralQuestions(document.getElementById("canvas") as HTMLCanvasElement);
       }
       if (this.getButtonName() === "Shop") {
         new Shop(document.getElementById("canvas") as HTMLCanvasElement);
