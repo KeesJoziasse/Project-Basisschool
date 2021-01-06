@@ -61,7 +61,7 @@ class Player extends GameItem {
     if (this.animationFrame <= 10) {
       ctx.drawImage(
         GameItem.loadNewImage(
-          "./assets/img/Characters/AmongUsa/among-us-walk-1.png"
+          "./assets/img/Characters/AmongUs/among-us-walk-1.png"
         ),
         this.xPos,
         this.yPos
