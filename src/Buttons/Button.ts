@@ -38,7 +38,7 @@ abstract class Button {
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandler = (event: MouseEvent): void => {
-    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
     if (
       event.clientX >= this.getButtonXPos() &&
       event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
