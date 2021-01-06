@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Shop(document.getElementById("canvas"));
+    new Start(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -376,6 +376,13 @@ class AmongUsChar extends Images {
         this.image = Start.loadNewImage("./assets/img/Characters/AmongUs/amongUsLime.png");
     }
 }
+class ArcticPlanet extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "ArcticPlanet";
+        this.image = Start.loadNewImage("./assets/img/world/ArcticPlanet.png");
+    }
+}
 class ArticImage extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -538,13 +545,6 @@ class Titel extends Images {
         super(xPos, yPos);
         this.name = "Titel";
         this.image = Start.loadNewImage("./assets/img/world/Titel.png");
-    }
-}
-class ArcticPlanet extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "ArcticPlanet";
-        this.image = Start.loadNewImage("./assets/img/world/ArcticPlanet.png");
     }
 }
 class VenusUnlocked extends Images {
@@ -1131,6 +1131,10 @@ class Start {
     charachterMaker() {
         this.characterImages.push(new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
         this.characterImages.push(new Stickman(this.canvas.width / 2 - 48, this.canvas.height / 2 - 120));
+        this.characterImages.push(new StewieUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.characterImages.push(new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.characterImages.push(new MortyUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120));
+        this.characterImages.push(new AshUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120));
     }
     imageMaker() {
         this.images.push(new Titel(this.canvas.width / 4, -40));
