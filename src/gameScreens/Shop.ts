@@ -81,7 +81,8 @@ class Shop {
 
     //#TODO #FIX zodra die unluck button gepressed wordt
     //#TODO #FIX probleem hij ziet de shop niet!!
-    this.drawUnlockableCharacter();
+    
+    // this.drawUnlockableCharacter();
 
     
 

@@ -225,13 +225,6 @@ class StartGameButton extends Button {
         this.image = Start.loadNewImage("./assets/img/buttons/start-button.png");
     }
 }
-class Unlock extends Button {
-    constructor(xPos, yPos, index) {
-        super(xPos, yPos);
-        this.name = "Unlock";
-        this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
-    }
-}
 class HighscoreButton extends Button {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -837,7 +830,6 @@ class Shop {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.drawUnlockableCharacter();
         this.buttons.forEach((button) => {
             button.draw(ctx);
         });
