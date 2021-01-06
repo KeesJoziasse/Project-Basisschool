@@ -57,44 +57,72 @@ class GeneralQuestions {
       image.draw(ctx);
     });
 
-    //The text at the top center.
-    Start.writeTextToCanvas(
-      ctx,
-      "Questions",
-      60,
-      this.canvas.width / 2,
-      80,
-      "center"
-    );
+    // control interface
+    this.controls(ctx);
 
-    // besturing text
-    Start.writeTextToCanvas(
-      ctx,
-      "Besturing:",
-      50,
-      this.canvas.width / 12,
-      140,
-      "center"
-    );
+    // titles of al the textboxes
+    this.titleTextBoxes(ctx);
+  }
 
+  private buttonMaker() {
+    this.buttons.push(
+      new BackToStart(
+        (this.canvas.width / 5) * 0.05,
+        (this.canvas.height / 5) * 0.09
+      )
+    );
+  }
+
+  // locatie images op canvas
+  private imageMaker() {
+    //titles
+    this.images.push(new Control((this.canvas.width / 15) * 0.1, 110));
+    this.images.push(new Questions(this.canvas.width / 3, 0));
+    // besturing
+    this.images.push(new UpperLane((this.canvas.width / 3) * 0.60, 200));
+    this.images.push(new MidLane((this.canvas.width / 3) * 0.60, 350));
+    this.images.push(new DownLane((this.canvas.width / 3) * 0.60, 500));
+    // shield
+    this.images.push(new ShieldBooster((this.canvas.width / 3) * 1, 435));
+    // rocket
+    this.images.push(new RocketBooster((this.canvas.width / 3) * 1, 135));
+    // coin
+    this.images.push(new TextCoin((this.canvas.width / 2) * 1.34, 435));
+    // obstacle
+    this.images.push(new TextObstacle((this.canvas.width / 2) * 1.34, 150));
+  }
+
+  // function to draw all control text on the canvas
+  private controls(ctx: CanvasRenderingContext2D) {
     Start.writeTextToCanvas(
       ctx,
-      "Beweeg omhoog",
+      "Bovenste laan:",
       40,
-      (this.canvas.width / 9) * 0.97,
-      260,
+      (this.canvas.width / 9) * 0.92,
+      265,
       "center"
     );
 
     Start.writeTextToCanvas(
       ctx,
-      "Beweeg omlaag",
+      "Middelste laan:",
       40,
       (this.canvas.width / 9) * 0.93,
-      390,
+      405,
       "center"
     );
-    // title boosters
+
+    Start.writeTextToCanvas(
+      ctx,
+      "Onderste laan:",
+      40,
+      (this.canvas.width / 9) * 0.93,
+      560,
+      "center"
+    );
+  }
+// function to draw als textbox titles to the canvas
+  private titleTextBoxes(ctx: CanvasRenderingContext2D) {
     Start.writeTextToCanvas(
       ctx,
       "Rocket booster",
@@ -129,30 +157,6 @@ class GeneralQuestions {
       435,
       "center"
     );
-  }
-
-  private buttonMaker() {
-    this.buttons.push(
-      new BackToStart(
-        (this.canvas.width / 5) * 0.05,
-        (this.canvas.height / 5) * 0.09
-      )
-    );
-  }
-
-  // locatie images op canvas
-  private imageMaker() {
-    // besturing
-    this.images.push(new ArrowUp((this.canvas.width / 3) * 0.65, 150));
-    this.images.push(new ArrowDown((this.canvas.width / 3) * 0.65, 360));
-    // shield
-    this.images.push(new ShieldBooster((this.canvas.width / 3) * 1, 435));
-    // rocket
-    this.images.push(new RocketBooster((this.canvas.width / 3) * 1, 135));
-    // coin
-    this.images.push(new TextCoin((this.canvas.width / 2) * 1.34, 435));
-    // obstacle
-    this.images.push(new TextObstacle((this.canvas.width / 2) * 1.34, 150));
   }
 
   /**

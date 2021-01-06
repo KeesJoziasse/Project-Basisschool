@@ -318,13 +318,6 @@ class AmongUsChar extends Images {
         this.image = Start.loadNewImage("./assets/img/Characters/AmongUs/amongUsLime.png");
     }
 }
-class ArrowUp extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "arrowUP";
-        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/arrowUp.png");
-    }
-}
 class ArticImage extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -363,11 +356,32 @@ class Coin extends Images {
         this.image = Start.loadNewImage("./assets/img/GameItems/coin.png");
     }
 }
+class Control extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Control";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/control.png");
+    }
+}
+class DownLane extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "downLane";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/downLane.png");
+    }
+}
 class Mars extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "Mars";
         this.image = Start.loadNewImage("./assets/img/world/mars.png");
+    }
+}
+class MidLane extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "midLane";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/midLane.png");
     }
 }
 class Moon extends Images {
@@ -382,6 +396,13 @@ class Morty extends Images {
         super(xPos, yPos);
         this.name = "Morty";
         this.image = Start.loadNewImage("./assets/img/players/morty.png");
+    }
+}
+class Questions extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Questions";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/questions.png");
     }
 }
 class RocketBooster extends Images {
@@ -447,18 +468,18 @@ class Unlockable extends Images {
         this.image = Start.loadNewImage("./assets/img/players/yellowAU.png");
     }
 }
+class UpperLane extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "upperLane";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/upperLane.png");
+    }
+}
 class Venus extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "Venus";
         this.image = Start.loadNewImage("./assets/img/world/venus.png");
-    }
-}
-class ArrowDown extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "arrowDown";
-        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/arrowDown.png");
     }
 }
 class coinForShop extends Images {
@@ -713,25 +734,33 @@ class GeneralQuestions {
         this.images.forEach((image) => {
             image.draw(ctx);
         });
-        Start.writeTextToCanvas(ctx, "Questions", 60, this.canvas.width / 2, 80, "center");
-        Start.writeTextToCanvas(ctx, "Besturing:", 50, this.canvas.width / 12, 140, "center");
-        Start.writeTextToCanvas(ctx, "Beweeg omhoog", 40, (this.canvas.width / 9) * 0.97, 260, "center");
-        Start.writeTextToCanvas(ctx, "Beweeg omlaag", 40, (this.canvas.width / 9) * 0.93, 390, "center");
-        Start.writeTextToCanvas(ctx, "Rocket booster", 35, (this.canvas.width / 3) * 1.4, 140, "center");
-        Start.writeTextToCanvas(ctx, "Shield booster", 35, (this.canvas.width / 3) * 1.4, 435, "center");
-        Start.writeTextToCanvas(ctx, "Obstakels", 35, (this.canvas.width / 2) * 1.6, 140, "center");
-        Start.writeTextToCanvas(ctx, "Coins", 35, (this.canvas.width / 2) * 1.6, 435, "center");
+        this.controls(ctx);
+        this.titleTextBoxes(ctx);
     }
     buttonMaker() {
         this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09));
     }
     imageMaker() {
-        this.images.push(new ArrowUp((this.canvas.width / 3) * 0.65, 150));
-        this.images.push(new ArrowDown((this.canvas.width / 3) * 0.65, 360));
+        this.images.push(new Control((this.canvas.width / 15) * 0.1, 110));
+        this.images.push(new Questions(this.canvas.width / 3, 0));
+        this.images.push(new UpperLane((this.canvas.width / 3) * 0.60, 200));
+        this.images.push(new MidLane((this.canvas.width / 3) * 0.60, 350));
+        this.images.push(new DownLane((this.canvas.width / 3) * 0.60, 500));
         this.images.push(new ShieldBooster((this.canvas.width / 3) * 1, 435));
         this.images.push(new RocketBooster((this.canvas.width / 3) * 1, 135));
         this.images.push(new TextCoin((this.canvas.width / 2) * 1.34, 435));
         this.images.push(new TextObstacle((this.canvas.width / 2) * 1.34, 150));
+    }
+    controls(ctx) {
+        Start.writeTextToCanvas(ctx, "Bovenste laan:", 40, (this.canvas.width / 9) * 0.92, 265, "center");
+        Start.writeTextToCanvas(ctx, "Middelste laan:", 40, (this.canvas.width / 9) * 0.93, 405, "center");
+        Start.writeTextToCanvas(ctx, "Onderste laan:", 40, (this.canvas.width / 9) * 0.93, 560, "center");
+    }
+    titleTextBoxes(ctx) {
+        Start.writeTextToCanvas(ctx, "Rocket booster", 35, (this.canvas.width / 3) * 1.4, 140, "center");
+        Start.writeTextToCanvas(ctx, "Shield booster", 35, (this.canvas.width / 3) * 1.4, 435, "center");
+        Start.writeTextToCanvas(ctx, "Obstakels", 35, (this.canvas.width / 2) * 1.6, 140, "center");
+        Start.writeTextToCanvas(ctx, "Coins", 35, (this.canvas.width / 2) * 1.6, 435, "center");
     }
 }
 class HighScore {
@@ -754,8 +783,6 @@ class HighScore {
         this.rankList(ctx);
         this.buttons.forEach((button) => {
             button.draw(ctx);
-            button.move(this.canvas);
-            button.reloadImage(this.canvas);
         });
     }
     rankList(ctx) {
@@ -766,7 +793,7 @@ class HighScore {
         HighScore.writeTextToCanvas(ctx, "Fifth:", 40, this.canvas.width / 3, 440, "center");
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "black") {
-        ctx.font = `${fontSize}px Minecraft`;
+        ctx.font = `${fontSize}px Arial`;
         ctx.fillStyle = color;
         ctx.textAlign = alignment;
         ctx.fillText(text, xCoordinate, yCoordinate);

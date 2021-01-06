@@ -56,8 +56,6 @@ class HighScore {
    //Drawing the buttons
   this.buttons.forEach((button) => {
     button.draw(ctx);
-    button.move(this.canvas);
-    button.reloadImage(this.canvas); //#TODO
   });
   }
 
@@ -127,7 +125,7 @@ class HighScore {
     alignment: CanvasTextAlign = "center",
     color: string = "black"
   ) {
-    ctx.font = `${fontSize}px Minecraft`;
+    ctx.font = `${fontSize}px Arial`;
     ctx.fillStyle = color;
     ctx.textAlign = alignment;
     ctx.fillText(text, xCoordinate, yCoordinate);
