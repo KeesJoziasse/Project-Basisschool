@@ -105,9 +105,9 @@ class Shop {
     // Amount of money in the player's bank
     Start.writeTextToCanvas(
       ctx,
-      "1000",
+      "200",
       60,
-      this.canvas.width / 10,
+      this.canvas.width / 11,
       this.canvas.height / 1.035,
       "center");
 

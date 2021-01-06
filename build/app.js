@@ -995,7 +995,7 @@ class Shop {
             button.draw(ctx);
         });
         Start.writeTextToCanvas(ctx, "Shop", 60, this.canvas.width / 2, 80, "center");
-        Start.writeTextToCanvas(ctx, "1000", 60, this.canvas.width / 10, this.canvas.height / 1.035, "center");
+        Start.writeTextToCanvas(ctx, "200", 60, this.canvas.width / 11, this.canvas.height / 1.035, "center");
         Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 5.8, this.canvas.height / 2.25, "center");
         Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 2.55, this.canvas.height / 2.25, "center");
         Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.68, this.canvas.height / 2.25, "center");
