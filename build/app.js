@@ -558,7 +558,7 @@ class YellowAmongUsUnlocked extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "YellowAmongUsUnlocked";
-        this.image = Start.loadNewImage("./assets/img/players/YellowAUUnlocked.png");
+        this.image = Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png");
     }
 }
 class ArrowDown extends Images {
@@ -706,11 +706,14 @@ class Player extends GameItem {
         if (this.animationFrame >= 40) {
             this.animationFrame -= 39;
         }
+        this.animatePlayer(ctx);
+    }
+    animatePlayer(ctx) {
         if (this.animationFrame <= 10) {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png"), this.xPos, this.yPos);
         }
         else if (this.animationFrame >= 10 && this.animationFrame <= 20) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png"), this.xPos, this.yPos);
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-2.png"), this.xPos, this.yPos);
         }
         else if (this.animationFrame >= 20 && this.animationFrame <= 30) {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-3.png"), this.xPos, this.yPos);
@@ -720,11 +723,7 @@ class Player extends GameItem {
         }
     }
     collidesWithScoringItem(ScoringItem) {
-        if (this.xPos < ScoringItem.getPositionX() + ScoringItem.getImageWidth() &&
-            this.xPos + this.image.width > ScoringItem.getPositionX() &&
-            this.canvas.width - 200 <
-                ScoringItem.getPositionY() + ScoringItem.getImageHeight() &&
-            this.canvas.width - 200 + this.image.width > ScoringItem.getPositionY()) {
+        if (this.xPos + this.image.width > ScoringItem.getPositionX()) {
             return true;
         }
         return false;

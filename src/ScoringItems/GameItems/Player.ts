@@ -57,11 +57,16 @@ class Player extends GameItem {
       this.animationFrame -= 39;
     }
 
-    //animated so the images will change at a certain amount of frames
+    //Calls the animation method
+    this.animatePlayer(ctx);
+  }
+
+  //Method to animate the player.
+  private animatePlayer(ctx: CanvasRenderingContext2D) {
     if (this.animationFrame <= 10) {
       ctx.drawImage(
         GameItem.loadNewImage(
-          "./assets/img/Characters/AmongUsa/among-us-walk-1.png"
+          "./assets/img/Characters/AmongUs/among-us-walk-1.png"
         ),
         this.xPos,
         this.yPos
@@ -96,16 +101,11 @@ class Player extends GameItem {
   /**
    * Method that checks if a gameItem collides with the player
    * #TODO wordt nog niet aangesproken
-   * @param GameItem
+   * @param ScoringItem
    */
   public collidesWithScoringItem(ScoringItem: ScoringItem): boolean {
     if (
-      this.xPos < ScoringItem.getPositionX() + ScoringItem.getImageWidth() &&
-      this.xPos + this.image.width > ScoringItem.getPositionX() &&
-      this.canvas.width - 200 <
-        ScoringItem.getPositionY() + ScoringItem.getImageHeight() &&
-      this.canvas.width - 200 + this.image.width > ScoringItem.getPositionY()
-    ) {
+      this.xPos + this.image.width > ScoringItem.getPositionX()){
       return true;
     }
     return false;
