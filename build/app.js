@@ -852,9 +852,9 @@ class Shop {
         });
     }
     drawImages() {
-        this.images.push(new coinForShop(this.canvas.width / 2 - 120, this.canvas.height / 3 + 560));
-        this.images.push(new coinForShop(this.canvas.width / 2 - 520, this.canvas.height / 3 + 560));
-        this.images.push(new coinForShop(this.canvas.width / 2 + 270, this.canvas.height / 3 + 560));
+        this.images.push(new coinForShop(this.canvas.width / 2.3, this.canvas.height / 1.17));
+        this.images.push(new coinForShop(this.canvas.width / 4.4, this.canvas.height / 1.17));
+        this.images.push(new coinForShop(this.canvas.width / 1.56, this.canvas.height / 1.17));
         this.images.push(new coinForShop(this.canvas.width / 2 - 330, this.canvas.height / 3 + 60));
         this.images.push(new coinForShop(this.canvas.width / 2 + 480, this.canvas.height / 3 + 60));
         this.images.push(new coinForShop(this.canvas.width / 2 - 750, this.canvas.height / 3 + 60));
