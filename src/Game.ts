@@ -27,7 +27,7 @@ abstract class Game {
   protected scoringItems: ScoringItem[];
 
   //testArea
-  private test: Shark;
+
 
   /**
    * Constructor
