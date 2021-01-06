@@ -121,6 +121,8 @@ class Start {
   }
 
   private buttonMaker() {
+    
+     
     //Initializing the buttons and pushing them to the array
     //Making the start button
     this.buttons.push(

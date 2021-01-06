@@ -8,30 +8,61 @@ class Game {
         this.loop = () => {
             this.frame++;
             this.draw();
-            console.log(this.worldName);
-            this.player.move();
-            if (this.worldName === "Ocean") {
-                console.log("Ocean");
-            }
-            else if (this.worldName === "Level-2") {
+            this.frameIndex();
+            this.forScoringItems();
+            if (this.frame % 10 === 0) {
+                this.player.move();
             }
             requestAnimationFrame(this.loop);
+            console.log(this.scoringItems);
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.gameItems = [];
         this.player = new Player(this.canvas);
         this.score = 0;
         this.frame = 0;
         this.worldName = worldName;
         this.loop();
+        this.scoringItems = [];
+    }
+    scoringItemsOceanWorld() { }
+    frameIndex() { }
+    forScoringItems() {
+        if (this.frame > 1) {
+            this.scoringItems.forEach((scoringItem) => {
+                scoringItem.move();
+            });
+            for (let i = 0; i < this.scoringItems.length; i++) {
+                if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
+                    this.scoringItems.splice(i, 1);
+                }
+                else if (this.scoringItems[i].outOfCanvas()) {
+                    this.scoringItems.splice(i, 1);
+                }
+            }
+        }
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        if (this.worldName === "Ocean") {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"), 0, -100);
+        }
+        if (this.worldName === "Desert") {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"), 0, 0);
+        }
+        if (this.worldName === "Artic") {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/ArticBG.jpg"), 0, 0);
+        }
+        if (this.worldName === "Swamp") {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"), 0, -100);
+        }
         Start.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
         this.player.draw(ctx);
+        if (this.frame > 1) {
+            this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+        }
     }
 }
 class KeyboardListener {
@@ -432,6 +463,20 @@ class MortyUnlocked extends Images {
         this.image = Start.loadNewImage("./assets/img/players/MortyUnlocked.png");
     }
 }
+class RocketBooster extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "rocketBooster";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/rocketBooster.png");
+    }
+}
+class ShieldBooster extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "shieldBooster";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/shieldBooster.png");
+    }
+}
 class Stewie extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -458,6 +503,34 @@ class SwampImage extends Images {
         super(xPos, yPos);
         this.name = "Swamp";
         this.image = Start.loadNewImage("./assets/img/world/swamp.png");
+    }
+}
+class TextCoin extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "textCoin";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/textCoin.png");
+    }
+}
+class TextObstacle extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "textObstacle";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/textObstacle.png");
+    }
+}
+class TextRocketBooster extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "textRocketBooster";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/textRocketBooster.png");
+    }
+}
+class TextShieldBooster extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "textShieldBooster";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/textShieldBooster.png");
     }
 }
 class Titel extends Images {
@@ -537,19 +610,12 @@ class GameItem {
         return Math.round(Math.random() * (max - min) + min);
     }
 }
-class ScoringItem extends GameItem {
+class ScoringItem {
     constructor(canvas) {
-        super(canvas);
-        this.canvas = this.canvas;
-        this.createRandomYpos();
-    }
-    getImageWidth() {
-        return this.image.width;
-    }
-    getImageHeight() {
-        return this.image.height;
-    }
-    createRandomYpos() {
+        this.canvas = canvas;
+        this.topLane = this.canvas.height / 4;
+        this.middleLane = this.canvas.height / 2;
+        this.lowerLane = (this.canvas.height / 4) * 3;
         const random = GameItem.randomInteger(1, 3);
         if (random === 1) {
             this.yPosition = this.topLane;
@@ -560,22 +626,45 @@ class ScoringItem extends GameItem {
         if (random === 3) {
             this.yPosition = this.lowerLane;
         }
+        this.speed = -3;
+        this.xPosition = this.canvas.width;
+    }
+    getPositionX() {
+        return this.xPosition;
+    }
+    getPositionY() {
+        return this.yPosition;
+    }
+    getImageWidth() {
+        return this.image.width;
+    }
+    getImageHeight() {
+        return this.image.height;
+    }
+    getPoints() {
+        return this.points;
+    }
+    move() {
+        this.xPosition += this.speed;
     }
     draw(ctx) {
-        ctx.drawImage(this.image, this.xPosition, this.yPosition);
+        ctx.drawImage(this.image, this.xPosition - this.image.width / 2, this.yPosition);
     }
-    reloadImage(canvas) { }
-    collisionDetection() {
+    outOfCanvas() {
+        if (this.xPosition + this.image.width < 0) {
+            return true;
+        }
+        return false;
     }
-    move(canvas) {
+    loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
     }
 }
 class IngameCoin extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.name = "Coin";
-        this.image = GameItem.loadNewImage("./assets/img/coin.png");
-        this.points = 1;
     }
 }
 class Obstacle extends ScoringItem {
@@ -591,24 +680,25 @@ class Player extends GameItem {
         this.image = GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-1.png");
         this.keyboardListener = new KeyboardListener();
         this.yPos = this.canvas.height / 2;
-        this.xPos = this.canvas.width / 3;
+        this.xPos = this.canvas.width / 7;
         this.animationFrame = 0;
     }
     move() {
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_W) &&
-            this.yPos !== this.topLane) {
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_UP) &&
+            this.yPos === this.middleLane) {
             this.yPos = this.topLane;
-            console.log("W is pressed");
         }
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_X) &&
-            this.yPos !== this.middleLane) {
+        else if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_UP) &&
+            this.yPos === this.lowerLane) {
             this.yPos = this.middleLane;
-            console.log("X is pressed");
         }
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_S) &&
-            this.yPos !== this.lowerLane) {
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_DOWN) &&
+            this.yPos === this.topLane) {
+            this.yPos = this.middleLane;
+        }
+        else if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_DOWN) &&
+            this.yPos === this.middleLane) {
             this.yPos = this.lowerLane;
-            console.log("S is pressed");
         }
     }
     draw(ctx) {
@@ -629,7 +719,37 @@ class Player extends GameItem {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-2.png"), this.xPos, this.yPos);
         }
     }
-    collidesWithGameItem(GameItem) { }
+    collidesWithScoringItem(ScoringItem) {
+        if (this.xPos < ScoringItem.getPositionX() + ScoringItem.getImageWidth() &&
+            this.xPos + this.image.width > ScoringItem.getPositionX() &&
+            this.canvas.width - 200 <
+                ScoringItem.getPositionY() + ScoringItem.getImageHeight() &&
+            this.canvas.width - 200 + this.image.width > ScoringItem.getPositionY()) {
+            return true;
+        }
+        return false;
+    }
+}
+class Fish extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanFish.png");
+        this.points = -5;
+    }
+}
+class Pearl extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanParelBooster.png");
+        this.points = -5;
+    }
+}
+class Shark extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanShark.png");
+        this.points = -5;
+    }
 }
 class ArticWorld extends Game {
     constructor(canvas, worldName) {
@@ -639,11 +759,34 @@ class ArticWorld extends Game {
 class DesertWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
+        this.image = GameItem.loadNewImage("./assets/img/world/DesertBG.jpg");
     }
 }
 class OceanWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
+        this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
+        const ctx = this.canvas.getContext("2d");
+    }
+    drawBackground(ctx) {
+        ctx.drawImage(this.image, this.canvas.width / 2, this.canvas.height / 2);
+    }
+    frameIndex() {
+        if (this.frame % 100 === 0) {
+            this.scoringItemsOceanWorld();
+        }
+    }
+    scoringItemsOceanWorld() {
+        const random = GameItem.randomInteger(1, 3);
+        if (random === 1) {
+            this.scoringItems.push(new Shark(this.canvas));
+        }
+        if (random === 2) {
+            this.scoringItems.push(new Fish(this.canvas));
+        }
+        if (random === 3) {
+            this.scoringItems.push(new Pearl(this.canvas));
+        }
     }
 }
 class SwampWorld extends Game {
@@ -661,8 +804,10 @@ class GeneralQuestions {
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
+        this.images = [];
         this.buttons = [];
         this.buttonMaker();
+        this.imageMaker();
         this.loop();
         document.addEventListener("click", this.mouseHandler);
     }
@@ -672,10 +817,26 @@ class GeneralQuestions {
         this.buttons.forEach((button) => {
             button.draw(ctx);
         });
+        this.images.forEach((image) => {
+            image.draw(ctx);
+        });
         Start.writeTextToCanvas(ctx, "Questions", 60, this.canvas.width / 2, 80, "center");
+        Start.writeTextToCanvas(ctx, "Besturing:", 50, this.canvas.width / 12, 140, "center");
+        Start.writeTextToCanvas(ctx, "Beweeg omhoog ⬆️", 40, this.canvas.width / 8, 220, "center");
+        Start.writeTextToCanvas(ctx, "Beweeg omlaag  ⬇️", 40, (this.canvas.width / 9) * 1.12, 290, "center");
+        Start.writeTextToCanvas(ctx, "Rocket booster", 35, (this.canvas.width / 3) * 1.02, 140, "center");
+        Start.writeTextToCanvas(ctx, "Shield booster", 35, (this.canvas.width / 3) * 1, 440, "center");
     }
     buttonMaker() {
         this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09));
+    }
+    imageMaker() {
+        this.images.push(new TextRocketBooster((this.canvas.width / 3) * 0.75, 135));
+        this.images.push(new RocketBooster((this.canvas.width / 2) * 1.10, 180));
+        this.images.push(new TextShieldBooster((this.canvas.width / 3) * 0.75, 430));
+        this.images.push(new ShieldBooster((this.canvas.width / 2) * 1.10, 490));
+        this.images.push(new TextCoin((this.canvas.width / 2) * 1.34, 442));
+        this.images.push(new TextObstacle((this.canvas.width / 2) * 1.34, 150));
     }
 }
 class HighScore {
