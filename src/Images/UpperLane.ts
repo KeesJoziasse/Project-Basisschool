@@ -1,11 +1,11 @@
 /// <reference path="Images.ts" />
 
-class ArrowUp extends Images {
+class UpperLane extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "arrowUP";
+      this.name = "upperLane";
       this.image = Start.loadNewImage(
-        "./assets/img/GeneralQuestions/arrowUp.png"
+        "./assets/img/GeneralQuestions/upperLane.png"
       );
     }
   }
