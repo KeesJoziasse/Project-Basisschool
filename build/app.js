@@ -589,6 +589,13 @@ class YellowAmongUsUnlocked extends Images {
         this.image = Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png");
     }
 }
+class ArrowDown extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "arrowDown";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/arrowDown.png");
+    }
+}
 class coinForShop extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
