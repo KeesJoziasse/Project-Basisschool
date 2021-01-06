@@ -86,7 +86,6 @@ abstract class Game {
     }
 
     requestAnimationFrame(this.loop);
-
     console.log(this.scoringItems);
   };
 

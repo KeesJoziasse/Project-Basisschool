@@ -5,7 +5,7 @@ class YellowAmongUsUnlocked extends Images {
       super(xPos, yPos);
       this.name = "YellowAmongUsUnlocked";
       this.image = Start.loadNewImage(
-        "./assets/img/players/YellowAUUnlocked.png"
+        "./assets/img/players/yellowAUUnlocked.png"
       );
     }
   
