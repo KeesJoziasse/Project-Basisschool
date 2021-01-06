@@ -17,8 +17,13 @@ abstract class Game {
   protected random: number;
   //Scoring items array
   protected scoringItems: ScoringItem[];
+<<<<<<< Updated upstream
   //Number of lives.
   protected lives: number;
+=======
+
+  //testArea
+>>>>>>> Stashed changes
 
   /**
    * Constructor
@@ -50,6 +55,9 @@ abstract class Game {
   //Frameindex for the worlds.
   public frameIndex() {}
 
+  //Draws the background
+  public drawBackground(ctx: CanvasRenderingContext2D) {}
+
   /**
    * Method that checks the gamestate
    */
@@ -76,8 +84,12 @@ abstract class Game {
 
       for (let i = 0; i < this.scoringItems.length; i++) {
         if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
+<<<<<<< Updated upstream
           this.score += this.scoringItems[i].getPoints();
           this.lives += this.scoringItems[i].getLives();
+=======
+          //#TODO fix first if statement
+>>>>>>> Stashed changes
           this.scoringItems.splice(i, 1);
         } else if (this.scoringItems[i].outOfCanvas()) {
           this.scoringItems.splice(i, 1);
