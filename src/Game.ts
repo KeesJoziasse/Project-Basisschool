@@ -27,7 +27,7 @@ abstract class Game {
   protected scoringItems: ScoringItem[];
 
   //testArea
-  private test: Shark;
+
 
   /**
    * Constructor
@@ -86,7 +86,6 @@ abstract class Game {
     }
 
     requestAnimationFrame(this.loop);
-
     console.log(this.scoringItems);
   };
 

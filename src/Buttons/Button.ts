@@ -49,8 +49,28 @@ abstract class Button {
       if (this.getButtonName() === "HighScore") {
         new HighScore(document.getElementById("canvas") as HTMLCanvasElement);
       } 
-      if (this.getButtonName() === "Unlock") {
-        
+      if (this.getButtonName() === "UnlockMoon") {
+         console.log("Unlock moon");
+      }
+
+      if (this.getButtonName() === "UnlockMars") {
+        console.log("Unlock mars");
+      }
+
+      if (this.getButtonName() === "UnlockVenus") {
+        console.log("Unlock venus");
+      }
+
+      if (this.getButtonName() === "UnlockStewie") {
+        console.log("Unlock Stewie");
+      }
+
+      if (this.getButtonName() === "UnlockAmongUs") {
+        console.log("Unlock AmongUs");
+      }
+
+      if (this.getButtonName() === "UnlockAsh") {
+        console.log("Unlock Ash");
       }
       
       if (this.getButtonName() === "Settings") {
@@ -68,6 +88,7 @@ abstract class Button {
         return null;
       }
       console.log(`User clicked the: ${this.getButtonName()} button`);
+      
     }
   };
 
@@ -90,4 +111,5 @@ abstract class Button {
   public draw(ctx: CanvasRenderingContext2D) {
     ctx.drawImage(this.image, this.xPos, this.yPos);
   }
+
 }

@@ -212,6 +212,22 @@ class Start {
     this.characterImages.push(
       new Stickman(this.canvas.width / 2 - 48, this.canvas.height / 2 - 120)
     );
+
+    this.characterImages.push(
+      new StewieUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+    );
+
+    this.characterImages.push(
+      new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+    );
+
+    this.characterImages.push(
+      new MortyUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120)
+    );
+
+    this.characterImages.push(
+      new AshUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120)
+    );
   }
 
   private imageMaker() {

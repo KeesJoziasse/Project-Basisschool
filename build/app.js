@@ -150,7 +150,23 @@ class Button {
                 if (this.getButtonName() === "HighScore") {
                     new HighScore(document.getElementById("canvas"));
                 }
-                if (this.getButtonName() === "Unlock") {
+                if (this.getButtonName() === "UnlockMoon") {
+                    console.log("Unlock moon");
+                }
+                if (this.getButtonName() === "UnlockMars") {
+                    console.log("Unlock mars");
+                }
+                if (this.getButtonName() === "UnlockVenus") {
+                    console.log("Unlock venus");
+                }
+                if (this.getButtonName() === "UnlockStewie") {
+                    console.log("Unlock Stewie");
+                }
+                if (this.getButtonName() === "UnlockAmongUs") {
+                    console.log("Unlock AmongUs");
+                }
+                if (this.getButtonName() === "UnlockAsh") {
+                    console.log("Unlock Ash");
                 }
                 if (this.getButtonName() === "Settings") {
                     new Settings(document.getElementById("canvas"));
@@ -240,13 +256,6 @@ class StartGameButton extends Button {
         this.image = Start.loadNewImage("./assets/img/buttons/start-button.png");
     }
 }
-class Unlock extends Button {
-    constructor(xPos, yPos, index) {
-        super(xPos, yPos);
-        this.name = "Unlock";
-        this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
-    }
-}
 class HighscoreButton extends Button {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -280,6 +289,55 @@ class PreviousWorld extends Button {
         super(xPos, yPos);
         this.name = "PreviousWorld";
         this.image = Start.loadNewImage("./assets/img/buttons/left-arrow.png");
+    }
+}
+class UnlockAmongUs extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "UnlockAmongUs";
+        this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
+    }
+}
+class UnlockAsh extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "UnlockAsh";
+        this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
+    }
+}
+class UnlockMars extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "UnlockMars";
+        this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
+    }
+}
+class UnlockMoon extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "UnlockMoon";
+        this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
+    }
+}
+class UnlockMorty extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "UnlockMorty";
+        this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
+    }
+}
+class UnlockStewie extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "UnlockStewie";
+        this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
+    }
+}
+class UnlockVenus extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "UnlockVenus";
+        this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
     }
 }
 class Images {
@@ -318,6 +376,13 @@ class AmongUsChar extends Images {
         this.image = Start.loadNewImage("./assets/img/Characters/AmongUs/amongUsLime.png");
     }
 }
+class ArcticPlanet extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "ArcticPlanet";
+        this.image = Start.loadNewImage("./assets/img/world/ArcticPlanet.png");
+    }
+}
 class ArticImage extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -330,6 +395,13 @@ class Ash extends Images {
         super(xPos, yPos);
         this.name = "Ash";
         this.image = Start.loadNewImage("./assets/img/players/ash.png");
+    }
+}
+class AshUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "AshUnlocked";
+        this.image = Start.loadNewImage("./assets/img/players/AshUnlocked.png");
     }
 }
 class Cloud extends Images {
@@ -363,6 +435,13 @@ class Control extends Images {
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/control.png");
     }
 }
+class DesertPlanet extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "DesertPlanet";
+        this.image = Start.loadNewImage("./assets/img/world/DesertPlanet.png");
+    }
+}
 class DownLane extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -370,11 +449,11 @@ class DownLane extends Images {
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/downLane.png");
     }
 }
-class Mars extends Images {
+class MarsUnlocked extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "Mars";
-        this.image = Start.loadNewImage("./assets/img/world/mars.png");
+        this.name = "MarsUnlocked";
+        this.image = Start.loadNewImage("./assets/img/world/MarsUnlocked.png");
     }
 }
 class MidLane extends Images {
@@ -384,11 +463,11 @@ class MidLane extends Images {
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/midLane.png");
     }
 }
-class Moon extends Images {
+class MoonUnlocked extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "Moon";
-        this.image = Start.loadNewImage("./assets/img/world/maan.png");
+        this.name = "MoonUnlocked";
+        this.image = Start.loadNewImage("./assets/img/world/MoonUnlocked.png");
     }
 }
 class Morty extends Images {
@@ -396,6 +475,13 @@ class Morty extends Images {
         super(xPos, yPos);
         this.name = "Morty";
         this.image = Start.loadNewImage("./assets/img/players/morty.png");
+    }
+}
+class MortyUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "MortyUnlocked";
+        this.image = Start.loadNewImage("./assets/img/players/MortyUnlocked.png");
     }
 }
 class Questions extends Images {
@@ -419,11 +505,18 @@ class ShieldBooster extends Images {
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/shieldBooster.png");
     }
 }
-class Sonic extends Images {
+class Stewie extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "Sonic";
-        this.image = Start.loadNewImage("./assets/img/players/sonic.png");
+        this.name = "Stewie";
+        this.image = Start.loadNewImage("./assets/img/players/stewie.png");
+    }
+}
+class StewieUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "StewieUnlocked";
+        this.image = Start.loadNewImage("./assets/img/players/StewieUnlocked.png");
     }
 }
 class Stickman extends Images {
@@ -438,6 +531,13 @@ class SwampImage extends Images {
         super(xPos, yPos);
         this.name = "Swamp";
         this.image = Start.loadNewImage("./assets/img/world/swamp.png");
+    }
+}
+class SwampPlanet extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "SwampPlanet";
+        this.image = Start.loadNewImage("./assets/img/world/SwampPlanet.png");
     }
 }
 class TextCoin extends Images {
@@ -461,13 +561,6 @@ class Titel extends Images {
         this.image = Start.loadNewImage("./assets/img/world/Titel.png");
     }
 }
-class Unlockable extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "UnlockAble";
-        this.image = Start.loadNewImage("./assets/img/players/yellowAU.png");
-    }
-}
 class UpperLane extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -475,11 +568,25 @@ class UpperLane extends Images {
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/upperLane.png");
     }
 }
-class Venus extends Images {
+class VenusUnlocked extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "Venus";
-        this.image = Start.loadNewImage("./assets/img/world/venus.png");
+        this.name = "VenusUnlocked";
+        this.image = Start.loadNewImage("./assets/img/world/VenusUnlocked.png");
+    }
+}
+class YellowAmongUs extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "YellowAmongUs";
+        this.image = Start.loadNewImage("./assets/img/players/yellowAU.png");
+    }
+}
+class YellowAmongUsUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "YellowAmongUsUnlocked";
+        this.image = Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png");
     }
 }
 class coinForShop extends Images {
@@ -621,16 +728,16 @@ class Player extends GameItem {
             this.animationFrame -= 39;
         }
         if (this.animationFrame <= 10) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-1.png"), this.xPos, this.yPos);
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUsa/among-us-walk-1.png"), this.xPos, this.yPos);
         }
         else if (this.animationFrame >= 10 && this.animationFrame <= 20) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-2.png"), this.xPos, this.yPos);
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png"), this.xPos, this.yPos);
         }
         else if (this.animationFrame >= 20 && this.animationFrame <= 30) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-3.png"), this.xPos, this.yPos);
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-3.png"), this.xPos, this.yPos);
         }
         else if (this.animationFrame >= 30 && this.animationFrame <= 40) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-2.png"), this.xPos, this.yPos);
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png"), this.xPos, this.yPos);
         }
     }
     collidesWithScoringItem(ScoringItem) {
@@ -680,7 +787,6 @@ class OceanWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
         this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
-        const ctx = this.canvas.getContext("2d");
     }
     drawBackground(ctx) {
         ctx.drawImage(this.image, this.canvas.width / 2, this.canvas.height / 2);
@@ -902,8 +1008,13 @@ class Shop {
         this.drawUnlockableCharacter();
         this.drawUnlockableWorlds();
         this.drawImages();
+        this.getButtonName();
+        this.money = 1000;
         this.loop();
         document.addEventListener("click", this.mouseHandler);
+    }
+    getButtonName() {
+        return this.name;
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
@@ -912,6 +1023,7 @@ class Shop {
             button.draw(ctx);
         });
         Start.writeTextToCanvas(ctx, "Shop", 60, this.canvas.width / 2, 80, "center");
+        this.money;
         this.images.forEach((image) => {
             image.move(this.canvas);
             image.reloadImage(this.canvas);
@@ -929,36 +1041,37 @@ class Shop {
         });
     }
     drawImages() {
-        this.images.push(new coinForShop(this.canvas.width / 2 - 120, this.canvas.height / 3 + 560));
-        this.images.push(new coinForShop(this.canvas.width / 2 - 520, this.canvas.height / 3 + 560));
-        this.images.push(new coinForShop(this.canvas.width / 2 + 270, this.canvas.height / 3 + 560));
-        this.images.push(new coinForShop(this.canvas.width / 2 - 330, this.canvas.height / 3 + 60));
-        this.images.push(new coinForShop(this.canvas.width / 2 + 480, this.canvas.height / 3 + 60));
-        this.images.push(new coinForShop(this.canvas.width / 2 - 750, this.canvas.height / 3 + 60));
-        this.images.push(new coinForShop(this.canvas.width / 2 + 80, this.canvas.height / 3 + 60));
+        this.images.push(new coinForShop(this.canvas.width / 2.3, this.canvas.height / 1.17));
+        this.images.push(new coinForShop(this.canvas.width / 4.4, this.canvas.height / 1.17));
+        this.images.push(new coinForShop(this.canvas.width / 1.56, this.canvas.height / 1.17));
+        this.images.push(new coinForShop(this.canvas.width / 3, this.canvas.height / 2.56));
+        this.images.push(new coinForShop(this.canvas.width / 1.33, this.canvas.height / 2.56));
+        this.images.push(new coinForShop(this.canvas.width / 9, this.canvas.height / 2.56));
+        this.images.push(new coinForShop(this.canvas.width / 1.85, this.canvas.height / 2.56));
+        this.images.push(new coinForShop(this.canvas.width / 50, this.canvas.height / 1.1));
     }
     drawUnlockableWorlds() {
-        this.newWorlds.push(new Moon(this.canvas.width / 2 - 500, this.canvas.height / 3 + 300));
-        this.newWorlds.push(new Mars(this.canvas.width / 2 - 100, this.canvas.height / 3 + 300));
-        this.newWorlds.push(new Venus(this.canvas.width / 2 + 300, this.canvas.height / 3 + 300));
+        this.newWorlds.push(new DesertPlanet(this.canvas.width / 4.3, this.canvas.height / 1.6));
+        this.newWorlds.push(new SwampPlanet(this.canvas.width / 2.33, this.canvas.height / 1.64));
+        this.newWorlds.push(new ArcticPlanet(this.canvas.width / 1.56, this.canvas.height / 1.64));
     }
     drawUnlockableCharacter() {
-        this.characters.push(new Sonic(this.canvas.width / 2 - 700, this.canvas.height / 3 - 210));
-        this.characters.push(new Unlockable(this.canvas.width / 2 - 300, this.canvas.height / 3 - 190));
-        this.characters.push(new Ash(this.canvas.width / 2 + 160, this.canvas.height / 3 - 190));
-        this.characters.push(new Morty(this.canvas.width / 2 + 580, this.canvas.height / 3 - 190));
+        this.characters.push(new Stewie(this.canvas.width / 7.5, this.canvas.height / 6));
+        this.characters.push(new YellowAmongUs(this.canvas.width / 2.9, this.canvas.height / 6));
+        this.characters.push(new Ash(this.canvas.width / 1.7, this.canvas.height / 6));
+        this.characters.push(new Morty(this.canvas.width / 1.25, this.canvas.height / 6));
     }
     buttonMaker() {
         this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09));
-        this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
-        this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
-        this.buttons.push(new Unlock(this.canvas.width - 1500, 1000, 1));
-        this.buttons.push(new Unlock(this.canvas.width - 700, 1000, 1));
-        this.buttons.push(new Unlock(this.canvas.width - 1100, 1000, 1));
-        this.buttons.push(new Unlock(this.canvas.width - 1710, 500, 1));
-        this.buttons.push(new Unlock(this.canvas.width - 1300, 500, 1));
-        this.buttons.push(new Unlock(this.canvas.width - 890, 500, 1));
-        this.buttons.push(new Unlock(this.canvas.width - 480, 500, 1));
+        this.buttons.push(new QuestionsAnswersButton(this.canvas.width / 1.07, this.canvas.height / 70));
+        this.buttons.push(new SettingsButton(this.canvas.width / 1.07, this.canvas.height / 8.5));
+        this.buttons.push(new UnlockMoon(this.canvas.width / 4.5, this.canvas.height / 1.08));
+        this.buttons.push(new UnlockVenus(this.canvas.width / 1.56, this.canvas.height / 1.08));
+        this.buttons.push(new UnlockMars(this.canvas.width / 2.31, this.canvas.height / 1.08));
+        this.buttons.push(new UnlockStewie(this.canvas.width / 9, this.canvas.height / 2.15));
+        this.buttons.push(new UnlockAmongUs(this.canvas.width / 3.1, this.canvas.height / 2.15));
+        this.buttons.push(new UnlockAsh(this.canvas.width / 1.87, this.canvas.height / 2.15));
+        this.buttons.push(new UnlockMorty(this.canvas.width / 1.34, this.canvas.height / 2.15));
     }
     loadNewImage(source) {
         const img = new Image();
@@ -1046,6 +1159,10 @@ class Start {
     charachterMaker() {
         this.characterImages.push(new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
         this.characterImages.push(new Stickman(this.canvas.width / 2 - 48, this.canvas.height / 2 - 120));
+        this.characterImages.push(new StewieUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.characterImages.push(new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.characterImages.push(new MortyUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120));
+        this.characterImages.push(new AshUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120));
     }
     imageMaker() {
         this.images.push(new Titel(this.canvas.width / 4, -40));

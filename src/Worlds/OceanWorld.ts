@@ -7,7 +7,6 @@ class OceanWorld extends Game {
   constructor(canvas: HTMLCanvasElement, worldName: string) {
     super(canvas, worldName);
     this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
-    const ctx = this.canvas.getContext("2d");
   }
 
   public drawBackground(ctx:CanvasRenderingContext2D){
