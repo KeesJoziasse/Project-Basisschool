@@ -88,7 +88,6 @@ abstract class Button {
         return null;
       }
       console.log(`User clicked the: ${this.getButtonName()} button`);
-      
     }
   };
 
