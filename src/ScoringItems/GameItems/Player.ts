@@ -61,7 +61,7 @@ class Player extends GameItem {
     if (this.animationFrame <= 10) {
       ctx.drawImage(
         GameItem.loadNewImage(
-          "./assets/img/Characters/Amongus/among-us-walk-1.png"
+          "./assets/img/Characters/AmongUs/among-us-walk-1.png"
         ),
         this.xPos,
         this.yPos
@@ -69,7 +69,7 @@ class Player extends GameItem {
     } else if (this.animationFrame >= 10 && this.animationFrame <= 20) {
       ctx.drawImage(
         GameItem.loadNewImage(
-          "./assets/img/Characters/Amongus/among-us-walk-2.png"
+          "./assets/img/Characters/AmongUs/among-us-walk-2.png"
         ),
         this.xPos,
         this.yPos
@@ -77,7 +77,7 @@ class Player extends GameItem {
     } else if (this.animationFrame >= 20 && this.animationFrame <= 30) {
       ctx.drawImage(
         GameItem.loadNewImage(
-          "./assets/img/Characters/Amongus/among-us-walk-3.png"
+          "./assets/img/Characters/AmongUs/among-us-walk-3.png"
         ),
         this.xPos,
         this.yPos
