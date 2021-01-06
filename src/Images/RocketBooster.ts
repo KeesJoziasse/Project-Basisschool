@@ -8,6 +8,4 @@ class RocketBooster extends Images {
         "./assets/img/GeneralQuestions/rocketBooster.png"
       );
     }
-  
-    // #TODO method maken zodat deze functie je doorverwijst naar de game (playingscreen)
   }

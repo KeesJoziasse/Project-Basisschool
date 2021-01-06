@@ -1,11 +1,11 @@
 /// <reference path="Images.ts" />
 
-class ShieldBooster extends Images {
+class ArrowUp extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "shieldBooster";
+      this.name = "arrowUP";
       this.image = Start.loadNewImage(
-        "./assets/img/GeneralQuestions/shieldBooster.png"
+        "./assets/img/GeneralQuestions/arrowUp.png"
       );
     }
   }

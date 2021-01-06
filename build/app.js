@@ -306,6 +306,13 @@ class AmongUsChar extends Images {
         this.image = Start.loadNewImage("./assets/img/Characters/AmongUs/amongUsLime.png");
     }
 }
+class ArrowUp extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "arrowUP";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/arrowUp.png");
+    }
+}
 class ArticImage extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -414,20 +421,6 @@ class TextObstacle extends Images {
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/textObstacle.png");
     }
 }
-class TextRocketBooster extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "textRocketBooster";
-        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/textRocketBooster.png");
-    }
-}
-class TextShieldBooster extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "textShieldBooster";
-        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/textShieldBooster.png");
-    }
-}
 class Titel extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -447,6 +440,13 @@ class Venus extends Images {
         super(xPos, yPos);
         this.name = "Venus";
         this.image = Start.loadNewImage("./assets/img/world/venus.png");
+    }
+}
+class ArrowDown extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "arrowDown";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/arrowDown.png");
     }
 }
 class coinForShop extends Images {
@@ -698,20 +698,22 @@ class GeneralQuestions {
         });
         Start.writeTextToCanvas(ctx, "Questions", 60, this.canvas.width / 2, 80, "center");
         Start.writeTextToCanvas(ctx, "Besturing:", 50, this.canvas.width / 12, 140, "center");
-        Start.writeTextToCanvas(ctx, "Beweeg omhoog ⬆️", 40, this.canvas.width / 8, 220, "center");
-        Start.writeTextToCanvas(ctx, "Beweeg omlaag  ⬇️", 40, (this.canvas.width / 9) * 1.12, 290, "center");
-        Start.writeTextToCanvas(ctx, "Rocket booster", 35, (this.canvas.width / 3) * 1.02, 140, "center");
-        Start.writeTextToCanvas(ctx, "Shield booster", 35, (this.canvas.width / 3) * 1, 440, "center");
+        Start.writeTextToCanvas(ctx, "Beweeg omhoog", 40, (this.canvas.width / 9) * 0.97, 260, "center");
+        Start.writeTextToCanvas(ctx, "Beweeg omlaag", 40, (this.canvas.width / 9) * 0.93, 390, "center");
+        Start.writeTextToCanvas(ctx, "Rocket booster", 35, (this.canvas.width / 3) * 1.4, 140, "center");
+        Start.writeTextToCanvas(ctx, "Shield booster", 35, (this.canvas.width / 3) * 1.4, 435, "center");
+        Start.writeTextToCanvas(ctx, "Obstakels", 35, (this.canvas.width / 2) * 1.6, 140, "center");
+        Start.writeTextToCanvas(ctx, "Coins", 35, (this.canvas.width / 2) * 1.6, 435, "center");
     }
     buttonMaker() {
         this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09));
     }
     imageMaker() {
-        this.images.push(new TextRocketBooster((this.canvas.width / 3) * 0.75, 135));
-        this.images.push(new RocketBooster((this.canvas.width / 2) * 1.10, 180));
-        this.images.push(new TextShieldBooster((this.canvas.width / 3) * 0.75, 430));
-        this.images.push(new ShieldBooster((this.canvas.width / 2) * 1.10, 490));
-        this.images.push(new TextCoin((this.canvas.width / 2) * 1.34, 442));
+        this.images.push(new ArrowUp((this.canvas.width / 3) * 0.65, 150));
+        this.images.push(new ArrowDown((this.canvas.width / 3) * 0.65, 360));
+        this.images.push(new ShieldBooster((this.canvas.width / 3) * 1, 435));
+        this.images.push(new RocketBooster((this.canvas.width / 3) * 1, 135));
+        this.images.push(new TextCoin((this.canvas.width / 2) * 1.34, 435));
         this.images.push(new TextObstacle((this.canvas.width / 2) * 1.34, 150));
     }
 }
@@ -1060,7 +1062,7 @@ class Start {
         }
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "black") {
-        ctx.font = `${fontSize}px Minecraft`;
+        ctx.font = `${fontSize}px Arial`;
         ctx.fillStyle = color;
         ctx.textAlign = alignment;
         ctx.fillText(text, xCoordinate, yCoordinate);
