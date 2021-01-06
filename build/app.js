@@ -449,6 +449,13 @@ class DownLane extends Images {
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/downLane.png");
     }
 }
+class HighScoreTitle extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "highScoreTitle";
+        this.image = Start.loadNewImage("./assets/img/HighScore/highScoreTitle.png");
+    }
+}
 class MarsUnlocked extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -489,6 +496,13 @@ class Questions extends Images {
         super(xPos, yPos);
         this.name = "Questions";
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/questions.png");
+    }
+}
+class Ranking extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "ranking";
+        this.image = Start.loadNewImage("./assets/img/HighScore/ranking.png");
     }
 }
 class RocketBooster extends Images {
@@ -878,25 +892,25 @@ class HighScore {
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
+        this.images = [];
         this.buttons = [];
         this.buttonMaker();
+        this.imageMaker();
         this.loop();
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        HighScore.writeTextToCanvas(ctx, "Highscores", 65, this.canvas.width / 2, 80, "center");
-        this.rankList(ctx);
+        this.images.forEach((image) => {
+            image.draw(ctx);
+        });
         this.buttons.forEach((button) => {
             button.draw(ctx);
         });
     }
-    rankList(ctx) {
-        HighScore.writeTextToCanvas(ctx, "First:", 40, this.canvas.width / 3, 200, "center");
-        HighScore.writeTextToCanvas(ctx, "Second:", 40, (this.canvas.width / 3) * 0.96, 260, "center");
-        HighScore.writeTextToCanvas(ctx, "Thrid:", 40, (this.canvas.width / 3) * 0.99, 320, "center");
-        HighScore.writeTextToCanvas(ctx, "Fourth:", 40, (this.canvas.width / 3) * 0.97, 380, "center");
-        HighScore.writeTextToCanvas(ctx, "Fifth:", 40, this.canvas.width / 3, 440, "center");
+    imageMaker() {
+        this.images.push(new HighScoreTitle(this.canvas.width / 3, 0));
+        this.images.push(new Ranking(this.canvas.width / 5, 200));
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "black") {
         ctx.font = `${fontSize}px Arial`;
