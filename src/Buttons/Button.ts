@@ -63,7 +63,6 @@ abstract class Button {
 
       if (this.getButtonName() === "UnlockStewie") {
         console.log("Unlock Stewie");
-        
       }
 
       if (this.getButtonName() === "UnlockAmongUs") {
@@ -89,6 +88,7 @@ abstract class Button {
         return null;
       }
       console.log(`User clicked the: ${this.getButtonName()} button`);
+      
     }
   };
 
@@ -111,4 +111,5 @@ abstract class Button {
   public draw(ctx: CanvasRenderingContext2D) {
     ctx.drawImage(this.image, this.xPos, this.yPos);
   }
+
 }

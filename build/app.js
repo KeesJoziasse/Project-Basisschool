@@ -837,6 +837,7 @@ class Shop {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.drawUnlockableCharacter();
         this.buttons.forEach((button) => {
             button.draw(ctx);
         });
@@ -878,6 +879,7 @@ class Shop {
         if (this.getButtonName() === "UnlockStewie") {
             this.characters.push(new StewieUnlocked(this.canvas.width / 2 - 700, this.canvas.height / 3 - 180));
         }
+        ;
         this.characters.push(new YellowAmongUs(this.canvas.width / 2 - 300, this.canvas.height / 3 - 190));
         this.characters.push(new Ash(this.canvas.width / 2 + 160, this.canvas.height / 3 - 190));
         this.characters.push(new Morty(this.canvas.width / 2 + 580, this.canvas.height / 3 - 190));

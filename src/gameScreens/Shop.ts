@@ -7,6 +7,7 @@ class Shop {
   private newWorlds: Images[];
   public name: string;
   private money: number;
+  
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
@@ -42,9 +43,7 @@ class Shop {
     this.getButtonName();
 
     // Amount of money
-    this.money = 1000; 
-
-    
+    this.money = 1000;     
 
     //Calls the loop.
     this.loop();
@@ -57,13 +56,12 @@ class Shop {
     return this.name;
   }
 
-  
-
   /**
    * Method for the Game Loop
    */
   public loop = () => {
     this.draw();
+
 
     // in the first loop no images are loaded
     requestAnimationFrame(this.loop);
@@ -76,12 +74,17 @@ class Shop {
    */
   public draw() {
     const ctx = this.canvas.getContext("2d");
+    
 
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    //#TODO #FIX zodra die unluck button gepressed wordt
+    //#TODO #FIX probleem hij ziet de shop niet!!
+    this.drawUnlockableCharacter();
+
     
-    // this.drawUnlockableCharacter();
+
     // this.drawUnlockableWorlds();
 
     this.buttons.forEach((button) => {
@@ -160,18 +163,16 @@ class Shop {
     // #TODO draw characters that are actually compatible for drawing, these are examples
     this.characters.push(
       new Stewie(this.canvas.width / 2 - 700, this.canvas.height / 3 - 180)
-    )
+    );
     
     if(this.getButtonName() === "UnlockStewie"){
     this.characters.push(
       new StewieUnlocked(this.canvas.width / 2 - 700, this.canvas.height / 3 - 180)
-    )}
+    )};
 
     this.characters.push(
       new YellowAmongUs(this.canvas.width / 2 - 300, this.canvas.height / 3 - 190)
     );
-
-    
 
     this.characters.push(
       new Ash(this.canvas.width / 2 + 160, this.canvas.height / 3 - 190)
@@ -222,7 +223,6 @@ class Shop {
     this.buttons.push(new UnlockAmongUs(this.canvas.width - 1300, 500));
     this.buttons.push(new UnlockAsh(this.canvas.width - 890, 500));
     this.buttons.push(new UnlockMorty(this.canvas.width - 480, 500));
-    
   }
 
   /**
