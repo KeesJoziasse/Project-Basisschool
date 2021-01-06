@@ -46,6 +46,18 @@ class Game {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        if (this.worldName === "Ocean") {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"), 0, -100);
+        }
+        if (this.worldName === "Desert") {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"), 0, 0);
+        }
+        if (this.worldName === "Artic") {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/ArticBG.jpg"), 0, 0);
+        }
+        if (this.worldName === "Swamp") {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"), 0, -100);
+        }
         Start.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
         this.player.draw(ctx);
         if (this.frame > 1) {
@@ -646,6 +658,11 @@ class DesertWorld extends Game {
 class OceanWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
+        this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
+        const ctx = this.canvas.getContext("2d");
+    }
+    drawBackground(ctx) {
+        ctx.drawImage(this.image, this.canvas.width / 2, this.canvas.height / 2);
     }
     frameIndex() {
         if (this.frame % 100 === 0) {
