@@ -1,12 +1,12 @@
 /// <reference path = "Images.ts"/>
 
-class Moon extends Images {
+class DesertPlanet extends Images {
 
   public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "Moon";
+      this.name = "DesertPlanet";
       this.image = Start.loadNewImage(
-        "./assets/img/world/maan.png"
+        "./assets/img/world/DesertPlanet.png"
       );
     }
 }

@@ -1,12 +1,12 @@
 /// <reference path = "Images.ts"/>
 
-class Venus extends Images {
+class ArcticPlanet extends Images {
 
     public constructor(xPos: number, yPos: number) {
         super(xPos, yPos);
-        this.name = "Venus";
+        this.name = "ArcticPlanet";
         this.image = Start.loadNewImage(
-          "./assets/img/world/venus.png"
+          "./assets/img/world/ArcticPlanet.png"
         );
       }
 }

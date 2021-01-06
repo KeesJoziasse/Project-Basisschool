@@ -421,11 +421,11 @@ class Coin extends Images {
         this.image = Start.loadNewImage("./assets/img/GameItems/coin.png");
     }
 }
-class Mars extends Images {
+class DesertPlanet extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "Mars";
-        this.image = Start.loadNewImage("./assets/img/world/mars.png");
+        this.name = "DesertPlanet";
+        this.image = Start.loadNewImage("./assets/img/world/DesertPlanet.png");
     }
 }
 class MarsUnlocked extends Images {
@@ -433,13 +433,6 @@ class MarsUnlocked extends Images {
         super(xPos, yPos);
         this.name = "MarsUnlocked";
         this.image = Start.loadNewImage("./assets/img/world/MarsUnlocked.png");
-    }
-}
-class Moon extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "Moon";
-        this.image = Start.loadNewImage("./assets/img/world/maan.png");
     }
 }
 class MoonUnlocked extends Images {
@@ -505,6 +498,13 @@ class SwampImage extends Images {
         this.image = Start.loadNewImage("./assets/img/world/swamp.png");
     }
 }
+class SwampPlanet extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "SwampPlanet";
+        this.image = Start.loadNewImage("./assets/img/world/SwampPlanet.png");
+    }
+}
 class TextCoin extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -540,11 +540,11 @@ class Titel extends Images {
         this.image = Start.loadNewImage("./assets/img/world/Titel.png");
     }
 }
-class Venus extends Images {
+class ArcticPlanet extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "Venus";
-        this.image = Start.loadNewImage("./assets/img/world/venus.png");
+        this.name = "ArcticPlanet";
+        this.image = Start.loadNewImage("./assets/img/world/ArcticPlanet.png");
     }
 }
 class VenusUnlocked extends Images {
@@ -1016,38 +1016,34 @@ class Shop {
         this.images.push(new coinForShop(this.canvas.width / 2.3, this.canvas.height / 1.17));
         this.images.push(new coinForShop(this.canvas.width / 4.4, this.canvas.height / 1.17));
         this.images.push(new coinForShop(this.canvas.width / 1.56, this.canvas.height / 1.17));
-        this.images.push(new coinForShop(this.canvas.width / 2 - 330, this.canvas.height / 3 + 60));
-        this.images.push(new coinForShop(this.canvas.width / 2 + 480, this.canvas.height / 3 + 60));
-        this.images.push(new coinForShop(this.canvas.width / 2 - 750, this.canvas.height / 3 + 60));
-        this.images.push(new coinForShop(this.canvas.width / 2 + 80, this.canvas.height / 3 + 60));
-        this.images.push(new coinForShop(this.canvas.width / 2 - 950, this.canvas.height / 3 + 625));
+        this.images.push(new coinForShop(this.canvas.width / 3, this.canvas.height / 2.56));
+        this.images.push(new coinForShop(this.canvas.width / 1.33, this.canvas.height / 2.56));
+        this.images.push(new coinForShop(this.canvas.width / 9, this.canvas.height / 2.56));
+        this.images.push(new coinForShop(this.canvas.width / 1.85, this.canvas.height / 2.56));
+        this.images.push(new coinForShop(this.canvas.width / 50, this.canvas.height / 1.1));
     }
     drawUnlockableWorlds() {
-        this.newWorlds.push(new Moon(this.canvas.width / 2 - 500, this.canvas.height / 3 + 300));
-        this.newWorlds.push(new Mars(this.canvas.width / 2 - 100, this.canvas.height / 3 + 300));
-        this.newWorlds.push(new Venus(this.canvas.width / 2 + 300, this.canvas.height / 3 + 300));
+        this.newWorlds.push(new DesertPlanet(this.canvas.width / 4.3, this.canvas.height / 1.6));
+        this.newWorlds.push(new SwampPlanet(this.canvas.width / 2.33, this.canvas.height / 1.64));
+        this.newWorlds.push(new ArcticPlanet(this.canvas.width / 1.56, this.canvas.height / 1.64));
     }
     drawUnlockableCharacter() {
-        this.characters.push(new Stewie(this.canvas.width / 2 - 700, this.canvas.height / 3 - 180));
-        if (this.getButtonName() === "UnlockStewie") {
-            this.characters.push(new StewieUnlocked(this.canvas.width / 2 - 700, this.canvas.height / 3 - 180));
-        }
-        ;
-        this.characters.push(new YellowAmongUs(this.canvas.width / 2 - 300, this.canvas.height / 3 - 190));
-        this.characters.push(new Ash(this.canvas.width / 2 + 160, this.canvas.height / 3 - 190));
-        this.characters.push(new Morty(this.canvas.width / 2 + 580, this.canvas.height / 3 - 190));
+        this.characters.push(new Stewie(this.canvas.width / 7.5, this.canvas.height / 6));
+        this.characters.push(new YellowAmongUs(this.canvas.width / 2.9, this.canvas.height / 6));
+        this.characters.push(new Ash(this.canvas.width / 1.7, this.canvas.height / 6));
+        this.characters.push(new Morty(this.canvas.width / 1.25, this.canvas.height / 6));
     }
     buttonMaker() {
         this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09));
-        this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
-        this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
-        this.buttons.push(new UnlockMoon(this.canvas.width - 1500, 1000));
-        this.buttons.push(new UnlockVenus(this.canvas.width - 700, 1000));
-        this.buttons.push(new UnlockMars(this.canvas.width - 1100, 1000));
-        this.buttons.push(new UnlockStewie(this.canvas.width - 1710, 500));
-        this.buttons.push(new UnlockAmongUs(this.canvas.width - 1300, 500));
-        this.buttons.push(new UnlockAsh(this.canvas.width - 890, 500));
-        this.buttons.push(new UnlockMorty(this.canvas.width - 480, 500));
+        this.buttons.push(new QuestionsAnswersButton(this.canvas.width / 1.07, this.canvas.height / 70));
+        this.buttons.push(new SettingsButton(this.canvas.width / 1.07, this.canvas.height / 8.5));
+        this.buttons.push(new UnlockMoon(this.canvas.width / 4.5, this.canvas.height / 1.08));
+        this.buttons.push(new UnlockVenus(this.canvas.width / 1.56, this.canvas.height / 1.08));
+        this.buttons.push(new UnlockMars(this.canvas.width / 2.31, this.canvas.height / 1.08));
+        this.buttons.push(new UnlockStewie(this.canvas.width / 9, this.canvas.height / 2.15));
+        this.buttons.push(new UnlockAmongUs(this.canvas.width / 3.1, this.canvas.height / 2.15));
+        this.buttons.push(new UnlockAsh(this.canvas.width / 1.87, this.canvas.height / 2.15));
+        this.buttons.push(new UnlockMorty(this.canvas.width / 1.34, this.canvas.height / 2.15));
     }
     loadNewImage(source) {
         const img = new Image();
