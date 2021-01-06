@@ -49,16 +49,16 @@ abstract class Button {
       if (this.getButtonName() === "HighScore") {
         new HighScore(document.getElementById("canvas") as HTMLCanvasElement);
       } 
-      if (this.getButtonName() === "UnlockMoon") {
-         console.log("Unlock moon");
+      if (this.getButtonName() === "UnlockDesert") {
+         console.log("Unlock Desert");
       }
 
-      if (this.getButtonName() === "UnlockMars") {
-        console.log("Unlock mars");
+      if (this.getButtonName() === "UnlockSwamp") {
+        console.log("Unlock Swamp");
       }
 
-      if (this.getButtonName() === "UnlockVenus") {
-        console.log("Unlock venus");
+      if (this.getButtonName() === "UnlockArctic") {
+        console.log("Unlock Arctic");
       }
 
       if (this.getButtonName() === "UnlockStewie") {

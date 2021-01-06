@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Start(document.getElementById("canvas"));
+    new Shop(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -150,14 +150,14 @@ class Button {
                 if (this.getButtonName() === "HighScore") {
                     new HighScore(document.getElementById("canvas"));
                 }
-                if (this.getButtonName() === "UnlockMoon") {
-                    console.log("Unlock moon");
+                if (this.getButtonName() === "UnlockDesert") {
+                    console.log("Unlock Desert");
                 }
-                if (this.getButtonName() === "UnlockMars") {
-                    console.log("Unlock mars");
+                if (this.getButtonName() === "UnlockSwamp") {
+                    console.log("Unlock Swamp");
                 }
-                if (this.getButtonName() === "UnlockVenus") {
-                    console.log("Unlock venus");
+                if (this.getButtonName() === "UnlockArctic") {
+                    console.log("Unlock Arctic");
                 }
                 if (this.getButtonName() === "UnlockStewie") {
                     console.log("Unlock Stewie");
@@ -298,6 +298,13 @@ class UnlockAmongUs extends Button {
         this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
     }
 }
+class UnlockArctic extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "UnlockArctic";
+        this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
+    }
+}
 class UnlockAsh extends Button {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -305,17 +312,10 @@ class UnlockAsh extends Button {
         this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
     }
 }
-class UnlockMars extends Button {
+class UnlockDesert extends Button {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "UnlockMars";
-        this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
-    }
-}
-class UnlockMoon extends Button {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "UnlockMoon";
+        this.name = "UnlockDesert";
         this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
     }
 }
@@ -333,10 +333,10 @@ class UnlockStewie extends Button {
         this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
     }
 }
-class UnlockVenus extends Button {
+class UnlockSwamp extends Button {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "UnlockVenus";
+        this.name = "UnlockSwamp";
         this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
     }
 }
@@ -1023,7 +1023,14 @@ class Shop {
             button.draw(ctx);
         });
         Start.writeTextToCanvas(ctx, "Shop", 60, this.canvas.width / 2, 80, "center");
-        this.money;
+        Start.writeTextToCanvas(ctx, "200", 60, this.canvas.width / 11, this.canvas.height / 1.035, "center");
+        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 5.8, this.canvas.height / 2.25, "center");
+        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 2.55, this.canvas.height / 2.25, "center");
+        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.68, this.canvas.height / 2.25, "center");
+        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.24, this.canvas.height / 2.25, "center");
+        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 1.42, this.canvas.height / 1.10, "center");
+        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 2.01, this.canvas.height / 1.10, "center");
+        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 3.4, this.canvas.height / 1.10, "center");
         this.images.forEach((image) => {
             image.move(this.canvas);
             image.reloadImage(this.canvas);
@@ -1065,9 +1072,9 @@ class Shop {
         this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09));
         this.buttons.push(new QuestionsAnswersButton(this.canvas.width / 1.07, this.canvas.height / 70));
         this.buttons.push(new SettingsButton(this.canvas.width / 1.07, this.canvas.height / 8.5));
-        this.buttons.push(new UnlockMoon(this.canvas.width / 4.5, this.canvas.height / 1.08));
-        this.buttons.push(new UnlockVenus(this.canvas.width / 1.56, this.canvas.height / 1.08));
-        this.buttons.push(new UnlockMars(this.canvas.width / 2.31, this.canvas.height / 1.08));
+        this.buttons.push(new UnlockDesert(this.canvas.width / 4.5, this.canvas.height / 1.08));
+        this.buttons.push(new UnlockArctic(this.canvas.width / 1.56, this.canvas.height / 1.08));
+        this.buttons.push(new UnlockSwamp(this.canvas.width / 2.31, this.canvas.height / 1.08));
         this.buttons.push(new UnlockStewie(this.canvas.width / 9, this.canvas.height / 2.15));
         this.buttons.push(new UnlockAmongUs(this.canvas.width / 3.1, this.canvas.height / 2.15));
         this.buttons.push(new UnlockAsh(this.canvas.width / 1.87, this.canvas.height / 2.15));
