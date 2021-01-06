@@ -6,15 +6,15 @@ window.addEventListener("load", init);
 class Game {
     constructor(canvasId, worldName) {
         this.loop = () => {
+            this.gameOver();
             this.frame++;
             this.draw();
             this.frameIndex();
             this.forScoringItems();
-            if (this.frame % 10 === 0) {
+            if (this.frame % 7 === 0) {
                 this.player.move();
             }
             requestAnimationFrame(this.loop);
-            console.log(this.scoringItems);
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
@@ -22,12 +22,14 @@ class Game {
         this.player = new Player(this.canvas);
         this.score = 0;
         this.frame = 0;
+        this.lives = 3;
         this.worldName = worldName;
         this.loop();
         this.scoringItems = [];
     }
     scoringItemsOceanWorld() { }
     frameIndex() { }
+    drawBackground(ctx) { }
     forScoringItems() {
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => {
@@ -35,6 +37,8 @@ class Game {
             });
             for (let i = 0; i < this.scoringItems.length; i++) {
                 if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
+                    this.score += this.scoringItems[i].getPoints();
+                    this.lives += this.scoringItems[i].getLives();
                     this.scoringItems.splice(i, 1);
                 }
                 else if (this.scoringItems[i].outOfCanvas()) {
@@ -59,9 +63,16 @@ class Game {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"), 0, -100);
         }
         Start.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
+        Start.writeTextToCanvas(ctx, `Score: ${this.score}`, 60, this.canvas.width / 8, this.canvas.height / 8, null, "red");
+        Start.writeTextToCanvas(ctx, `Lives: ${this.lives}`, 60, (this.canvas.width / 8) * 7, this.canvas.height / 8, null, "red");
         this.player.draw(ctx);
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+        }
+    }
+    gameOver() {
+        if (this.score < 0 || this.lives < 0) {
+            alert("Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !");
         }
     }
 }
@@ -143,6 +154,7 @@ KeyboardListener.KEY_Z = 90;
 class Button {
     constructor(xPos, yPos) {
         this.mouseHandler = (event) => {
+            console.log(`xPos ${event.clientX}, yPos ${event.clientY}`);
             if (event.clientX >= this.getButtonXPos() &&
                 event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
                 event.clientY >= this.getButtonYPos() &&
@@ -661,7 +673,11 @@ class ScoringItem {
         if (random === 3) {
             this.yPosition = this.lowerLane;
         }
-        this.speed = -3;
+<<<<<<< Updated upstream
+        this.speed = -(this.canvas.width / 100);
+=======
+        this.speed = -8;
+>>>>>>> Stashed changes
         this.xPosition = this.canvas.width;
     }
     getPositionX() {
@@ -679,11 +695,14 @@ class ScoringItem {
     getPoints() {
         return this.points;
     }
+    getLives() {
+        return this.lives;
+    }
     move() {
         this.xPosition += this.speed;
     }
     draw(ctx) {
-        ctx.drawImage(this.image, this.xPosition - this.image.width / 2, this.yPosition);
+        ctx.drawImage(this.image, this.xPosition, this.yPosition);
     }
     outOfCanvas() {
         if (this.xPosition + this.image.width < 0) {
@@ -712,7 +731,6 @@ class Player extends GameItem {
     constructor(canvas) {
         super(canvas);
         this.name = "Player";
-        this.image = GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-1.png");
         this.keyboardListener = new KeyboardListener();
         this.yPos = this.canvas.height / 2;
         this.xPos = this.canvas.width / 7;
@@ -737,29 +755,61 @@ class Player extends GameItem {
         }
     }
     draw(ctx) {
+<<<<<<< Updated upstream
+        this.playerAnimation();
+        ctx.drawImage(this.image, this.xPos, this.yPos);
+    }
+    playerAnimation() {
+=======
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+>>>>>>> Stashed changes
         this.animationFrame++;
-        if (this.animationFrame >= 40) {
-            this.animationFrame -= 39;
+        if (this.animationFrame >= 20) {
+            this.animationFrame -= 19;
         }
-        if (this.animationFrame <= 10) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png"), this.xPos, this.yPos);
+<<<<<<< Updated upstream
+        if (this.animationFrame <= 5) {
+            this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png");
         }
-        else if (this.animationFrame >= 10 && this.animationFrame <= 20) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png"), this.xPos, this.yPos);
+        else if (this.animationFrame > 5 && this.animationFrame <= 10) {
+            this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
         }
-        else if (this.animationFrame >= 20 && this.animationFrame <= 30) {
+        else if (this.animationFrame > 10 && this.animationFrame <= 15) {
+            this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-3.png");
+        }
+        else if (this.animationFrame > 15 && this.animationFrame <= 20) {
+            this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
+        }
+    }
+    collidesWithScoringItem(ScoringItem) {
+        if (this.xPos + this.image.width > ScoringItem.getPositionX() &&
+            this.yPos <
+                ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
+            this.yPos + this.image.height >
+                ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2) {
+=======
+        this.animatePlayer(ctx);
+    }
+    animatePlayer(ctx) {
+        if (this.animationFrame <= 4) {
+            GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png"),
+                this.xPos,
+                this.yPos;
+        }
+        else if (this.animationFrame >= 4 && this.animationFrame <= 8) {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-2.png"), this.xPos, this.yPos);
+        }
+        else if (this.animationFrame >= 12 && this.animationFrame <= 16) {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-3.png"), this.xPos, this.yPos);
         }
-        else if (this.animationFrame >= 30 && this.animationFrame <= 40) {
+        else if (this.animationFrame >= 16 && this.animationFrame <= 20) {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png"), this.xPos, this.yPos);
         }
     }
     collidesWithScoringItem(ScoringItem) {
-        if (this.xPos < ScoringItem.getPositionX() + ScoringItem.getImageWidth() &&
-            this.xPos + this.image.width > ScoringItem.getPositionX() &&
-            this.canvas.width - 200 <
-                ScoringItem.getPositionY() + ScoringItem.getImageHeight() &&
-            this.canvas.width - 200 + this.image.width > ScoringItem.getPositionY()) {
+        if (this.xPos > ScoringItem.getPositionX()) {
+            console.log(this.xPos + ScoringItem.getPositionX());
+>>>>>>> Stashed changes
             return true;
         }
         return false;
@@ -770,20 +820,31 @@ class Fish extends ScoringItem {
         super(canvas);
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanFish.png");
         this.points = -5;
+        this.lives = 0;
     }
 }
 class Pearl extends ScoringItem {
     constructor(canvas) {
         super(canvas);
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanParelBooster.png");
-        this.points = -5;
+        this.points = 20;
+        this.lives = 0;
+    }
+}
+class Rock extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanRock1.png");
+        this.points = -20;
+        this.lives = -1;
     }
 }
 class Shark extends ScoringItem {
     constructor(canvas) {
         super(canvas);
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanShark.png");
-        this.points = -5;
+        this.points = -20;
+        this.lives = -1;
     }
 }
 class ArticWorld extends Game {
@@ -802,16 +863,16 @@ class OceanWorld extends Game {
         super(canvas, worldName);
         this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
     }
-    drawBackground(ctx) {
-        ctx.drawImage(this.image, this.canvas.width / 2, this.canvas.height / 2);
-    }
     frameIndex() {
-        if (this.frame % 100 === 0) {
+        if (this.frame % 40 === 0) {
             this.scoringItemsOceanWorld();
+        }
+        if (this.frame % 10 === 0) {
+            this.score += 1;
         }
     }
     scoringItemsOceanWorld() {
-        const random = GameItem.randomInteger(1, 3);
+        const random = GameItem.randomInteger(1, 4);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }
@@ -820,6 +881,9 @@ class OceanWorld extends Game {
         }
         if (random === 3) {
             this.scoringItems.push(new Pearl(this.canvas));
+        }
+        if (random === 4) {
+            this.scoringItems.push(new Rock(this.canvas));
         }
     }
 }

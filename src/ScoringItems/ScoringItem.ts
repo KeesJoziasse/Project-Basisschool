@@ -7,8 +7,8 @@ abstract class ScoringItem {
 
   protected points: number;
   protected image: HTMLImageElement;
-
-  private speed: number;
+  protected speed: number;
+  protected lives: number;
   private xPosition: number;
   private yPosition: number;
 
@@ -29,8 +29,13 @@ abstract class ScoringItem {
     if (random === 3) {
       this.yPosition = this.lowerLane;
     }
+
     //Speed of the scoring objects
-    this.speed = -3;
+<<<<<<< Updated upstream
+    this.speed = -(this.canvas.width / 100);
+=======
+    this.speed = -8;
+>>>>>>> Stashed changes
 
     this.xPosition = this.canvas.width;
   }
@@ -39,21 +44,20 @@ abstract class ScoringItem {
   public getPositionX(): number {
     return this.xPosition;
   }
-
   public getPositionY(): number {
     return this.yPosition;
   }
-
   public getImageWidth(): number {
     return this.image.width;
   }
-
   public getImageHeight(): number {
     return this.image.height;
   }
-
   public getPoints(): number {
     return this.points;
+  }
+  public getLives(): number{
+    return this.lives;
   }
 
   /**
@@ -71,8 +75,8 @@ abstract class ScoringItem {
     ctx.drawImage(
       this.image,
       // Center the image in the lane with the x coordinates
-      this.xPosition - this.image.width / 2,
-      this.yPosition 
+      this.xPosition,
+      this.yPosition
     );
   }
 
