@@ -134,7 +134,6 @@ abstract class Game {
         -100
       );
     }
-
     //Draws all the scoring items.
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
