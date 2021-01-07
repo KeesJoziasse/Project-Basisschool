@@ -1,9 +1,7 @@
 class HighScore {
   private canvas: HTMLCanvasElement;
   private images: Images[];
-  // private button: Button;
   private buttons: Button[];
-  // private buttons: Button[];
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
@@ -32,7 +30,6 @@ class HighScore {
    */
   public loop = () => {
     this.draw();
-
     // in the first loop no images are loaded
     requestAnimationFrame(this.loop);
   };
@@ -64,31 +61,8 @@ class HighScore {
 // ranking image
     this.images.push(new Ranking(this.canvas.width / 5, 200));
   }
-
-  /**
-   * Writes text to the canvas
-   * @param {string} text - Text to write
-   * @param {number} fontSize - Font size in pixels
-   * @param {number} xCoordinate - Horizontal coordinate in pixels
-   * @param {number} yCoordinate - Vertical coordinate in pixels
-   * @param {string} alignment - Where to align the text
-   * @param {string} color - The color of the text
-   */
-  public static writeTextToCanvas(
-    ctx: CanvasRenderingContext2D,
-    text: string,
-    fontSize: number = 20,
-    xCoordinate: number,
-    yCoordinate: number,
-    alignment: CanvasTextAlign = "center",
-    color: string = "black"
-  ) {
-    ctx.font = `${fontSize}px Arial`;
-    ctx.fillStyle = color;
-    ctx.textAlign = alignment;
-    ctx.fillText(text, xCoordinate, yCoordinate);
-  }
-
+  
+  // 
   /**
    * Loads an image so it doesn't flicker
    * @param {HTMLImageElement} source

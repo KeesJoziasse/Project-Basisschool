@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Shop(document.getElementById("canvas"));
+    new Start(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -10,6 +10,7 @@ class Game {
             this.draw();
             this.frameIndex();
             this.forScoringItems();
+            this.gameOver();
             if (this.frame % 10 === 0) {
                 this.player.move();
             }
@@ -21,6 +22,7 @@ class Game {
         this.canvas.height = window.innerHeight;
         this.player = new Player(this.canvas);
         this.score = 0;
+        this.lives = 3;
         this.frame = 0;
         this.worldName = worldName;
         this.loop();
@@ -35,6 +37,8 @@ class Game {
             });
             for (let i = 0; i < this.scoringItems.length; i++) {
                 if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
+                    this.score += this.scoringItems[i].getPoints();
+                    this.lives += this.scoringItems[i].getLives();
                     this.scoringItems.splice(i, 1);
                 }
                 else if (this.scoringItems[i].outOfCanvas()) {
@@ -62,6 +66,19 @@ class Game {
         this.player.draw(ctx);
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+        }
+        this.drawScore(ctx);
+        this.drawLives(ctx);
+    }
+    drawScore(ctx) {
+        Start.writeTextToCanvas(ctx, `Score: ${this.score}`, 60, this.canvas.width / 8, this.canvas.height / 8, null, "red");
+    }
+    drawLives(ctx) {
+        Start.writeTextToCanvas(ctx, `Lives: ${this.lives}`, 60, (this.canvas.width / 8) * 7, this.canvas.height / 8, null, "red");
+    }
+    gameOver() {
+        if (this.lives < 0) {
+            alert(`Game over... Je behaalde score is: ${this.score}  Druk op F5 om opnieuw te spelen !`);
         }
     }
 }
@@ -143,6 +160,7 @@ KeyboardListener.KEY_Z = 90;
 class Button {
     constructor(xPos, yPos) {
         this.mouseHandler = (event) => {
+            console.log(`xPos ${event.clientX}, yPos ${event.clientY}`);
             if (event.clientX >= this.getButtonXPos() &&
                 event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
                 event.clientY >= this.getButtonYPos() &&
@@ -453,7 +471,7 @@ class HighScoreTitle extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "highScoreTitle";
-        this.image = Start.loadNewImage("./assets/img/HighScore/highScoreTitle.png");
+        this.image = Start.loadNewImage("./assets/img/Highscore/highScoreTitle.png");
     }
 }
 class MarsUnlocked extends Images {
@@ -502,7 +520,7 @@ class Ranking extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "ranking";
-        this.image = Start.loadNewImage("./assets/img/HighScore/ranking.png");
+        this.image = Start.loadNewImage("./assets/img/Highscore/ranking.png");
     }
 }
 class RocketBooster extends Images {
@@ -668,7 +686,7 @@ class ScoringItem {
         if (random === 3) {
             this.yPosition = this.lowerLane;
         }
-        this.speed = -3;
+        this.speed = -(this.canvas.width / 100);
         this.xPosition = this.canvas.width;
     }
     getPositionX() {
@@ -686,11 +704,14 @@ class ScoringItem {
     getPoints() {
         return this.points;
     }
+    getLives() {
+        return this.lives;
+    }
     move() {
         this.xPosition += this.speed;
     }
     draw(ctx) {
-        ctx.drawImage(this.image, this.xPosition - this.image.width / 2, this.yPosition);
+        ctx.drawImage(this.image, this.xPosition, this.yPosition);
     }
     outOfCanvas() {
         if (this.xPosition + this.image.width < 0) {
@@ -719,7 +740,6 @@ class Player extends GameItem {
     constructor(canvas) {
         super(canvas);
         this.name = "Player";
-        this.image = GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-1.png");
         this.keyboardListener = new KeyboardListener();
         this.yPos = this.canvas.height / 2;
         this.xPos = this.canvas.width / 7;
@@ -744,29 +764,33 @@ class Player extends GameItem {
         }
     }
     draw(ctx) {
+        this.playerAnimation();
+        ctx.drawImage(this.image, this.xPos, this.yPos);
+    }
+    playerAnimation() {
         this.animationFrame++;
-        if (this.animationFrame >= 40) {
-            this.animationFrame -= 39;
+        if (this.animationFrame >= 20) {
+            this.animationFrame -= 19;
         }
-        if (this.animationFrame <= 10) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png"), this.xPos, this.yPos);
+        if (this.animationFrame <= 5) {
+            this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png");
         }
-        else if (this.animationFrame >= 10 && this.animationFrame <= 20) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png"), this.xPos, this.yPos);
+        else if (this.animationFrame > 5 && this.animationFrame <= 10) {
+            this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
         }
-        else if (this.animationFrame >= 20 && this.animationFrame <= 30) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-3.png"), this.xPos, this.yPos);
+        else if (this.animationFrame > 10 && this.animationFrame <= 15) {
+            this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-3.png");
         }
-        else if (this.animationFrame >= 30 && this.animationFrame <= 40) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png"), this.xPos, this.yPos);
+        else if (this.animationFrame > 15 && this.animationFrame <= 20) {
+            this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
         }
     }
     collidesWithScoringItem(ScoringItem) {
-        if (this.xPos < ScoringItem.getPositionX() + ScoringItem.getImageWidth() &&
-            this.xPos + this.image.width > ScoringItem.getPositionX() &&
-            this.canvas.width - 200 <
-                ScoringItem.getPositionY() + ScoringItem.getImageHeight() &&
-            this.canvas.width - 200 + this.image.width > ScoringItem.getPositionY()) {
+        if (this.xPos + this.image.width > ScoringItem.getPositionX() &&
+            this.yPos <
+                ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
+            this.yPos + this.image.height >
+                ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2) {
             return true;
         }
         return false;
@@ -776,21 +800,32 @@ class Fish extends ScoringItem {
     constructor(canvas) {
         super(canvas);
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanFish.png");
-        this.points = -5;
+        this.points = 5;
+        this.lives = 0;
     }
 }
 class Pearl extends ScoringItem {
     constructor(canvas) {
         super(canvas);
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanParelBooster.png");
-        this.points = -5;
+        this.points = 20;
+        this.lives = 0;
+    }
+}
+class Rock extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanRock1.png");
+        this.points = -20;
+        this.lives = -1;
     }
 }
 class Shark extends ScoringItem {
     constructor(canvas) {
         super(canvas);
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanShark.png");
-        this.points = -5;
+        this.points = -20;
+        this.lives = -1;
     }
 }
 class ArticWorld extends Game {
@@ -813,12 +848,15 @@ class OceanWorld extends Game {
         ctx.drawImage(this.image, this.canvas.width / 2, this.canvas.height / 2);
     }
     frameIndex() {
-        if (this.frame % 100 === 0) {
+        if (this.frame % 40 === 0) {
             this.scoringItemsOceanWorld();
+        }
+        if (this.frame % 10 === 0) {
+            this.score += 1;
         }
     }
     scoringItemsOceanWorld() {
-        const random = GameItem.randomInteger(1, 3);
+        const random = GameItem.randomInteger(1, 4);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }
@@ -827,6 +865,9 @@ class OceanWorld extends Game {
         }
         if (random === 3) {
             this.scoringItems.push(new Pearl(this.canvas));
+        }
+        if (random === 4) {
+            this.scoringItems.push(new Rock(this.canvas));
         }
     }
 }
@@ -919,12 +960,6 @@ class HighScore {
         this.images.push(new HighScoreTitle(this.canvas.width / 3, 0));
         this.images.push(new Ranking(this.canvas.width / 5, 200));
     }
-    static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "black") {
-        ctx.font = `${fontSize}px Arial`;
-        ctx.fillStyle = color;
-        ctx.textAlign = alignment;
-        ctx.fillText(text, xCoordinate, yCoordinate);
-    }
     static loadNewImage(source) {
         const img = new Image();
         img.src = source;
@@ -952,7 +987,7 @@ class QuestionAndAnswer {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        HighScore.writeTextToCanvas(ctx, "Questions and Answers", 65, this.canvas.width / 2, 80, "center");
+        Start.writeTextToCanvas(ctx, "Questions and Answers", 65, this.canvas.width / 2, 80, "center");
         this.list(ctx);
         this.buttons.forEach((button) => {
             button.draw(ctx);
@@ -961,13 +996,13 @@ class QuestionAndAnswer {
         });
     }
     list(ctx) {
-        HighScore.writeTextToCanvas(ctx, "Question 1: Wanneer een onbekend persoon contact met je opneemt, geef je dit dan door aan ouders/verzorgers?", 30, (this.canvas.width / 2) * 0.9, 200, "center");
-        HighScore.writeTextToCanvas(ctx, "Question 2: Wanneer een onbekend iemand vraagt om een foto van je, stuur je die dan?", 30, (this.canvas.width / 2) * 0.7, 260, "center");
-        HighScore.writeTextToCanvas(ctx, "Question 3: Voeg je vaak onbekenden toe op sociale media? (Door middel van “snel toevoegen”)", 30, (this.canvas.width / 2) * 0.78, 320, "center");
-        HighScore.writeTextToCanvas(ctx, "Question 4: Je ziet dat een klasgenoot met een vreemd iemand aan het chatten is. Geef je dit aan?", 30, (this.canvas.width / 2) * 0.78, 380, "center");
-        HighScore.writeTextToCanvas(ctx, "Question 5: Je krijgt het bericht: “FortNite_100” stuurt je een vriendschap verzoek. Accepteer je dit verzoek?", 30, (this.canvas.width / 2) * 0.88, 440, "center");
-        HighScore.writeTextToCanvas(ctx, "Question 6: Hoor je in je klas/omgeving vaak over het toevoegen van vreemden op sociale media?", 30, (this.canvas.width / 2) * 0.79, 500, "center");
-        HighScore.writeTextToCanvas(ctx, "Question 7: Waarschuwen je ouders je over online veiligheid?", 30, (this.canvas.width / 2) * 0.51, 560, "center");
+        Start.writeTextToCanvas(ctx, "Question 1: Wanneer een onbekend persoon contact met je opneemt, geef je dit dan door aan ouders/verzorgers?", 30, (this.canvas.width / 2) * 0.9, 200, "center");
+        Start.writeTextToCanvas(ctx, "Question 2: Wanneer een onbekend iemand vraagt om een foto van je, stuur je die dan?", 30, (this.canvas.width / 2) * 0.7, 260, "center");
+        Start.writeTextToCanvas(ctx, "Question 3: Voeg je vaak onbekenden toe op sociale media? (Door middel van “snel toevoegen”)", 30, (this.canvas.width / 2) * 0.78, 320, "center");
+        Start.writeTextToCanvas(ctx, "Question 4: Je ziet dat een klasgenoot met een vreemd iemand aan het chatten is. Geef je dit aan?", 30, (this.canvas.width / 2) * 0.78, 380, "center");
+        Start.writeTextToCanvas(ctx, "Question 5: Je krijgt het bericht: “FortNite_100” stuurt je een vriendschap verzoek. Accepteer je dit verzoek?", 30, (this.canvas.width / 2) * 0.88, 440, "center");
+        Start.writeTextToCanvas(ctx, "Question 6: Hoor je in je klas/omgeving vaak over het toevoegen van vreemden op sociale media?", 30, (this.canvas.width / 2) * 0.79, 500, "center");
+        Start.writeTextToCanvas(ctx, "Question 7: Waarschuwen je ouders je over online veiligheid?", 30, (this.canvas.width / 2) * 0.51, 560, "center");
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "black") {
         ctx.font = `${fontSize}px Minecraft`;

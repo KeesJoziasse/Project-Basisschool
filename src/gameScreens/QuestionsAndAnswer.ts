@@ -41,7 +41,7 @@ class QuestionAndAnswer {
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   
       //The text at the top center.
-      HighScore.writeTextToCanvas(
+      Start.writeTextToCanvas(
         ctx,
         "Questions and Answers",
         65,
@@ -63,7 +63,7 @@ class QuestionAndAnswer {
   
     // all the question and answers text + position
     private list(ctx: CanvasRenderingContext2D) {
-      HighScore.writeTextToCanvas(
+      Start.writeTextToCanvas(
         ctx,
         "Question 1: Wanneer een onbekend persoon contact met je opneemt, geef je dit dan door aan ouders/verzorgers?",
         30,
@@ -72,7 +72,7 @@ class QuestionAndAnswer {
         "center"
       );
   
-      HighScore.writeTextToCanvas(
+      Start.writeTextToCanvas(
         ctx,
         "Question 2: Wanneer een onbekend iemand vraagt om een foto van je, stuur je die dan?",
         30,
@@ -81,7 +81,7 @@ class QuestionAndAnswer {
         "center"
       );
   
-      HighScore.writeTextToCanvas(
+      Start.writeTextToCanvas(
         ctx,
         "Question 3: Voeg je vaak onbekenden toe op sociale media? (Door middel van “snel toevoegen”)",
         30,
@@ -90,7 +90,7 @@ class QuestionAndAnswer {
         "center"
       );
   
-      HighScore.writeTextToCanvas(
+      Start.writeTextToCanvas(
         ctx,
         "Question 4: Je ziet dat een klasgenoot met een vreemd iemand aan het chatten is. Geef je dit aan?",
         30,
@@ -99,7 +99,7 @@ class QuestionAndAnswer {
         "center"
       );
   
-      HighScore.writeTextToCanvas(
+      Start.writeTextToCanvas(
         ctx,
         "Question 5: Je krijgt het bericht: “FortNite_100” stuurt je een vriendschap verzoek. Accepteer je dit verzoek?",
         30,
@@ -108,7 +108,7 @@ class QuestionAndAnswer {
         "center"
       );
 
-      HighScore.writeTextToCanvas(
+      Start.writeTextToCanvas(
         ctx,
         "Question 6: Hoor je in je klas/omgeving vaak over het toevoegen van vreemden op sociale media?",
         30,
@@ -117,7 +117,7 @@ class QuestionAndAnswer {
         "center"
       );
 
-      HighScore.writeTextToCanvas(
+      Start.writeTextToCanvas(
         ctx,
         "Question 7: Waarschuwen je ouders je over online veiligheid?",
         30,
