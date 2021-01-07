@@ -1,9 +1,7 @@
 class HighScore {
   private canvas: HTMLCanvasElement;
   private images: Images[];
-  // private button: Button;
   private buttons: Button[];
-  // private buttons: Button[];
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
