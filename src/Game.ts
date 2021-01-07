@@ -19,6 +19,8 @@ abstract class Game {
   protected scoringItems: ScoringItem[];
   //Number of lives.
   protected lives: number;
+  //TEST
+  private test: GameItem;
 
   /**
    * Constructor
