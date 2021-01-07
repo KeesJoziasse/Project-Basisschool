@@ -99,16 +99,15 @@ abstract class Game {
     const ctx = this.canvas.getContext("2d");
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
-    this.player.draw(ctx);
+  
     //Sets the background
     if (this.worldName === "Ocean") {
       ctx.drawImage(
         GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"),
         0,
         -100
-      );
+      )
     }
 
     if (this.worldName === "Desert") {
@@ -116,7 +115,7 @@ abstract class Game {
         GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"),
         0,
         0
-      );
+      )
     }
 
     if (this.worldName === "Artic") {
@@ -124,7 +123,7 @@ abstract class Game {
         GameItem.loadNewImage("./assets/img/world/ArticBG.jpg"),
         0,
         0
-      );
+      )
     }
 
     if (this.worldName === "Swamp") {
@@ -132,8 +131,11 @@ abstract class Game {
         GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"),
         0,
         -100
-      );
+      )
     }
+
+    //Drawing The player
+    this.player.draw(ctx);
     //Draws all the scoring items.
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
