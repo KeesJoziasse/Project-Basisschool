@@ -59,7 +59,6 @@ abstract class Game {
    */
   public loop = () => {
     this.draw();
-    this.gameOver();
     this.frame++;
     this.frameIndex();
     this.forScoringItems();
@@ -92,17 +91,19 @@ abstract class Game {
     }
   }
 
-  /**
+/**
    * Method that writes gameItems on the canvas
    */
-  private draw() {
+  public draw() {
     const ctx = this.canvas.getContext("2d");
+
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
-  
+
+
+    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD 
     //Sets the background
-    if (this.worldName === "Ocean") {
+    if(this.worldName === "Ocean"){
       ctx.drawImage(
         GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"),
         0,
@@ -110,7 +111,7 @@ abstract class Game {
       )
     }
 
-    if (this.worldName === "Desert") {
+    if(this.worldName === "Desert"){
       ctx.drawImage(
         GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"),
         0,
@@ -118,7 +119,7 @@ abstract class Game {
       )
     }
 
-    if (this.worldName === "Artic") {
+    if(this.worldName === "Artic"){
       ctx.drawImage(
         GameItem.loadNewImage("./assets/img/world/ArticBG.jpg"),
         0,
@@ -126,7 +127,7 @@ abstract class Game {
       )
     }
 
-    if (this.worldName === "Swamp") {
+    if(this.worldName === "Swamp"){
       ctx.drawImage(
         GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"),
         0,
@@ -134,42 +135,15 @@ abstract class Game {
       )
     }
 
-    //Drawing The player
-    this.player.draw(ctx);
-    //Draws all the scoring items.
-    if (this.frame > 1) {
-      this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
-    }
-  }
-  /**
-   * Draw the score on a canvas
-   * @param ctx
-   */
-  private drawScore(ctx: CanvasRenderingContext2D): void {
-    Start.writeTextToCanvas(
-      ctx,
-      `Score: ${this.score}`,
-      60,
-      this.canvas.width / 8,
-      this.canvas.height / 8,
-      null,
-      "red"
-    );
-  }
 
-  /**
-   * Draw the score on a canvas
-   * @param ctx
-   */
-  private drawLives(ctx: CanvasRenderingContext2D): void {
+    //test text write Danger Dash
     Start.writeTextToCanvas(
       ctx,
-      `Score: ${this.lives}`,
+      "Run!",
       60,
-      (this.canvas.width / 8) * 7,
-      this.canvas.height / 8,
-      null,
-      "red"
+      this.canvas.width / 2,
+      80,
+      "center"
     );
 
     //Drawing the player
@@ -180,13 +154,54 @@ abstract class Game {
       this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
     }
   }
-
-  //Gameover Checker
-  private gameOver() {
-    if (this.score < 0 || this.lives < 0) {
-      alert(
-        "Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !"
-      );
-    }
-  }
 }
+//   /**
+//    * Draw the score on a canvas
+//    * @param ctx
+//    */
+//   private drawScore(ctx: CanvasRenderingContext2D): void {
+//     Start.writeTextToCanvas(
+//       ctx,
+//       `Score: ${this.score}`,
+//       60,
+//       this.canvas.width / 8,
+//       this.canvas.height / 8,
+//       null,
+//       "red"
+//     );
+//   }
+
+//   /**
+//    * Draw the score on a canvas
+//    * @param ctx
+//    */
+//   private drawLives(ctx: CanvasRenderingContext2D): void {
+//     Start.writeTextToCanvas(
+//       ctx,
+//       `Score: ${this.lives}`,
+//       60,
+//       (this.canvas.width / 8) * 7,
+//       this.canvas.height / 8,
+//       null,
+//       "red"
+//     );
+
+//     //Drawing the player
+//     this.player.draw(ctx);
+
+//     //Draws all the scoring items.
+//     if (this.frame > 1) {
+//       this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+//     }
+//   }
+
+//   //Gameover Checker
+//   private gameOver() {
+//     if (this.score < 0 || this.lives < 0) {
+//       alert(
+//         "Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !"
+//       );
+//     }
+//   }
+// }
+

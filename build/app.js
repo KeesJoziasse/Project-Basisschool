@@ -7,7 +7,6 @@ class Game {
     constructor(canvasId, worldName) {
         this.loop = () => {
             this.draw();
-            this.gameOver();
             this.frame++;
             this.frameIndex();
             this.forScoringItems();
@@ -62,24 +61,10 @@ class Game {
         if (this.worldName === "Swamp") {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"), 0, -100);
         }
+        Start.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
         this.player.draw(ctx);
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
-        }
-    }
-    drawScore(ctx) {
-        Start.writeTextToCanvas(ctx, `Score: ${this.score}`, 60, this.canvas.width / 8, this.canvas.height / 8, null, "red");
-    }
-    drawLives(ctx) {
-        Start.writeTextToCanvas(ctx, `Score: ${this.lives}`, 60, (this.canvas.width / 8) * 7, this.canvas.height / 8, null, "red");
-        this.player.draw(ctx);
-        if (this.frame > 1) {
-            this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
-        }
-    }
-    gameOver() {
-        if (this.score < 0 || this.lives < 0) {
-            alert("Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !");
         }
     }
 }
