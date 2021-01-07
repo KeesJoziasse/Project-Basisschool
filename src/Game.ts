@@ -17,13 +17,8 @@ abstract class Game {
   protected random: number;
   //Scoring items array
   protected scoringItems: ScoringItem[];
-<<<<<<< Updated upstream
   //Number of lives.
   protected lives: number;
-=======
-
-  //testArea
->>>>>>> Stashed changes
 
   /**
    * Constructor
@@ -62,9 +57,9 @@ abstract class Game {
    * Method that checks the gamestate
    */
   public loop = () => {
+    this.draw();
     this.gameOver();
     this.frame++;
-    this.draw();
     this.frameIndex();
     this.forScoringItems();
 
@@ -72,6 +67,7 @@ abstract class Game {
     if (this.frame % 7 === 0) {
       this.player.move();
     }
+
     requestAnimationFrame(this.loop);
   };
 
@@ -84,12 +80,8 @@ abstract class Game {
 
       for (let i = 0; i < this.scoringItems.length; i++) {
         if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
-<<<<<<< Updated upstream
           this.score += this.scoringItems[i].getPoints();
           this.lives += this.scoringItems[i].getLives();
-=======
-          //#TODO fix first if statement
->>>>>>> Stashed changes
           this.scoringItems.splice(i, 1);
         } else if (this.scoringItems[i].outOfCanvas()) {
           this.scoringItems.splice(i, 1);
@@ -101,11 +93,12 @@ abstract class Game {
   /**
    * Method that writes gameItems on the canvas
    */
-  public draw() {
+  private draw() {
     const ctx = this.canvas.getContext("2d");
-
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.drawScore(ctx);
+    this.drawLives(ctx);
 
     //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
     //Sets the background
@@ -141,17 +134,29 @@ abstract class Game {
       );
     }
 
-    //test text write Danger Dash
-    Start.writeTextToCanvas(
-      ctx,
-      "Run!",
-      60,
-      this.canvas.width / 2,
-      80,
-      "center"
-    );
 
-    //Writes the score to the canvas.
+    //Drawing the player
+    this.player.draw(ctx);
+    //Draws all the scoring items.
+    if (this.frame > 1) {
+      this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+    }
+  }
+
+  //Gameover Checker
+  private gameOver() {
+    if (this.lives < 0) {
+      alert(
+        "Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !"
+      );
+    }
+  }
+
+  /**
+   * Draw the score on a canvas
+   * @param ctx
+   */
+  private drawScore(ctx: CanvasRenderingContext2D): void {
     Start.writeTextToCanvas(
       ctx,
       `Score: ${this.score}`,
@@ -161,31 +166,21 @@ abstract class Game {
       null,
       "red"
     );
+  }
 
-    //Writes the score to the canvas.
+  /**
+   * Draw the score on a canvas
+   * @param ctx
+   */
+  private drawLives(ctx: CanvasRenderingContext2D): void {
     Start.writeTextToCanvas(
       ctx,
-      `Lives: ${this.lives}`,
+      `Score: ${this.lives}`,
       60,
       (this.canvas.width / 8) * 7,
       this.canvas.height / 8,
       null,
       "red"
     );
-
-    //Drawing the player
-    this.player.draw(ctx);
-
-    //Draws all the scoring items.
-    if (this.frame > 1) {
-      this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
-    }
-  }
-
-  //Gameover Checker
-  private gameOver() {
-    if (this.score < 0 || this.lives < 0) {
-      alert("Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !")
-    }
   }
 }

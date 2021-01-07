@@ -32,7 +32,6 @@ class HighScore {
    */
   public loop = () => {
     this.draw();
-
     // in the first loop no images are loaded
     requestAnimationFrame(this.loop);
   };
