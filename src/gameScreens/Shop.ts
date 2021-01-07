@@ -98,11 +98,79 @@ class Shop {
       this.canvas.width / 2,
       80,
       "center"
+
+      
     );
 
-    this.money;
+    // Amount of money in the player's bank
+    Start.writeTextToCanvas(
+      ctx,
+      "200",
+      60,
+      this.canvas.width / 11,
+      this.canvas.height / 1.035,
+      "center");
 
+      // Price of Stewie
+      Start.writeTextToCanvas(
+        ctx,
+        "50",
+        60,
+        this.canvas.width / 5.8,
+        this.canvas.height / 2.25,
+        "center");
 
+        // Price for yellow Among Us character
+        Start.writeTextToCanvas(
+          ctx,
+          "50",
+          60,
+          this.canvas.width / 2.55,
+          this.canvas.height / 2.25,
+          "center");
+
+          // Price for Ash
+          Start.writeTextToCanvas(
+            ctx,
+            "50",
+            60,
+            this.canvas.width / 1.68,
+            this.canvas.height / 2.25,
+            "center");
+
+            // Price for Morty
+            Start.writeTextToCanvas(
+              ctx,
+              "50",
+              60,
+              this.canvas.width / 1.24,
+              this.canvas.height / 2.25,
+              "center");
+
+              // Price for desert level
+              Start.writeTextToCanvas(
+                ctx,
+                "100",
+                60,
+                this.canvas.width / 1.42,
+                this.canvas.height / 1.10,
+                "center");
+
+                Start.writeTextToCanvas(
+                  ctx,
+                  "100",
+                  60,
+                  this.canvas.width / 2.01,
+                  this.canvas.height / 1.10,
+                  "center");
+
+                  Start.writeTextToCanvas(
+                    ctx,
+                    "100",
+                    60,
+                    this.canvas.width / 3.4,
+                    this.canvas.height / 1.10,
+                    "center");
 
     // Drawing the images
     this.images.forEach((image) => {
@@ -161,7 +229,7 @@ class Shop {
   public drawUnlockableCharacter() {
     // #TODO draw characters that are actually compatible for drawing, these are examples
     this.characters.push(
-      new Stewie(this.canvas.width / 7.5, this.canvas.height / 6)
+      new Yoshi(this.canvas.width / 7.9, this.canvas.height / 6)
     );
 
     this.characters.push(
@@ -200,9 +268,9 @@ class Shop {
     // this.buttons.push(new NextSelector(this.canvas.width - 380, 740, 1)); ##TODO ADD if you want more characters/worlds
 
     // Unlock buttons for the worlds
-    this.buttons.push(new UnlockMoon(this.canvas.width / 4.5, this.canvas.height / 1.08));
-    this.buttons.push(new UnlockVenus(this.canvas.width / 1.56, this.canvas.height / 1.08));
-    this.buttons.push(new UnlockMars(this.canvas.width / 2.31, this.canvas.height / 1.08));
+    this.buttons.push(new UnlockDesert(this.canvas.width / 4.5, this.canvas.height / 1.08));
+    this.buttons.push(new UnlockArctic(this.canvas.width / 1.56, this.canvas.height / 1.08));
+    this.buttons.push(new UnlockSwamp(this.canvas.width / 2.31, this.canvas.height / 1.08));
 
     /// Unlock buttons for the characters
     // #TODO fix code duplication
@@ -211,6 +279,8 @@ class Shop {
     this.buttons.push(new UnlockAsh(this.canvas.width / 1.87, this.canvas.height / 2.15));
     this.buttons.push(new UnlockMorty(this.canvas.width / 1.34, this.canvas.height / 2.15));
   }
+
+
 
   /**
    * Method to handle the mouse event

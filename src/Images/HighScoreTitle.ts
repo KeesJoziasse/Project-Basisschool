@@ -1,11 +1,11 @@
 /// <reference path="Images.ts" />
 
-class ArrowDown extends Images {
+class HighScoreTitle extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "arrowDown";
+      this.name = "highScoreTitle";
       this.image = Start.loadNewImage(
-        "./assets/img/GeneralQuestions/arrowDown.png"
+        "./assets/img/Highscore/highScoreTitle.png"
       );
     }
   }

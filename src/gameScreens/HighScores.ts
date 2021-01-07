@@ -1,9 +1,7 @@
 class HighScore {
   private canvas: HTMLCanvasElement;
-  private image: HTMLImageElement;
-  private button: Button;
+  private images: Images[];
   private buttons: Button[];
-  // private buttons: Button[];
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
@@ -12,12 +10,18 @@ class HighScore {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-     //The button array
-  this.buttons = [];
+    //The overall image array
+    this.images = [];
+
+    //The button array
+    this.buttons = [];
 
     //Calling the button maker method.
-  this.buttonMaker();
-     
+    this.buttonMaker();
+
+    //Calling the image maker method
+    this.imageMaker();
+
     this.loop();
   }
 
@@ -26,7 +30,6 @@ class HighScore {
    */
   public loop = () => {
     this.draw();
-
     // in the first loop no images are loaded
     requestAnimationFrame(this.loop);
   };
@@ -40,99 +43,26 @@ class HighScore {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    //The text at the top center.
-    HighScore.writeTextToCanvas(
-      ctx,
-      "Highscores",
-      65,
-      this.canvas.width / 2,
-      80,
-      "center"
-    );
+    //Draws all the images
+    this.images.forEach((image) => {
+      image.draw(ctx);
+    });
 
-    //rank list of the highscores from first to fifth
-    this.rankList(ctx);
-
-   //Drawing the buttons
-  this.buttons.forEach((button) => {
-    button.draw(ctx);
-    button.move(this.canvas);
-    button.reloadImage(this.canvas); //#TODO
-  });
+    //Drawing the buttons
+    this.buttons.forEach((button) => {
+      button.draw(ctx);
+    });
   }
 
-  // function to get a ranklist from first to fifth
-  private rankList(ctx: CanvasRenderingContext2D) {
-    HighScore.writeTextToCanvas(
-      ctx,
-      "First:",
-      40,
-      this.canvas.width / 3,
-      200,
-      "center"
-    );
-
-    HighScore.writeTextToCanvas(
-      ctx,
-      "Second:",
-      40,
-      (this.canvas.width / 3) * 0.96,
-      260,
-      "center"
-    );
-
-    HighScore.writeTextToCanvas(
-      ctx,
-      "Thrid:",
-      40,
-      (this.canvas.width / 3) * 0.99,
-      320,
-      "center"
-    );
-
-    HighScore.writeTextToCanvas(
-      ctx,
-      "Fourth:",
-      40,
-      (this.canvas.width / 3) * 0.97,
-      380,
-      "center"
-    );
-
-    HighScore.writeTextToCanvas(
-      ctx,
-      "Fifth:",
-      40,
-      this.canvas.width / 3,
-      440,
-      "center"
-    );
+  // locatie images op canvas
+  private imageMaker() {
+    //title
+    this.images.push(new HighScoreTitle(this.canvas.width / 3, 0));
+// ranking image
+    this.images.push(new Ranking(this.canvas.width / 5, 200));
   }
-
-  /**
-   * Writes text to the canvas
-   * @param {string} text - Text to write
-   * @param {number} fontSize - Font size in pixels
-   * @param {number} xCoordinate - Horizontal coordinate in pixels
-   * @param {number} yCoordinate - Vertical coordinate in pixels
-   * @param {string} alignment - Where to align the text
-   * @param {string} color - The color of the text
-   */
-  public static writeTextToCanvas(
-    ctx: CanvasRenderingContext2D,
-    text: string,
-    fontSize: number = 20,
-    xCoordinate: number,
-    yCoordinate: number,
-    alignment: CanvasTextAlign = "center",
-    color: string = "black"
-  ) {
-    ctx.font = `${fontSize}px Minecraft`;
-    ctx.fillStyle = color;
-    ctx.textAlign = alignment;
-    ctx.fillText(text, xCoordinate, yCoordinate);
-  }
-
+  
+  // 
   /**
    * Loads an image so it doesn't flicker
    * @param {HTMLImageElement} source
@@ -146,15 +76,12 @@ class HighScore {
 
   private buttonMaker() {
     //Initializing the buttons and pushing them to the array
-//Making the right arrow for level selector
+    //Making the right arrow for level selector
     this.buttons.push(
       new BackToStart(
         (this.canvas.width / 7) * 0.09,
         (this.canvas.height / 3) * 0.08
       )
     );
-
   }
-
 }
-

@@ -214,7 +214,7 @@ class Start {
     );
 
     this.characterImages.push(
-      new StewieUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+      new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
 
     this.characterImages.push(

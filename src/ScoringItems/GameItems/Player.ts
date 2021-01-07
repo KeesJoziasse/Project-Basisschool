@@ -1,18 +1,14 @@
 /// <reference path = "../GameItem.ts"/>
-
 class Player extends GameItem {
   private keyboardListener: KeyboardListener;
-  private image: HTMLImageElement;
   private yPos: number;
   private xPos: number;
   private animationFrame: number;
+  private image: HTMLImageElement;
 
   constructor(canvas: HTMLCanvasElement) {
     super(canvas);
     this.name = "Player";
-    this.image = GameItem.loadNewImage(
-      "./assets/img/Characters/Amongus/among-us-walk-1.png"
-    );
     this.keyboardListener = new KeyboardListener();
     this.yPos = this.canvas.height / 2;
     this.xPos = this.canvas.width / 7;
@@ -51,60 +47,50 @@ class Player extends GameItem {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
+    // ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
     //Animationframe goes to 1 if its 76
-    this.animationFrame++;
-    if (this.animationFrame >= 40) {
-      this.animationFrame -= 39;
-    }
+    this.playerAnimation();
+    ctx.drawImage(this.image, this.xPos, this.yPos);
+  }
 
-    //animated so the images will change at a certain amount of frames
-    if (this.animationFrame <= 10) {
-      ctx.drawImage(
-        GameItem.loadNewImage(
-          "./assets/img/Characters/AmongUsa/among-us-walk-1.png"
-        ),
-        this.xPos,
-        this.yPos
+  //Walking animation of the player
+  private playerAnimation() {
+    //Adds 1 to the frame counter.
+    this.animationFrame++;
+
+    if (this.animationFrame >= 20) {
+      this.animationFrame -= 19;
+    }
+    if (this.animationFrame <= 5) {
+      this.image = GameItem.loadNewImage(
+        "./assets/img/Characters/AmongUs/among-us-walk-1.png"
       );
-    } else if (this.animationFrame >= 10 && this.animationFrame <= 20) {
-      ctx.drawImage(
-        GameItem.loadNewImage(
-          "./assets/img/Characters/AmongUs/among-us-walk-2.png"
-        ),
-        this.xPos,
-        this.yPos
+    } else if (this.animationFrame > 5 && this.animationFrame <= 10) {
+      this.image = GameItem.loadNewImage(
+        "./assets/img/Characters/AmongUs/among-us-walk-2.png"
       );
-    } else if (this.animationFrame >= 20 && this.animationFrame <= 30) {
-      ctx.drawImage(
-        GameItem.loadNewImage(
-          "./assets/img/Characters/AmongUs/among-us-walk-3.png"
-        ),
-        this.xPos,
-        this.yPos
+    } else if (this.animationFrame > 10 && this.animationFrame <= 15) {
+      this.image = GameItem.loadNewImage(
+        "./assets/img/Characters/AmongUs/among-us-walk-3.png"
       );
-    } else if (this.animationFrame >= 30 && this.animationFrame <= 40) {
-      ctx.drawImage(
-        GameItem.loadNewImage(
-          "./assets/img/Characters/AmongUs/among-us-walk-2.png"
-        ),
-        this.xPos,
-        this.yPos
+    } else if (this.animationFrame > 15 && this.animationFrame <= 20) {
+      this.image = GameItem.loadNewImage(
+        "./assets/img/Characters/AmongUs/among-us-walk-2.png"
       );
     }
   }
 
   /**
    * Method that checks if a gameItem collides with the player
-   * #TODO wordt nog niet aangesproken
-   * @param GameItem
+   * @param ScoringItem
    */
   public collidesWithScoringItem(ScoringItem: ScoringItem): boolean {
     if (
-      this.xPos < ScoringItem.getPositionX() + ScoringItem.getImageWidth() &&
       this.xPos + this.image.width > ScoringItem.getPositionX() &&
-      this.canvas.width - 200 <
-        ScoringItem.getPositionY() + ScoringItem.getImageHeight() &&
-      this.canvas.width - 200 + this.image.width > ScoringItem.getPositionY()
+      this.yPos <
+        ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 && 
+      this.yPos + this.image.height >
+        ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2
     ) {
       return true;
     }
