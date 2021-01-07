@@ -26,7 +26,17 @@ abstract class Game {
   //Scoring items array
   protected scoringItems: ScoringItem[];
 
-  //testArea
+  //speed of the worldImage
+  protected speed: number;
+
+  //xpos of the worldImage
+  protected xPos: number;
+
+  //xpos of the worldImage
+  protected yPos: number;
+
+  //image of the world
+  protected image: HTMLImageElement;
 
   /**
    * Constructor
@@ -54,11 +64,15 @@ abstract class Game {
     //Authorizing the worldname.
     this.worldName = worldName;
 
+    //Speed of the world on canvas
+    this.speed;
+
     //Calling the loop
     this.loop();
 
     //Scoringitems array
     this.scoringItems = [];
+
   }
 
   //Creates the scoring items for the ocean world
@@ -82,7 +96,7 @@ abstract class Game {
     }
 
     requestAnimationFrame(this.loop);
-    console.log(this.scoringItems);
+    //console.log(this.scoringItems);
   };
 
   //Handles everything for the scoringitems.
@@ -105,6 +119,9 @@ abstract class Game {
     }
   }
 
+  //This function will be overwritten by Artic,Desert,Ocean,SwampWorlds
+  public drawBackgroundOcean(){}
+
   /**
    * Method that writes gameItems on the canvas
    */
@@ -113,6 +130,7 @@ abstract class Game {
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+<<<<<<< Updated upstream
     // //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
     // //Sets the background
     if (this.worldName === "Ocean") {
@@ -121,6 +139,13 @@ abstract class Game {
         0,
         -100
       );
+=======
+
+    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD 
+    //Sets the background
+    if(this.worldName === "Ocean"){
+      this.drawBackgroundOcean();
+>>>>>>> Stashed changes
     }
 
     if (this.worldName === "Desert") {
@@ -146,7 +171,13 @@ abstract class Game {
         -100
       );
     }
+<<<<<<< Updated upstream
     //test text write Danger Dash
+=======
+
+
+    //test text write Run!
+>>>>>>> Stashed changes
     Start.writeTextToCanvas(
       ctx,
       "Run!",

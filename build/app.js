@@ -15,7 +15,6 @@ class Game {
                 this.player.move();
             }
             requestAnimationFrame(this.loop);
-            console.log(this.scoringItems);
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
@@ -25,6 +24,7 @@ class Game {
         this.lives = 3;
         this.frame = 0;
         this.worldName = worldName;
+        this.speed;
         this.loop();
         this.scoringItems = [];
     }
@@ -47,11 +47,12 @@ class Game {
             }
         }
     }
+    drawBackgroundOcean() { }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         if (this.worldName === "Ocean") {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"), 0, -100);
+            this.drawBackgroundOcean();
         }
         if (this.worldName === "Desert") {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"), 0, 0);
@@ -686,7 +687,11 @@ class ScoringItem {
         if (random === 3) {
             this.yPosition = this.lowerLane;
         }
+<<<<<<< Updated upstream
         this.speed = -(this.canvas.width / 100);
+=======
+        this.speed;
+>>>>>>> Stashed changes
         this.xPosition = this.canvas.width;
     }
     getPositionX() {
@@ -800,14 +805,20 @@ class Fish extends ScoringItem {
     constructor(canvas) {
         super(canvas);
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanFish.png");
+<<<<<<< Updated upstream
         this.points = 5;
         this.lives = 0;
+=======
+        this.points = -5;
+        this.speed = -3;
+>>>>>>> Stashed changes
     }
 }
 class Pearl extends ScoringItem {
     constructor(canvas) {
         super(canvas);
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanParelBooster.png");
+<<<<<<< Updated upstream
         this.points = 20;
         this.lives = 0;
     }
@@ -818,34 +829,66 @@ class Rock extends ScoringItem {
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanRock1.png");
         this.points = -20;
         this.lives = -1;
+=======
+        this.points = -5;
+        this.speed = -3;
+>>>>>>> Stashed changes
     }
 }
 class Shark extends ScoringItem {
     constructor(canvas) {
         super(canvas);
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanShark.png");
+<<<<<<< Updated upstream
         this.points = -20;
         this.lives = -1;
+=======
+        this.points = -5;
+        this.speed = -5;
+>>>>>>> Stashed changes
     }
 }
 class ArticWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
+        this.image = GameItem.loadNewImage("./assets/img/world/ArticBG.jpg");
+        this.speed = -3;
     }
 }
 class DesertWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
         this.image = GameItem.loadNewImage("./assets/img/world/DesertBG.jpg");
+        this.speed = -3;
     }
 }
 class OceanWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
         this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
+        this.speed = -3;
+        this.xPos = 0;
+        this.yPos = -100;
+        this.beginBackground = 1900;
+        this.animationFrameBackground = 0;
     }
-    drawBackground(ctx) {
-        ctx.drawImage(this.image, this.canvas.width / 2, this.canvas.height / 2);
+    drawBackgroundOcean() {
+        const ctx = this.canvas.getContext("2d");
+        this.animationFrameBackground++;
+        console.log(this.animationFrameBackground);
+        if (this.animationFrameBackground === 1200) {
+            this.animationFrameBackground = -1;
+            this.xPos = 0;
+            this.beginBackground = 1900;
+        }
+        if (this.animationFrameBackground < 900) {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"), this.xPos, this.yPos);
+            this.xPos += this.speed;
+        }
+        if (this.animationFrameBackground > 200) {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"), this.beginBackground, this.yPos);
+            this.beginBackground += this.speed;
+        }
     }
     frameIndex() {
         if (this.frame % 40 === 0) {
@@ -874,6 +917,8 @@ class OceanWorld extends Game {
 class SwampWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
+        this.image = GameItem.loadNewImage("./assets/img/world/SwampBG.jpg");
+        this.speed = -3;
     }
 }
 class GeneralQuestions {

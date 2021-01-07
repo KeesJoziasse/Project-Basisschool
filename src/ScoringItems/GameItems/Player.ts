@@ -58,12 +58,23 @@ class Player extends GameItem {
     //Adds 1 to the frame counter.
     this.animationFrame++;
 
+<<<<<<< Updated upstream
     if (this.animationFrame >= 20) {
       this.animationFrame -= 19;
     }
     if (this.animationFrame <= 5) {
       this.image = GameItem.loadNewImage(
         "./assets/img/Characters/AmongUs/among-us-walk-1.png"
+=======
+    //animated so the images will change at a certain amount of frames
+    if (this.animationFrame <= 10) {
+      ctx.drawImage(
+        GameItem.loadNewImage(
+          "./assets/img/Characters/AmongUs/among-us-walk-1.png"
+        ),
+        this.xPos,
+        this.yPos
+>>>>>>> Stashed changes
       );
     } else if (this.animationFrame > 5 && this.animationFrame <= 10) {
       this.image = GameItem.loadNewImage(

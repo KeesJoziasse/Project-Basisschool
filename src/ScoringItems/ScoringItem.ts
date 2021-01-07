@@ -7,8 +7,13 @@ abstract class ScoringItem {
 
   protected points: number;
   protected image: HTMLImageElement;
+<<<<<<< Updated upstream
   protected speed: number;
   protected lives: number;
+=======
+
+  protected speed: number;
+>>>>>>> Stashed changes
   private xPosition: number;
   private yPosition: number;
 
@@ -31,7 +36,11 @@ abstract class ScoringItem {
     }
 
     //Speed of the scoring objects
+<<<<<<< Updated upstream
     this.speed = -(this.canvas.width / 100);
+=======
+    this.speed;
+>>>>>>> Stashed changes
 
     this.xPosition = this.canvas.width;
   }
