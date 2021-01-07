@@ -48,7 +48,6 @@ class Player extends GameItem {
 
   public draw(ctx: CanvasRenderingContext2D) {
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     //Animationframe goes to 1 if its 76
     this.playerAnimation();
     ctx.drawImage(this.image, this.xPos, this.yPos);

@@ -99,10 +99,9 @@ abstract class Game {
     const ctx = this.canvas.getContext("2d");
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.drawScore(ctx);
-    this.drawLives(ctx);
 
     //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
+    this.player.draw(ctx);
     //Sets the background
     if (this.worldName === "Ocean") {
       ctx.drawImage(
@@ -136,24 +135,11 @@ abstract class Game {
       );
     }
 
-
-    //Drawing the player
-    this.player.draw(ctx);
     //Draws all the scoring items.
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
     }
   }
-
-  //Gameover Checker
-  private gameOver() {
-    if (this.lives < 0) {
-      alert(
-        "Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !"
-      );
-    }
-  }
-
   /**
    * Draw the score on a canvas
    * @param ctx
@@ -194,11 +180,12 @@ abstract class Game {
     }
   }
 
-  // //Gameover Checker
-  // private gameOver() {
-  //   if (this.score < 0 || this.lives < 0) {
-  //     alert(
-  //       "Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !"
-  //     );
-  //   }
+  //Gameover Checker
+  private gameOver() {
+    if (this.score < 0 || this.lives < 0) {
+      alert(
+        "Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !"
+      );
+    }
+  }
 }

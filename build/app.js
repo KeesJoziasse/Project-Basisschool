@@ -48,11 +48,9 @@ class Game {
         }
     }
     draw() {
-        console.log("Draw is working");
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.drawScore(ctx);
-        this.drawLives(ctx);
+        this.player.draw(ctx);
         if (this.worldName === "Ocean") {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"), 0, -100);
         }
@@ -65,14 +63,8 @@ class Game {
         if (this.worldName === "Swamp") {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"), 0, -100);
         }
-        this.player.draw(ctx);
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
-        }
-    }
-    gameOver() {
-        if (this.lives < 0) {
-            alert("Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !");
         }
     }
     drawScore(ctx) {
@@ -80,6 +72,15 @@ class Game {
     }
     drawLives(ctx) {
         Start.writeTextToCanvas(ctx, `Score: ${this.lives}`, 60, (this.canvas.width / 8) * 7, this.canvas.height / 8, null, "red");
+        this.player.draw(ctx);
+        if (this.frame > 1) {
+            this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+        }
+    }
+    gameOver() {
+        if (this.score < 0 || this.lives < 0) {
+            alert("Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !");
+        }
     }
 }
 class KeyboardListener {
