@@ -12,8 +12,8 @@ abstract class Game {
   private gameItems: GameItem[]; //Probs remove it.
 
   //The score of the player
-  private score: number;
-
+  protected score: number;
+  protected lives: number;
   //Worldname of the current world
   private worldName: string;
 
@@ -27,7 +27,6 @@ abstract class Game {
   protected scoringItems: ScoringItem[];
 
   //testArea
-
 
   /**
    * Constructor
@@ -48,7 +47,7 @@ abstract class Game {
 
     //Setting the score to 0.
     this.score = 0;
-
+    this.lives = 3;
     //Setting the framecounter to 0.
     this.frame = 0;
 
@@ -73,13 +72,10 @@ abstract class Game {
    */
   public loop = () => {
     this.frame++;
-
     this.draw();
-
     this.frameIndex();
-
     this.forScoringItems();
-
+    this.gameOver();
     //makes the player move, ifstatement makes sure the buttons are not spammable
     if (this.frame % 10 === 0) {
       this.player.move();
@@ -97,7 +93,10 @@ abstract class Game {
       });
 
       for (let i = 0; i < this.scoringItems.length; i++) {
-        if (this.player.collidesWithScoringItem(this.scoringItems[i])) { //#TODO fix first if statement
+        if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
+          //#TODO fix first if statement
+          this.score += this.scoringItems[i].getPoints();
+          this.lives += this.scoringItems[i].getLives();
           this.scoringItems.splice(i, 1);
         } else if (this.scoringItems[i].outOfCanvas()) {
           this.scoringItems.splice(i, 1);
@@ -111,46 +110,42 @@ abstract class Game {
    */
   public draw() {
     const ctx = this.canvas.getContext("2d");
-
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-
-    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD 
-    //Sets the background
-    if(this.worldName === "Ocean"){
+    // //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
+    // //Sets the background
+    if (this.worldName === "Ocean") {
       ctx.drawImage(
         GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"),
         0,
         -100
-      )
+      );
     }
 
-    if(this.worldName === "Desert"){
+    if (this.worldName === "Desert") {
       ctx.drawImage(
         GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"),
         0,
         0
-      )
+      );
     }
 
-    if(this.worldName === "Artic"){
+    if (this.worldName === "Artic") {
       ctx.drawImage(
         GameItem.loadNewImage("./assets/img/world/ArticBG.jpg"),
         0,
         0
-      )
+      );
     }
 
-    if(this.worldName === "Swamp"){
+    if (this.worldName === "Swamp") {
       ctx.drawImage(
         GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"),
         0,
         -100
-      )
+      );
     }
-
-
     //test text write Danger Dash
     Start.writeTextToCanvas(
       ctx,
@@ -160,13 +155,52 @@ abstract class Game {
       80,
       "center"
     );
-
     //Drawing the player
     this.player.draw(ctx);
-
     //Draws all the scoring items.
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+    }
+
+    this.drawScore(ctx);
+    this.drawLives(ctx);
+  }
+
+  /**
+   * Draw the score on a canvas
+   * @param ctx
+   */
+  private drawScore(ctx: CanvasRenderingContext2D): void {
+    Start.writeTextToCanvas(
+      ctx,
+      `Score: ${this.score}`,
+      60,
+      this.canvas.width / 8,
+      this.canvas.height / 8,
+      null,
+      "red"
+    );
+  }
+
+  /**
+   * Draw the score on a canvas
+   * @param ctx
+   */
+  private drawLives(ctx: CanvasRenderingContext2D): void {
+    Start.writeTextToCanvas(
+      ctx,
+      `Lives: ${this.lives}`,
+      60,
+      (this.canvas.width / 8) * 7,
+      this.canvas.height / 8,
+      null,
+      "red"
+    );
+  }
+
+  private gameOver(){
+    if (this.lives < 0) {
+      alert(`Game over... Je behaalde score is: ${this.score}  Druk op F5 om opnieuw te spelen !`)
     }
   }
 }

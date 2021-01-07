@@ -17,13 +17,16 @@ class OceanWorld extends Game {
   }
 
   public frameIndex() {
-    if (this.frame % 100 === 0) {
+    if (this.frame % 40 === 0) {
       this.scoringItemsOceanWorld();
+    }
+    if (this.frame % 10 === 0){
+      this.score += 1
     }
   }
 
   public scoringItemsOceanWorld(): void {
-    const random = GameItem.randomInteger(1, 3);
+    const random = GameItem.randomInteger(1, 4);
     if (random === 1) {
       this.scoringItems.push(new Shark(this.canvas));
     }
@@ -32,6 +35,9 @@ class OceanWorld extends Game {
     }
     if (random === 3) {
       this.scoringItems.push(new Pearl(this.canvas));
+    }
+    if(random === 4){
+      this.scoringItems.push(new Rock(this.canvas));
     }
   }
 }

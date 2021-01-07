@@ -189,3 +189,6 @@ $RECYCLE.BIN/
 build/*
 !build/.gitkeep
 build/app.js.map
+build/app.js.map
+build/app.js.map
+*.map
