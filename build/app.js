@@ -603,6 +603,13 @@ class Yoshi extends Images {
         this.image = Start.loadNewImage("./assets/img/players/yoshi.png");
     }
 }
+class YoshiUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "YoshiUnlocked";
+        this.image = Start.loadNewImage("./assets/img/players/YoshiUnlocked.png");
+    }
+}
 class coinForShop extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -1180,7 +1187,7 @@ class Start {
     charachterMaker() {
         this.characterImages.push(new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
         this.characterImages.push(new Stickman(this.canvas.width / 2 - 48, this.canvas.height / 2 - 120));
-        this.characterImages.push(new StewieUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.characterImages.push(new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
         this.characterImages.push(new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
         this.characterImages.push(new MortyUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120));
         this.characterImages.push(new AshUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120));
