@@ -558,7 +558,7 @@ class YellowAmongUsUnlocked extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "YellowAmongUsUnlocked";
-        this.image = Start.loadNewImage("./assets/img/players/YellowAUUnlocked.png");
+        this.image = Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png");
     }
 }
 class ArrowDown extends Images {
@@ -707,7 +707,7 @@ class Player extends GameItem {
             this.animationFrame -= 39;
         }
         if (this.animationFrame <= 10) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png"), this.xPos, this.yPos);
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUsa/among-us-walk-1.png"), this.xPos, this.yPos);
         }
         else if (this.animationFrame >= 10 && this.animationFrame <= 20) {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png"), this.xPos, this.yPos);
