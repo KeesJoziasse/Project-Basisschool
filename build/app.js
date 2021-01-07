@@ -471,7 +471,7 @@ class HighScoreTitle extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "highScoreTitle";
-        this.image = Start.loadNewImage("./assets/img/HighScore/highScoreTitle.png");
+        this.image = Start.loadNewImage("./assets/img/Highscore/highScoreTitle.png");
     }
 }
 class MarsUnlocked extends Images {
@@ -520,7 +520,7 @@ class Ranking extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "ranking";
-        this.image = Start.loadNewImage("./assets/img/HighScore/ranking.png");
+        this.image = Start.loadNewImage("./assets/img/Highscore/ranking.png");
     }
 }
 class RocketBooster extends Images {
