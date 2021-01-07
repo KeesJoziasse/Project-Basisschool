@@ -64,17 +64,17 @@ class HighScore {
     this.images.push(new Ranking(this.canvas.width / 5, 200));
   }
   
-  // 
-  /**
-   * Loads an image so it doesn't flicker
-   * @param {HTMLImageElement} source
-   * @return HTMLImageElement - returns an image
-   */
-  public static loadNewImage(source: string): HTMLImageElement {
-    const img = new Image();
-    img.src = source;
-    return img;
-  }
+  // // 
+  // /**
+  //  * Loads an image so it doesn't flicker
+  //  * @param {HTMLImageElement} source
+  //  * @return HTMLImageElement - returns an image
+  //  */
+  // public static loadNewImage(source: string): HTMLImageElement {
+  //   const img = new Image();
+  //   img.src = source;
+  //   return img;
+  // }
 
   private buttonMaker() {
     //Initializing the buttons and pushing them to the array
