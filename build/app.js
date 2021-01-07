@@ -6,29 +6,30 @@ window.addEventListener("load", init);
 class Game {
     constructor(canvasId, worldName) {
         this.loop = () => {
-            this.draw();
             this.frame++;
+            this.draw();
             this.frameIndex();
             this.forScoringItems();
-            if (this.frame % 7 === 0) {
+            this.gameOver();
+            if (this.frame % 10 === 0) {
                 this.player.move();
             }
             requestAnimationFrame(this.loop);
+            console.log(this.scoringItems);
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.player = new Player(this.canvas);
         this.score = 0;
-        this.frame = 0;
         this.lives = 3;
+        this.frame = 0;
         this.worldName = worldName;
         this.loop();
         this.scoringItems = [];
     }
     scoringItemsOceanWorld() { }
     frameIndex() { }
-    drawBackground(ctx) { }
     forScoringItems() {
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => {
@@ -65,6 +66,19 @@ class Game {
         this.player.draw(ctx);
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+        }
+        this.drawScore(ctx);
+        this.drawLives(ctx);
+    }
+    drawScore(ctx) {
+        Start.writeTextToCanvas(ctx, `Score: ${this.score}`, 60, this.canvas.width / 8, this.canvas.height / 8, null, "red");
+    }
+    drawLives(ctx) {
+        Start.writeTextToCanvas(ctx, `Lives: ${this.lives}`, 60, (this.canvas.width / 8) * 7, this.canvas.height / 8, null, "red");
+    }
+    gameOver() {
+        if (this.lives < 0) {
+            alert(`Game over... Je behaalde score is: ${this.score}  Druk op F5 om opnieuw te spelen !`);
         }
     }
 }
@@ -743,7 +757,6 @@ class Player extends GameItem {
         }
     }
     draw(ctx) {
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.playerAnimation();
         ctx.drawImage(this.image, this.xPos, this.yPos);
     }
@@ -780,7 +793,7 @@ class Fish extends ScoringItem {
     constructor(canvas) {
         super(canvas);
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanFish.png");
-        this.points = -5;
+        this.points = 5;
         this.lives = 0;
     }
 }
