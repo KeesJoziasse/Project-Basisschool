@@ -746,19 +746,19 @@ class Player extends GameItem {
         this.animationFrame = 0;
     }
     move() {
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_UP) &&
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_1) &&
             this.yPos === this.middleLane) {
             this.yPos = this.topLane;
         }
-        else if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_UP) &&
-            this.yPos === this.lowerLane) {
-            this.yPos = this.middleLane;
-        }
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_DOWN) &&
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_2) &&
             this.yPos === this.topLane) {
             this.yPos = this.middleLane;
         }
-        else if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_DOWN) &&
+        else if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_2) &&
+            this.yPos === this.lowerLane) {
+            this.yPos = this.middleLane;
+        }
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_3) &&
             this.yPos === this.middleLane) {
             this.yPos = this.lowerLane;
         }
@@ -769,19 +769,19 @@ class Player extends GameItem {
     }
     playerAnimation() {
         this.animationFrame++;
-        if (this.animationFrame >= 20) {
-            this.animationFrame -= 19;
+        if (this.animationFrame >= 40) {
+            this.animationFrame -= 39;
         }
-        if (this.animationFrame <= 5) {
+        if (this.animationFrame <= 10) {
             this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png");
         }
-        else if (this.animationFrame > 5 && this.animationFrame <= 10) {
+        else if (this.animationFrame > 10 && this.animationFrame <= 20) {
             this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
         }
-        else if (this.animationFrame > 10 && this.animationFrame <= 15) {
+        else if (this.animationFrame > 20 && this.animationFrame <= 30) {
             this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-3.png");
         }
-        else if (this.animationFrame > 15 && this.animationFrame <= 20) {
+        else if (this.animationFrame > 30 && this.animationFrame <= 40) {
             this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
         }
     }
