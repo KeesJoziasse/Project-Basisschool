@@ -17,13 +17,8 @@ abstract class Game {
   protected random: number;
   //Scoring items array
   protected scoringItems: ScoringItem[];
-<<<<<<< Updated upstream
   //Number of lives.
   protected lives: number;
-=======
-
-  //testArea
->>>>>>> Stashed changes
 
   /**
    * Constructor
@@ -54,19 +49,18 @@ abstract class Game {
   public scoringItemsOceanWorld(): void {}
   //Frameindex for the worlds.
   public frameIndex() {}
-
   //Draws the background
   public drawBackground(ctx: CanvasRenderingContext2D) {}
 
   /**
    * Method that checks the gamestate
    */
-  public loop = () => {
-    this.gameOver();
+  public loop = () => { 
     this.frame++;
     this.draw();
     this.frameIndex();
     this.forScoringItems();
+    // this.gameOver();
 
     //makes the player move, ifstatement makes sure the buttons are not spammable
     if (this.frame % 7 === 0) {
@@ -84,12 +78,8 @@ abstract class Game {
 
       for (let i = 0; i < this.scoringItems.length; i++) {
         if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
-<<<<<<< Updated upstream
           this.score += this.scoringItems[i].getPoints();
           this.lives += this.scoringItems[i].getLives();
-=======
-          //#TODO fix first if statement
->>>>>>> Stashed changes
           this.scoringItems.splice(i, 1);
         } else if (this.scoringItems[i].outOfCanvas()) {
           this.scoringItems.splice(i, 1);
@@ -102,11 +92,10 @@ abstract class Game {
    * Method that writes gameItems on the canvas
    */
   public draw() {
+    console.log("Draw is working");
     const ctx = this.canvas.getContext("2d");
-
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
     //Sets the background
     if (this.worldName === "Ocean") {
@@ -182,10 +171,11 @@ abstract class Game {
     }
   }
 
-  //Gameover Checker
-  private gameOver() {
-    if (this.score < 0 || this.lives < 0) {
-      alert("Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !")
-    }
-  }
+  // //Gameover Checker
+  // private gameOver() {
+  //   if (this.score < 0 || this.lives < 0) {
+  //     alert(
+  //       "Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !"
+  //     );
+  //   }
 }

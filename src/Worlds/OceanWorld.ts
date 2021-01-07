@@ -9,12 +9,12 @@ class OceanWorld extends Game {
     this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
   }
 
-  // public drawBackground(ctx:CanvasRenderingContext2D){
-  //   ctx.drawImage(this.image,
-  //   this.canvas.width / 2,
-  //   this.canvas.height / 2,
-  //   )
-  // }
+  public drawBackground(ctx:CanvasRenderingContext2D){
+    ctx.drawImage(this.image,
+    this.canvas.width / 2,
+    this.canvas.height / 2,
+    )
+  }
 
   public frameIndex() {
     if (this.frame % 40 === 0) {

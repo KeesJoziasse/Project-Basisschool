@@ -6,7 +6,6 @@ window.addEventListener("load", init);
 class Game {
     constructor(canvasId, worldName) {
         this.loop = () => {
-            this.gameOver();
             this.frame++;
             this.draw();
             this.frameIndex();
@@ -48,6 +47,7 @@ class Game {
         }
     }
     draw() {
+        console.log("Draw is working");
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         if (this.worldName === "Ocean") {
@@ -68,11 +68,6 @@ class Game {
         this.player.draw(ctx);
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
-        }
-    }
-    gameOver() {
-        if (this.score < 0 || this.lives < 0) {
-            alert("Ohnee je bent af, refresh de pagina om opnieuw te kunnen spelen !");
         }
     }
 }
@@ -659,11 +654,7 @@ class ScoringItem {
         if (random === 3) {
             this.yPosition = this.lowerLane;
         }
-<<<<<<< Updated upstream
         this.speed = -(this.canvas.width / 100);
-=======
-        this.speed = -8;
->>>>>>> Stashed changes
         this.xPosition = this.canvas.width;
     }
     getPositionX() {
@@ -741,19 +732,15 @@ class Player extends GameItem {
         }
     }
     draw(ctx) {
-<<<<<<< Updated upstream
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.playerAnimation();
         ctx.drawImage(this.image, this.xPos, this.yPos);
     }
     playerAnimation() {
-=======
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
->>>>>>> Stashed changes
         this.animationFrame++;
         if (this.animationFrame >= 20) {
             this.animationFrame -= 19;
         }
-<<<<<<< Updated upstream
         if (this.animationFrame <= 5) {
             this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png");
         }
@@ -773,29 +760,6 @@ class Player extends GameItem {
                 ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
             this.yPos + this.image.height >
                 ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2) {
-=======
-        this.animatePlayer(ctx);
-    }
-    animatePlayer(ctx) {
-        if (this.animationFrame <= 4) {
-            GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png"),
-                this.xPos,
-                this.yPos;
-        }
-        else if (this.animationFrame >= 4 && this.animationFrame <= 8) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/Amongus/among-us-walk-2.png"), this.xPos, this.yPos);
-        }
-        else if (this.animationFrame >= 12 && this.animationFrame <= 16) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-3.png"), this.xPos, this.yPos);
-        }
-        else if (this.animationFrame >= 16 && this.animationFrame <= 20) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png"), this.xPos, this.yPos);
-        }
-    }
-    collidesWithScoringItem(ScoringItem) {
-        if (this.xPos > ScoringItem.getPositionX()) {
-            console.log(this.xPos + ScoringItem.getPositionX());
->>>>>>> Stashed changes
             return true;
         }
         return false;
@@ -848,6 +812,9 @@ class OceanWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
         this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
+    }
+    drawBackground(ctx) {
+        ctx.drawImage(this.image, this.canvas.width / 2, this.canvas.height / 2);
     }
     frameIndex() {
         if (this.frame % 40 === 0) {
