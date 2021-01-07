@@ -769,8 +769,8 @@ class Player extends GameItem {
     }
     playerAnimation() {
         this.animationFrame++;
-        if (this.animationFrame >= 40) {
-            this.animationFrame -= 39;
+        if (this.animationFrame >= 20) {
+            this.animationFrame -= 19;
         }
         if (this.animationFrame <= 10) {
             this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png");

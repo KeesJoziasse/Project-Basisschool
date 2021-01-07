@@ -105,13 +105,6 @@ abstract class Game {
     }
   }
 
-<<<<<<< Updated upstream
-=======
-  //This function will be overwritten by Artic,Desert,Ocean,SwampWorlds
-  //#TODO #FIX deze wordt nog niet aangeroepen in de draw want de background is nog niet gefixt
-  public drawBackgroundOcean(){}
-
->>>>>>> Stashed changes
   /**
    * Method that writes gameItems on the canvas
    */

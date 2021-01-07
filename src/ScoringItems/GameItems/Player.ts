@@ -61,13 +61,8 @@ class Player extends GameItem {
     //Adds 1 to the frame counter.
     this.animationFrame++;
 
-<<<<<<< Updated upstream
     if (this.animationFrame >= 20) {
       this.animationFrame -= 19;
-=======
-    if (this.animationFrame >= 40) {
-      this.animationFrame -= 39;
->>>>>>> Stashed changes
     }
     if (this.animationFrame <= 10) {
       this.image = GameItem.loadNewImage(
