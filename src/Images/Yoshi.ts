@@ -1,12 +1,12 @@
 /// <reference path = "Images.ts"/>
 
-class Stewie extends Images {
+class Yoshi extends Images {
 
     public constructor(xPos: number, yPos: number) {
         super(xPos, yPos);
-        this.name = "Stewie";
+        this.name = "Yoshi";
         this.image = Start.loadNewImage(
-          "./assets/img/players/stewie.png"
+          "./assets/img/players/yoshi.png"
         );
         
       }

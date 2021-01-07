@@ -519,13 +519,6 @@ class ShieldBooster extends Images {
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/shieldBooster.png");
     }
 }
-class Stewie extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "Stewie";
-        this.image = Start.loadNewImage("./assets/img/players/stewie.png");
-    }
-}
 class StewieUnlocked extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -601,6 +594,13 @@ class YellowAmongUsUnlocked extends Images {
         super(xPos, yPos);
         this.name = "YellowAmongUsUnlocked";
         this.image = Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png");
+    }
+}
+class Yoshi extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Yoshi";
+        this.image = Start.loadNewImage("./assets/img/players/yoshi.png");
     }
 }
 class coinForShop extends Images {
@@ -1077,7 +1077,7 @@ class Shop {
         this.newWorlds.push(new ArcticPlanet(this.canvas.width / 1.56, this.canvas.height / 1.64));
     }
     drawUnlockableCharacter() {
-        this.characters.push(new Stewie(this.canvas.width / 7.5, this.canvas.height / 6));
+        this.characters.push(new Yoshi(this.canvas.width / 7.9, this.canvas.height / 6));
         this.characters.push(new YellowAmongUs(this.canvas.width / 2.9, this.canvas.height / 6));
         this.characters.push(new Ash(this.canvas.width / 1.7, this.canvas.height / 6));
         this.characters.push(new Morty(this.canvas.width / 1.25, this.canvas.height / 6));
