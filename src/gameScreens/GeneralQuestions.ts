@@ -108,7 +108,7 @@ class GeneralQuestions {
       "Middelste laan:",
       40,
       (this.canvas.width / 9) * 0.93,
-      405,
+      420,
       "center"
     );
 

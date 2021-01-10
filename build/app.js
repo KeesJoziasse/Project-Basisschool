@@ -471,7 +471,7 @@ class HighScoreTitle extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "highScoreTitle";
-        this.image = Start.loadNewImage("./assets/img/HighScore/highScoreTitle.png");
+        this.image = Start.loadNewImage("./assets/img/Highscore/highScoreTitle.png");
     }
 }
 class MarsUnlocked extends Images {
@@ -520,7 +520,7 @@ class Ranking extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "ranking";
-        this.image = Start.loadNewImage("./assets/img/HighScore/ranking.png");
+        this.image = Start.loadNewImage("./assets/img/Highscore/ranking.png");
     }
 }
 class RocketBooster extends Images {
@@ -535,13 +535,6 @@ class ShieldBooster extends Images {
         super(xPos, yPos);
         this.name = "shieldBooster";
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/shieldBooster.png");
-    }
-}
-class Stewie extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "Stewie";
-        this.image = Start.loadNewImage("./assets/img/players/stewie.png");
     }
 }
 class StewieUnlocked extends Images {
@@ -619,6 +612,20 @@ class YellowAmongUsUnlocked extends Images {
         super(xPos, yPos);
         this.name = "YellowAmongUsUnlocked";
         this.image = Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png");
+    }
+}
+class Yoshi extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Yoshi";
+        this.image = Start.loadNewImage("./assets/img/players/yoshi.png");
+    }
+}
+class YoshiUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "YoshiUnlocked";
+        this.image = Start.loadNewImage("./assets/img/players/YoshiUnlocked.png");
     }
 }
 class coinForShop extends Images {
@@ -739,19 +746,19 @@ class Player extends GameItem {
         this.animationFrame = 0;
     }
     move() {
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_UP) &&
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_1) &&
             this.yPos === this.middleLane) {
             this.yPos = this.topLane;
         }
-        else if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_UP) &&
-            this.yPos === this.lowerLane) {
-            this.yPos = this.middleLane;
-        }
-        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_DOWN) &&
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_2) &&
             this.yPos === this.topLane) {
             this.yPos = this.middleLane;
         }
-        else if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_DOWN) &&
+        else if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_2) &&
+            this.yPos === this.lowerLane) {
+            this.yPos = this.middleLane;
+        }
+        if (this.keyboardListener.isKeyDown(KeyboardListener.KEY_3) &&
             this.yPos === this.middleLane) {
             this.yPos = this.lowerLane;
         }
@@ -765,16 +772,16 @@ class Player extends GameItem {
         if (this.animationFrame >= 20) {
             this.animationFrame -= 19;
         }
-        if (this.animationFrame <= 5) {
+        if (this.animationFrame <= 10) {
             this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png");
         }
-        else if (this.animationFrame > 5 && this.animationFrame <= 10) {
+        else if (this.animationFrame > 10 && this.animationFrame <= 20) {
             this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
         }
-        else if (this.animationFrame > 10 && this.animationFrame <= 15) {
+        else if (this.animationFrame > 20 && this.animationFrame <= 30) {
             this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-3.png");
         }
-        else if (this.animationFrame > 15 && this.animationFrame <= 20) {
+        else if (this.animationFrame > 30 && this.animationFrame <= 40) {
             this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
         }
     }
@@ -914,7 +921,7 @@ class GeneralQuestions {
     }
     controls(ctx) {
         Start.writeTextToCanvas(ctx, "Bovenste laan:", 40, (this.canvas.width / 9) * 0.92, 265, "center");
-        Start.writeTextToCanvas(ctx, "Middelste laan:", 40, (this.canvas.width / 9) * 0.93, 405, "center");
+        Start.writeTextToCanvas(ctx, "Middelste laan:", 40, (this.canvas.width / 9) * 0.93, 420, "center");
         Start.writeTextToCanvas(ctx, "Onderste laan:", 40, (this.canvas.width / 9) * 0.93, 560, "center");
     }
     titleTextBoxes(ctx) {
@@ -953,12 +960,6 @@ class HighScore {
         this.images.push(new HighScoreTitle(this.canvas.width / 3, 0));
         this.images.push(new Ranking(this.canvas.width / 5, 200));
     }
-    static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "black") {
-        ctx.font = `${fontSize}px Arial`;
-        ctx.fillStyle = color;
-        ctx.textAlign = alignment;
-        ctx.fillText(text, xCoordinate, yCoordinate);
-    }
     static loadNewImage(source) {
         const img = new Image();
         img.src = source;
@@ -986,7 +987,7 @@ class QuestionAndAnswer {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        HighScore.writeTextToCanvas(ctx, "Questions and Answers", 65, this.canvas.width / 2, 80, "center");
+        Start.writeTextToCanvas(ctx, "Questions and Answers", 65, this.canvas.width / 2, 80, "center");
         this.list(ctx);
         this.buttons.forEach((button) => {
             button.draw(ctx);
@@ -995,13 +996,13 @@ class QuestionAndAnswer {
         });
     }
     list(ctx) {
-        HighScore.writeTextToCanvas(ctx, "Question 1: Wanneer een onbekend persoon contact met je opneemt, geef je dit dan door aan ouders/verzorgers?", 30, (this.canvas.width / 2) * 0.9, 200, "center");
-        HighScore.writeTextToCanvas(ctx, "Question 2: Wanneer een onbekend iemand vraagt om een foto van je, stuur je die dan?", 30, (this.canvas.width / 2) * 0.7, 260, "center");
-        HighScore.writeTextToCanvas(ctx, "Question 3: Voeg je vaak onbekenden toe op sociale media? (Door middel van “snel toevoegen”)", 30, (this.canvas.width / 2) * 0.78, 320, "center");
-        HighScore.writeTextToCanvas(ctx, "Question 4: Je ziet dat een klasgenoot met een vreemd iemand aan het chatten is. Geef je dit aan?", 30, (this.canvas.width / 2) * 0.78, 380, "center");
-        HighScore.writeTextToCanvas(ctx, "Question 5: Je krijgt het bericht: “FortNite_100” stuurt je een vriendschap verzoek. Accepteer je dit verzoek?", 30, (this.canvas.width / 2) * 0.88, 440, "center");
-        HighScore.writeTextToCanvas(ctx, "Question 6: Hoor je in je klas/omgeving vaak over het toevoegen van vreemden op sociale media?", 30, (this.canvas.width / 2) * 0.79, 500, "center");
-        HighScore.writeTextToCanvas(ctx, "Question 7: Waarschuwen je ouders je over online veiligheid?", 30, (this.canvas.width / 2) * 0.51, 560, "center");
+        Start.writeTextToCanvas(ctx, "Question 1: Wanneer een onbekend persoon contact met je opneemt, geef je dit dan door aan ouders/verzorgers?", 30, (this.canvas.width / 2) * 0.9, 200, "center");
+        Start.writeTextToCanvas(ctx, "Question 2: Wanneer een onbekend iemand vraagt om een foto van je, stuur je die dan?", 30, (this.canvas.width / 2) * 0.7, 260, "center");
+        Start.writeTextToCanvas(ctx, "Question 3: Voeg je vaak onbekenden toe op sociale media? (Door middel van “snel toevoegen”)", 30, (this.canvas.width / 2) * 0.78, 320, "center");
+        Start.writeTextToCanvas(ctx, "Question 4: Je ziet dat een klasgenoot met een vreemd iemand aan het chatten is. Geef je dit aan?", 30, (this.canvas.width / 2) * 0.78, 380, "center");
+        Start.writeTextToCanvas(ctx, "Question 5: Je krijgt het bericht: “FortNite_100” stuurt je een vriendschap verzoek. Accepteer je dit verzoek?", 30, (this.canvas.width / 2) * 0.88, 440, "center");
+        Start.writeTextToCanvas(ctx, "Question 6: Hoor je in je klas/omgeving vaak over het toevoegen van vreemden op sociale media?", 30, (this.canvas.width / 2) * 0.79, 500, "center");
+        Start.writeTextToCanvas(ctx, "Question 7: Waarschuwen je ouders je over online veiligheid?", 30, (this.canvas.width / 2) * 0.51, 560, "center");
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "black") {
         ctx.font = `${fontSize}px Minecraft`;
@@ -1118,7 +1119,7 @@ class Shop {
         this.newWorlds.push(new ArcticPlanet(this.canvas.width / 1.56, this.canvas.height / 1.64));
     }
     drawUnlockableCharacter() {
-        this.characters.push(new Stewie(this.canvas.width / 7.5, this.canvas.height / 6));
+        this.characters.push(new Yoshi(this.canvas.width / 7.9, this.canvas.height / 6));
         this.characters.push(new YellowAmongUs(this.canvas.width / 2.9, this.canvas.height / 6));
         this.characters.push(new Ash(this.canvas.width / 1.7, this.canvas.height / 6));
         this.characters.push(new Morty(this.canvas.width / 1.25, this.canvas.height / 6));
@@ -1221,7 +1222,7 @@ class Start {
     charachterMaker() {
         this.characterImages.push(new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
         this.characterImages.push(new Stickman(this.canvas.width / 2 - 48, this.canvas.height / 2 - 120));
-        this.characterImages.push(new StewieUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.characterImages.push(new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
         this.characterImages.push(new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
         this.characterImages.push(new MortyUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120));
         this.characterImages.push(new AshUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120));

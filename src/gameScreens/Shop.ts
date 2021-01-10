@@ -229,7 +229,7 @@ class Shop {
   public drawUnlockableCharacter() {
     // #TODO draw characters that are actually compatible for drawing, these are examples
     this.characters.push(
-      new Stewie(this.canvas.width / 7.5, this.canvas.height / 6)
+      new Yoshi(this.canvas.width / 7.9, this.canvas.height / 6)
     );
 
     this.characters.push(
