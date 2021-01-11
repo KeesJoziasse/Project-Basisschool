@@ -2,14 +2,15 @@
 
 abstract class Player extends GameItem {
   private keyboardListener: KeyboardListener;
-  private yPos: number;
-  private xPos: number;
-  private animationFrame: number;
-  private image: HTMLImageElement;
+
+  protected animationFrame: number;
+  protected yPos: number;
+  protected xPos: number;
+  protected image: HTMLImageElement;
+  private characterName: string;
 
   constructor(canvas: HTMLCanvasElement) {
     super(canvas);
-    this.name = "Player";
     this.keyboardListener = new KeyboardListener();
     this.yPos = this.canvas.height / 2;
     this.xPos = this.canvas.width / 7;
@@ -21,6 +22,7 @@ abstract class Player extends GameItem {
    */
   public move() {
 
+    //move from middlelane to toplane
     if (
       this.keyboardListener.isKeyDown(KeyboardListener.KEY_1) &&
       this.yPos === this.middleLane
@@ -28,6 +30,7 @@ abstract class Player extends GameItem {
       this.yPos = this.topLane;
     }
 
+    //move from toplane to middlelane + move from lowerlane to middlelane
     if (
       this.keyboardListener.isKeyDown(KeyboardListener.KEY_2) &&
       this.yPos === this.topLane
@@ -40,6 +43,7 @@ abstract class Player extends GameItem {
       this.yPos = this.middleLane;
     }
 
+    //move from middlelane to lowerlane
     if (
       this.keyboardListener.isKeyDown(KeyboardListener.KEY_3) &&
       this.yPos === this.middleLane
@@ -50,39 +54,19 @@ abstract class Player extends GameItem {
 
   }
 
-  public draw(ctx: CanvasRenderingContext2D) {
-    // ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
-    //Animationframe goes to 1 if its 76
-    this.playerAnimation();
+  public draw(ctx: CanvasRenderingContext2D, characterName:string) {
+    //ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    //Checks characterName for the right CharacterAnimation
+    if(this.characterName === "AmongUs"){
+      this.AmongUsAnimation();
+    }
+    
     ctx.drawImage(this.image, this.xPos, this.yPos);
   }
 
-  //Walking animation of the player
-  private playerAnimation() {
-    //Adds 1 to the frame counter.
-    this.animationFrame++;
-
-    if (this.animationFrame >= 20) {
-      this.animationFrame -= 19;
-    }
-    if (this.animationFrame <= 10) {
-      this.image = GameItem.loadNewImage(
-        "./assets/img/Characters/AmongUs/among-us-walk-1.png"
-      );
-    } else if (this.animationFrame > 10 && this.animationFrame <= 20) {
-      this.image = GameItem.loadNewImage(
-        "./assets/img/Characters/AmongUs/among-us-walk-2.png"
-      );
-    } else if (this.animationFrame > 20 && this.animationFrame <= 30) {
-      this.image = GameItem.loadNewImage(
-        "./assets/img/Characters/AmongUs/among-us-walk-3.png"
-      );
-    } else if (this.animationFrame > 30 && this.animationFrame <= 40) {
-      this.image = GameItem.loadNewImage(
-        "./assets/img/Characters/AmongUs/among-us-walk-2.png"
-      );
-    }
-  }
+  //Will be overwritten by AmongUs class
+  public AmongUsAnimation(){}
 
   /**
    * Method that checks if a gameItem collides with the player

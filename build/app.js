@@ -29,6 +29,7 @@ class Game {
         this.speed;
         this.loop();
         this.scoringItems = [];
+        this.characterName = characterName;
     }
     scoringItemsOceanWorld() { }
     frameIndex() { }
@@ -69,7 +70,7 @@ class Game {
         }
         Start.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
         this.player.forEach((player) => {
-            player.draw(ctx);
+            player.draw(ctx, this.characterName);
         });
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
@@ -763,7 +764,6 @@ class Question extends ScoringItem {
 class Player extends GameItem {
     constructor(canvas) {
         super(canvas);
-        this.name = "Player";
         this.keyboardListener = new KeyboardListener();
         this.yPos = this.canvas.height / 2;
         this.xPos = this.canvas.width / 7;
@@ -787,11 +787,29 @@ class Player extends GameItem {
             this.yPos = this.lowerLane;
         }
     }
-    draw(ctx) {
-        this.playerAnimation();
+    draw(ctx, characterName) {
+        if (this.characterName === "AmongUs") {
+            this.AmongUsAnimation();
+        }
         ctx.drawImage(this.image, this.xPos, this.yPos);
     }
-    playerAnimation() {
+    AmongUsAnimation() { }
+    collidesWithScoringItem(ScoringItem) {
+        if (this.xPos + this.image.width > ScoringItem.getPositionX() &&
+            this.yPos <
+                ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
+            this.yPos + this.image.height >
+                ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2) {
+            return true;
+        }
+        return false;
+    }
+}
+class AmongUs extends Player {
+    constructor(canvas) {
+        super(canvas);
+    }
+    AmongUsAnimation() {
         this.animationFrame++;
         if (this.animationFrame >= 20) {
             this.animationFrame -= 19;
@@ -808,16 +826,6 @@ class Player extends GameItem {
         else if (this.animationFrame > 30 && this.animationFrame <= 40) {
             this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
         }
-    }
-    collidesWithScoringItem(ScoringItem) {
-        if (this.xPos + this.image.width > ScoringItem.getPositionX() &&
-            this.yPos <
-                ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
-            this.yPos + this.image.height >
-                ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2) {
-            return true;
-        }
-        return false;
     }
 }
 class Fish extends ScoringItem {
@@ -872,13 +880,11 @@ class OceanWorld extends Game {
         this.speed = -3;
         this.xPos = 0;
         this.yPos = -100;
-        this.beginBackground = 1900;
         this.animationFrameBackground = 0;
     }
     drawBackgroundOcean() {
         const ctx = this.canvas.getContext("2d");
         this.animationFrameBackground++;
-        console.log(this.animationFrameBackground);
         if (this.animationFrameBackground === 1200) {
             this.animationFrameBackground = -1;
             this.xPos = 0;

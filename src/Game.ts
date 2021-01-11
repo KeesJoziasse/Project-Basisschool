@@ -73,6 +73,9 @@ abstract class Game {
     //Scoringitems array
     this.scoringItems = [];
 
+    //Authorizing the Character
+    this.characterName = characterName
+  
   }
 
   //Creates the scoring items for the ocean world
@@ -176,7 +179,7 @@ abstract class Game {
 
     //Drawing the player
     this.player.forEach((player) => {
-      player.draw(ctx);
+      player.draw(ctx , this.characterName);
     });
 
     //Draws all the scoring items.

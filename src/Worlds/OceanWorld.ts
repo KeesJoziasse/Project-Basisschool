@@ -10,16 +10,17 @@ class OceanWorld extends Game {
     this.speed = -3;
     this.xPos = 0;
     this.yPos = -100;
-    this.beginBackground = 1900;
     this.animationFrameBackground = 0;
   }
 
   //Draws the background and animates it so it looks like it moves
   public drawBackgroundOcean(){
     const ctx = this.canvas.getContext("2d");
+
+    //#TODO FIX BACKGROUND WITH ARRAY
+    //#FIX IMPORTANT
     
     this.animationFrameBackground++;
-    console.log(this.animationFrameBackground);
 
     //does a reset
     if(this.animationFrameBackground === 1200){
