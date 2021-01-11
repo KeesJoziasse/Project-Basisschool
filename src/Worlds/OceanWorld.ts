@@ -38,7 +38,6 @@ class OceanWorld extends Game {
         );
         this.xPos += this.speed;
       }
-      
     }
 
   public frameIndex() {
