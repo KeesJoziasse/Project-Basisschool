@@ -330,8 +330,7 @@ class Start {
       );
     } else if (
       button.getButtonName() == "StartGame" &&
-      this.worldImages[this.indexCounterWorld].getImageName() == "Desert",
-      "AmongUs"
+      this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
     ) {
       new DesertWorld(
         this.canvas,
