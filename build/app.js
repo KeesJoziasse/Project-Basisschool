@@ -853,8 +853,8 @@ class Shark extends ScoringItem {
     }
 }
 class ArticWorld extends Game {
-    constructor(canvas, worldName) {
-        super(canvas, worldName);
+    constructor(canvas, worldName, characterName) {
+        super(canvas, worldName, characterName);
         this.image = GameItem.loadNewImage("./assets/img/world/ArticBG.jpg");
         this.speed = -3;
     }
@@ -862,8 +862,7 @@ class ArticWorld extends Game {
 class DesertWorld extends Game {
     constructor(canvas, worldName, characterName) {
         super(canvas, worldName, characterName);
-        this.image = GameItem.loadNewImage("./assets/img/world/DesertBG.jpg");
-        this.speed = -3;
+        this.background = GameItem.loadNewImage("./assets/img/world/DesertBG.jpg");
     }
 }
 class OceanWorld extends Game {
@@ -919,10 +918,38 @@ class OceanWorld extends Game {
     }
 }
 class SwampWorld extends Game {
-    constructor(canvas, worldName) {
-        super(canvas, worldName);
+    constructor(canvas, worldName, characterName) {
+        super(canvas, worldName, characterName);
         this.image = GameItem.loadNewImage("./assets/img/world/SwampBG.jpg");
         this.speed = -3;
+    }
+}
+class Endscreen {
+    constructor(canvasId) {
+        this.loop = () => {
+            this.draw();
+            requestAnimationFrame(this.loop);
+        };
+        this.mouseHandler = (event) => { };
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = innerHeight;
+        this.buttons = [];
+        this.buttonMaker();
+        this.image = [];
+        this.loop();
+        document.addEventListener("click", this.mouseHandler);
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        ctx.drawImage(GameItem.loadNewImage("./assets/img/background/EndscreenBackground.jpg"), 0, 0);
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+        });
+    }
+    buttonMaker() {
+        this.buttons.push(new RestartButton((this.canvas.width / 2.5), (this.canvas.height / 1.5)));
     }
 }
 class GeneralQuestions {

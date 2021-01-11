@@ -31,16 +31,7 @@ abstract class ScoringItem {
     }
 
     //Speed of the scoring objects
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-    this.speed = -(this.canvas.width / 100);
-=======
-    this.speed;
->>>>>>> Stashed changes
-=======
     this.speed = -(this.canvas.width/100);
->>>>>>> main
-
     this.xPosition = this.canvas.width;
   }
 
