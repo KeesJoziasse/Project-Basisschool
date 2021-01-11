@@ -1241,7 +1241,6 @@ class Start {
     constructor(canvasId) {
         this.loop = () => {
             this.draw();
-            this.wallet++;
             requestAnimationFrame(this.loop);
         };
         this.mouseHandler = (event) => {
@@ -1264,7 +1263,6 @@ class Start {
         this.characterImages = [];
         this.images = [];
         this.background = [];
-        this.wallet = 0;
         this.indexCounterWorld = 0;
         this.indexCounterCharacter = 0;
         this.buttonMaker();
@@ -1295,7 +1293,6 @@ class Start {
         for (let i = 0; i < this.worldImages.length; i++) {
             this.worldImages[this.indexCounterWorld].draw(ctx);
         }
-        Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
     }
     buttonMaker() {
         this.buttons.push(new StartGameButton(this.canvas.width / 2 - 329 / 2, (this.canvas.height / 5) * 4 - 100 / 2));

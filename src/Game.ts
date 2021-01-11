@@ -234,6 +234,6 @@ abstract class Game {
   }
 
   private gameOver(){
-      new Endscreen(this.canvas, this.score);
+    new Endscreen(this.canvas, this.score);
   }
 }
