@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Start(document.getElementById("canvas"));
+    new Shop(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -190,7 +190,6 @@ KeyboardListener.KEY_Z = 90;
 class Button {
     constructor(xPos, yPos) {
         this.mouseHandler = (event) => {
-            console.log(`User clicked the: ${this.getButtonName()} button`);
             if (event.clientX >= this.getButtonXPos() &&
                 event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
                 event.clientY >= this.getButtonYPos() &&
@@ -200,7 +199,6 @@ class Button {
                 }
                 if (this.getButtonName() === "UnlockDesert") {
                     console.log("Unlock Desert");
-                    new UnlockDesert(20, 20);
                 }
                 if (this.getButtonName() === "UnlockSwamp") {
                     console.log("Unlock Swamp");
@@ -243,6 +241,7 @@ class Button {
         this.xPos = xPos;
         this.yPos = yPos;
         document.addEventListener("click", this.mouseHandler);
+        this.shop = [];
     }
     move(canvas) { }
     reloadImage(canvas) { }
@@ -1182,7 +1181,16 @@ class Shop {
             this.draw();
             requestAnimationFrame(this.loop);
         };
-        this.mouseHandler = (event) => { };
+        this.mouseHandler = (event) => {
+            if (event.clientX >= this.getButtonXPos() &&
+                event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
+                event.clientY >= this.getButtonYPos() &&
+                event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()) {
+                if (this.getButtonName() === "UnlockYoshi") {
+                    this.characters.push(new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6));
+                }
+            }
+        };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
@@ -1196,6 +1204,18 @@ class Shop {
         this.drawImages();
         this.loop();
         document.addEventListener("click", this.mouseHandler);
+    }
+    getButtonXPos() {
+        return this.xPos;
+    }
+    getButtonYPos() {
+        return this.yPos;
+    }
+    getButtonImageWidth() {
+        return this.image.width;
+    }
+    getButtonImageHeight() {
+        return this.image.height;
     }
     getButtonName() {
         return this.name;
