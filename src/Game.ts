@@ -135,26 +135,10 @@ abstract class Game {
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-<<<<<<< Updated upstream
-    // //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
-    // //Sets the background
-    if (this.worldName === "Ocean") {
-<<<<<<< HEAD
-      ctx.drawImage(
-        GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"),
-        0,
-        -100
-      );
-=======
-
     //#TODO #FIX THIS IS A FUNCTION OF THE WORLD 
     //Sets the background
     if(this.worldName === "Ocean"){
       this.drawBackgroundOcean();
->>>>>>> Stashed changes
-=======
-      this.drawBackgroundOcean();
->>>>>>> main
     }
 
     if (this.worldName === "Desert") {
@@ -180,13 +164,8 @@ abstract class Game {
         -100
       );
     }
-<<<<<<< Updated upstream
-    //test text write Danger Dash
-=======
-
 
     //test text write Run!
->>>>>>> Stashed changes
     Start.writeTextToCanvas(
       ctx,
       "Run!",
