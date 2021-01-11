@@ -6,6 +6,7 @@ abstract class Button {
   protected image: HTMLImageElement;
   protected name: string;
   protected xVelocity: number;
+  private canvas: HTMLCanvasElement;
 
   constructor(xPos: number, yPos: number) {
     this.xPos = xPos;
@@ -33,11 +34,24 @@ abstract class Button {
     return this.image;
   }
 
+  public draw(ctx: CanvasRenderingContext2D) {
+
+   
+
+   ctx.drawImage(this.image, this.xPos, this.yPos);
+
+   
+  }
+
   /**
    * Method to handle the mouse event
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandler = (event: MouseEvent): void => {
+    
+    console.log(`User clicked the: ${this.getButtonName()} button`);
+    
+    
     // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
     if (
       event.clientX >= this.getButtonXPos() &&
@@ -51,6 +65,7 @@ abstract class Button {
       } 
       if (this.getButtonName() === "UnlockDesert") {
          console.log("Unlock Desert");
+         new UnlockDesert(20, 20)
       }
 
       if (this.getButtonName() === "UnlockSwamp") {
@@ -61,8 +76,8 @@ abstract class Button {
         console.log("Unlock Arctic");
       }
 
-      if (this.getButtonName() === "UnlockStewie") {
-        console.log("Unlock Stewie");
+      if (this.getButtonName() === "UnlockYoshi") {
+        console.log("Unlock Yoshi");
       }
 
       if (this.getButtonName() === "UnlockAmongUs") {
@@ -71,6 +86,10 @@ abstract class Button {
 
       if (this.getButtonName() === "UnlockAsh") {
         console.log("Unlock Ash");
+      }
+
+      if (this.getButtonName() === "UnlockMorty") {
+        console.log("Unlock Morty");
       }
       
       if (this.getButtonName() === "Settings") {
@@ -90,9 +109,7 @@ abstract class Button {
       } else {
         return null;
       }
-      console.log(`User clicked the: ${this.getButtonName()} button`);
-      
-    }
+     }
   };
 
   /**
@@ -111,8 +128,6 @@ abstract class Button {
     return this.image.height;
   }
 
-  public draw(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(this.image, this.xPos, this.yPos);
-  }
+ 
 
 }

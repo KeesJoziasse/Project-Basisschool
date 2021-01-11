@@ -3,6 +3,7 @@ class Endscreen {
     private canvas: HTMLCanvasElement;
     private buttons: Button[];
     private image: Images[];
+    private score: number;
 
     public constructor(canvasId: HTMLCanvasElement){
         // Construct the canvas
@@ -24,6 +25,8 @@ class Endscreen {
 
         // Calls the loop
         this.loop();
+
+        this.score = 200;
 
         // Add a mouse event
         document.addEventListener("click", this.mouseHandler);
@@ -51,6 +54,24 @@ class Endscreen {
     this.buttons.forEach((button) => {
       button.draw(ctx);
     });
+
+    Start.writeTextToCanvas(
+      ctx,
+      "Game Over!",
+      120,
+      this.canvas.width / 2.1,
+      this.canvas.height / 2.25,
+      "center", 
+      "white");
+
+      Start.writeTextToCanvas(
+        ctx,
+        `Your score is ${this.score}`,
+        60,
+        this.canvas.width / 2.1,
+        this.canvas.height / 1.8,
+        "center",
+        "white");
 }
 
 private buttonMaker() {
@@ -61,6 +82,11 @@ private buttonMaker() {
       )
     );
 }
+
+
+
+
+
 
 
 
