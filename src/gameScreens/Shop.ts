@@ -6,7 +6,7 @@ class Shop {
   private characters: Images[];
   private newWorlds: Images[];
   public name: string;
-  private money: number;
+  
 
 
   //Constructor
@@ -41,9 +41,6 @@ class Shop {
     this.drawImages();
 
     this.getButtonName();
-
-    // Amount of money
-    this.money = 1000;
 
     //Calls the loop.
     this.loop();
