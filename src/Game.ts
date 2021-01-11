@@ -124,7 +124,7 @@ abstract class Game {
     // //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
     // //Sets the background
     if (this.worldName === "Ocean") {
-      //Write method background draw here!
+      //this.drawBackgroundOcean();
     }
 
     if (this.worldName === "Desert") {
