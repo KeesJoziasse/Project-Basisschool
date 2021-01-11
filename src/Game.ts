@@ -12,8 +12,12 @@ abstract class Game {
   //The score of the player
   protected score: number;
   protected lives: number;
+
   //Worldname of the current world
   private worldName: string;
+
+  //characterName of the current Character of the player
+  private characterName: string;
 
   //Amount of frames that have passed
   protected frame: number;
@@ -30,7 +34,7 @@ abstract class Game {
    * Constructor
    * @param canvasId HTML canvas where the game will be displayed on
    */
-  public constructor(canvasId: HTMLCanvasElement, worldName: string) {
+  public constructor(canvasId: HTMLCanvasElement, worldName: string, characterName:string) {
     this.canvas = canvasId;
 
     //Making the canvas width + canvas height
@@ -49,6 +53,9 @@ abstract class Game {
 
     //Authorizing the worldname.
     this.worldName = worldName;
+
+    //Authorizing the character of the player
+    this.characterName = characterName;
 
     //Calling the loop
     this.loop();
