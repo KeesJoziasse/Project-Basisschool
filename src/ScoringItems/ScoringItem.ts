@@ -63,6 +63,20 @@ abstract class ScoringItem {
     this.xPosition += this.speed;
   }
 
+// overwritten by QuestionBox
+  public getXPosQuestionBox():number{
+    return this.getXPosQuestionBox();
+  }
+
+  public getYPosQuestionBox():number{
+    return this.getYPosQuestionBox();
+  }
+
+  public getImageHeightQuestionBox():number{
+    return this.getImageHeightQuestionBox();
+  }
+
+
   /**
    * Render the objects
    * @param ctx The CanvasRenderingContext2D of the canvas to draw on

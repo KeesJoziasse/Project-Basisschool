@@ -89,6 +89,15 @@ abstract class Player extends GameItem {
    * @param ScoringItem
    */
   public collidesWithScoringItem(ScoringItem: ScoringItem): boolean {
+    if(this.xPos + this.image.width > ScoringItem.getXPosQuestionBox() &&
+    this.yPos <
+      ScoringItem.getYPosQuestionBox() + ScoringItem.getImageHeightQuestionBox() / 2 && 
+    this.yPos + this.image.height >
+      ScoringItem.getYPosQuestionBox() + ScoringItem.getImageHeightQuestionBox() / 2){
+        //TODO linking to inGameQuestions 
+        console.log(InGameQuestions);
+      }
+
     if (
       this.xPos + this.image.width > ScoringItem.getPositionX() &&
       this.yPos <

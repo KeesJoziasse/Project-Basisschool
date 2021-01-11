@@ -4,7 +4,7 @@ let init = () => {
 };
 window.addEventListener("load", init);
 class Game {
-    constructor(canvasId, worldName) {
+    constructor(canvasId, worldName, characterName) {
         this.loop = () => {
             this.frame++;
             this.draw();
@@ -12,7 +12,9 @@ class Game {
             this.forScoringItems();
             this.gameOver();
             if (this.frame % 10 === 0) {
-                this.player.move();
+                this.player.forEach((player) => {
+                    player.move();
+                });
             }
             requestAnimationFrame(this.loop);
             console.log(this.scoringItems);
@@ -20,11 +22,12 @@ class Game {
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.player = new Player(this.canvas);
+        this.player = [];
         this.score = 0;
         this.lives = 3;
         this.frame = 0;
         this.worldName = worldName;
+        this.characterName = characterName;
         this.loop();
         this.scoringItems = [];
     }
@@ -35,23 +38,27 @@ class Game {
             this.scoringItems.forEach((scoringItem) => {
                 scoringItem.move();
             });
-            for (let i = 0; i < this.scoringItems.length; i++) {
-                if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
-                    this.score += this.scoringItems[i].getPoints();
-                    this.lives += this.scoringItems[i].getLives();
-                    this.scoringItems.splice(i, 1);
+            this.player.forEach((player) => {
+                for (let i = 0; i < this.scoringItems.length; i++) {
+                    if (player.collidesWithScoringItem(this.scoringItems[i])) {
+                        this.score += this.scoringItems[i].getPoints();
+                        this.lives += this.scoringItems[i].getLives();
+                        this.scoringItems.splice(i, 1);
+                    }
+                    else if (this.scoringItems[i].outOfCanvas()) {
+                        this.scoringItems.splice(i, 1);
+                    }
                 }
-                else if (this.scoringItems[i].outOfCanvas()) {
-                    this.scoringItems.splice(i, 1);
-                }
-            }
+            });
         }
+    }
+    drawBackgroundOcean() {
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         if (this.worldName === "Ocean") {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"), 0, -100);
+            this.drawBackgroundOcean();
         }
         if (this.worldName === "Desert") {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"), 0, 0);
@@ -63,7 +70,9 @@ class Game {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"), 0, -100);
         }
         Start.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
-        this.player.draw(ctx);
+        this.player.forEach((player) => {
+            player.draw(ctx);
+        });
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
         }
@@ -710,6 +719,15 @@ class ScoringItem {
     move() {
         this.xPosition += this.speed;
     }
+    getXPosQuestionBox() {
+        return this.getXPosQuestionBox();
+    }
+    getYPosQuestionBox() {
+        return this.getYPosQuestionBox();
+    }
+    getImageHeightQuestionBox() {
+        return this.getImageHeightQuestionBox();
+    }
     draw(ctx) {
         ctx.drawImage(this.image, this.xPosition, this.yPosition);
     }
@@ -786,6 +804,13 @@ class Player extends GameItem {
         }
     }
     collidesWithScoringItem(ScoringItem) {
+        if (this.xPos + this.image.width > ScoringItem.getXPosQuestionBox() &&
+            this.yPos <
+                ScoringItem.getYPosQuestionBox() + ScoringItem.getImageHeightQuestionBox() / 2 &&
+            this.yPos + this.image.height >
+                ScoringItem.getYPosQuestionBox() + ScoringItem.getImageHeightQuestionBox() / 2) {
+            console.log(InGameQuestions);
+        }
         if (this.xPos + this.image.width > ScoringItem.getPositionX() &&
             this.yPos <
                 ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
@@ -812,6 +837,26 @@ class Pearl extends ScoringItem {
         this.lives = 0;
     }
 }
+class QuestionBox extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/GameItems/ocean/questionBox.png");
+        this.points = 0;
+        this.lives = +1;
+        this.xpos = 0;
+        this.ypos = 0;
+        this.imageHeight = 0;
+    }
+    getXPosQuestionBox() {
+        return this.xpos;
+    }
+    getYPosQuestionBox() {
+        return this.ypos;
+    }
+    getImageHeightQuestionBox() {
+        return this.imageHeight;
+    }
+}
 class Rock extends ScoringItem {
     constructor(canvas) {
         super(canvas);
@@ -829,23 +874,36 @@ class Shark extends ScoringItem {
     }
 }
 class ArticWorld extends Game {
-    constructor(canvas, worldName) {
-        super(canvas, worldName);
+    constructor(canvas, worldName, characterName) {
+        super(canvas, worldName, characterName);
     }
 }
 class DesertWorld extends Game {
-    constructor(canvas, worldName) {
-        super(canvas, worldName);
+    constructor(canvas, worldName, characterName) {
+        super(canvas, worldName, characterName);
         this.image = GameItem.loadNewImage("./assets/img/world/DesertBG.jpg");
     }
 }
 class OceanWorld extends Game {
-    constructor(canvas, worldName) {
-        super(canvas, worldName);
+    constructor(canvas, worldName, characterName) {
+        super(canvas, worldName, characterName);
         this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
+        this.xPos;
+        this.yPos;
+        this.speed = -3;
     }
-    drawBackground(ctx) {
-        ctx.drawImage(this.image, this.canvas.width / 2, this.canvas.height / 2);
+    drawBackgroundOcean() {
+        const ctx = this.canvas.getContext("2d");
+        this.animationFrameBackground++;
+        console.log(this.animationFrameBackground);
+        if (this.animationFrameBackground === 1200) {
+            this.animationFrameBackground = -1;
+            this.xPos = 0;
+        }
+        if (this.animationFrameBackground < 900) {
+            ctx.drawImage(this.image, this.xPos, this.yPos);
+            this.xPos += this.speed;
+        }
     }
     frameIndex() {
         if (this.frame % 40 === 0) {
@@ -856,7 +914,7 @@ class OceanWorld extends Game {
         }
     }
     scoringItemsOceanWorld() {
-        const random = GameItem.randomInteger(1, 4);
+        const random = GameItem.randomInteger(1, 5);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }
@@ -869,11 +927,14 @@ class OceanWorld extends Game {
         if (random === 4) {
             this.scoringItems.push(new Rock(this.canvas));
         }
+        if (random === 5) {
+            this.scoringItems.push(new QuestionBox(this.canvas));
+        }
     }
 }
 class SwampWorld extends Game {
-    constructor(canvas, worldName) {
-        super(canvas, worldName);
+    constructor(canvas, worldName, characterName) {
+        super(canvas, worldName, characterName);
     }
 }
 class GeneralQuestions {
@@ -1270,19 +1331,19 @@ class Start {
     startLevel(button) {
         if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Ocean") {
-            new OceanWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
+            new OceanWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName(), "AmongUs");
         }
         else if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Artic") {
-            new ArticWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
+            new ArticWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName(), "AmongUs");
         }
         else if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Desert") {
-            new DesertWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
+            new DesertWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName(), "AmongUs");
         }
         else if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Swamp") {
-            new SwampWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName());
+            new SwampWorld(this.canvas, this.worldImages[this.indexCounterWorld].getImageName(), "AmongUs");
         }
     }
     static writeTextToCanvas(ctx, text, fontSize = 20, xCoordinate, yCoordinate, alignment = "center", color = "black") {
