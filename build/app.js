@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Shop(document.getElementById("canvas"));
+    new Endscreen(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -177,6 +177,9 @@ class Button {
                 if (this.getButtonName() === "Shop") {
                     new Shop(document.getElementById("canvas"));
                 }
+                if (this.getButtonName() === "RestartButton") {
+                    new Start(document.getElementById("canvas"));
+                }
                 else if (this.getButtonName() === "BackToStart") {
                     new Start(document.getElementById("canvas"));
                 }
@@ -226,6 +229,13 @@ class QuestionsAnswersButton extends Button {
         super(xPos, yPos);
         this.name = "QandA";
         this.image = Start.loadNewImage("./assets/img/buttons/info-button.png");
+    }
+}
+class RestartButton extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "RestartButton";
+        this.image = Start.loadNewImage("./assets/img/buttons/RestartButton.png");
     }
 }
 class SettingsButton extends Button {
@@ -835,6 +845,32 @@ class SwampWorld extends Game {
         super(canvas, worldName);
     }
 }
+class Endscreen {
+    constructor(canvasId) {
+        this.loop = () => {
+            this.draw();
+            requestAnimationFrame(this.loop);
+        };
+        this.mouseHandler = (event) => { };
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = innerHeight;
+        this.buttons = [];
+        this.buttonMaker();
+        this.loop();
+        document.addEventListener("click", this.mouseHandler);
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+        });
+    }
+    buttonMaker() {
+        this.buttons.push(new RestartButton((this.canvas.width / 2.5), (this.canvas.height / 1.5)));
+    }
+}
 class GeneralQuestions {
     constructor(canvasId) {
         this.loop = () => {
@@ -1030,7 +1066,6 @@ class Shop {
         this.drawUnlockableWorlds();
         this.drawImages();
         this.getButtonName();
-        this.money = 1000;
         this.loop();
         document.addEventListener("click", this.mouseHandler);
     }
