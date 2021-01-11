@@ -1,7 +1,6 @@
 class Start {
   //Attributes
   private canvas: HTMLCanvasElement;
-  private wallet: number;
   private buttons: Button[];
   private worldImages: Images[];
   private characterImages: Images[];
@@ -31,9 +30,6 @@ class Start {
 
     //Background cloud array
     this.background = [];
-
-    //Your total coin value
-    this.wallet = 0;
 
     //Index counter for world
     this.indexCounterWorld = 0;
@@ -70,9 +66,6 @@ class Start {
   public loop = () => {
     //Draws everythin while in the loop
     this.draw();
-
-    //#TODO you can remove this after you are fine with the code, for now there is a counter in the top left of your screen.
-    this.wallet++;
 
     // in the first loop no images are loaded
     requestAnimationFrame(this.loop);
@@ -116,8 +109,6 @@ class Start {
       this.worldImages[this.indexCounterWorld].draw(ctx);
     }
 
-    //Writing the total amount of coins to the top left of your screen
-    Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
   }
 
   private buttonMaker() {
