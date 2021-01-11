@@ -2,19 +2,44 @@
 
 class OceanWorld extends Game {
 
-  private image:HTMLImageElement;
+  private image: HTMLImageElement;
+  private xPos: number;
+  private yPos: number;
+  private speed: number;
+  private animationFrameBackground: number;
 
   constructor(canvas: HTMLCanvasElement, worldName: string, characterName:string) {
     super(canvas, worldName, characterName);
     this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
+    this.xPos;
+    this.yPos;
+    this.speed = -3;
   }
 
-  public drawBackground(ctx:CanvasRenderingContext2D){
-    ctx.drawImage(this.image,
-    this.canvas.width / 2,
-    this.canvas.height / 2,
-    )
-  }
+    //Draws the background and animates it so it looks like it moves
+    public drawBackgroundOcean(){
+      const ctx = this.canvas.getContext("2d");
+      
+      this.animationFrameBackground++;
+      console.log(this.animationFrameBackground);
+  
+      //does a reset
+      if(this.animationFrameBackground === 1200){
+        this.animationFrameBackground = -1;
+        this.xPos = 0;
+      }
+  
+      //First loaded image
+      if(this.animationFrameBackground < 900){
+        ctx.drawImage(
+          this.image,
+          this.xPos,
+          this.yPos
+        );
+        this.xPos += this.speed;
+      }
+      
+    }
 
   public frameIndex() {
     if (this.frame % 40 === 0) {

@@ -124,11 +124,7 @@ abstract class Game {
     // //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
     // //Sets the background
     if (this.worldName === "Ocean") {
-      ctx.drawImage(
-        GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"),
-        0,
-        -100
-      );
+      //Write method background draw here!
     }
 
     if (this.worldName === "Desert") {
