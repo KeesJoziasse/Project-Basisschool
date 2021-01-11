@@ -459,6 +459,13 @@ class DownLane extends Images {
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/downLane.png");
     }
 }
+class EndscreenBackground extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "EndscreenBG";
+        this.image = Start.loadNewImage("./assets/img/background/EndscreenBackground.jpg");
+    }
+}
 class HighScoreTitle extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -857,12 +864,14 @@ class Endscreen {
         this.canvas.height = innerHeight;
         this.buttons = [];
         this.buttonMaker();
+        this.image = [];
         this.loop();
         document.addEventListener("click", this.mouseHandler);
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        ctx.drawImage(GameItem.loadNewImage("./assets/img/background/EndscreenBackground.jpg"), 0, 0);
         this.buttons.forEach((button) => {
             button.draw(ctx);
         });

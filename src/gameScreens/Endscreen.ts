@@ -4,7 +4,7 @@ class Endscreen {
     private buttons: Button[];
     private image: Images[];
 
-    public constructor(canvasId: HTMLCanvasElement, RestartBG: string){
+    public constructor(canvasId: HTMLCanvasElement){
         // Construct the canvas
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
@@ -20,7 +20,7 @@ class Endscreen {
         this.image = [];
 
         // Calls the background maker
-        this.showBackground();
+        
 
         // Calls the loop
         this.loop();
@@ -46,14 +46,11 @@ class Endscreen {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    ctx.drawImage(GameItem.loadNewImage("./assets/img/background/EndscreenBackground.jpg"), 0, 0);
+
     this.buttons.forEach((button) => {
       button.draw(ctx);
     });
-
-    //Draws all the images
-    this.image.forEach((image) => {
-        image.draw(ctx);
-      });
 }
 
 private buttonMaker() {
@@ -65,9 +62,7 @@ private buttonMaker() {
     );
 }
 
-private showBackground() {
-    this.image.push(new EndscreenBackground(0, 0));
-  }
+
 
 /**
    * Method to handle the mouse event
