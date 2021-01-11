@@ -40,9 +40,15 @@ class Game {
             });
             this.player.forEach((player) => {
                 for (let i = 0; i < this.scoringItems.length; i++) {
+                    if (player.collidesWithScoringItem(this.scoringItems[i]) && this.scoringItems[i].getName() === "QuestionBox") {
+                        this.speed = 0;
+                        new InGameQuestions(document.getElementById("canvas"));
+                        console.log("test");
+                    }
                     if (player.collidesWithScoringItem(this.scoringItems[i])) {
                         this.score += this.scoringItems[i].getPoints();
                         this.lives += this.scoringItems[i].getLives();
+                        console.log(this.scoringItems[i].getName());
                         this.scoringItems.splice(i, 1);
                     }
                     else if (this.scoringItems[i].outOfCanvas()) {
@@ -206,6 +212,9 @@ class Button {
                 if (this.getButtonName() === "RestartButton") {
                     new Start(document.getElementById("canvas"));
                 }
+                if (this.getButtonName() === "NoButton") {
+                    new Start(document.getElementById("canvas"));
+                }
                 else if (this.getButtonName() === "BackToStart") {
                     new Start(document.getElementById("canvas"));
                 }
@@ -253,7 +262,7 @@ class BackToStart extends Button {
 class NoButton extends Button {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "BackToStart";
+        this.name = "NoButton";
         this.image = Start.loadNewImage("./assets/img/buttons/noButton.png");
     }
 }
@@ -302,7 +311,7 @@ class StartGameButton extends Button {
 class YesButton extends Button {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "BackToStart";
+        this.name = "YesButton";
         this.image = Start.loadNewImage("./assets/img/buttons/yesButton.png");
     }
 }
@@ -753,17 +762,11 @@ class ScoringItem {
     getLives() {
         return this.lives;
     }
+    getName() {
+        return this.name;
+    }
     move() {
         this.xPosition += this.speed;
-    }
-    getXPosQuestionBox() {
-        return this.getXPosQuestionBox();
-    }
-    getYPosQuestionBox() {
-        return this.getYPosQuestionBox();
-    }
-    getImageHeightQuestionBox() {
-        return this.getImageHeightQuestionBox();
     }
     draw(ctx) {
         ctx.drawImage(this.image, this.xPosition, this.yPosition);
@@ -828,18 +831,12 @@ class Player extends GameItem {
         ctx.drawImage(this.image, this.xPos, this.yPos);
     }
     collidesWithScoringItem(ScoringItem) {
-        if (this.xPos + this.image.width > ScoringItem.getXPosQuestionBox() &&
-            this.yPos <
-                ScoringItem.getYPosQuestionBox() + ScoringItem.getImageHeightQuestionBox() / 2 &&
-            this.yPos + this.image.height >
-                ScoringItem.getYPosQuestionBox() + ScoringItem.getImageHeightQuestionBox() / 2) {
-            console.log(InGameQuestions);
-        }
         if (this.xPos + this.image.width > ScoringItem.getPositionX() &&
             this.yPos <
                 ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
             this.yPos + this.image.height >
-                ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2) {
+                ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
+            this.xPos < ScoringItem.getImageWidth() + ScoringItem.getPositionX()) {
             return true;
         }
         return false;
@@ -874,6 +871,7 @@ class Fish extends ScoringItem {
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanFish.png");
         this.points = 5;
         this.lives = 0;
+        this.name = "Fish";
     }
 }
 class Pearl extends ScoringItem {
@@ -882,6 +880,7 @@ class Pearl extends ScoringItem {
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanParelBooster.png");
         this.points = 20;
         this.lives = 0;
+        this.name = "Pearl";
     }
 }
 class QuestionBox extends ScoringItem {
@@ -890,18 +889,7 @@ class QuestionBox extends ScoringItem {
         this.image = this.loadNewImage("assets/img/GameItems/ocean/questionBox.png");
         this.points = 0;
         this.lives = +1;
-        this.xpos = 0;
-        this.ypos = 0;
-        this.imageHeight = 0;
-    }
-    getXPosQuestionBox() {
-        return this.xpos;
-    }
-    getYPosQuestionBox() {
-        return this.ypos;
-    }
-    getImageHeightQuestionBox() {
-        return this.imageHeight;
+        this.name = "QuestionBox";
     }
 }
 class Rock extends ScoringItem {
@@ -910,6 +898,7 @@ class Rock extends ScoringItem {
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanRock1.png");
         this.points = -20;
         this.lives = -1;
+        this.name = "Rock";
     }
 }
 class Shark extends ScoringItem {
@@ -918,6 +907,7 @@ class Shark extends ScoringItem {
         this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanShark.png");
         this.points = -20;
         this.lives = -1;
+        this.name = "Shark";
     }
 }
 class ArticWorld extends Game {

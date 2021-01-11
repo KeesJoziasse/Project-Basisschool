@@ -9,8 +9,10 @@ abstract class ScoringItem {
   protected image: HTMLImageElement;
   protected speed: number;
   protected lives: number;
+  protected name: string;
   private xPosition: number;
   private yPosition: number;
+  
 
   public constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -54,6 +56,10 @@ abstract class ScoringItem {
   public getLives(): number{
     return this.lives;
   }
+  public getName(): string{
+    return this.name;
+  }
+
 
   /**
    * Moves the scoring items
@@ -61,20 +67,6 @@ abstract class ScoringItem {
   public move() {
     this.xPosition += this.speed;
   }
-
-// overwritten by QuestionBox
-  public getXPosQuestionBox():number{
-    return this.getXPosQuestionBox();
-  }
-
-  public getYPosQuestionBox():number{
-    return this.getYPosQuestionBox();
-  }
-
-  public getImageHeightQuestionBox():number{
-    return this.getImageHeightQuestionBox();
-  }
-
 
   /**
    * Render the objects

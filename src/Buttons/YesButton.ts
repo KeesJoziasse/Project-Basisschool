@@ -3,7 +3,7 @@
 class YesButton extends Button {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "BackToStart";
+      this.name = "YesButton";
       this.image = Start.loadNewImage("./assets/img/buttons/yesButton.png");
     }
   }

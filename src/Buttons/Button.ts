@@ -85,6 +85,9 @@ abstract class Button {
       if (this.getButtonName() === "RestartButton"){
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
       }
+      if (this.getButtonName() === "NoButton"){
+         new Start(document.getElementById("canvas") as HTMLCanvasElement);
+      }
       else if (this.getButtonName() === "BackToStart") {
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
       } else {

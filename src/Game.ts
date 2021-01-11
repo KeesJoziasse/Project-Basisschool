@@ -108,10 +108,16 @@ abstract class Game {
 
       this.player.forEach((player) => {
         for (let i = 0; i < this.scoringItems.length; i++) {
+          if(player.collidesWithScoringItem(this.scoringItems[i]) && this.scoringItems[i].getName() === "QuestionBox"){
+            this.speed = 0;
+            new InGameQuestions (document.getElementById("canvas") as HTMLCanvasElement);
+            console.log("test");
+          }
           if (player.collidesWithScoringItem(this.scoringItems[i])) {
             //#TODO fix first if statement
             this.score += this.scoringItems[i].getPoints();
             this.lives += this.scoringItems[i].getLives();
+            console.log(this.scoringItems[i].getName());
             this.scoringItems.splice(i, 1);
           } else if (this.scoringItems[i].outOfCanvas()) {
             this.scoringItems.splice(i, 1);
@@ -122,7 +128,7 @@ abstract class Game {
   }
 
   //This function will be overwritten by Artic,Desert,Ocean,SwampWorlds
-  public drawBackgroundOcean(){}
+  public drawBackgroundOcean() {}
 
   /**
    * Method that writes gameItems on the canvas
@@ -132,9 +138,9 @@ abstract class Game {
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD 
+    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
     //Sets the background
-    if(this.worldName === "Ocean"){
+    if (this.worldName === "Ocean") {
       this.drawBackgroundOcean();
     }
 
@@ -218,9 +224,11 @@ abstract class Game {
     );
   }
 
-  private gameOver(){
+  private gameOver() {
     if (this.lives < 0) {
-      alert(`Game over... Je behaalde score is: ${this.score}  Druk op F5 om opnieuw te spelen !`)
+      alert(
+        `Game over... Je behaalde score is: ${this.score}  Druk op F5 om opnieuw te spelen !`
+      );
     }
   }
 }
