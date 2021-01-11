@@ -113,6 +113,10 @@ abstract class Game {
     }
   }
 
+  public drawBackgroundOcean(){
+    //this function will be overwritten by OceanWorld
+  }
+
   /**
    * Method that writes gameItems on the canvas
    */
@@ -124,7 +128,7 @@ abstract class Game {
     // //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
     // //Sets the background
     if (this.worldName === "Ocean") {
-      //this.drawBackgroundOcean();
+      this.drawBackgroundOcean();
     }
 
     if (this.worldName === "Desert") {
