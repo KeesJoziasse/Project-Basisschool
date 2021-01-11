@@ -47,7 +47,7 @@ class Player extends GameItem {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
-    // ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
+    // ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     //Animationframe goes to 1 if its 76
     this.playerAnimation();
     ctx.drawImage(this.image, this.xPos, this.yPos);
@@ -88,9 +88,10 @@ class Player extends GameItem {
     if (
       this.xPos + this.image.width > ScoringItem.getPositionX() &&
       this.yPos <
-        ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 && 
+        ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
       this.yPos + this.image.height >
-        ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2
+        ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
+      this.xPos < ScoringItem.getImageWidth() + ScoringItem.getPositionX()
     ) {
       return true;
     }
