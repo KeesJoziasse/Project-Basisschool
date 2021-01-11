@@ -16,9 +16,6 @@ abstract class Game {
   //Worldname of the current world
   private worldName: string;
 
-  //characterName of the current Character of the player
-  private characterName: string;
-
   //Amount of frames that have passed
   protected frame: number;
 
@@ -28,13 +25,23 @@ abstract class Game {
   //Scoring items array
   protected scoringItems: ScoringItem[];
 
-  //testArea
+  //speed of the worldImage
+  protected speed: number;
+
+  //xpos of the worldImage
+  protected xPos: number;
+
+  //xpos of the worldImage
+  protected yPos: number;
+
+  //image of the world
+  protected image: HTMLImageElement;
 
   /**
    * Constructor
    * @param canvasId HTML canvas where the game will be displayed on
    */
-  public constructor(canvasId: HTMLCanvasElement, worldName: string, characterName:string) {
+  public constructor(canvasId: HTMLCanvasElement, worldName: string) {
     this.canvas = canvasId;
 
     //Making the canvas width + canvas height
@@ -54,14 +61,16 @@ abstract class Game {
     //Authorizing the worldname.
     this.worldName = worldName;
 
-    //Authorizing the character of the player
-    this.characterName = characterName;
+    //Speed of the world on canvas
+    this.speed;
 
     //Calling the loop
     this.loop();
 
     //Scoringitems array
     this.scoringItems = [];
+
+    this.player.push(new AmongUs(this.canvas, "AmongUs"));
   }
 
   //Creates the scoring items for the ocean world
@@ -81,14 +90,13 @@ abstract class Game {
     this.gameOver();
     //makes the player move, ifstatement makes sure the buttons are not spammable
     if (this.frame % 10 === 0) {
-
       this.player.forEach((player) => {
         player.move();
       });
     }
 
     requestAnimationFrame(this.loop);
-    console.log(this.scoringItems);
+    //console.log(this.scoringItems);
   };
 
   //Handles everything for the scoringitems.
@@ -113,9 +121,8 @@ abstract class Game {
     }
   }
 
-  public drawBackgroundOcean(){
-    //this function will be overwritten by OceanWorld
-  }
+  //This function will be overwritten by Artic,Desert,Ocean,SwampWorlds
+  public drawBackgroundOcean(){}
 
   /**
    * Method that writes gameItems on the canvas
@@ -125,9 +132,9 @@ abstract class Game {
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
-    // //Sets the background
-    if (this.worldName === "Ocean") {
+    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD 
+    //Sets the background
+    if(this.worldName === "Ocean"){
       this.drawBackgroundOcean();
     }
 
@@ -154,7 +161,8 @@ abstract class Game {
         -100
       );
     }
-    //test text write Danger Dash
+
+    //test text write Run!
     Start.writeTextToCanvas(
       ctx,
       "Run!",
