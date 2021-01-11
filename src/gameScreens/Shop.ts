@@ -6,7 +6,33 @@ class Shop {
   private characters: Images[];
   private newWorlds: Images[];
   public name: string;
-  
+  private xPos: number;
+  private yPos: number;
+
+  public getButtonXPos(): number {
+    return this.xPos;
+  }
+
+  public getButtonYPos(): number {
+    return this.yPos;
+  }
+
+  /**
+   * Returns the width of the image
+   * @returns {number} - image width
+   */
+  public getButtonImageWidth(): number {
+    return this.image.width;
+  }
+
+  /**
+   * Returns the height of the image
+   * @returns {number} - image height
+   */
+  public getButtonImageHeight(): number {
+    return this.image.height;
+  }
+
 
 
   //Constructor
@@ -40,7 +66,7 @@ class Shop {
     // Calls the image drawer function
     this.drawImages();
 
-    // this.drawUnlockables(button, ctx)
+    
 
     //Calls the loop.
     this.loop();
@@ -73,7 +99,7 @@ class Shop {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // this.drawUnlockables(button, ctx);
+
 
     this.buttons.forEach((button) => {
       button.draw(ctx);
@@ -97,66 +123,66 @@ class Shop {
       this.canvas.height / 1.035,
       "center");
 
-      // Price of Stewie
-      Start.writeTextToCanvas(
-        ctx,
-        "50",
-        60,
-        this.canvas.width / 5.8,
-        this.canvas.height / 2.25,
-        "center");
+    // Price of Stewie
+    Start.writeTextToCanvas(
+      ctx,
+      "50",
+      60,
+      this.canvas.width / 5.8,
+      this.canvas.height / 2.25,
+      "center");
 
-        // Price for yellow Among Us character
-        Start.writeTextToCanvas(
-          ctx,
-          "50",
-          60,
-          this.canvas.width / 2.55,
-          this.canvas.height / 2.25,
-          "center");
+    // Price for yellow Among Us character
+    Start.writeTextToCanvas(
+      ctx,
+      "50",
+      60,
+      this.canvas.width / 2.55,
+      this.canvas.height / 2.25,
+      "center");
 
-          // Price for Ash
-          Start.writeTextToCanvas(
-            ctx,
-            "50",
-            60,
-            this.canvas.width / 1.68,
-            this.canvas.height / 2.25,
-            "center");
+    // Price for Ash
+    Start.writeTextToCanvas(
+      ctx,
+      "50",
+      60,
+      this.canvas.width / 1.68,
+      this.canvas.height / 2.25,
+      "center");
 
-            // Price for Morty
-            Start.writeTextToCanvas(
-              ctx,
-              "50",
-              60,
-              this.canvas.width / 1.24,
-              this.canvas.height / 2.25,
-              "center");
+    // Price for Morty
+    Start.writeTextToCanvas(
+      ctx,
+      "50",
+      60,
+      this.canvas.width / 1.24,
+      this.canvas.height / 2.25,
+      "center");
 
-              // Price for desert level
-              Start.writeTextToCanvas(
-                ctx,
-                "100",
-                60,
-                this.canvas.width / 1.42,
-                this.canvas.height / 1.10,
-                "center");
+    // Price for desert level
+    Start.writeTextToCanvas(
+      ctx,
+      "100",
+      60,
+      this.canvas.width / 1.42,
+      this.canvas.height / 1.10,
+      "center");
 
-                Start.writeTextToCanvas(
-                  ctx,
-                  "100",
-                  60,
-                  this.canvas.width / 2.01,
-                  this.canvas.height / 1.10,
-                  "center");
+    Start.writeTextToCanvas(
+      ctx,
+      "100",
+      60,
+      this.canvas.width / 2.01,
+      this.canvas.height / 1.10,
+      "center");
 
-                  Start.writeTextToCanvas(
-                    ctx,
-                    "100",
-                    60,
-                    this.canvas.width / 3.4,
-                    this.canvas.height / 1.10,
-                    "center");
+    Start.writeTextToCanvas(
+      ctx,
+      "100",
+      60,
+      this.canvas.width / 3.4,
+      this.canvas.height / 1.10,
+      "center");
 
     // Drawing the images
     this.images.forEach((image) => {
@@ -179,12 +205,6 @@ class Shop {
       world.draw(ctx);
     })
   }
-
-  // public drawUnlockables(button: Button, ctx: CanvasRenderingContext2D){
-  //   if(button.getButtonName() === "UnlockYoshi"){
-  //     ctx.drawImage(GameItem.loadNewImage("./assets/img/players/YoshiUnlocked.png"), this.canvas.width / 7.9, this.canvas.width / 6);
-  //   }
-  // }
 
   public drawImages() {
     // Draw coins
@@ -220,6 +240,7 @@ class Shop {
 
   public drawUnlockableCharacter() {
     // #TODO draw characters that are actually compatible for drawing, these are examples
+
     this.characters.push(
       new Yoshi(this.canvas.width / 7.9, this.canvas.height / 6)
     );
@@ -278,7 +299,15 @@ class Shop {
    * Method to handle the mouse event
    * @param {MouseEvent} event - mouse event
    */
-  public mouseHandler = (event: MouseEvent) => { };
+  public mouseHandler = (event: MouseEvent): void => {
+    if(event.clientX >= this.getButtonXPos() &&
+    event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
+    event.clientY >= this.getButtonYPos() &&
+    event.clientY <= this.getButtonYPos() + this.getButtonImageHeight())
+  {if (this.getButtonName() === "UnlockYoshi"){
+    this.characters.push(new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6))
+  }}
+  };
 
   /**
    * Loads an image in such a way that the screen doesn't constantly flicker

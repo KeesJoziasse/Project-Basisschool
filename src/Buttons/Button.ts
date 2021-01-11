@@ -7,11 +7,13 @@ abstract class Button {
   protected name: string;
   protected xVelocity: number;
   private canvas: HTMLCanvasElement;
+  private shop: Shop[];
 
   constructor(xPos: number, yPos: number) {
     this.xPos = xPos;
     this.yPos = yPos;
     document.addEventListener("click", this.mouseHandler);
+    this.shop = [];
   }
 
   public move(canvas: HTMLCanvasElement) {}
@@ -35,10 +37,10 @@ abstract class Button {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
+    
+   ctx.drawImage(this.image, this.xPos, this.yPos);
 
    
-
-   ctx.drawImage(this.image, this.xPos, this.yPos);
 
    
   }
@@ -49,7 +51,7 @@ abstract class Button {
    */
   public mouseHandler = (event: MouseEvent): void => {
     
-    console.log(`User clicked the: ${this.getButtonName()} button`);
+    
     
     
     // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
@@ -65,7 +67,6 @@ abstract class Button {
       } 
       if (this.getButtonName() === "UnlockDesert") {
          console.log("Unlock Desert");
-         new UnlockDesert(20, 20)
       }
 
       if (this.getButtonName() === "UnlockSwamp") {
@@ -109,7 +110,9 @@ abstract class Button {
       } else {
         return null;
       }
+      
      }
+    //  console.log(`User clicked the: ${this.getButtonName()} button`);
   };
 
   /**
