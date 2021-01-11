@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Start(document.getElementById("canvas"));
+    new InGameQuestions(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -248,6 +248,13 @@ class BackToStart extends Button {
         this.image = Start.loadNewImage("./assets/img/buttons/left-arrow.png");
     }
 }
+class NoButton extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "BackToStart";
+        this.image = Start.loadNewImage("./assets/img/buttons/noButton.png");
+    }
+}
 class QuestionsAnswersButton extends Button {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -281,6 +288,13 @@ class StartGameButton extends Button {
         super(xPos, yPos);
         this.name = "StartGame";
         this.image = Start.loadNewImage("./assets/img/buttons/start-button.png");
+    }
+}
+class YesButton extends Button {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "BackToStart";
+        this.image = Start.loadNewImage("./assets/img/buttons/yesButton.png");
     }
 }
 class HighscoreButton extends Button {
@@ -481,6 +495,13 @@ class HighScoreTitle extends Images {
         super(xPos, yPos);
         this.name = "highScoreTitle";
         this.image = Start.loadNewImage("./assets/img/Highscore/highScoreTitle.png");
+    }
+}
+class InGameQuestionImage extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Questions";
+        this.image = InGameQuestions.loadNewImage("./assets/img/InGameQuestions/inGameQuestionsImage.png");
     }
 }
 class MarsUnlocked extends Images {
@@ -1031,6 +1052,40 @@ class HighScore {
     }
 }
 class InGameQuestions {
+    constructor(canvasId) {
+        this.loop = () => {
+            this.draw();
+            requestAnimationFrame(this.loop);
+        };
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.images = [];
+        this.buttons = [];
+        this.buttonMaker();
+        this.imageMaker();
+        this.loop();
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        this.images.forEach((image) => {
+            image.draw(ctx);
+        });
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+        });
+    }
+    imageMaker() {
+        this.images.push(new InGameQuestionImage(this.canvas.width / 3, 150));
+    }
+    static loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
+    buttonMaker() {
+        this.buttons.push(new YesButton((this.canvas.width / 3) * 1.05, (this.canvas.height / 2) * 1.5), new NoButton((this.canvas.width / 2) * 1.05, (this.canvas.height / 2) * 1.5));
+    }
 }
 class QuestionAndAnswer {
     constructor(canvasId) {
