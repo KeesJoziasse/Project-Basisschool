@@ -243,6 +243,7 @@ class Button {
         return this.image.height;
     }
     draw(ctx) {
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         ctx.drawImage(this.image, this.xPos, this.yPos);
     }
 }

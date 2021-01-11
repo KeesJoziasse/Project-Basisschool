@@ -110,7 +110,7 @@ abstract class Button {
 
   public draw(ctx: CanvasRenderingContext2D) {
     //clears the canvas
-    // ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     ctx.drawImage(this.image, this.xPos, this.yPos);
   }
 }
