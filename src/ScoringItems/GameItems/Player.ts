@@ -55,17 +55,26 @@ abstract class Player extends GameItem {
     }
   }
 
-  //Will be overwritten by AmongUs class
-  public AmongUsAnimation() {}
-
   public draw(ctx: CanvasRenderingContext2D) {
-    //Checks characterName for the right CharacterAnimation
-    if (this.characterName === "AmongUs") {
-      this.AmongUsAnimation();
-    }
-
+    // ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    //Animationframe goes to 1 if its 76
+    this.playerAnimation();
     ctx.drawImage(this.image, this.xPos, this.yPos);
   }
+
+  //Walking animation of the player
+  private playerAnimation() {
+    //Adds 1 to the frame counter.
+    this.animationFrame++;
+  }
+  // // public draw(ctx: CanvasRenderingContext2D) {
+  // //   //Checks characterName for the right CharacterAnimation
+  // //   if (this.characterName === "AmongUs") {
+  // //     this.AmongUsAnimation();
+  // //   }
+
+  // //   ctx.drawImage(this.image, this.xPos, this.yPos);
+  // }
 
   /*** Method that checks if a gameItem collides with the player    
   ** @param ScoringItem    

@@ -7,5 +7,6 @@ class Fish extends ScoringItem {
     this.points = 5;
     this.lives = 0;
     this.name = "Fish";
+    this.earnedCoins = 0;
   }
 }

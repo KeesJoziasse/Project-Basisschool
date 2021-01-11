@@ -69,20 +69,12 @@ class Shop {
    */
   public draw() {
     const ctx = this.canvas.getContext("2d");
-
-
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     //#TODO #FIX zodra die unluck button gepressed wordt
     //#TODO #FIX probleem hij ziet de shop niet!!
-
     // this.drawUnlockableCharacter();
-
-
-
     // this.drawUnlockableWorlds();
-
     this.buttons.forEach((button) => {
       button.draw(ctx);
     });

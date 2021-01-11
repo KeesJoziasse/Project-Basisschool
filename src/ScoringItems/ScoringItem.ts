@@ -1,15 +1,14 @@
 abstract class ScoringItem {
   private canvas: HTMLCanvasElement;
-
   private topLane: number;
   private middleLane: number;
   private lowerLane: number;
-
   protected points: number;
   protected image: HTMLImageElement;
   protected speed: number;
   protected lives: number;
   protected name: string;
+  protected earnedCoins: number;
   private xPosition: number;
   private yPosition: number;
   
@@ -33,7 +32,8 @@ abstract class ScoringItem {
     }
 
     //Speed of the scoring objects
-    this.speed = -(this.canvas.width/400);
+    this.speed = -12;
+
     this.xPosition = this.canvas.width;
   }
 
@@ -60,6 +60,9 @@ abstract class ScoringItem {
     return this.name;
   }
 
+  public getCoinValue(): number{
+    return this.earnedCoins;
+  }
 
   /**
    * Moves the scoring items

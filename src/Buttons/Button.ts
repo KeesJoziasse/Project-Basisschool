@@ -6,6 +6,7 @@ abstract class Button {
   protected image: HTMLImageElement;
   protected name: string;
   protected xVelocity: number;
+  protected canvas: HTMLCanvasElement;
 
   constructor(xPos: number, yPos: number) {
     this.xPos = xPos;
@@ -38,7 +39,7 @@ abstract class Button {
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandler = (event: MouseEvent): void => {
-    console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
     if (
       event.clientX >= this.getButtonXPos() &&
       event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
@@ -48,9 +49,9 @@ abstract class Button {
       // looks if the buttons name match and get you to the right page
       if (this.getButtonName() === "HighScore") {
         new HighScore(document.getElementById("canvas") as HTMLCanvasElement);
-      } 
+      }
       if (this.getButtonName() === "UnlockDesert") {
-         console.log("Unlock Desert");
+        console.log("Unlock Desert");
       }
 
       if (this.getButtonName() === "UnlockSwamp") {
@@ -72,12 +73,14 @@ abstract class Button {
       if (this.getButtonName() === "UnlockAsh") {
         console.log("Unlock Ash");
       }
-      
+
       if (this.getButtonName() === "Settings") {
         new Settings(document.getElementById("canvas") as HTMLCanvasElement);
       }
       if (this.getButtonName() === "QandA") {
-        new GeneralQuestions(document.getElementById("canvas") as HTMLCanvasElement);
+        new GeneralQuestions(
+          document.getElementById("canvas") as HTMLCanvasElement
+        );
       }
       if (this.getButtonName() === "Shop") {
         new Shop(document.getElementById("canvas") as HTMLCanvasElement);
@@ -93,7 +96,6 @@ abstract class Button {
       } else {
         return null;
       }
-      console.log(`User clicked the: ${this.getButtonName()} button`);
     }
   };
 
@@ -114,7 +116,8 @@ abstract class Button {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
+    //clears the canvas
+    // ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     ctx.drawImage(this.image, this.xPos, this.yPos);
   }
-
 }

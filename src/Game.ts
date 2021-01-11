@@ -12,7 +12,7 @@ abstract class Game {
   //The score of the player
   protected score: number;
   protected lives: number;
-
+  protected earnedCoins: number;
   //Worldname of the current world
   private worldName: string;
 
@@ -55,6 +55,7 @@ abstract class Game {
     //Setting the score to 0.
     this.score = 0;
     this.lives = 3;
+    this.earnedCoins = 0;
     //Setting the framecounter to 0.
     this.frame = 0;
 
@@ -96,7 +97,6 @@ abstract class Game {
     }
 
     requestAnimationFrame(this.loop);
-    //console.log(this.scoringItems);
   };
 
   //Handles everything for the scoringitems.
@@ -167,17 +167,6 @@ abstract class Game {
         -100
       );
     }
-
-    //test text write Run!
-    Start.writeTextToCanvas(
-      ctx,
-      "Run!",
-      60,
-      this.canvas.width / 2,
-      80,
-      "center"
-    );
-
     //Drawing the player
     this.player.forEach((player) => {
       player.draw(ctx);
@@ -197,12 +186,25 @@ abstract class Game {
    * @param ctx
    */
   private drawScore(ctx: CanvasRenderingContext2D): void {
+    //Draws the score
     Start.writeTextToCanvas(
       ctx,
       `Score: ${this.score}`,
       60,
-      this.canvas.width / 8,
+      this.canvas.width /2,
       this.canvas.height / 8,
+      null,
+      "red"
+    );
+    
+    //Draws the earned coins
+    ctx.drawImage(GameItem.loadNewImage("assets/img/GameItems/coin.png") , this.canvas.width /20, this.canvas.height / 8)
+    Start.writeTextToCanvas(
+      ctx,
+      `${this.earnedCoins}`,
+      60,
+      this.canvas.width / 8 ,
+      this.canvas.height / 5,
       null,
       "red"
     );
@@ -213,15 +215,41 @@ abstract class Game {
    * @param ctx
    */
   private drawLives(ctx: CanvasRenderingContext2D): void {
-    Start.writeTextToCanvas(
-      ctx,
-      `Lives: ${this.lives}`,
-      60,
-      (this.canvas.width / 8) * 7,
-      this.canvas.height / 8,
-      null,
-      "red"
-    );
+    if (this.lives == 3) {
+      ctx.drawImage(
+        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
+    if (this.lives == 2) {
+      ctx.drawImage(
+        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
+    if (this.lives == 1) {
+      ctx.drawImage(
+        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
+    if (this.lives == 0) {
+      ctx.drawImage(
+        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
+    if (this.lives < 0) {
+      ctx.drawImage(
+        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
   }
 
   private gameOver() {

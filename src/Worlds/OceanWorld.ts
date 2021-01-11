@@ -61,7 +61,11 @@ class OceanWorld extends Game {
   }
 
   public scoringItemsOceanWorld(): void {
+<<<<<<< HEAD
     const random = GameItem.randomInteger(1, 5);
+=======
+    const random = GameItem.randomInteger(1, 5 );
+>>>>>>> origin/Justin
     if (random === 1) {
       this.scoringItems.push(new Shark(this.canvas));
     }
@@ -75,7 +79,12 @@ class OceanWorld extends Game {
       this.scoringItems.push(new Rock(this.canvas));
     }
     if(random === 5){
+<<<<<<< HEAD
       this.scoringItems.push(new QuestionBox(this.canvas));
+=======
+      this.scoringItems.push(new inGameCoin(this.canvas));
+    }
+>>>>>>> origin/Justin
   }
 }
 }

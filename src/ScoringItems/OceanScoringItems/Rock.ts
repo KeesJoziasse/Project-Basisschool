@@ -7,5 +7,6 @@ class Rock extends ScoringItem {
     this.points = -20;
     this.lives = -1;
     this.name = "Rock";
+    this.earnedCoins = 0;
   }
 }

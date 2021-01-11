@@ -9,5 +9,6 @@ class Pearl extends ScoringItem {
     this.points = 20;
     this.lives = 0;
     this.name = "Pearl";
+    this.earnedCoins = 0;
   }
 }
