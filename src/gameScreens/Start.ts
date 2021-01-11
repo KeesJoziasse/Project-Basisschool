@@ -200,7 +200,7 @@ class Start {
     );
 
     this.worldImages.push(
-      new ArticImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 110)
+      new ArticImage(this.canvas.width / 2 - 250, this.canvas.height / 3 - 150)
     );
   }
 

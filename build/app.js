@@ -1312,7 +1312,7 @@ class Start {
         this.worldImages.push(new OceanImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 130));
         this.worldImages.push(new DesertImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 80));
         this.worldImages.push(new SwampImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 90));
-        this.worldImages.push(new ArticImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 110));
+        this.worldImages.push(new ArticImage(this.canvas.width / 2 - 250, this.canvas.height / 3 - 150));
     }
     charachterMaker() {
         this.characterImages.push(new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
