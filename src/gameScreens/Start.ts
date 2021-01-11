@@ -316,7 +316,8 @@ class Start {
     ) {
       new OceanWorld(
         this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName()
+        this.worldImages[this.indexCounterWorld].getImageName(),
+        "AmongUs"
       );
     } else if (
       button.getButtonName() == "StartGame" &&
@@ -324,15 +325,18 @@ class Start {
     ) {
       new ArticWorld(
         this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName()
+        this.worldImages[this.indexCounterWorld].getImageName(),
+        "AmongUs"
       );
     } else if (
       button.getButtonName() == "StartGame" &&
-      this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
+      this.worldImages[this.indexCounterWorld].getImageName() == "Desert",
+      "AmongUs"
     ) {
       new DesertWorld(
         this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName()
+        this.worldImages[this.indexCounterWorld].getImageName(),
+        "AmongUs"
       );
     } else if (
       button.getButtonName() == "StartGame" &&
@@ -340,7 +344,8 @@ class Start {
     ) {
       new SwampWorld(
         this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName()
+        this.worldImages[this.indexCounterWorld].getImageName(),
+        "AmongUs"
       );
     }
   }
