@@ -51,11 +51,11 @@ class OceanWorld extends Game {
   }
 
   public frameIndex() {
-    if (this.frame % 40 === 0) {
+    if (this.frame % 100 === 0) {
       this.scoringItemsOceanWorld();
     }
     if (this.frame % 10 === 0){
-      this.score += 1
+      this.score += 1;
     }
   }
 

@@ -92,7 +92,6 @@ abstract class Game {
     this.gameOver();
     //makes the player move, ifstatement makes sure the buttons are not spammable
     if (this.frame % 10 === 0) {
-
       this.player.forEach((player) => {
         player.move();
       });

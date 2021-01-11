@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Endscreen(document.getElementById("canvas"));
+    new Start(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -710,7 +710,7 @@ class ScoringItem {
         if (random === 3) {
             this.yPosition = this.lowerLane;
         }
-        this.speed = -(this.canvas.width / 100);
+        this.speed = -(this.canvas.width / 400);
         this.xPosition = this.canvas.width;
     }
     getPositionX() {
@@ -894,7 +894,7 @@ class OceanWorld extends Game {
         }
     }
     frameIndex() {
-        if (this.frame % 40 === 0) {
+        if (this.frame % 100 === 0) {
             this.scoringItemsOceanWorld();
         }
         if (this.frame % 10 === 0) {

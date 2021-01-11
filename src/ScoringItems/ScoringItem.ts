@@ -31,7 +31,7 @@ abstract class ScoringItem {
     }
 
     //Speed of the scoring objects
-    this.speed = -(this.canvas.width/100);
+    this.speed = -(this.canvas.width/400);
     this.xPosition = this.canvas.width;
   }
 
