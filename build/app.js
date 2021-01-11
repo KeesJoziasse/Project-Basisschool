@@ -17,7 +17,6 @@ class Game {
                 });
             }
             requestAnimationFrame(this.loop);
-            console.log(this.scoringItems);
         };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
@@ -27,7 +26,7 @@ class Game {
         this.lives = 3;
         this.frame = 0;
         this.worldName = worldName;
-        this.characterName = characterName;
+        this.speed;
         this.loop();
         this.scoringItems = [];
     }
@@ -52,8 +51,7 @@ class Game {
             });
         }
     }
-    drawBackgroundOcean() {
-    }
+    drawBackgroundOcean() { }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -855,23 +853,28 @@ class Shark extends ScoringItem {
     }
 }
 class ArticWorld extends Game {
-    constructor(canvas, worldName, characterName) {
-        super(canvas, worldName, characterName);
+    constructor(canvas, worldName) {
+        super(canvas, worldName);
+        this.image = GameItem.loadNewImage("./assets/img/world/ArticBG.jpg");
+        this.speed = -3;
     }
 }
 class DesertWorld extends Game {
     constructor(canvas, worldName, characterName) {
         super(canvas, worldName, characterName);
         this.image = GameItem.loadNewImage("./assets/img/world/DesertBG.jpg");
+        this.speed = -3;
     }
 }
 class OceanWorld extends Game {
     constructor(canvas, worldName, characterName) {
         super(canvas, worldName, characterName);
         this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
-        this.xPos;
-        this.yPos;
         this.speed = -3;
+        this.xPos = 0;
+        this.yPos = -100;
+        this.beginBackground = 1900;
+        this.animationFrameBackground = 0;
     }
     drawBackgroundOcean() {
         const ctx = this.canvas.getContext("2d");
@@ -880,10 +883,15 @@ class OceanWorld extends Game {
         if (this.animationFrameBackground === 1200) {
             this.animationFrameBackground = -1;
             this.xPos = 0;
+            this.beginBackground = 1900;
         }
         if (this.animationFrameBackground < 900) {
-            ctx.drawImage(this.image, this.xPos, this.yPos);
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"), this.xPos, this.yPos);
             this.xPos += this.speed;
+        }
+        if (this.animationFrameBackground > 200) {
+            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"), this.beginBackground, this.yPos);
+            this.beginBackground += this.speed;
         }
     }
     frameIndex() {
@@ -911,36 +919,10 @@ class OceanWorld extends Game {
     }
 }
 class SwampWorld extends Game {
-    constructor(canvas, worldName, characterName) {
-        super(canvas, worldName, characterName);
-    }
-}
-class Endscreen {
-    constructor(canvasId) {
-        this.loop = () => {
-            this.draw();
-            requestAnimationFrame(this.loop);
-        };
-        this.mouseHandler = (event) => { };
-        this.canvas = canvasId;
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = innerHeight;
-        this.buttons = [];
-        this.buttonMaker();
-        this.image = [];
-        this.loop();
-        document.addEventListener("click", this.mouseHandler);
-    }
-    draw() {
-        const ctx = this.canvas.getContext("2d");
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        ctx.drawImage(GameItem.loadNewImage("./assets/img/background/EndscreenBackground.jpg"), 0, 0);
-        this.buttons.forEach((button) => {
-            button.draw(ctx);
-        });
-    }
-    buttonMaker() {
-        this.buttons.push(new RestartButton((this.canvas.width / 2.5), (this.canvas.height / 1.5)));
+    constructor(canvas, worldName) {
+        super(canvas, worldName);
+        this.image = GameItem.loadNewImage("./assets/img/world/SwampBG.jpg");
+        this.speed = -3;
     }
 }
 class GeneralQuestions {
