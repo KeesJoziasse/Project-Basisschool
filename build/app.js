@@ -6,15 +6,21 @@ window.addEventListener("load", init);
 class Game {
     constructor(canvasId, worldName) {
         this.loop = () => {
+            console.log(this.gameState);
             this.frame++;
             this.draw();
-            this.frameIndex();
-            this.forScoringItems();
-            this.gameOver();
+            if (this.gameState === "Running") {
+                this.forScoringItems();
+                this.frameIndex();
+            }
             if (this.frame % 10 === 0) {
                 this.player.forEach((player) => {
                     player.move();
                 });
+            }
+            if (this.lives < 0) {
+                this.gameState = "GameOver";
+                this.gameOver();
             }
             requestAnimationFrame(this.loop);
         };
@@ -29,6 +35,7 @@ class Game {
         this.speed;
         this.loop();
         this.scoringItems = [];
+        this.gameState = "Running";
         this.player.push(new AmongUs(this.canvas, "AmongUs"));
     }
     scoringItemsOceanWorld() { }
@@ -85,9 +92,7 @@ class Game {
         Start.writeTextToCanvas(ctx, `Lives: ${this.lives}`, 60, (this.canvas.width / 8) * 7, this.canvas.height / 8, null, "red");
     }
     gameOver() {
-        if (this.lives < 0) {
-            alert(`Game over... Je behaalde score is: ${this.score}  Druk op F5 om opnieuw te spelen !`);
-        }
+        new Endscreen(this.canvas, this.score);
     }
 }
 class KeyboardListener {
@@ -937,7 +942,7 @@ class SwampWorld extends Game {
     }
 }
 class Endscreen {
-    constructor(canvasId) {
+    constructor(canvasId, score) {
         this.loop = () => {
             this.draw();
             requestAnimationFrame(this.loop);
@@ -946,6 +951,7 @@ class Endscreen {
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = innerHeight;
+        this.score = score;
         this.buttons = [];
         this.buttonMaker();
         this.image = [];

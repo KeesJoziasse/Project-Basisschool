@@ -5,11 +5,12 @@ class Endscreen {
     private image: Images[];
     private score: number;
 
-    public constructor(canvasId: HTMLCanvasElement){
+    public constructor(canvasId: HTMLCanvasElement, score:number){
         // Construct the canvas
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = innerHeight;
+        this.score = score;
 
         // Calls the button array
         this.buttons = [];

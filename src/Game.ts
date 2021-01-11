@@ -37,6 +37,9 @@ abstract class Game {
   //image of the world
   protected image: HTMLImageElement;
 
+  //GameOverState
+  private gameState: string;
+
   /**
    * Constructor
    * @param canvasId HTML canvas where the game will be displayed on
@@ -70,6 +73,9 @@ abstract class Game {
     //Scoringitems array
     this.scoringItems = [];
 
+    //Endstate
+    this.gameState = "Running";
+
     this.player.push(new AmongUs(this.canvas, "AmongUs"));
   }
 
@@ -83,17 +89,26 @@ abstract class Game {
    * Method that checks the gamestate
    */
   public loop = () => {
+    console.log(this.gameState);
     this.frame++;
     this.draw();
-    this.frameIndex();
-    this.forScoringItems();
-    this.gameOver();
+    if(this.gameState === "Running"){
+      this.forScoringItems();
+      this.frameIndex();
+    }
+    
+    
     //makes the player move, ifstatement makes sure the buttons are not spammable
     if (this.frame % 10 === 0) {
       this.player.forEach((player) => {
         player.move();
       });
     }
+    if (this.lives < 0) {
+      this.gameState = "GameOver";
+      this.gameOver();
+    }
+
 
     requestAnimationFrame(this.loop);
     //console.log(this.scoringItems);
@@ -219,8 +234,6 @@ abstract class Game {
   }
 
   private gameOver(){
-    if (this.lives < 0) {
-      alert(`Game over... Je behaalde score is: ${this.score}  Druk op F5 om opnieuw te spelen !`)
-    }
+      new Endscreen(this.canvas, this.score);
   }
 }
