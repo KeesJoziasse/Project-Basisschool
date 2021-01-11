@@ -5,7 +5,7 @@ class HighScoreTitle extends Images {
       super(xPos, yPos);
       this.name = "highScoreTitle";
       this.image = Start.loadNewImage(
-        "./assets/img/HighScore/highScoreTitle.png"
+        "./assets/img/Highscore/highScoreTitle.png"
       );
     }
   }

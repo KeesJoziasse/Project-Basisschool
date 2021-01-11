@@ -5,7 +5,7 @@ class Ranking extends Images {
       super(xPos, yPos);
       this.name = "ranking";
       this.image = Start.loadNewImage(
-        "./assets/img/HighScore/ranking.png"
+        "./assets/img/Highscore/ranking.png"
       );
     }
   }

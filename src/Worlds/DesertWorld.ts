@@ -2,10 +2,10 @@
 
 class DesertWorld extends Game{
     
-    private image:HTMLImageElement;
+    private background:HTMLImageElement;
 
     constructor(canvas:HTMLCanvasElement, worldName:string){
         super(canvas, worldName);
-        this.image = GameItem.loadNewImage("./assets/img/world/DesertBG.jpg");
+        this.background = GameItem.loadNewImage("./assets/img/world/DesertBG.jpg");
     }
 }

@@ -6,7 +6,7 @@ class Shop {
   private characters: Images[];
   private newWorlds: Images[];
   public name: string;
-  private money: number;
+  
 
 
   //Constructor
@@ -40,10 +40,7 @@ class Shop {
     // Calls the image drawer function
     this.drawImages();
 
-    this.getButtonName();
-
-    // Amount of money
-    this.money = 1000;
+    // this.drawUnlockables(button, ctx)
 
     //Calls the loop.
     this.loop();
@@ -72,12 +69,12 @@ class Shop {
    */
   public draw() {
     const ctx = this.canvas.getContext("2d");
+
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    //#TODO #FIX zodra die unluck button gepressed wordt
-    //#TODO #FIX probleem hij ziet de shop niet!!
-    // this.drawUnlockableCharacter();
-    // this.drawUnlockableWorlds();
+
+    // this.drawUnlockables(button, ctx);
+
     this.buttons.forEach((button) => {
       button.draw(ctx);
     });
@@ -89,10 +86,7 @@ class Shop {
       60,
       this.canvas.width / 2,
       80,
-      "center"
-
-      
-    );
+      "center");
 
     // Amount of money in the player's bank
     Start.writeTextToCanvas(
@@ -186,6 +180,12 @@ class Shop {
     })
   }
 
+  // public drawUnlockables(button: Button, ctx: CanvasRenderingContext2D){
+  //   if(button.getButtonName() === "UnlockYoshi"){
+  //     ctx.drawImage(GameItem.loadNewImage("./assets/img/players/YoshiUnlocked.png"), this.canvas.width / 7.9, this.canvas.width / 6);
+  //   }
+  // }
+
   public drawImages() {
     // Draw coins
     // #TODO fix code duplication
@@ -221,7 +221,7 @@ class Shop {
   public drawUnlockableCharacter() {
     // #TODO draw characters that are actually compatible for drawing, these are examples
     this.characters.push(
-      new Stewie(this.canvas.width / 7.5, this.canvas.height / 6)
+      new Yoshi(this.canvas.width / 7.9, this.canvas.height / 6)
     );
 
     this.characters.push(
@@ -266,7 +266,7 @@ class Shop {
 
     /// Unlock buttons for the characters
     // #TODO fix code duplication
-    this.buttons.push(new UnlockStewie(this.canvas.width / 9, this.canvas.height / 2.15));
+    this.buttons.push(new UnlockYoshi(this.canvas.width / 9, this.canvas.height / 2.15));
     this.buttons.push(new UnlockAmongUs(this.canvas.width / 3.1, this.canvas.height / 2.15));
     this.buttons.push(new UnlockAsh(this.canvas.width / 1.87, this.canvas.height / 2.15));
     this.buttons.push(new UnlockMorty(this.canvas.width / 1.34, this.canvas.height / 2.15));

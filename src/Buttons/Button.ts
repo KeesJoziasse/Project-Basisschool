@@ -6,7 +6,7 @@ abstract class Button {
   protected image: HTMLImageElement;
   protected name: string;
   protected xVelocity: number;
-  protected canvas: HTMLCanvasElement;
+  private canvas: HTMLCanvasElement;
 
   constructor(xPos: number, yPos: number) {
     this.xPos = xPos;
@@ -34,11 +34,24 @@ abstract class Button {
     return this.image;
   }
 
+  public draw(ctx: CanvasRenderingContext2D) {
+
+   
+
+   ctx.drawImage(this.image, this.xPos, this.yPos);
+
+   
+  }
+
   /**
    * Method to handle the mouse event
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandler = (event: MouseEvent): void => {
+    
+    console.log(`User clicked the: ${this.getButtonName()} button`);
+    
+    
     // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
     if (
       event.clientX >= this.getButtonXPos() &&
@@ -51,7 +64,8 @@ abstract class Button {
         new HighScore(document.getElementById("canvas") as HTMLCanvasElement);
       }
       if (this.getButtonName() === "UnlockDesert") {
-        console.log("Unlock Desert");
+         console.log("Unlock Desert");
+         new UnlockDesert(20, 20)
       }
 
       if (this.getButtonName() === "UnlockSwamp") {
@@ -62,8 +76,8 @@ abstract class Button {
         console.log("Unlock Arctic");
       }
 
-      if (this.getButtonName() === "UnlockStewie") {
-        console.log("Unlock Stewie");
+      if (this.getButtonName() === "UnlockYoshi") {
+        console.log("Unlock Yoshi");
       }
 
       if (this.getButtonName() === "UnlockAmongUs") {
@@ -74,6 +88,10 @@ abstract class Button {
         console.log("Unlock Ash");
       }
 
+      if (this.getButtonName() === "UnlockMorty") {
+        console.log("Unlock Morty");
+      }
+      
       if (this.getButtonName() === "Settings") {
         new Settings(document.getElementById("canvas") as HTMLCanvasElement);
       }
@@ -84,12 +102,16 @@ abstract class Button {
       }
       if (this.getButtonName() === "Shop") {
         new Shop(document.getElementById("canvas") as HTMLCanvasElement);
-      } else if (this.getButtonName() === "BackToStart") {
+      }
+      if (this.getButtonName() === "RestartButton"){
+        new Start(document.getElementById("canvas") as HTMLCanvasElement);
+      }
+      else if (this.getButtonName() === "BackToStart") {
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
       } else {
         return null;
       }
-    }
+     }
   };
 
   /**
@@ -108,9 +130,6 @@ abstract class Button {
     return this.image.height;
   }
 
-  public draw(ctx: CanvasRenderingContext2D) {
-    //clears the canvas
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    ctx.drawImage(this.image, this.xPos, this.yPos);
-  }
+ 
+
 }

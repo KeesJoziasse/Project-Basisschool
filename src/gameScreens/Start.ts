@@ -1,7 +1,6 @@
 class Start {
   //Attributes
   private canvas: HTMLCanvasElement;
-  private wallet: number;
   private buttons: Button[];
   private worldImages: Images[];
   private characterImages: Images[];
@@ -31,9 +30,6 @@ class Start {
 
     //Background cloud array
     this.background = [];
-
-    //Your total coin value
-    this.wallet = 0;
 
     //Index counter for world
     this.indexCounterWorld = 0;
@@ -70,9 +66,6 @@ class Start {
   public loop = () => {
     //Draws everythin while in the loop
     this.draw();
-
-    //#TODO you can remove this after you are fine with the code, for now there is a counter in the top left of your screen.
-    this.wallet++;
 
     // in the first loop no images are loaded
     requestAnimationFrame(this.loop);
@@ -115,9 +108,6 @@ class Start {
     for (let i = 0; i < this.worldImages.length; i++) {
       this.worldImages[this.indexCounterWorld].draw(ctx);
     }
-
-    //Writing the total amount of coins to the top left of your screen
-    Start.writeTextToCanvas(ctx, `${this.wallet}`, 40, 60, 80);
   }
 
   private buttonMaker() {
@@ -200,7 +190,7 @@ class Start {
     );
 
     this.worldImages.push(
-      new ArticImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 110)
+      new ArticImage(this.canvas.width / 2 - 250, this.canvas.height / 3 - 150)
     );
   }
 
@@ -214,7 +204,7 @@ class Start {
     );
 
     this.characterImages.push(
-      new StewieUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+      new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
 
     this.characterImages.push(
@@ -316,7 +306,7 @@ class Start {
     ) {
       new OceanWorld(
         this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName()
+        this.worldImages[this.indexCounterWorld].getImageName(),
       );
     } else if (
       button.getButtonName() == "StartGame" &&
@@ -324,7 +314,7 @@ class Start {
     ) {
       new ArticWorld(
         this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName()
+        this.worldImages[this.indexCounterWorld].getImageName(),
       );
     } else if (
       button.getButtonName() == "StartGame" &&
@@ -332,7 +322,7 @@ class Start {
     ) {
       new DesertWorld(
         this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName()
+        this.worldImages[this.indexCounterWorld].getImageName(),
       );
     } else if (
       button.getButtonName() == "StartGame" &&
@@ -340,9 +330,12 @@ class Start {
     ) {
       new SwampWorld(
         this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName()
+        this.worldImages[this.indexCounterWorld].getImageName(),
       );
     }
+
+    //this.player.push(new AmongUs(this.canvas, "AmongUs"));
+    //push player to array of Player[] 
   }
 
   /**
