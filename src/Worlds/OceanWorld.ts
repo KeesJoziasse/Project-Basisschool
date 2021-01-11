@@ -4,8 +4,8 @@ class OceanWorld extends Game {
   private beginBackground: number;
   private animationFrameBackground: number;
 
-  constructor(canvas: HTMLCanvasElement, worldName: string, characterName:string) {
-    super(canvas, worldName, characterName);
+  constructor(canvas: HTMLCanvasElement, worldName: string) {
+    super(canvas, worldName);
     this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
     this.speed = -3;
     this.xPos = 0;

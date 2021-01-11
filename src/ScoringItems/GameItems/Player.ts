@@ -7,14 +7,19 @@ abstract class Player extends GameItem {
   protected yPos: number;
   protected xPos: number;
   protected image: HTMLImageElement;
-  private characterName: string;
+  protected characterName: string;
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, charactername:string) {
     super(canvas);
     this.keyboardListener = new KeyboardListener();
     this.yPos = this.canvas.height / 2;
     this.xPos = this.canvas.width / 7;
     this.animationFrame = 0;
+    this.characterName = charactername;
+
+    if(this.characterName === "AmongUs"){
+      
+    }
   }
 
   /**
@@ -54,9 +59,10 @@ abstract class Player extends GameItem {
 
   }
 
-  public draw(ctx: CanvasRenderingContext2D, characterName:string) {
-    //ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    //Will be overwritten by AmongUs class
+    public AmongUsAnimation(){}
 
+  public draw(ctx: CanvasRenderingContext2D) {
     //Checks characterName for the right CharacterAnimation
     if(this.characterName === "AmongUs"){
       this.AmongUsAnimation();
@@ -64,9 +70,6 @@ abstract class Player extends GameItem {
     
     ctx.drawImage(this.image, this.xPos, this.yPos);
   }
-
-  //Will be overwritten by AmongUs class
-  public AmongUsAnimation(){}
 
   /**
    * Method that checks if a gameItem collides with the player

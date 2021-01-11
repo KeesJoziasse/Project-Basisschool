@@ -1,8 +1,9 @@
 /// <reference path="Player.ts" />
 
 class AmongUs extends Player {
-    public constructor(canvas:HTMLCanvasElement){
-        super(canvas);
+
+    public constructor(canvas:HTMLCanvasElement, characterName:string){
+        super(canvas, characterName);
     }
 
     public AmongUsAnimation(){

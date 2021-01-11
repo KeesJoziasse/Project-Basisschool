@@ -16,9 +16,6 @@ abstract class Game {
   //Worldname of the current world
   private worldName: string;
 
-  //characterName of the current Character of the player
-  private characterName: string;
-
   //Amount of frames that have passed
   protected frame: number;
 
@@ -44,7 +41,7 @@ abstract class Game {
    * Constructor
    * @param canvasId HTML canvas where the game will be displayed on
    */
-  public constructor(canvasId: HTMLCanvasElement, worldName: string, characterName:string) {
+  public constructor(canvasId: HTMLCanvasElement, worldName: string) {
     this.canvas = canvasId;
 
     //Making the canvas width + canvas height
@@ -73,9 +70,7 @@ abstract class Game {
     //Scoringitems array
     this.scoringItems = [];
 
-    //Authorizing the Character
-    this.characterName = characterName
-  
+    this.player.push(new AmongUs(this.canvas, "AmongUs"));
   }
 
   //Creates the scoring items for the ocean world
@@ -179,7 +174,7 @@ abstract class Game {
 
     //Drawing the player
     this.player.forEach((player) => {
-      player.draw(ctx , this.characterName);
+      player.draw(ctx);
     });
 
     //Draws all the scoring items.
