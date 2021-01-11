@@ -1,5 +1,6 @@
 /// <reference path = "../GameItem.ts"/>
-class Player extends GameItem {
+
+abstract class Player extends GameItem {
   private keyboardListener: KeyboardListener;
   private yPos: number;
   private xPos: number;

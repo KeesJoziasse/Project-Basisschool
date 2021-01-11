@@ -6,16 +6,18 @@ abstract class Game {
   protected canvas: HTMLCanvasElement;
 
   //The ingame player
-  private player: Player;
+  private player: Player[];
   // #TODO screen: Screen[]
-  //Array of game items ??
-  private gameItems: GameItem[]; //Probs remove it.
 
   //The score of the player
   protected score: number;
   protected lives: number;
+
   //Worldname of the current world
   private worldName: string;
+
+  //characterName of the current Character of the player
+  private characterName: string;
 
   //Amount of frames that have passed
   protected frame: number;
@@ -32,18 +34,16 @@ abstract class Game {
    * Constructor
    * @param canvasId HTML canvas where the game will be displayed on
    */
-  public constructor(canvasId: HTMLCanvasElement, worldName: string) {
+  public constructor(canvasId: HTMLCanvasElement, worldName: string, characterName:string) {
     this.canvas = canvasId;
 
     //Making the canvas width + canvas height
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-    //Array of the gameItems
-    //this.gameItems = [];
-
     //Making the player
-    this.player = new Player(this.canvas);
+    //#TODO fix that the new player made is chosen by startscreen
+    this.player = [];
 
     //Setting the score to 0.
     this.score = 0;
@@ -53,6 +53,9 @@ abstract class Game {
 
     //Authorizing the worldname.
     this.worldName = worldName;
+
+    //Authorizing the character of the player
+    this.characterName = characterName;
 
     //Calling the loop
     this.loop();
@@ -78,7 +81,10 @@ abstract class Game {
     this.gameOver();
     //makes the player move, ifstatement makes sure the buttons are not spammable
     if (this.frame % 10 === 0) {
-      this.player.move();
+
+      this.player.forEach((player) => {
+        player.move();
+      });
     }
 
     requestAnimationFrame(this.loop);
@@ -92,17 +98,23 @@ abstract class Game {
         scoringItem.move();
       });
 
-      for (let i = 0; i < this.scoringItems.length; i++) {
-        if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
-          //#TODO fix first if statement
-          this.score += this.scoringItems[i].getPoints();
-          this.lives += this.scoringItems[i].getLives();
-          this.scoringItems.splice(i, 1);
-        } else if (this.scoringItems[i].outOfCanvas()) {
-          this.scoringItems.splice(i, 1);
+      this.player.forEach((player) => {
+        for (let i = 0; i < this.scoringItems.length; i++) {
+          if (player.collidesWithScoringItem(this.scoringItems[i])) {
+            //#TODO fix first if statement
+            this.score += this.scoringItems[i].getPoints();
+            this.lives += this.scoringItems[i].getLives();
+            this.scoringItems.splice(i, 1);
+          } else if (this.scoringItems[i].outOfCanvas()) {
+            this.scoringItems.splice(i, 1);
+          }
         }
-      }
+      });
     }
+  }
+
+  public drawBackgroundOcean(){
+    //this function will be overwritten by OceanWorld
   }
 
   /**
@@ -116,11 +128,7 @@ abstract class Game {
     // //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
     // //Sets the background
     if (this.worldName === "Ocean") {
-      ctx.drawImage(
-        GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"),
-        0,
-        -100
-      );
+      this.drawBackgroundOcean();
     }
 
     if (this.worldName === "Desert") {
@@ -155,8 +163,12 @@ abstract class Game {
       80,
       "center"
     );
+
     //Drawing the player
-    this.player.draw(ctx);
+    this.player.forEach((player) => {
+      player.draw(ctx);
+    });
+
     //Draws all the scoring items.
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
