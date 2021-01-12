@@ -4,15 +4,15 @@ class OceanWorld extends Game {
 
   private background: HTMLImageElement;
 
-  constructor(canvas: HTMLCanvasElement, worldName: string) {
-    super(canvas, worldName);
+  constructor(canvas: HTMLCanvasElement) {
+    super(canvas);
     this.background = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
     this.xPos = 0;
     this.yPos = -100;
   }
 
   //Draws the background 
-  public drawBackgroundOcean(){
+  public drawBackground(){
     const ctx = this.canvas.getContext("2d");
 
     ctx.drawImage(this.background, this.xPos, this.yPos);

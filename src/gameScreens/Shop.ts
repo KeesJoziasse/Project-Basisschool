@@ -277,11 +277,11 @@ class Shop {
     // #TODO draw characters that are actually compatible for drawing, these are examples
 
     this.characters.push(
-      new Yoshi(this.canvas.width / 7.9, this.canvas.height / 6)
+      new YoshiUnlockable(this.canvas.width / 7.9, this.canvas.height / 6)
     );
 
     this.characters.push(
-      new YellowAmongUs(this.canvas.width / 2.9, this.canvas.height / 6)
+      new YellowAmongUsUnlockable(this.canvas.width / 2.9, this.canvas.height / 6)
     );
 
     this.characters.push(
@@ -289,7 +289,7 @@ class Shop {
     );
 
     this.characters.push(
-      new Sonic(this.canvas.width / 1.29, this.canvas.height / 6)
+      new SonicUnlockable(this.canvas.width / 1.29, this.canvas.height / 6)
     );
   }
 

@@ -1,6 +1,6 @@
 /// <reference path="Player.ts" />
 
-class Sonic extends Player {
+class YellowAmongUs extends Player {
     private walk1: HTMLImageElement;
     private walk2: HTMLImageElement;
     private walk3: HTMLImageElement;
@@ -8,13 +8,13 @@ class Sonic extends Player {
     public constructor(canvas: HTMLCanvasElement) {
       super(canvas);
       this.walk1 = GameItem.loadNewImage(
-        "./assets/img/Characters/Sonic/sonic-animatie1.png"
+        "./assets/img/Characters/AmongUsYellow/amongUs-animatie1.png"
       );
       this.walk2 = GameItem.loadNewImage(
-        "./assets/img/Characters/Sonic/sonic-animatie2.png"
+        "./assets/img/Characters/AmongUsYellow/amongUs-animatie2.png"
       );
       this.walk3 = GameItem.loadNewImage(
-        "./assets/img/Characters/Sonic/sonic-animatie3.png"
+        "./assets/img/Characters/AmongUsYellow/amongUs-animatie3.png"
       );
     }
   
@@ -38,4 +38,3 @@ class Sonic extends Player {
       ctx.drawImage(this.image, this.xPos, this.yPos);
     }
   }
-  

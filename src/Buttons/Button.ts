@@ -135,7 +135,4 @@ abstract class Button {
   public getButtonImageHeight(): number {
     return this.image.height;
   }
-
- 
-
 }

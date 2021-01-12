@@ -13,7 +13,6 @@ class Cloud extends Images {
   }
 
   public reloadImage(canvas: HTMLCanvasElement) {
-    //#TODO FIX
     if (
       (this.xPos + this.getImageImageWidth() < canvas.width + 0.75 &&
         this.xPos + this.getImageImageWidth() > canvas.width - 0.75) ||
