@@ -144,8 +144,14 @@ abstract class Game {
     }
   }
 
-  //This function will be overwritten by Artic,Desert,Ocean,SwampWorlds
+  //This function will be overwritten by OceanWorld
   public drawBackgroundOcean() {}
+  //This function will be overwritten by DesertWorld
+  public drawBackgroundDesert() {}
+  //This function will be overwritten by ArticWorld
+  public drawBackgroundArtic() {}
+  //This function will be overwritten by SwampWorld
+  public drawBackgroundSwamp() {}
 
   /**
    * Method that writes gameItems on the canvas
@@ -155,36 +161,25 @@ abstract class Game {
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
     //Sets the background
     if (this.worldName === "Ocean") {
       this.drawBackgroundOcean();
     }
 
     if (this.worldName === "Desert") {
-      ctx.drawImage(
-        GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"),
-        0,
-        0
-      );
+      this.drawBackgroundDesert();
     }
 
     if (this.worldName === "Artic") {
-      ctx.drawImage(
-        GameItem.loadNewImage("./assets/img/world/ArticBG.jpg"),
-        0,
-        0
-      );
+      this.drawBackgroundArtic();
     }
 
     if (this.worldName === "Swamp") {
-      ctx.drawImage(
-        GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"),
-        0,
-        -100
-      );
+     this.drawBackgroundSwamp();
     }
+
     //Drawing the player
+    //TODO ifstatement to check what character it shoudl be
     this.player.forEach((player) => {
       player.draw(ctx);
     });

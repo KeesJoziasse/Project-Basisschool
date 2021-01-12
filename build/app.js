@@ -66,6 +66,9 @@ class Game {
         }
     }
     drawBackgroundOcean() { }
+    drawBackgroundDesert() { }
+    drawBackgroundArtic() { }
+    drawBackgroundSwamp() { }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -73,13 +76,13 @@ class Game {
             this.drawBackgroundOcean();
         }
         if (this.worldName === "Desert") {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"), 0, 0);
+            this.drawBackgroundDesert();
         }
         if (this.worldName === "Artic") {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/ArticBG.jpg"), 0, 0);
+            this.drawBackgroundArtic();
         }
         if (this.worldName === "Swamp") {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"), 0, -100);
+            this.drawBackgroundSwamp();
         }
         this.player.forEach((player) => {
             player.draw(ctx);
@@ -395,17 +398,17 @@ class UnlockArctic extends Button {
         this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
     }
 }
-class UnlockAsh extends Button {
-    constructor(xPos, yPos, canvas) {
-        super(xPos, yPos, canvas);
-        this.name = "UnlockAsh";
-        this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
-    }
-}
 class UnlockDesert extends Button {
     constructor(xPos, yPos, canvas) {
         super(xPos, yPos, canvas);
         this.name = "UnlockDesert";
+        this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
+    }
+}
+class UnlockGirlCharacter extends Button {
+    constructor(xPos, yPos, canvas) {
+        super(xPos, yPos, canvas);
+        this.name = "UnlockGirlCharacter";
         this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
     }
 }
@@ -488,20 +491,6 @@ class ArticImage extends Images {
         this.image = Start.loadNewImage("./assets/img/world/artic.png");
     }
 }
-class Ash extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "Ash";
-        this.image = Start.loadNewImage("./assets/img/players/ash.png");
-    }
-}
-class AshUnlocked extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "AshUnlocked";
-        this.image = Start.loadNewImage("./assets/img/players/AshUnlocked.png");
-    }
-}
 class Cloud extends Images {
     constructor(xPos, yPos, xVelocity) {
         super(xPos, yPos);
@@ -559,6 +548,20 @@ class EndscreenBackground extends Images {
         super(xPos, yPos);
         this.name = "EndscreenBG";
         this.image = Start.loadNewImage("./assets/img/background/EndscreenBackground.jpg");
+    }
+}
+class GirlCharacter extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "GirlCharacter";
+        this.image = Start.loadNewImage("./assets/img/players/GirlCharacter.png");
+    }
+}
+class GirlCharacterUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "GirlCharacterUnlocked";
+        this.image = Start.loadNewImage("./assets/img/players/GirlCharacterUnlocked.png");
     }
 }
 class HighScoreTitle extends Images {
@@ -981,41 +984,37 @@ class Shark extends ScoringItem {
 class ArticWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
-        this.image = GameItem.loadNewImage("./assets/img/world/ArticBG.jpg");
-        this.speed = -3;
+        this.background = GameItem.loadNewImage("./assets/img/world/ArticBG.jpg");
+        this.xPos = 0;
+        this.yPos = -100;
+    }
+    drawBackgroundArtic() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.drawImage(this.background, this.xPos, this.yPos);
     }
 }
 class DesertWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
         this.background = GameItem.loadNewImage("./assets/img/world/DesertBG.jpg");
+        this.xPos = 0;
+        this.yPos = -100;
+    }
+    drawBackgroundDesert() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.drawImage(this.background, this.xPos, this.yPos);
     }
 }
 class OceanWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
-        this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
-        this.speed = -3;
+        this.background = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
         this.xPos = 0;
         this.yPos = -100;
-        this.animationFrameBackground = 0;
     }
     drawBackgroundOcean() {
         const ctx = this.canvas.getContext("2d");
-        this.animationFrameBackground++;
-        if (this.animationFrameBackground === 1200) {
-            this.animationFrameBackground = -1;
-            this.xPos = 0;
-            this.beginBackground = 1900;
-        }
-        if (this.animationFrameBackground < 900) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"), this.xPos, this.yPos);
-            this.xPos += this.speed;
-        }
-        if (this.animationFrameBackground > 200) {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"), this.beginBackground, this.yPos);
-            this.beginBackground += this.speed;
-        }
+        ctx.drawImage(this.background, this.xPos, this.yPos);
     }
     frameIndex() {
         if (this.frame % 100 === 0) {
@@ -1050,8 +1049,13 @@ class OceanWorld extends Game {
 class SwampWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
-        this.image = GameItem.loadNewImage("./assets/img/world/SwampBG.jpg");
-        this.speed = -3;
+        this.background = GameItem.loadNewImage("./assets/img/world/SwampBG.jpg");
+        this.xPos = 0;
+        this.yPos = -100;
+    }
+    drawBackgroundSwamp() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.drawImage(this.background, this.xPos, this.yPos);
     }
 }
 class Endscreen {
@@ -1308,8 +1312,8 @@ class Shop {
                     if (button.getButtonName() === "UnlockAmongUs") {
                         this.characters.push(new YellowAmongUsUnlocked(this.canvas.width / 2.9, this.canvas.height / 6));
                     }
-                    if (button.getButtonName() === "UnlockAsh") {
-                        this.characters.push(new AshUnlocked(this.canvas.width / 1.7, this.canvas.height / 6));
+                    if (button.getButtonName() === "UnlockGirlCharacter") {
+                        this.characters.push(new GirlCharacterUnlocked(this.canvas.width / 1.7, this.canvas.height / 6));
                     }
                     if (button.getButtonName() === "UnlockMorty") {
                         this.characters.push(new MortyUnlocked(this.canvas.width / 1.25, this.canvas.height / 6));
@@ -1410,7 +1414,7 @@ class Shop {
     drawUnlockableCharacter() {
         this.characters.push(new Yoshi(this.canvas.width / 7.9, this.canvas.height / 6));
         this.characters.push(new YellowAmongUs(this.canvas.width / 2.9, this.canvas.height / 6));
-        this.characters.push(new Ash(this.canvas.width / 1.7, this.canvas.height / 6));
+        this.characters.push(new GirlCharacter(this.canvas.width / 1.7, this.canvas.height / 6));
         this.characters.push(new Morty(this.canvas.width / 1.25, this.canvas.height / 6));
     }
     buttonMaker() {
@@ -1420,7 +1424,7 @@ class Shop {
         this.buttons.push(new UnlockSwamp(this.canvas.width / 2.31, this.canvas.height / 1.08, this.canvas));
         this.buttons.push(new UnlockYoshi(this.canvas.width / 9, this.canvas.height / 2.15, this.canvas));
         this.buttons.push(new UnlockAmongUs(this.canvas.width / 3.1, this.canvas.height / 2.15, this.canvas));
-        this.buttons.push(new UnlockAsh(this.canvas.width / 1.87, this.canvas.height / 2.15, this.canvas));
+        this.buttons.push(new UnlockGirlCharacter(this.canvas.width / 1.87, this.canvas.height / 2.15, this.canvas));
         this.buttons.push(new UnlockMorty(this.canvas.width / 1.34, this.canvas.height / 2.15, this.canvas));
     }
     loadNewImage(source) {
@@ -1509,7 +1513,7 @@ class Start {
         this.characterImages.push(new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
         this.characterImages.push(new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
         this.characterImages.push(new MortyUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120));
-        this.characterImages.push(new AshUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120));
+        this.characterImages.push(new GirlCharacterUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120));
     }
     imageMaker() {
         this.images.push(new Titel(this.canvas.width / 4, -40));
