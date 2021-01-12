@@ -1305,6 +1305,7 @@ class Shop {
         this.drawUnlockableWorlds();
         this.drawImages();
         this.loop();
+        this.numSplice = 1;
         document.addEventListener("click", this.mouseHandler);
         this.draw();
     }
@@ -1471,6 +1472,9 @@ class Start {
     }
     charachterMaker() {
         this.characterImages.push(new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.characterImages.push(new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.characterImages.push(new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.characterImages.push(new GirlCharacterUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
     }
     imageMaker() {
         this.images.push(new Titel(this.canvas.width / 4, -40));

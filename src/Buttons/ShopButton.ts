@@ -6,6 +6,4 @@ class ShopButton extends Button {
     this.name = "Shop";
     this.image = Start.loadNewImage("./assets/img/buttons/shop-button.png");
   }
-
-  // #TODO method maken zodat deze functie je doorverwijst naar de game (playingscreen)
 }

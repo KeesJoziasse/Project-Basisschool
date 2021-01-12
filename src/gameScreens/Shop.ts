@@ -8,6 +8,7 @@ class Shop {
   public name: string;
   private xPos: number;
   private yPos: number;
+  private numSplice: number;
 
   public getButtonXPos(): number {
     return this.xPos;
@@ -68,6 +69,9 @@ class Shop {
     
     //Calls the loop.
     this.loop();
+
+    //Counter to splice
+    this.numSplice = 1;
 
     // add an mouse event
     document.addEventListener("click", this.mouseHandler);
@@ -377,39 +381,37 @@ class Shop {
         if (button.getButtonName() === "UnlockAmongUs") {
           this.characters.push(
             new YellowAmongUsUnlocked(this.canvas.width / 2.9, this.canvas.height / 6)
-          )
+          );
         }
 
         if (button.getButtonName() === "UnlockGirlCharacter") {
           this.characters.push(
             new GirlCharacterUnlocked(this.canvas.width / 1.7, this.canvas.height / 6)
-          )
+          );
         }
 
-        
-        
         if (button.getButtonName() === "UnlockMorty") {
           this.characters.push(
             new MortyUnlocked(this.canvas.width / 1.25, this.canvas.height / 6)
-          )
+          );
         }
 
         if (button.getButtonName() === "UnlockSwamp") {
           this.characters.push(
             new SwampPlanetUnlocked(this.canvas.width / 2.33, this.canvas.height / 1.64)
-          )
+          );
         }
 
         if (button.getButtonName() === "UnlockDesert") {
           this.characters.push(
             new DesertPlanetUnlocked(this.canvas.width / 4.3, this.canvas.height / 1.6)
-          )
+          );
         }
 
         if (button.getButtonName() === "UnlockArctic") {
           this.characters.push(
             new ArcticPlanetUnlocked(this.canvas.width / 1.56, this.canvas.height / 1.646)
-          )
+          );
         }
 
         

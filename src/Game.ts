@@ -13,6 +13,7 @@ abstract class Game {
   protected score: number;
   protected lives: number;
   protected earnedCoins: number;
+
   //Worldname of the current world
   private worldName: string;
 
@@ -59,9 +60,9 @@ abstract class Game {
     this.score = 0;
     this.lives = 3;
     this.earnedCoins = 0;
+
     //Setting the framecounter to 0.
     this.frame = 0;
-
 
     //Authorizing the worldname.
     this.worldName = worldName;
@@ -78,6 +79,7 @@ abstract class Game {
     //Endstate
     this.gameState = "Running";
 
+    //TODO fix that this isn't always the character
     this.player.push(new AmongUs(this.canvas, "AmongUs"));
   }
 

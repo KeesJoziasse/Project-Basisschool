@@ -6,6 +6,4 @@ class ShowStartScreen extends Button {
     this.name = "StartScreen";
     this.image = Start.loadNewImage("./assets/img/buttons/start-button.png");
   }
-
-  // #TODO method maken zodat deze functie je doorverwijst naar de game (playingscreen)
 }
