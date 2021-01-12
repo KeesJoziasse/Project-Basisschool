@@ -390,8 +390,6 @@ class Shop {
           )
         }
 
-        
-        
         if (button.getButtonName() === "UnlockSonic") {
           this.characters.push(
             new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6)

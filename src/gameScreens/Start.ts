@@ -208,6 +208,9 @@ class Start {
     this.characterImages.push(
       new GirlCharacterUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
+    this.characterImages.push(
+      new SonicUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+    )
   }
 
   private imageMaker() {
