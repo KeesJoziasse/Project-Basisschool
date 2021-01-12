@@ -59,6 +59,7 @@ abstract class Game {
     //Setting the framecounter to 0.
     this.frame = 0;
 
+
     //Authorizing the worldname.
     this.worldName = worldName;
 
@@ -108,11 +109,11 @@ abstract class Game {
 
       this.player.forEach((player) => {
         for (let i = 0; i < this.scoringItems.length; i++) {
+          
           if(player.collidesWithScoringItem(this.scoringItems[i]) && this.scoringItems[i].getName() === "QuestionBox"){
-            this.speed = 0;
-            new InGameQuestions (document.getElementById("canvas") as HTMLCanvasElement);
-            console.log("test");
+            new InGameQuestions(document.getElementById("canvas") as HTMLCanvasElement);
           }
+
           if (player.collidesWithScoringItem(this.scoringItems[i])) {
             //#TODO fix first if statement
             this.score += this.scoringItems[i].getPoints();

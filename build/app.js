@@ -42,9 +42,7 @@ class Game {
             this.player.forEach((player) => {
                 for (let i = 0; i < this.scoringItems.length; i++) {
                     if (player.collidesWithScoringItem(this.scoringItems[i]) && this.scoringItems[i].getName() === "QuestionBox") {
-                        this.speed = 0;
                         new InGameQuestions(document.getElementById("canvas"));
-                        console.log("test");
                     }
                     if (player.collidesWithScoringItem(this.scoringItems[i])) {
                         this.score += this.scoringItems[i].getPoints();
@@ -75,7 +73,9 @@ class Game {
         if (this.worldName === "Swamp") {
             ctx.drawImage(GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"), 0, -100);
         }
-        this.player.draw(ctx);
+        this.player.forEach((player) => {
+            player.draw(ctx);
+        });
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
         }
@@ -884,17 +884,6 @@ class AmongUs extends Player {
             this.image = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
         }
     }
-    collidesWithScoringItem(ScoringItem) {
-        if (this.xPos + this.image.width > ScoringItem.getPositionX() &&
-            this.yPos <
-                ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
-            this.yPos + this.image.height >
-                ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
-            this.xPos < ScoringItem.getImageWidth() + ScoringItem.getPositionX()) {
-            return true;
-        }
-        return false;
-    }
 }
 class Fish extends ScoringItem {
     constructor(canvas) {
@@ -913,6 +902,7 @@ class Pearl extends ScoringItem {
         this.points = 20;
         this.lives = 0;
         this.name = "Pearl";
+        this.earnedCoins = 0;
     }
 }
 class QuestionBox extends ScoringItem {
@@ -922,7 +912,6 @@ class QuestionBox extends ScoringItem {
         this.points = 0;
         this.lives = +1;
         this.name = "QuestionBox";
-        this.earnedCoins = 0;
     }
 }
 class Rock extends ScoringItem {
@@ -993,7 +982,7 @@ class OceanWorld extends Game {
         }
     }
     scoringItemsOceanWorld() {
-        const random = GameItem.randomInteger(1, 5);
+        const random = GameItem.randomInteger(3, 6);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }
@@ -1007,8 +996,10 @@ class OceanWorld extends Game {
             this.scoringItems.push(new Rock(this.canvas));
         }
         if (random === 5) {
-            this.scoringItems.push(new QuestionBox(this.canvas));
             this.scoringItems.push(new inGameCoin(this.canvas));
+        }
+        if (random === 6) {
+            this.scoringItems.push(new QuestionBox(this.canvas));
         }
     }
 }
