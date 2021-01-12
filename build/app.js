@@ -554,14 +554,14 @@ class GirlCharacter extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "GirlCharacter";
-        this.image = Start.loadNewImage("./assets/img/players/GirlCharacter.png");
+        this.image = Start.loadNewImage("./assets/img/players/WazigGirl.png");
     }
 }
 class GirlCharacterUnlocked extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "GirlCharacterUnlocked";
-        this.image = Start.loadNewImage("./assets/img/players/GirlCharacterUnlocked.png");
+        this.image = Start.loadNewImage("./assets/img/players/girl.png");
     }
 }
 class HighScoreTitle extends Images {
