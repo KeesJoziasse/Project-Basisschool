@@ -37,7 +37,7 @@ class Game {
         this.loop();
         this.scoringItems = [];
         this.gameState = "Running";
-        this.player.push(new AmongUs(this.canvas, "AmongUs"));
+        this.player.push(new Girl(this.canvas, "AmongUs"));
     }
     scoringItemsOceanWorld() { }
     frameIndex() { }
@@ -902,6 +902,32 @@ class AmongUs extends Player {
         this.walk1 = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png");
         this.walk2 = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
         this.walk3 = GameItem.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-3.png");
+    }
+    AmongUsAnimation() {
+        this.animationFrame++;
+        if (this.animationFrame >= 20) {
+            this.animationFrame -= 19;
+        }
+        if (this.animationFrame <= 10) {
+            this.image = this.walk1;
+        }
+        else if (this.animationFrame > 10 && this.animationFrame <= 20) {
+            this.image = this.walk2;
+        }
+        else if (this.animationFrame > 20 && this.animationFrame <= 30) {
+            this.image = this.walk3;
+        }
+        else if (this.animationFrame > 30 && this.animationFrame <= 40) {
+            this.image = this.walk2;
+        }
+    }
+}
+class Girl extends Player {
+    constructor(canvas, characterName) {
+        super(canvas, characterName);
+        this.walk1 = GameItem.loadNewImage("./assets/img/Characters/GirlCharacter/girl-walk-1.png");
+        this.walk2 = GameItem.loadNewImage("./assets/img/Characters/GirlCharacter/girl-walk-2.png");
+        this.walk3 = GameItem.loadNewImage("./assets/img/Characters/GirlCharacter/girl-walk-3.png");
     }
     AmongUsAnimation() {
         this.animationFrame++;

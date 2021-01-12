@@ -80,7 +80,7 @@ abstract class Game {
     this.gameState = "Running";
 
     //TODO fix that this isn't always the character
-    this.player.push(new AmongUs(this.canvas, "AmongUs"));
+    this.player.push(new Girl(this.canvas, "AmongUs"));
   }
 
   //Creates the scoring items for the ocean world
