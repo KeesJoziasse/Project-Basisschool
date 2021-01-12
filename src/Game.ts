@@ -93,12 +93,10 @@ abstract class Game {
     console.log(this.gameState);
     this.frame++;
     this.draw();
-    if(this.gameState === "Running"){
+    if (this.gameState === "Running") {
       this.forScoringItems();
       this.frameIndex();
     }
-    
-    
     //makes the player move, ifstatement makes sure the buttons are not spammable
     if (this.frame % 10 === 0) {
       this.player.forEach((player) => {
@@ -109,8 +107,6 @@ abstract class Game {
       this.gameState = "GameOver";
       this.gameOver();
     }
-
-
     requestAnimationFrame(this.loop);
   };
 
@@ -138,7 +134,7 @@ abstract class Game {
   }
 
   //This function will be overwritten by Artic,Desert,Ocean,SwampWorlds
-  public drawBackgroundOcean(){}
+  public drawBackgroundOcean() {}
 
   /**
    * Method that writes gameItems on the canvas
@@ -148,9 +144,9 @@ abstract class Game {
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD 
+    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
     //Sets the background
-    if(this.worldName === "Ocean"){
+    if (this.worldName === "Ocean") {
       this.drawBackgroundOcean();
     }
 
@@ -201,19 +197,23 @@ abstract class Game {
       ctx,
       `Score: ${this.score}`,
       60,
-      this.canvas.width /2,
+      this.canvas.width / 2,
       this.canvas.height / 8,
       null,
       "red"
     );
-    
+
     //Draws the earned coins
-    ctx.drawImage(GameItem.loadNewImage("assets/img/GameItems/coin.png") , this.canvas.width /20, this.canvas.height / 8)
+    ctx.drawImage(
+      GameItem.loadNewImage("assets/img/GameItems/coin.png"),
+      this.canvas.width / 20,
+      this.canvas.height / 8
+    );
     Start.writeTextToCanvas(
       ctx,
       `${this.earnedCoins}`,
       60,
-      this.canvas.width / 8 ,
+      this.canvas.width / 8,
       this.canvas.height / 5,
       null,
       "red"
@@ -262,7 +262,7 @@ abstract class Game {
     }
   }
 
-  private gameOver(){
+  private gameOver() {
     new Endscreen(this.canvas, this.score);
   }
 }
