@@ -68,7 +68,8 @@ class GeneralQuestions {
     this.buttons.push(
       new BackToStart(
         (this.canvas.width / 5) * 0.05,
-        (this.canvas.height / 5) * 0.09
+        (this.canvas.height / 5) * 0.09,
+        this.canvas
       )
     );
   }

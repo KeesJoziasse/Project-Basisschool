@@ -2,8 +2,8 @@
 
 class NextWorld extends Button {
 
-    public constructor(xPos: number, yPos: number, index: number) {
-      super(xPos, yPos);
+    public constructor(xPos: number, yPos: number, index: number, canvas:HTMLCanvasElement) {
+      super(xPos, yPos, canvas);
       this.name = "NextWorld";
       this.image = Start.loadNewImage("./assets/img/buttons/arrow-right.png");
   

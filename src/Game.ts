@@ -90,20 +90,20 @@ abstract class Game {
    */
   public loop = () => {
     console.log(this.gameState);
-    this.frame++;
-    this.draw();
+
     if(this.gameState === "Running"){
+      this.frame++;
+      this.draw();
       this.forScoringItems();
       this.frameIndex();
+      //Refacture to method #TODO JUSTIN
+      if (this.frame % 10 === 0) {
+        this.player.forEach((player) => {
+          player.move();
+        });
+      }
     }
     
-    
-    //makes the player move, ifstatement makes sure the buttons are not spammable
-    if (this.frame % 10 === 0) {
-      this.player.forEach((player) => {
-        player.move();
-      });
-    }
     if (this.lives < 0) {
       this.gameState = "GameOver";
       this.gameOver();
@@ -111,7 +111,7 @@ abstract class Game {
 
 
     requestAnimationFrame(this.loop);
-    //console.log(this.scoringItems);
+    console.log(this.scoringItems);
   };
 
   //Handles everything for the scoringitems.

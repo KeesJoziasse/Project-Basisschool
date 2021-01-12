@@ -5,6 +5,7 @@ abstract class Images {
   protected image: HTMLImageElement;
   protected name: string;
   protected xVelocity: number;
+  protected canvas: HTMLCanvasElement;
 
   constructor(xPos: number, yPos: number) {
     this.xPos = xPos;
@@ -49,5 +50,7 @@ abstract class Images {
 
   public draw(ctx: CanvasRenderingContext2D) {
     ctx.drawImage(this.image, this.xPos, this.yPos);
+    console.log(this.getImageName());
+    
   }
 }

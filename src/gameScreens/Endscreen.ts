@@ -79,7 +79,8 @@ private buttonMaker() {
     this.buttons.push(
       new RestartButton(
         (this.canvas.width / 2.5),
-        (this.canvas.height / 1.5) 
+        (this.canvas.height / 1.5), 
+        this.canvas 
       )
     );
 }

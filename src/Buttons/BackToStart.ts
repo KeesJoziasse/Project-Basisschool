@@ -3,8 +3,8 @@
 class BackToStart extends Button {
     // image (zodat deze button zelf verantwoordelijk is voor zijn eigen image).
   
-    public constructor(xPos: number, yPos: number) {
-      super(xPos, yPos);
+    public constructor(xPos: number, yPos: number, canvas:HTMLCanvasElement) {
+      super(xPos, yPos, canvas);
       this.name = "BackToStart";
       this.image = Start.loadNewImage("./assets/img/buttons/left-arrow.png");
       // #TODO loadNewImage verplaatsen naar Screen

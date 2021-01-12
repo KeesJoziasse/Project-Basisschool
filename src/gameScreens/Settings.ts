@@ -57,21 +57,23 @@ class Settings {
         80,
         "center"
       );
-}
-
-private buttonMaker() {
+  }
+      
+  private buttonMaker() {
     this.buttons.push(
       new BackToStart(
         (this.canvas.width / 5) * 0.05,
-        (this.canvas.height / 5) * 0.09
+        (this.canvas.height / 5) * 0.09,
+        this.canvas
       )
     );
 
-      }
+  }
 
-/**
+  /**
    * Method to handle the mouse event
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandler = (event: MouseEvent) => {};
+  
 }

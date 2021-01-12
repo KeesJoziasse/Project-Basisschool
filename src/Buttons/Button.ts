@@ -6,12 +6,14 @@ abstract class Button {
   protected image: HTMLImageElement;
   protected name: string;
   protected xVelocity: number;
-  private canvas: HTMLCanvasElement;
+  protected canvas: HTMLCanvasElement;
+  protected images: Images;
 
-  constructor(xPos: number, yPos: number) {
+  constructor(xPos: number, yPos: number, canvas: HTMLCanvasElement) {
     this.xPos = xPos;
     this.yPos = yPos;
     document.addEventListener("click", this.mouseHandler);
+    this.canvas = canvas;
   }
 
   public move(canvas: HTMLCanvasElement) {}
@@ -49,7 +51,7 @@ abstract class Button {
    */
   public mouseHandler = (event: MouseEvent): void => {
     
-    console.log(`User clicked the: ${this.getButtonName()} button`);
+    //console.log(`User clicked the: ${this.getButtonName()} button`);
     
     
     // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
@@ -65,7 +67,6 @@ abstract class Button {
       } 
       if (this.getButtonName() === "UnlockDesert") {
          console.log("Unlock Desert");
-         new UnlockDesert(20, 20)
       }
 
       if (this.getButtonName() === "UnlockSwamp") {
@@ -81,10 +82,13 @@ abstract class Button {
       }
 
       if (this.getButtonName() === "UnlockAmongUs") {
-        console.log("Unlock AmongUs");
+        this.drawUnlockedAmongUs();
       }
 
       if (this.getButtonName() === "UnlockAsh") {
+        const ctx = this.canvas.getContext("2d");
+        
+        ctx.drawImage(Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png"), this.canvas.width / 2.9, this.canvas.height / 6 );
         console.log("Unlock Ash");
       }
 
@@ -105,12 +109,17 @@ abstract class Button {
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
       }
       else if (this.getButtonName() === "BackToStart") {
-        new Start(document.getElementById("canvas") as HTMLCanvasElement);
+        //new Start(document.getElementById("canvas") as HTMLCanvasElement);
+        
       } else {
         return null;
       }
      }
   };
+
+  public drawUnlockedAmongUs(){
+    // will be overwritten by UnlockAmongUs.TS
+  }
 
   /**
    * Returns the width of the image

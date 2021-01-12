@@ -119,7 +119,8 @@ class Start {
     this.buttons.push(
       new StartGameButton(
         this.canvas.width / 2 - 329 / 2, //Fix this secton for centering no magic numbers #TODO
-        (this.canvas.height / 5) * 4 - 100 / 2 //Fix this secton for centering no magic numbers #TODO
+        (this.canvas.height / 5) * 4 - 100 / 2, //Fix this secton for centering no magic numbers #TODO
+        this.canvas
       )
     );
 
@@ -127,7 +128,8 @@ class Start {
     this.buttons.push(
       new ShopButton(
         this.canvas.width / 5 - 329 / 2,
-        (this.canvas.height / 6) * 4
+        (this.canvas.height / 6) * 4,
+        this.canvas
       )
     );
 
@@ -135,13 +137,14 @@ class Start {
     this.buttons.push(
       new HighscoreButton(
         (this.canvas.width / 5) * 4 - 329 / 2,
-        (this.canvas.height / 6) * 4
+        (this.canvas.height / 6) * 4,
+        this.canvas
       )
     );
 
     //Making the left arrow for character selector
     this.buttons.push(
-      new PreviousCharacter(this.canvas.width / 4, this.canvas.height / 2 - 89)
+      new PreviousCharacter(this.canvas.width / 4, this.canvas.height / 2 - 89, this.canvas)
     );
 
     //Making the right arrow for character selector
@@ -149,7 +152,8 @@ class Start {
       new NextCharacter(
         (this.canvas.width / 4) * 3 - 143,
         this.canvas.height / 2 - 89,
-        1
+        1,
+        this.canvas
       )
     );
 
@@ -157,7 +161,8 @@ class Start {
     this.buttons.push(
       new PreviousWorld(
         (this.canvas.width / 7) * 2,
-        this.canvas.height / 3 - 89
+        this.canvas.height / 3 - 89,
+        this.canvas
       )
     );
 
@@ -166,15 +171,16 @@ class Start {
       new NextWorld(
         (this.canvas.width / 7) * 5 - 143,
         this.canvas.height / 3 - 89,
-        1
+        1,
+        this.canvas
       )
     );
 
     //QandA Button
-    this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
+    this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0, this.canvas));
 
     //Settings Button
-    this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
+    this.buttons.push(new SettingsButton(this.canvas.width - 124, 124, this.canvas));
   }
 
   private worldImageMaker() {
