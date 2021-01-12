@@ -82,7 +82,6 @@ class Start {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    //Background cloud #TODO Make it reload
     this.background.forEach((backgroundImage) => {
       backgroundImage.draw(ctx);
       backgroundImage.move(this.canvas);
@@ -111,8 +110,7 @@ class Start {
   }
 
   private buttonMaker() {
-    
-     
+
     //Initializing the buttons and pushing them to the array
     //Making the start button
     this.buttons.push(
@@ -176,10 +174,7 @@ class Start {
     );
 
     //QandA Button
-    this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0, this.canvas));
-
-    //Settings Button
-    this.buttons.push(new SettingsButton(this.canvas.width - 124, 124, this.canvas));
+    this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 180, 50, this.canvas));
   }
 
   private worldImageMaker() {
@@ -201,28 +196,10 @@ class Start {
   }
 
   private charachterMaker() {
+    //TODO alleen dingen pushen die echt in de game komen
+    //TODO hier dingen pushen zodra unlock button is gedrukt
     this.characterImages.push(
       new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
-    );
-
-    this.characterImages.push(
-      new Stickman(this.canvas.width / 2 - 48, this.canvas.height / 2 - 120)
-    );
-
-    this.characterImages.push(
-      new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
-    );
-
-    this.characterImages.push(
-      new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
-    );
-
-    this.characterImages.push(
-      new MortyUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120)
-    );
-
-    this.characterImages.push(
-      new AshUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120)
     );
   }
 
