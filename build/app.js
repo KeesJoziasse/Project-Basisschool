@@ -227,9 +227,6 @@ class Button {
                 if (this.getButtonName() === "UnlockMorty") {
                     console.log("Unlock Morty");
                 }
-                if (this.getButtonName() === "Settings") {
-                    new Settings(document.getElementById("canvas"));
-                }
                 if (this.getButtonName() === "QandA") {
                     new GeneralQuestions(document.getElementById("canvas"));
                 }
@@ -307,13 +304,6 @@ class RestartButton extends Button {
         super(xPos, yPos, canvas);
         this.name = "RestartButton";
         this.image = Start.loadNewImage("./assets/img/buttons/RestartButton.png");
-    }
-}
-class SettingsButton extends Button {
-    constructor(xPos, yPos, canvas) {
-        super(xPos, yPos, canvas);
-        this.name = "Settings";
-        this.image = Start.loadNewImage("./assets/img/buttons/settings-button.png");
     }
 }
 class ShopButton extends Button {
@@ -554,14 +544,14 @@ class GirlCharacter extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "GirlCharacter";
-        this.image = Start.loadNewImage("./assets/img/players/GirlCharacter.png");
+        this.image = Start.loadNewImage("./assets/img/players/WazigGirl.png");
     }
 }
 class GirlCharacterUnlocked extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "GirlCharacterUnlocked";
-        this.image = Start.loadNewImage("./assets/img/players/GirlCharacterUnlocked.png");
+        this.image = Start.loadNewImage("./assets/img/players/girl.png");
     }
 }
 class HighScoreTitle extends Images {
@@ -1267,33 +1257,6 @@ class QuestionAndAnswer {
         this.buttons.push(new BackToStart((this.canvas.width / 7) * 0.09, (this.canvas.height / 3) * 0.08, this.canvas));
     }
 }
-class Settings {
-    constructor(canvasId) {
-        this.loop = () => {
-            this.draw();
-            requestAnimationFrame(this.loop);
-        };
-        this.mouseHandler = (event) => { };
-        this.canvas = canvasId;
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-        this.buttons = [];
-        this.buttonMaker();
-        this.loop();
-        document.addEventListener("click", this.mouseHandler);
-    }
-    draw() {
-        const ctx = this.canvas.getContext("2d");
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.buttons.forEach((button) => {
-            button.draw(ctx);
-        });
-        Start.writeTextToCanvas(ctx, "Settings", 60, this.canvas.width / 2, 80, "center");
-    }
-    buttonMaker() {
-        this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09, this.canvas));
-    }
-}
 class Shop {
     constructor(canvasId) {
         this.loop = () => {
@@ -1498,8 +1461,7 @@ class Start {
         this.buttons.push(new NextCharacter((this.canvas.width / 4) * 3 - 143, this.canvas.height / 2 - 89, 1, this.canvas));
         this.buttons.push(new PreviousWorld((this.canvas.width / 7) * 2, this.canvas.height / 3 - 89, this.canvas));
         this.buttons.push(new NextWorld((this.canvas.width / 7) * 5 - 143, this.canvas.height / 3 - 89, 1, this.canvas));
-        this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0, this.canvas));
-        this.buttons.push(new SettingsButton(this.canvas.width - 124, 124, this.canvas));
+        this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 180, 50, this.canvas));
     }
     worldImageMaker() {
         this.worldImages.push(new OceanImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 130));
@@ -1509,11 +1471,6 @@ class Start {
     }
     charachterMaker() {
         this.characterImages.push(new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
-        this.characterImages.push(new Stickman(this.canvas.width / 2 - 48, this.canvas.height / 2 - 120));
-        this.characterImages.push(new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
-        this.characterImages.push(new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
-        this.characterImages.push(new MortyUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120));
-        this.characterImages.push(new GirlCharacterUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120));
     }
     imageMaker() {
         this.images.push(new Titel(this.canvas.width / 4, -40));

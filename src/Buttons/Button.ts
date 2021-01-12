@@ -91,9 +91,6 @@ abstract class Button {
         console.log("Unlock Morty");
       }
       
-      if (this.getButtonName() === "Settings") {
-        new Settings(document.getElementById("canvas") as HTMLCanvasElement);
-      }
       if (this.getButtonName() === "QandA") {
         new GeneralQuestions(
           document.getElementById("canvas") as HTMLCanvasElement

@@ -5,7 +5,7 @@ class GirlCharacterUnlocked extends Images {
       super(xPos, yPos);
       this.name = "GirlCharacterUnlocked";
       this.image = Start.loadNewImage(
-        "./assets/img/players/GirlCharacterUnlocked.png"
+        "./assets/img/players/girl.png"
       );
     }
   
