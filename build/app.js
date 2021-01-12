@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Start(document.getElementById("canvas"));
+    new InGameQuestions(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -12,6 +12,9 @@ class Game {
             if (this.gameState === "Running") {
                 this.forScoringItems();
                 this.frameIndex();
+            }
+            if (this.gameState === "question") {
+                new InGameQuestions(document.getElementById("canvas"));
             }
             if (this.frame % 10 === 0) {
                 this.player.forEach((player) => {
@@ -39,6 +42,12 @@ class Game {
         this.gameState = "Running";
         this.player.push(new AmongUs(this.canvas, "AmongUs"));
     }
+    getGameState() {
+        return this.gameState;
+    }
+    setGameState(gameState) {
+        this.gameState = gameState;
+    }
     scoringItemsOceanWorld() { }
     frameIndex() { }
     forScoringItems() {
@@ -48,7 +57,9 @@ class Game {
             });
             this.player.forEach((player) => {
                 for (let i = 0; i < this.scoringItems.length; i++) {
-                    if (player.collidesWithScoringItem(this.scoringItems[i])) {
+                    if (player.collidesWithScoringItem(this.scoringItems[i]) && this.scoringItems[i].getName() === "QuestionBox") {
+                        this.gameState = "question";
+                        console.log(this.score);
                     }
                     if (player.collidesWithScoringItem(this.scoringItems[i])) {
                         this.score += this.scoringItems[i].getPoints();
@@ -234,7 +245,10 @@ class Button {
                     new Start(document.getElementById("canvas"));
                 }
                 if (this.getButtonName() === "NoButton") {
-                    new Start(document.getElementById("canvas"));
+                    console.log("hallo");
+                }
+                if (this.getButtonName() === "YesButton") {
+                    console.log("hallo");
                 }
                 else if (this.getButtonName() === "BackToStart") {
                     new Start(document.getElementById("canvas"));
@@ -718,6 +732,91 @@ class OceanImage extends Images {
         this.image = Start.loadNewImage("./assets/img/world/ocean.png");
     }
 }
+class InGameQuestions {
+    constructor(canvasId) {
+        this.loop = () => {
+            console.log(this.score);
+            this.draw();
+            requestAnimationFrame(this.loop);
+        };
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.images = [];
+        this.buttons = [];
+        this.buttonMaker();
+        this.imageMaker();
+        this.loop();
+    }
+    getScore() {
+        return this.score;
+    }
+    setScore(score) {
+        this.score = score;
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        this.images.forEach((image) => {
+            image.draw(ctx);
+        });
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+        });
+    }
+    imageMaker() {
+        this.images.push(new InGameQuestionImage(this.canvas.width / 3, 150));
+    }
+    static loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
+    buttonMaker() {
+        this.buttons.push(new YesButton((this.canvas.width / 3) * 1.05, (this.canvas.height / 2) * 1.5), new NoButton((this.canvas.width / 2) * 1.05, (this.canvas.height / 2) * 1.5));
+    }
+    mathRandom() {
+        const random = GameItem.randomInteger(1, 2);
+        if (random === 1) {
+            this.question.push(new Question1(this.canvas));
+        }
+        if (random === 2) {
+            this.question.push(new Question2(this.canvas));
+        }
+    }
+}
+class Question {
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.text = this.text;
+        this.answer = this.answer;
+        this.name = this.name;
+    }
+    getText() {
+        return this.text;
+    }
+    mathRandom() { }
+    loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
+}
+class Question1 extends Question {
+    constructor(canvas) {
+        super(canvas);
+        this.text = this.loadNewImage("assets/img/GameItems/ocean/oceanParelBooster.png");
+        this.answer = "no";
+        this.name = "Question1";
+    }
+}
+class Question2 extends Question {
+    constructor(canvas) {
+        super(canvas);
+        this.text = this.loadNewImage("assets/img/GameItems/ocean/oceanShark.png");
+        this.answer = "Yes";
+        this.name = "Question2";
+    }
+}
 class ScoringItem {
     constructor(canvas) {
         this.canvas = canvas;
@@ -816,8 +915,6 @@ class IngameCoin extends ScoringItem {
     constructor(canvas) {
         super(canvas);
     }
-}
-class Question extends ScoringItem {
 }
 class Player extends GameItem {
     constructor(canvas, charactername) {
@@ -1136,42 +1233,6 @@ class HighScore {
     }
     buttonMaker() {
         this.buttons.push(new BackToStart((this.canvas.width / 7) * 0.09, (this.canvas.height / 3) * 0.08));
-    }
-}
-class InGameQuestions {
-    constructor(canvasId) {
-        this.loop = () => {
-            this.draw();
-            requestAnimationFrame(this.loop);
-        };
-        this.canvas = canvasId;
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-        this.images = [];
-        this.buttons = [];
-        this.buttonMaker();
-        this.imageMaker();
-        this.loop();
-    }
-    draw() {
-        const ctx = this.canvas.getContext("2d");
-        this.images.forEach((image) => {
-            image.draw(ctx);
-        });
-        this.buttons.forEach((button) => {
-            button.draw(ctx);
-        });
-    }
-    imageMaker() {
-        this.images.push(new InGameQuestionImage(this.canvas.width / 3, 150));
-    }
-    static loadNewImage(source) {
-        const img = new Image();
-        img.src = source;
-        return img;
-    }
-    buttonMaker() {
-        this.buttons.push(new YesButton((this.canvas.width / 3) * 1.05, (this.canvas.height / 2) * 1.5), new NoButton((this.canvas.width / 2) * 1.05, (this.canvas.height / 2) * 1.5));
     }
 }
 class QuestionAndAnswer {

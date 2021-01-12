@@ -6,4 +6,6 @@ class YesButton extends Button {
       this.name = "YesButton";
       this.image = Start.loadNewImage("./assets/img/buttons/yesButton.png");
     }
+
+    
   }

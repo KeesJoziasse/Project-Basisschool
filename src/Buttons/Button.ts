@@ -8,6 +8,8 @@ abstract class Button {
   protected xVelocity: number;
   private canvas: HTMLCanvasElement;
   private shop: Shop[];
+  // private game: Game;
+  // private inGameQuestions: InGameQuestions;
 
   constructor(xPos: number, yPos: number) {
     this.xPos = xPos;
@@ -108,8 +110,14 @@ abstract class Button {
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
       }
       if (this.getButtonName() === "NoButton"){
-         new Start(document.getElementById("canvas") as HTMLCanvasElement);
+        //  this.game.getGameState();
+         console.log("hallo");
+         
       }
+      if (this.getButtonName() === "YesButton"){
+        // this.game.getGameState(); 
+        console.log("hallo");
+     }
       else if (this.getButtonName() === "BackToStart") {
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
       } else {

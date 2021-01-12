@@ -80,6 +80,16 @@ abstract class Game {
 
     this.player.push(new AmongUs(this.canvas, "AmongUs"));
   }
+// getters and setters
+
+public getGameState(): string {
+  return this.gameState;
+}
+
+public setGameState(gameState: string){
+  this.gameState = gameState;
+}
+  
 
   //Creates the scoring items for the ocean world
   public scoringItemsOceanWorld(): void {}
@@ -98,6 +108,10 @@ abstract class Game {
     if(this.gameState === "Running"){
       this.forScoringItems();
       this.frameIndex();
+
+    }
+    if(this.gameState === "question"){
+      new InGameQuestions(document.getElementById("canvas") as HTMLCanvasElement)
     }
     
     
@@ -126,8 +140,9 @@ abstract class Game {
       this.player.forEach((player) => {
         for (let i = 0; i < this.scoringItems.length; i++) {
           
-          if(player.collidesWithScoringItem(this.scoringItems[i])){
-            
+          if(player.collidesWithScoringItem(this.scoringItems[i])&& this.scoringItems[i].getName() === "QuestionBox"){
+            this.gameState = "question";
+            console.log(this.score);
           }
 
           if (player.collidesWithScoringItem(this.scoringItems[i])) {
@@ -144,13 +159,6 @@ abstract class Game {
       });
     }
     }
-
-// test
-
-
-
-
-
 
   //This function will be overwritten by Artic,Desert,Ocean,SwampWorlds
   public drawBackgroundOcean() {}
@@ -280,4 +288,5 @@ abstract class Game {
   private gameOver(){
     new Endscreen(this.canvas, this.score);
   }
+
 }
