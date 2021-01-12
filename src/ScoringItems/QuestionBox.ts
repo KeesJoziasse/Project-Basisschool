@@ -1,4 +1,4 @@
-/// <reference path = "../ScoringItem.ts"/>
+/// <reference path = "./ScoringItem.ts"/>
 
 class QuestionBox extends ScoringItem{ 
   public constructor(canvas: HTMLCanvasElement) {
@@ -6,7 +6,7 @@ class QuestionBox extends ScoringItem{
   this.image = this.loadNewImage("assets/img/GameItems/ocean/questionBox.png");
   this.points = 0;
   this.lives = +1;
+  this.earnedCoins = 0;
   this.name = "QuestionBox";
   }
-
 }

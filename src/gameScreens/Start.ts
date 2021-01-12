@@ -57,7 +57,6 @@ class Start {
 
     //The clickhandler
     document.addEventListener("click", this.mouseHandler);
-
   }
 
   /**
@@ -324,7 +323,6 @@ class Start {
 
   private checkCharacterName(button: Button) {
     console.log("REE JUSTIN");
-    
     if (
       button.getButtonName() == "StartGame" &&
       this.characterImages[this.indexCounterCharacter].getImageName() === "AmongUsLime"

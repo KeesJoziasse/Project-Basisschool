@@ -13,7 +13,6 @@ class SwampWorld extends Game {
   //Draws the background
   public drawBackground() {
     const ctx = this.canvas.getContext("2d");
-
     ctx.drawImage(this.background, this.xPos, this.yPos);
   }
 }

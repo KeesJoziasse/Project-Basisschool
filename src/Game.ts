@@ -4,36 +4,27 @@
 abstract class Game {
   //The canvas
   protected canvas: HTMLCanvasElement;
-
   //The ingame player
   private player: Player;
   // #TODO screen: Screen[]
-
   //The score of the player
   protected score: number;
   protected lives: number;
   protected earnedCoins: number;
-
   //Amount of frames that have passed
   protected frame: number;
-
   //RNG
   protected random: number;
-
   //Scoring items array
   protected scoringItems: ScoringItem[];
-
   //speed of the worldImage
   protected speed: number;
-
   //xpos of the worldImage
   protected xPos: number;
-
   //xpos of the worldImage
   protected yPos: number;
-
   //image of the world
-  protected image: HTMLImageElement;
+  //protected image: HTMLImageElement; #Remove
 
   //GameOverState
   private gameState: string;

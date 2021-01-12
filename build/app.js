@@ -826,6 +826,16 @@ class IngameCoin extends ScoringItem {
 }
 class Question extends ScoringItem {
 }
+class QuestionBox extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/GameItems/ocean/questionBox.png");
+        this.points = 0;
+        this.lives = +1;
+        this.earnedCoins = 0;
+        this.name = "QuestionBox";
+    }
+}
 class Player extends GameItem {
     constructor(canvas) {
         super(canvas);
@@ -1045,15 +1055,6 @@ class Pearl extends ScoringItem {
         this.lives = 0;
         this.name = "Pearl";
         this.earnedCoins = 0;
-    }
-}
-class QuestionBox extends ScoringItem {
-    constructor(canvas) {
-        super(canvas);
-        this.image = this.loadNewImage("assets/img/GameItems/ocean/questionBox.png");
-        this.points = 0;
-        this.lives = +1;
-        this.name = "QuestionBox";
     }
 }
 class Rock1 extends ScoringItem {
