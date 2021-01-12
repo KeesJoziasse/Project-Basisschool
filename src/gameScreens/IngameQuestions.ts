@@ -80,11 +80,13 @@ class InGameQuestions {
           this.buttons.push(
             new YesButton(
               (this.canvas.width / 3)*1.05,
-              (this.canvas.height / 2)*1.5
+              (this.canvas.height / 2)*1.5,
+              this.canvas
             ),
             new NoButton(
                 (this.canvas.width / 2)*1.05,
-                (this.canvas.height / 2) *1.5
+                (this.canvas.height / 2) *1.5,
+                this.canvas
               )
           );
         }
