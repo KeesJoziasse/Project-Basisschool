@@ -1,10 +1,10 @@
 /// <reference path = "../Button.ts"/>
 
-class UnlockAsh extends Button {
+class UnlockGirlCharacter extends Button {
 
     public constructor(xPos: number, yPos: number, canvas:HTMLCanvasElement){
         super(xPos, yPos, canvas);
-        this.name = "UnlockAsh";
+        this.name = "UnlockGirlCharacter";
         this.image = Start.loadNewImage(
             "./assets/img/buttons/unlock.png"
           );

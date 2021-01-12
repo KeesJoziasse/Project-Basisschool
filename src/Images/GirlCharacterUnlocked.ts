@@ -1,11 +1,11 @@
 /// <reference path="Images.ts" />
 
-class Ash extends Images {
+class GirlCharacterUnlocked extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "Ash";
+      this.name = "GirlCharacterUnlocked";
       this.image = Start.loadNewImage(
-        "./assets/img/players/ash.png"
+        "./assets/img/players/GirlCharacterUnlocked.png"
       );
     }
   

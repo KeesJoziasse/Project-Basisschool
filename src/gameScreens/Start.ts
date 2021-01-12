@@ -222,7 +222,7 @@ class Start {
     );
 
     this.characterImages.push(
-      new AshUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120)
+      new GirlCharacterUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120)
     );
   }
 
