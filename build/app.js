@@ -474,6 +474,13 @@ class ArcticPlanet extends Images {
         this.image = Start.loadNewImage("./assets/img/world/ArcticPlanet.png");
     }
 }
+class ArcticPlanetUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Artic";
+        this.image = Start.loadNewImage("./assets/img/world/ArcticUnlocked.png");
+    }
+}
 class ArticImage extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -531,6 +538,13 @@ class DesertPlanet extends Images {
         super(xPos, yPos);
         this.name = "DesertPlanet";
         this.image = Start.loadNewImage("./assets/img/world/DesertPlanet.png");
+    }
+}
+class DesertPlanetUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Artic";
+        this.image = Start.loadNewImage("./assets/img/world/DesertUnlocked.png");
     }
 }
 class DownLane extends Images {
@@ -650,6 +664,13 @@ class SwampPlanet extends Images {
         super(xPos, yPos);
         this.name = "SwampPlanet";
         this.image = Start.loadNewImage("./assets/img/world/SwampPlanet.png");
+    }
+}
+class SwampPlanetUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "SwampUnlocked";
+        this.image = Start.loadNewImage("./assets/img/world/SwampUnlocked.png");
     }
 }
 class TextCoin extends Images {
@@ -1284,6 +1305,24 @@ class Shop {
                     if (button.getButtonName() === "UnlockYoshi") {
                         this.characters.push(new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6));
                     }
+                    if (button.getButtonName() === "UnlockAmongUs") {
+                        this.characters.push(new YellowAmongUsUnlocked(this.canvas.width / 2.9, this.canvas.height / 6));
+                    }
+                    if (button.getButtonName() === "UnlockAsh") {
+                        this.characters.push(new AshUnlocked(this.canvas.width / 1.7, this.canvas.height / 6));
+                    }
+                    if (button.getButtonName() === "UnlockMorty") {
+                        this.characters.push(new MortyUnlocked(this.canvas.width / 1.25, this.canvas.height / 6));
+                    }
+                    if (button.getButtonName() === "UnlockSwamp") {
+                        this.characters.push(new SwampPlanetUnlocked(this.canvas.width / 2.33, this.canvas.height / 1.64));
+                    }
+                    if (button.getButtonName() === "UnlockDesert") {
+                        this.characters.push(new DesertPlanetUnlocked(this.canvas.width / 4.3, this.canvas.height / 1.6));
+                    }
+                    if (button.getButtonName() === "UnlockArctic") {
+                        this.characters.push(new ArcticPlanetUnlocked(this.canvas.width / 1.56, this.canvas.height / 1.646));
+                    }
                 }
             });
         };
@@ -1320,18 +1359,18 @@ class Shop {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        ctx.drawImage(GameItem.loadNewImage("./assets/img/background/EndscreenBackground.jpg"), 0, 0);
         this.buttons.forEach((button) => {
             button.draw(ctx);
         });
-        Start.writeTextToCanvas(ctx, "Shop", 60, this.canvas.width / 2, 80, "center");
-        Start.writeTextToCanvas(ctx, "200", 60, this.canvas.width / 11, this.canvas.height / 1.035, "center");
-        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 5.8, this.canvas.height / 2.25, "center");
-        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 2.55, this.canvas.height / 2.25, "center");
-        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.68, this.canvas.height / 2.25, "center");
-        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.24, this.canvas.height / 2.25, "center");
-        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 1.42, this.canvas.height / 1.10, "center");
-        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 2.01, this.canvas.height / 1.10, "center");
-        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 3.4, this.canvas.height / 1.10, "center");
+        Start.writeTextToCanvas(ctx, "200", 60, this.canvas.width / 2, this.canvas.height / 10, "center", "white");
+        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 5.8, this.canvas.height / 2.25, "center", "white");
+        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 2.55, this.canvas.height / 2.25, "center", "white");
+        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.68, this.canvas.height / 2.25, "center", "white");
+        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.24, this.canvas.height / 2.25, "center", "white");
+        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 1.42, this.canvas.height / 1.10, "center", "white");
+        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 2.01, this.canvas.height / 1.10, "center", "white");
+        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 3.4, this.canvas.height / 1.10, "center", "white");
         this.images.forEach((image) => {
             image.move(this.canvas);
             image.reloadImage(this.canvas);
@@ -1361,7 +1400,7 @@ class Shop {
         this.images.push(new coinForShop(this.canvas.width / 1.33, this.canvas.height / 2.56));
         this.images.push(new coinForShop(this.canvas.width / 9, this.canvas.height / 2.56));
         this.images.push(new coinForShop(this.canvas.width / 1.85, this.canvas.height / 2.56));
-        this.images.push(new coinForShop(this.canvas.width / 50, this.canvas.height / 1.1));
+        this.images.push(new coinForShop(this.canvas.width / 2.35, this.canvas.height / 22));
     }
     drawUnlockableWorlds() {
         this.newWorlds.push(new DesertPlanet(this.canvas.width / 4.3, this.canvas.height / 1.6));
@@ -1376,8 +1415,6 @@ class Shop {
     }
     buttonMaker() {
         this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09, this.canvas));
-        this.buttons.push(new QuestionsAnswersButton(this.canvas.width / 1.07, this.canvas.height / 70, this.canvas));
-        this.buttons.push(new SettingsButton(this.canvas.width / 1.07, this.canvas.height / 8.5, this.canvas));
         this.buttons.push(new UnlockDesert(this.canvas.width / 4.5, this.canvas.height / 1.08, this.canvas));
         this.buttons.push(new UnlockArctic(this.canvas.width / 1.56, this.canvas.height / 1.08, this.canvas));
         this.buttons.push(new UnlockSwamp(this.canvas.width / 2.31, this.canvas.height / 1.08, this.canvas));

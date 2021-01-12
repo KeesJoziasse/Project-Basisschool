@@ -98,28 +98,21 @@ class Shop {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    ctx.drawImage(GameItem.loadNewImage("./assets/img/background/EndscreenBackground.jpg"), 0, 0);
+
     this.buttons.forEach((button) => {
       button.draw(ctx);
     });
-
-    //The text at the top center.
-    Start.writeTextToCanvas(
-      ctx,
-      "Shop",
-      60,
-      this.canvas.width / 2,
-      80,
-      "center"
-    );
 
     // Amount of money in the player's bank
     Start.writeTextToCanvas(
       ctx,
       "200",
       60,
-      this.canvas.width / 11,
-      this.canvas.height / 1.035,
-      "center"
+      this.canvas.width / 2,
+      this.canvas.height / 10,
+      "center",
+      "white"
     );
 
     // Price of Stewie
@@ -129,7 +122,8 @@ class Shop {
       60,
       this.canvas.width / 5.8,
       this.canvas.height / 2.25,
-      "center"
+      "center",
+      "white"
     );
 
     // Price for yellow Among Us character
@@ -139,7 +133,8 @@ class Shop {
       60,
       this.canvas.width / 2.55,
       this.canvas.height / 2.25,
-      "center"
+      "center",
+      "white"
     );
 
     // Price for Ash
@@ -149,7 +144,8 @@ class Shop {
       60,
       this.canvas.width / 1.68,
       this.canvas.height / 2.25,
-      "center"
+      "center",
+      "white"
     );
 
     // Price for Morty
@@ -159,7 +155,8 @@ class Shop {
       60,
       this.canvas.width / 1.24,
       this.canvas.height / 2.25,
-      "center"
+      "center",
+      "white"
     );
 
     // Price for desert level
@@ -169,7 +166,8 @@ class Shop {
       60,
       this.canvas.width / 1.42,
       this.canvas.height / 1.10,
-      "center"
+      "center",
+      "white"
     );
 
     Start.writeTextToCanvas(
@@ -178,7 +176,8 @@ class Shop {
       60,
       this.canvas.width / 2.01,
       this.canvas.height / 1.10,
-      "center"
+      "center",
+      "white"
     );
 
     Start.writeTextToCanvas(
@@ -187,7 +186,8 @@ class Shop {
       60,
       this.canvas.width / 3.4,
       this.canvas.height / 1.10,
-      "center"
+      "center",
+      "white"
     );
 
     // Drawing the images
@@ -248,7 +248,7 @@ class Shop {
       new coinForShop(this.canvas.width / 1.85, this.canvas.height / 2.56)
     );
     this.images.push(
-      new coinForShop(this.canvas.width / 50, this.canvas.height / 1.1)
+      new coinForShop(this.canvas.width / 2.35, this.canvas.height / 22)
     );
   }
 
@@ -294,24 +294,6 @@ class Shop {
       new BackToStart(
         (this.canvas.width / 5) * 0.05,
         (this.canvas.height / 5) * 0.09,
-        this.canvas
-      )
-    );
-
-    //QandA Button
-    this.buttons.push(
-      new QuestionsAnswersButton(
-        this.canvas.width / 1.07,
-        this.canvas.height / 70,
-        this.canvas
-      )
-    );
-
-    //Settings Button
-    this.buttons.push(
-      new SettingsButton(
-        this.canvas.width / 1.07,
-        this.canvas.height / 8.5,
         this.canvas
       )
     );
@@ -391,6 +373,44 @@ class Shop {
             new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6)
           );
         }
+
+        if (button.getButtonName() === "UnlockAmongUs") {
+          this.characters.push(
+            new YellowAmongUsUnlocked(this.canvas.width / 2.9, this.canvas.height / 6)
+          )
+        }
+
+        if (button.getButtonName() === "UnlockAsh") {
+          this.characters.push(
+            new AshUnlocked(this.canvas.width / 1.7, this.canvas.height / 6)
+          )
+        }
+
+        if (button.getButtonName() === "UnlockMorty") {
+          this.characters.push(
+            new MortyUnlocked(this.canvas.width / 1.25, this.canvas.height / 6)
+          )
+        }
+
+        if (button.getButtonName() === "UnlockSwamp") {
+          this.characters.push(
+            new SwampPlanetUnlocked(this.canvas.width / 2.33, this.canvas.height / 1.64)
+          )
+        }
+
+        if (button.getButtonName() === "UnlockDesert") {
+          this.characters.push(
+            new DesertPlanetUnlocked(this.canvas.width / 4.3, this.canvas.height / 1.6)
+          )
+        }
+
+        if (button.getButtonName() === "UnlockArctic") {
+          this.characters.push(
+            new ArcticPlanetUnlocked(this.canvas.width / 1.56, this.canvas.height / 1.646)
+          )
+        }
+
+        
       }
     });
   };
