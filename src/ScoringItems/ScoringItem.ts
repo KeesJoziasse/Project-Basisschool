@@ -7,9 +7,11 @@ abstract class ScoringItem {
   protected image: HTMLImageElement;
   protected speed: number;
   protected lives: number;
+  protected name: string;
   protected earnedCoins: number;
   private xPosition: number;
   private yPosition: number;
+  
 
   public constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -54,6 +56,10 @@ abstract class ScoringItem {
   public getLives(): number{
     return this.lives;
   }
+  public getName(): string{
+    return this.name;
+  }
+
   public getCoinValue(): number{
     return this.earnedCoins;
   }

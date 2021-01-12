@@ -51,13 +51,13 @@ class Start {
 
     //Background loop
     this.backgroundLoop();
+
     //The game loop.
     this.loop();
 
     //The clickhandler
     document.addEventListener("click", this.mouseHandler);
 
-    //TEST AREA
   }
 
   /**
@@ -69,8 +69,6 @@ class Start {
 
     // in the first loop no images are loaded
     requestAnimationFrame(this.loop);
-
-    //TEST AREA
   };
 
   /**
@@ -82,7 +80,6 @@ class Start {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    //Background cloud #TODO Make it reload
     this.background.forEach((backgroundImage) => {
       backgroundImage.draw(ctx);
       backgroundImage.move(this.canvas);
@@ -111,14 +108,13 @@ class Start {
   }
 
   private buttonMaker() {
-    
-     
     //Initializing the buttons and pushing them to the array
     //Making the start button
     this.buttons.push(
       new StartGameButton(
         this.canvas.width / 2 - 329 / 2, //Fix this secton for centering no magic numbers #TODO
-        (this.canvas.height / 5) * 4 - 100 / 2 //Fix this secton for centering no magic numbers #TODO
+        (this.canvas.height / 5) * 4 - 100 / 2, //Fix this secton for centering no magic numbers #TODO
+        this.canvas
       )
     );
 
@@ -126,7 +122,8 @@ class Start {
     this.buttons.push(
       new ShopButton(
         this.canvas.width / 5 - 329 / 2,
-        (this.canvas.height / 6) * 4
+        (this.canvas.height / 6) * 4,
+        this.canvas
       )
     );
 
@@ -134,13 +131,18 @@ class Start {
     this.buttons.push(
       new HighscoreButton(
         (this.canvas.width / 5) * 4 - 329 / 2,
-        (this.canvas.height / 6) * 4
+        (this.canvas.height / 6) * 4,
+        this.canvas
       )
     );
 
     //Making the left arrow for character selector
     this.buttons.push(
-      new PreviousCharacter(this.canvas.width / 4, this.canvas.height / 2 - 89)
+      new PreviousCharacter(
+        this.canvas.width / 4,
+        this.canvas.height / 2 - 89,
+        this.canvas
+      )
     );
 
     //Making the right arrow for character selector
@@ -148,7 +150,8 @@ class Start {
       new NextCharacter(
         (this.canvas.width / 4) * 3 - 143,
         this.canvas.height / 2 - 89,
-        1
+        1,
+        this.canvas
       )
     );
 
@@ -156,7 +159,8 @@ class Start {
     this.buttons.push(
       new PreviousWorld(
         (this.canvas.width / 7) * 2,
-        this.canvas.height / 3 - 89
+        this.canvas.height / 3 - 89,
+        this.canvas
       )
     );
 
@@ -165,15 +169,15 @@ class Start {
       new NextWorld(
         (this.canvas.width / 7) * 5 - 143,
         this.canvas.height / 3 - 89,
-        1
+        1,
+        this.canvas
       )
     );
 
     //QandA Button
-    this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 124, 0));
-
-    //Settings Button
-    this.buttons.push(new SettingsButton(this.canvas.width - 124, 124));
+    this.buttons.push(
+      new QuestionsAnswersButton(this.canvas.width - 180, 50, this.canvas)
+    );
   }
 
   private worldImageMaker() {
@@ -195,29 +199,23 @@ class Start {
   }
 
   private charachterMaker() {
+    //TODO alleen dingen pushen die echt in de game komen
+    //TODO hier dingen pushen zodra unlock button is gedrukt
     this.characterImages.push(
       new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
-
-    this.characterImages.push(
-      new Stickman(this.canvas.width / 2 - 48, this.canvas.height / 2 - 120)
-    );
-
     this.characterImages.push(
       new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
-
     this.characterImages.push(
       new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
-
     this.characterImages.push(
-      new MortyUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120)
+      new GirlCharacterUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
-
     this.characterImages.push(
-      new AshUnlocked(this.canvas.width / 2 - 50, this.canvas.height / 2 - 120)
-    );
+      new SonicUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+    )
   }
 
   private imageMaker() {
@@ -244,6 +242,7 @@ class Start {
         this.worldSelector(button);
         this.characterSelector(button);
         this.startLevel(button);
+        this.checkCharacterName(button);
       }
     });
   };
@@ -304,38 +303,55 @@ class Start {
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
     ) {
-      new OceanWorld(
-        this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName(),
-      );
+      new OceanWorld(this.canvas);
     } else if (
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Artic"
     ) {
-      new ArticWorld(
-        this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName(),
-      );
+      new ArticWorld(this.canvas);
     } else if (
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
     ) {
-      new DesertWorld(
-        this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName(),
-      );
+      new DesertWorld(this.canvas);
     } else if (
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Swamp"
     ) {
-      new SwampWorld(
-        this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName(),
-      );
+      new SwampWorld(this.canvas);
     }
+  }
 
-    //this.player.push(new AmongUs(this.canvas, "AmongUs"));
-    //push player to array of Player[] 
+  private checkCharacterName(button: Button) {
+    console.log("REE JUSTIN");
+    
+    if (
+      button.getButtonName() == "StartGame" &&
+      this.characterImages[this.indexCounterCharacter].getImageName() === "AmongUsLime"
+    ) {
+      new AmongUs(this.canvas);
+      console.log("AmongUsLime");
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.characterImages[this.indexCounterCharacter].getImageName() === "YoshiUnlocked"
+    ) {
+      new Yoshi(this.canvas);
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.characterImages[this.indexCounterCharacter].getImageName() === "UnlockYellowAmongUs"
+    ) {
+      new YellowAmongUs(this.canvas);
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.characterImages[this.indexCounterCharacter].getImageName() === "GirlCharacterUnlocked"
+    ) {
+      new Girl(this.canvas);
+    } else if ( 
+      button.getButtonName() == "StartGame" && 
+      this.characterImages[this.indexCounterCharacter].getImageName() == "SonicUnlocked"
+    ){
+      new Sonic(this.canvas);
+    }
   }
 
   /**
@@ -355,7 +371,6 @@ class Start {
     yCoordinate: number,
     alignment: CanvasTextAlign = "center",
     color: string = "black"
-
   ) {
     ctx.font = `${fontSize}px Arial`;
     ctx.fillStyle = color;

@@ -6,6 +6,7 @@ class Fish extends ScoringItem {
     this.image = this.loadNewImage("assets/img/obstacles/Ocean/oceanFish.png");
     this.points = 20;
     this.lives = 0;
+    this.name = "Fish";
     this.earnedCoins = 0;
   }
 }

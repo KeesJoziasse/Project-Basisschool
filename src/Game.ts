@@ -6,15 +6,13 @@ abstract class Game {
   protected canvas: HTMLCanvasElement;
 
   //The ingame player
-  private player: Player[];
+  private player: Player;
   // #TODO screen: Screen[]
 
   //The score of the player
   protected score: number;
   protected lives: number;
   protected earnedCoins: number;
-  //Worldname of the current world
-  // private worldName: string;
 
   //Amount of frames that have passed
   protected frame: number;
@@ -44,7 +42,7 @@ abstract class Game {
    * Constructor
    * @param canvasId HTML canvas where the game will be displayed on
    */
-  public constructor(canvasId: HTMLCanvasElement, worldName: string) {
+  public constructor(canvasId: HTMLCanvasElement) {
     this.canvas = canvasId;
 
     //Making the canvas width + canvas height
@@ -53,17 +51,15 @@ abstract class Game {
 
     //Making the player
     //#TODO fix that the new player made is chosen by startscreen
-    this.player = [];
+    this.player = new Player(this.canvas);
 
     //Setting the score to 0.
     this.score = 0;
     this.lives = 3;
     this.earnedCoins = 0;
+
     //Setting the framecounter to 0.
     this.frame = 0;
-
-    //Authorizing the worldname.
-    // this.worldName = worldName;
 
     //Speed of the world on canvas
     this.speed;
@@ -76,8 +72,6 @@ abstract class Game {
 
     //Endstate
     this.gameState = "Running";
-
-    this.player.push(new AmongUs(this.canvas, "AmongUs"));
   }
 
   //Creates the scoring items for the ocean world
@@ -90,18 +84,16 @@ abstract class Game {
    * Method that checks the gamestate
    */
   public loop = () => {
-    console.log(this.gameState);
-    this.frame++;
-    this.draw();
+    // console.log(this.gameState);
     if (this.gameState === "Running") {
+      this.frame++;
+      this.draw();
       this.forScoringItems();
       this.frameIndex();
-    }
-    //makes the player move, ifstatement makes sure the buttons are not spammable
-    if (this.frame % 10 === 0) {
-      this.player.forEach((player) => {
-        player.move();
-      });
+      //Refacture to method #TODO JUSTIN
+      if (this.frame % 10 === 0) {
+        this.player.move();
+      }
     }
     if (this.lives < 0) {
       this.gameState = "GameOver";
@@ -117,26 +109,32 @@ abstract class Game {
         scoringItem.move();
       });
 
-      this.player.forEach((player) => {
-        for (let i = 0; i < this.scoringItems.length; i++) {
-          if (player.collidesWithScoringItem(this.scoringItems[i])) {
-            //#TODO fix first if statement
-            this.score += this.scoringItems[i].getPoints();
-            this.lives += this.scoringItems[i].getLives();
-            this.earnedCoins += this.scoringItems[i].getCoinValue();
-            this.scoringItems.splice(i, 1);
-          } else if (this.scoringItems[i].outOfCanvas()) {
-            this.scoringItems.splice(i, 1);
-          }
+      for (let i = 0; i < this.scoringItems.length; i++) {
+        if (
+          this.player.collidesWithScoringItem(this.scoringItems[i]) &&
+          this.scoringItems[i].getName() === "QuestionBox"
+        ) {
+          new InGameQuestions(
+            document.getElementById("canvas") as HTMLCanvasElement
+          );
         }
-      });
+
+        if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
+          //#TODO fix first if statement
+          this.score += this.scoringItems[i].getPoints();
+          this.lives += this.scoringItems[i].getLives();
+          console.log(this.scoringItems[i].getName());
+          this.earnedCoins += this.scoringItems[i].getCoinValue();
+          this.scoringItems.splice(i, 1);
+        } else if (this.scoringItems[i].outOfCanvas()) {
+          this.scoringItems.splice(i, 1);
+        }
+      }
     }
   }
 
-  //This function will be overwritten by Artic,Desert,Ocean,SwampWorlds
-  public drawBackgroundDesert() {}
-  public drawBackgroundOcean() {}
-  
+  //This function will be overwritten by DesertWorld
+  public drawBackground() {}
 
   /**
    * Method that writes gameItems on the canvas
@@ -145,49 +143,16 @@ abstract class Game {
     const ctx = this.canvas.getContext("2d");
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    
-    this.drawBackgroundDesert();
-    this.drawBackgroundOcean();
 
-    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
-    //Sets the background
-    // if (this.worldName === "Ocean") {
-    //   this.drawBackgroundOcean();
-    // }
+    this.drawBackground();
 
-    // if (this.worldName === "Desert") {
-    //   ctx.drawImage(
-    //     GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"),
-    //     0,
-    //     0
-    //   );
-    // }
-
-    // if (this.worldName === "Artic") {
-    //   ctx.drawImage(
-    //     GameItem.loadNewImage("./assets/img/world/ArticBG.jpg"),
-    //     0,
-    //     0
-    //   );
-    // }
-
-    // if (this.worldName === "Swamp") {
-    //   ctx.drawImage(
-    //     GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"),
-    //     0,
-    //     -100
-    //   );
-    // }
     //Drawing the player
-    this.player.forEach((player) => {
-      player.draw(ctx);
-    });
+    this.player.draw();
 
     //Draws all the scoring items.
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
     }
-
     this.drawScore(ctx);
     this.drawLives(ctx);
   }

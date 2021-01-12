@@ -1,24 +1,19 @@
 /// <reference path = "../GameItem.ts"/>
 
-abstract class Player extends GameItem {
+class Player extends GameItem {
   private keyboardListener: KeyboardListener;
 
   protected animationFrame: number;
   protected yPos: number;
   protected xPos: number;
   protected image: HTMLImageElement;
-  protected characterName: string;
 
-  constructor(canvas: HTMLCanvasElement, charactername: string) {
+  constructor(canvas: HTMLCanvasElement) {
     super(canvas);
     this.keyboardListener = new KeyboardListener();
-    this.yPos = this.canvas.height / 2;
-    this.xPos = this.canvas.width / 7;
+    // this.yPos = this.canvas.height / 2;
+    // this.xPos = this.canvas.width / 7;
     this.animationFrame = 0;
-    this.characterName = charactername;
-
-    if (this.characterName === "AmongUs") {
-    }
   }
 
   /**
@@ -54,23 +49,20 @@ abstract class Player extends GameItem {
       this.yPos = this.lowerLane;
     }
   }
+
   //Will be overwritten by AmongUs class
-  public AmongUsAnimation() {}
-
-  public draw(ctx: CanvasRenderingContext2D) {
-    //Checks characterName for the right CharacterAnimation
-    if (this.characterName === "AmongUs") {
-      this.AmongUsAnimation();
-    }
-
-    ctx.drawImage(this.image, this.xPos, this.yPos);
+  public characterAnimation(){}
+  
+  public draw() {
+    console.log(this.image);
+    this.characterAnimation();
   }
 
-  /**
-   * Method that checks if a gameItem collides with the player
-   * @param ScoringItem
-   */
-  public collidesWithScoringItem(ScoringItem: ScoringItem): boolean {
+  /*** Method that checks if a gameItem collides with the player    
+  ** @param ScoringItem    
+  **/ public collidesWithScoringItem(
+    ScoringItem: ScoringItem
+  ): boolean {
     if (
       this.xPos + this.image.width > ScoringItem.getPositionX() &&
       this.yPos <
