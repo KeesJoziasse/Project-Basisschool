@@ -402,10 +402,10 @@ class UnlockGirlCharacter extends Button {
         this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
     }
 }
-class UnlockMorty extends Button {
+class UnlockSonic extends Button {
     constructor(xPos, yPos, canvas) {
         super(xPos, yPos, canvas);
-        this.name = "UnlockMorty";
+        this.name = "UnlockSonic";
         this.image = Start.loadNewImage("./assets/img/buttons/unlock.png");
     }
 }
@@ -589,20 +589,6 @@ class MoonUnlocked extends Images {
         this.image = Start.loadNewImage("./assets/img/world/MoonUnlocked.png");
     }
 }
-class Morty extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "Morty";
-        this.image = Start.loadNewImage("./assets/img/players/morty.png");
-    }
-}
-class MortyUnlocked extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "MortyUnlocked";
-        this.image = Start.loadNewImage("./assets/img/players/MortyUnlocked.png");
-    }
-}
 class Questions extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -629,6 +615,20 @@ class ShieldBooster extends Images {
         super(xPos, yPos);
         this.name = "shieldBooster";
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/shieldBooster.png");
+    }
+}
+class Sonic extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Sonic";
+        this.image = Start.loadNewImage("./assets/img/players/Sonic.png");
+    }
+}
+class SonicUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "SonicUnlocked";
+        this.image = Start.loadNewImage("./assets/img/players/SonicUnlocked.png");
     }
 }
 class StewieUnlocked extends Images {
@@ -1276,10 +1276,10 @@ class Shop {
                         this.characters.push(new YellowAmongUsUnlocked(this.canvas.width / 2.9, this.canvas.height / 6));
                     }
                     if (button.getButtonName() === "UnlockGirlCharacter") {
-                        this.characters.push(new GirlCharacterUnlocked(this.canvas.width / 1.7, this.canvas.height / 6));
+                        this.characters.push(new GirlCharacterUnlocked(this.canvas.width / 1.75, this.canvas.height / 6));
                     }
-                    if (button.getButtonName() === "UnlockMorty") {
-                        this.characters.push(new MortyUnlocked(this.canvas.width / 1.25, this.canvas.height / 6));
+                    if (button.getButtonName() === "UnlockSonic") {
+                        this.characters.push(new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6));
                     }
                     if (button.getButtonName() === "UnlockSwamp") {
                         this.characters.push(new SwampPlanetUnlocked(this.canvas.width / 2.33, this.canvas.height / 1.64));
@@ -1377,8 +1377,8 @@ class Shop {
     drawUnlockableCharacter() {
         this.characters.push(new Yoshi(this.canvas.width / 7.9, this.canvas.height / 6));
         this.characters.push(new YellowAmongUs(this.canvas.width / 2.9, this.canvas.height / 6));
-        this.characters.push(new GirlCharacter(this.canvas.width / 1.7, this.canvas.height / 6));
-        this.characters.push(new Morty(this.canvas.width / 1.25, this.canvas.height / 6));
+        this.characters.push(new GirlCharacter(this.canvas.width / 1.75, this.canvas.height / 6));
+        this.characters.push(new Sonic(this.canvas.width / 1.29, this.canvas.height / 6));
     }
     buttonMaker() {
         this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09, this.canvas));
@@ -1388,7 +1388,7 @@ class Shop {
         this.buttons.push(new UnlockYoshi(this.canvas.width / 9, this.canvas.height / 2.15, this.canvas));
         this.buttons.push(new UnlockAmongUs(this.canvas.width / 3.1, this.canvas.height / 2.15, this.canvas));
         this.buttons.push(new UnlockGirlCharacter(this.canvas.width / 1.87, this.canvas.height / 2.15, this.canvas));
-        this.buttons.push(new UnlockMorty(this.canvas.width / 1.34, this.canvas.height / 2.15, this.canvas));
+        this.buttons.push(new UnlockSonic(this.canvas.width / 1.34, this.canvas.height / 2.15, this.canvas));
     }
     loadNewImage(source) {
         const img = new Image();

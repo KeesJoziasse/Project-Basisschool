@@ -1,11 +1,11 @@
 /// <reference path="Images.ts" />
 
-class MortyUnlocked extends Images {
+class SonicUnlocked extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "MortyUnlocked";
+      this.name = "SonicUnlocked";
       this.image = Start.loadNewImage(
-        "./assets/img/players/MortyUnlocked.png"
+        "./assets/img/players/SonicUnlocked.png"
       );
     }
   

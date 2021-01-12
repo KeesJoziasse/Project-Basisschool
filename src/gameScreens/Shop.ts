@@ -281,11 +281,11 @@ class Shop {
     );
 
     this.characters.push(
-      new GirlCharacter(this.canvas.width / 1.7, this.canvas.height / 6)
+      new GirlCharacter(this.canvas.width / 1.75, this.canvas.height / 6)
     );
 
     this.characters.push(
-      new Morty(this.canvas.width / 1.25, this.canvas.height / 6)
+      new Sonic(this.canvas.width / 1.29, this.canvas.height / 6)
     );
   }
 
@@ -344,7 +344,7 @@ class Shop {
       )
     );
     this.buttons.push(
-      new UnlockMorty(
+      new UnlockSonic(
         this.canvas.width / 1.34,
         this.canvas.height / 2.15,
         this.canvas
@@ -382,15 +382,15 @@ class Shop {
 
         if (button.getButtonName() === "UnlockGirlCharacter") {
           this.characters.push(
-            new GirlCharacterUnlocked(this.canvas.width / 1.7, this.canvas.height / 6)
+            new GirlCharacterUnlocked(this.canvas.width / 1.75, this.canvas.height / 6)
           )
         }
 
         
         
-        if (button.getButtonName() === "UnlockMorty") {
+        if (button.getButtonName() === "UnlockSonic") {
           this.characters.push(
-            new MortyUnlocked(this.canvas.width / 1.25, this.canvas.height / 6)
+            new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6)
           )
         }
 
