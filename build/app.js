@@ -1363,8 +1363,7 @@ class Shop {
         this.buttons.forEach((button) => {
             button.draw(ctx);
         });
-        Start.writeTextToCanvas(ctx, "Shop", 60, this.canvas.width / 2, 80, "center", "white");
-        Start.writeTextToCanvas(ctx, "200", 60, this.canvas.width / 11, this.canvas.height / 1.035, "center", "white");
+        Start.writeTextToCanvas(ctx, "200", 60, this.canvas.width / 2, this.canvas.height / 10, "center", "white");
         Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 5.8, this.canvas.height / 2.25, "center", "white");
         Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 2.55, this.canvas.height / 2.25, "center", "white");
         Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.68, this.canvas.height / 2.25, "center", "white");
@@ -1401,7 +1400,7 @@ class Shop {
         this.images.push(new coinForShop(this.canvas.width / 1.33, this.canvas.height / 2.56));
         this.images.push(new coinForShop(this.canvas.width / 9, this.canvas.height / 2.56));
         this.images.push(new coinForShop(this.canvas.width / 1.85, this.canvas.height / 2.56));
-        this.images.push(new coinForShop(this.canvas.width / 50, this.canvas.height / 1.1));
+        this.images.push(new coinForShop(this.canvas.width / 2.35, this.canvas.height / 22));
     }
     drawUnlockableWorlds() {
         this.newWorlds.push(new DesertPlanet(this.canvas.width / 4.3, this.canvas.height / 1.6));
@@ -1416,8 +1415,6 @@ class Shop {
     }
     buttonMaker() {
         this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09, this.canvas));
-        this.buttons.push(new QuestionsAnswersButton(this.canvas.width / 1.07, this.canvas.height / 70, this.canvas));
-        this.buttons.push(new SettingsButton(this.canvas.width / 1.07, this.canvas.height / 8.5, this.canvas));
         this.buttons.push(new UnlockDesert(this.canvas.width / 4.5, this.canvas.height / 1.08, this.canvas));
         this.buttons.push(new UnlockArctic(this.canvas.width / 1.56, this.canvas.height / 1.08, this.canvas));
         this.buttons.push(new UnlockSwamp(this.canvas.width / 2.31, this.canvas.height / 1.08, this.canvas));

@@ -104,24 +104,13 @@ class Shop {
       button.draw(ctx);
     });
 
-    //The text at the top center.
-    Start.writeTextToCanvas(
-      ctx,
-      "Shop",
-      60,
-      this.canvas.width / 2,
-      80,
-      "center",
-      "white"
-    );
-
     // Amount of money in the player's bank
     Start.writeTextToCanvas(
       ctx,
       "200",
       60,
-      this.canvas.width / 11,
-      this.canvas.height / 1.035,
+      this.canvas.width / 2,
+      this.canvas.height / 10,
       "center",
       "white"
     );
@@ -259,7 +248,7 @@ class Shop {
       new coinForShop(this.canvas.width / 1.85, this.canvas.height / 2.56)
     );
     this.images.push(
-      new coinForShop(this.canvas.width / 50, this.canvas.height / 1.1)
+      new coinForShop(this.canvas.width / 2.35, this.canvas.height / 22)
     );
   }
 
@@ -305,24 +294,6 @@ class Shop {
       new BackToStart(
         (this.canvas.width / 5) * 0.05,
         (this.canvas.height / 5) * 0.09,
-        this.canvas
-      )
-    );
-
-    //QandA Button
-    this.buttons.push(
-      new QuestionsAnswersButton(
-        this.canvas.width / 1.07,
-        this.canvas.height / 70,
-        this.canvas
-      )
-    );
-
-    //Settings Button
-    this.buttons.push(
-      new SettingsButton(
-        this.canvas.width / 1.07,
-        this.canvas.height / 8.5,
         this.canvas
       )
     );
