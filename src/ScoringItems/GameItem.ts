@@ -6,7 +6,6 @@ abstract class GameItem {
     //shared with subclasses
     protected canvas: HTMLCanvasElement;
     protected name: string;
-
     private earnedCoins: number;
 
     //Lanes

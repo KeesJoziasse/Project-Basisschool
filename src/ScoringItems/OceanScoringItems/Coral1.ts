@@ -8,4 +8,4 @@ class Coral1 extends ScoringItem {
       this.lives = -1;
       this.earnedCoins = 0;
     }
-  }
+  } 

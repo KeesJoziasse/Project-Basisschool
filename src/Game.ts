@@ -51,7 +51,7 @@ abstract class Game {
 
     //Making the player
     //#TODO fix that the new player made is chosen by startscreen
-    this.player = new Player(this.canvas);
+    this.player = new AmongUs(this.canvas);
 
     //Setting the score to 0.
     this.score = 0;
@@ -84,6 +84,7 @@ abstract class Game {
    * Method that checks the gamestate
    */
   public loop = () => {
+    // console.log(this.player);
     // console.log(this.gameState);
     if (this.gameState === "Running") {
       this.frame++;
@@ -135,6 +136,7 @@ abstract class Game {
 
   //This function will be overwritten by DesertWorld
   public drawBackground() {}
+  public characterAnimationTest(){}
 
   /**
    * Method that writes gameItems on the canvas
@@ -143,12 +145,9 @@ abstract class Game {
     const ctx = this.canvas.getContext("2d");
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     this.drawBackground();
-
     //Drawing the player
-    this.player.draw();
-
+    this.player.draw(ctx);
     //Draws all the scoring items.
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
