@@ -14,7 +14,7 @@ abstract class Game {
   protected lives: number;
   protected earnedCoins: number;
   //Worldname of the current world
-  private worldName: string;
+  // private worldName: string;
 
   //Amount of frames that have passed
   protected frame: number;
@@ -63,7 +63,7 @@ abstract class Game {
     this.frame = 0;
 
     //Authorizing the worldname.
-    this.worldName = worldName;
+    // this.worldName = worldName;
 
     //Speed of the world on canvas
     this.speed;
@@ -134,7 +134,9 @@ abstract class Game {
   }
 
   //This function will be overwritten by Artic,Desert,Ocean,SwampWorlds
+  public drawBackgroundDesert() {}
   public drawBackgroundOcean() {}
+  
 
   /**
    * Method that writes gameItems on the canvas
@@ -143,36 +145,39 @@ abstract class Game {
     const ctx = this.canvas.getContext("2d");
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    
+    this.drawBackgroundDesert();
+    this.drawBackgroundOcean();
 
     //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
     //Sets the background
-    if (this.worldName === "Ocean") {
-      this.drawBackgroundOcean();
-    }
+    // if (this.worldName === "Ocean") {
+    //   this.drawBackgroundOcean();
+    // }
 
-    if (this.worldName === "Desert") {
-      ctx.drawImage(
-        GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"),
-        0,
-        0
-      );
-    }
+    // if (this.worldName === "Desert") {
+    //   ctx.drawImage(
+    //     GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"),
+    //     0,
+    //     0
+    //   );
+    // }
 
-    if (this.worldName === "Artic") {
-      ctx.drawImage(
-        GameItem.loadNewImage("./assets/img/world/ArticBG.jpg"),
-        0,
-        0
-      );
-    }
+    // if (this.worldName === "Artic") {
+    //   ctx.drawImage(
+    //     GameItem.loadNewImage("./assets/img/world/ArticBG.jpg"),
+    //     0,
+    //     0
+    //   );
+    // }
 
-    if (this.worldName === "Swamp") {
-      ctx.drawImage(
-        GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"),
-        0,
-        -100
-      );
-    }
+    // if (this.worldName === "Swamp") {
+    //   ctx.drawImage(
+    //     GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"),
+    //     0,
+    //     -100
+    //   );
+    // }
     //Drawing the player
     this.player.forEach((player) => {
       player.draw(ctx);

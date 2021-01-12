@@ -32,7 +32,6 @@ class Game {
         this.lives = 3;
         this.earnedCoins = 0;
         this.frame = 0;
-        this.worldName = worldName;
         this.speed;
         this.loop();
         this.scoringItems = [];
@@ -61,22 +60,13 @@ class Game {
             });
         }
     }
+    drawBackgroundDesert() { }
     drawBackgroundOcean() { }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        if (this.worldName === "Ocean") {
-            this.drawBackgroundOcean();
-        }
-        if (this.worldName === "Desert") {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"), 0, 0);
-        }
-        if (this.worldName === "Artic") {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/ArticBG.jpg"), 0, 0);
-        }
-        if (this.worldName === "Swamp") {
-            ctx.drawImage(GameItem.loadNewImage("./assets/img/world/SwampBG.jpg"), 0, -100);
-        }
+        this.drawBackgroundDesert();
+        this.drawBackgroundOcean();
         this.player.forEach((player) => {
             player.draw(ctx);
         });
@@ -938,7 +928,11 @@ class ArticWorld extends Game {
 class DesertWorld extends Game {
     constructor(canvas, worldName) {
         super(canvas, worldName);
-        this.background = GameItem.loadNewImage("./assets/img/world/DesertBG.jpg");
+        this.image = GameItem.loadNewImage("./assets/img/world/DesertBG.jpg");
+    }
+    drawBackgroundDesert() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.drawImage(GameItem.loadNewImage("./assets/img/world/DesertBG.jpg"), this.xPos, this.yPos);
     }
 }
 class OceanWorld extends Game {
