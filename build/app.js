@@ -806,6 +806,7 @@ class inGameCoin extends ScoringItem {
         this.earnedCoins = 1;
     }
 }
+<<<<<<< Updated upstream
 class GameItem {
     constructor(canvas) {
         this.canvas = canvas;
@@ -831,6 +832,9 @@ class IngameCoin extends ScoringItem {
     constructor(canvas) {
         super(canvas);
     }
+=======
+class PowerUp extends ScoringItem {
+>>>>>>> Stashed changes
 }
 class Question extends ScoringItem {
 }
