@@ -1,11 +1,11 @@
 /// <reference path="Images.ts" />
 
-class YellowAmongUsUnlocked extends Images {
+class ArcticPlanetUnlocked extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "UnlockYellowAmongUs";
+      this.name = "Artic";
       this.image = Start.loadNewImage(
-        "./assets/img/players/yellowAUUnlocked.png"
+        "./assets/img/world/ArcticUnlocked.png"
       );
     }
   

@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Start(document.getElementById("canvas"));
+    new Shop(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -474,6 +474,13 @@ class ArcticPlanet extends Images {
         this.image = Start.loadNewImage("./assets/img/world/ArcticPlanet.png");
     }
 }
+class ArcticPlanetUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "Artic";
+        this.image = Start.loadNewImage("./assets/img/world/ArcticUnlocked.png");
+    }
+}
 class ArticImage extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -531,6 +538,13 @@ class DesertPlanet extends Images {
         super(xPos, yPos);
         this.name = "DesertPlanet";
         this.image = Start.loadNewImage("./assets/img/world/DesertPlanet.png");
+    }
+}
+class DesertPlanetUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "DesertUnlocked";
+        this.image = Start.loadNewImage("./assets/img/world/DesertUnlocked.png");
     }
 }
 class DownLane extends Images {
@@ -652,6 +666,13 @@ class SwampPlanet extends Images {
         this.image = Start.loadNewImage("./assets/img/world/SwampPlanet.png");
     }
 }
+class SwampPlanetUnlocked extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "SwampUnlocked";
+        this.image = Start.loadNewImage("./assets/img/world/SwampUnlocked.png");
+    }
+}
 class TextCoin extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -697,7 +718,7 @@ class YellowAmongUs extends Images {
 class YellowAmongUsUnlocked extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "YellowAmongUsUnlocked";
+        this.name = "UnlockYellowAmongUs";
         this.image = Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png");
     }
 }
@@ -806,7 +827,6 @@ class inGameCoin extends ScoringItem {
         this.earnedCoins = 1;
     }
 }
-<<<<<<< Updated upstream
 class GameItem {
     constructor(canvas) {
         this.canvas = canvas;
@@ -832,9 +852,6 @@ class IngameCoin extends ScoringItem {
     constructor(canvas) {
         super(canvas);
     }
-=======
-class PowerUp extends ScoringItem {
->>>>>>> Stashed changes
 }
 class Question extends ScoringItem {
 }
@@ -1288,6 +1305,24 @@ class Shop {
                     if (button.getButtonName() === "UnlockYoshi") {
                         this.characters.push(new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6));
                     }
+                    if (button.getButtonName() === "UnlockAmongUs") {
+                        this.characters.push(new YellowAmongUsUnlocked(this.canvas.width / 2.9, this.canvas.height / 6));
+                    }
+                    if (button.getButtonName() === "UnlockAsh") {
+                        this.characters.push(new AshUnlocked(this.canvas.width / 1.7, this.canvas.height / 6));
+                    }
+                    if (button.getButtonName() === "UnlockMorty") {
+                        this.characters.push(new MortyUnlocked(this.canvas.width / 1.25, this.canvas.height / 6));
+                    }
+                    if (button.getButtonName() === "UnlockSwamp") {
+                        this.characters.push(new SwampPlanetUnlocked(this.canvas.width / 2.33, this.canvas.height / 1.64));
+                    }
+                    if (button.getButtonName() === "UnlockDesert") {
+                        this.characters.push(new DesertPlanetUnlocked(this.canvas.width / 4.3, this.canvas.height / 1.6));
+                    }
+                    if (button.getButtonName() === "UnlockArctic") {
+                        this.characters.push(new ArcticPlanetUnlocked(this.canvas.width / 1.56, this.canvas.height / 1.646));
+                    }
                 }
             });
         };
@@ -1324,18 +1359,19 @@ class Shop {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        ctx.drawImage(GameItem.loadNewImage("./assets/img/background/EndscreenBackground.jpg"), 0, 0);
         this.buttons.forEach((button) => {
             button.draw(ctx);
         });
-        Start.writeTextToCanvas(ctx, "Shop", 60, this.canvas.width / 2, 80, "center");
-        Start.writeTextToCanvas(ctx, "200", 60, this.canvas.width / 11, this.canvas.height / 1.035, "center");
-        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 5.8, this.canvas.height / 2.25, "center");
-        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 2.55, this.canvas.height / 2.25, "center");
-        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.68, this.canvas.height / 2.25, "center");
-        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.24, this.canvas.height / 2.25, "center");
-        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 1.42, this.canvas.height / 1.10, "center");
-        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 2.01, this.canvas.height / 1.10, "center");
-        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 3.4, this.canvas.height / 1.10, "center");
+        Start.writeTextToCanvas(ctx, "Shop", 60, this.canvas.width / 2, 80, "center", "white");
+        Start.writeTextToCanvas(ctx, "200", 60, this.canvas.width / 11, this.canvas.height / 1.035, "center", "white");
+        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 5.8, this.canvas.height / 2.25, "center", "white");
+        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 2.55, this.canvas.height / 2.25, "center", "white");
+        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.68, this.canvas.height / 2.25, "center", "white");
+        Start.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.24, this.canvas.height / 2.25, "center", "white");
+        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 1.42, this.canvas.height / 1.10, "center", "white");
+        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 2.01, this.canvas.height / 1.10, "center", "white");
+        Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 3.4, this.canvas.height / 1.10, "center", "white");
         this.images.forEach((image) => {
             image.move(this.canvas);
             image.reloadImage(this.canvas);
