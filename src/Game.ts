@@ -90,7 +90,8 @@ abstract class Game {
   /**
    * Method that checks the gamestate
    */
-  public loop = () => {
+  public loop = 
+  () => {
     console.log(this.gameState);
     this.frame++;
     this.draw();
@@ -125,8 +126,8 @@ abstract class Game {
       this.player.forEach((player) => {
         for (let i = 0; i < this.scoringItems.length; i++) {
           
-          if(player.collidesWithScoringItem(this.scoringItems[i]) && this.scoringItems[i].getName() === "QuestionBox"){
-            new InGameQuestions(document.getElementById("canvas") as HTMLCanvasElement);
+          if(player.collidesWithScoringItem(this.scoringItems[i])){
+            
           }
 
           if (player.collidesWithScoringItem(this.scoringItems[i])) {
@@ -142,7 +143,14 @@ abstract class Game {
         }
       });
     }
-  }
+    }
+
+// test
+
+
+
+
+
 
   //This function will be overwritten by Artic,Desert,Ocean,SwampWorlds
   public drawBackgroundOcean() {}

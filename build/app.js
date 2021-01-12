@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Shop(document.getElementById("canvas"));
+    new Start(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class Game {
@@ -48,8 +48,7 @@ class Game {
             });
             this.player.forEach((player) => {
                 for (let i = 0; i < this.scoringItems.length; i++) {
-                    if (player.collidesWithScoringItem(this.scoringItems[i]) && this.scoringItems[i].getName() === "QuestionBox") {
-                        new InGameQuestions(document.getElementById("canvas"));
+                    if (player.collidesWithScoringItem(this.scoringItems[i])) {
                     }
                     if (player.collidesWithScoringItem(this.scoringItems[i])) {
                         this.score += this.scoringItems[i].getPoints();
@@ -586,6 +585,13 @@ class MortyUnlocked extends Images {
         this.image = Start.loadNewImage("./assets/img/players/MortyUnlocked.png");
     }
 }
+class QuestionBoxText extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "questionBox";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/questionBox.png");
+    }
+}
 class Questions extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -598,20 +604,6 @@ class Ranking extends Images {
         super(xPos, yPos);
         this.name = "ranking";
         this.image = Start.loadNewImage("./assets/img/Highscore/ranking.png");
-    }
-}
-class RocketBooster extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "rocketBooster";
-        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/rocketBooster.png");
-    }
-}
-class ShieldBooster extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "shieldBooster";
-        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/shieldBooster.png");
     }
 }
 class StewieUnlocked extends Images {
@@ -768,6 +760,9 @@ class ScoringItem {
     }
     getCoinValue() {
         return this.earnedCoins;
+    }
+    getSpeed() {
+        return this.speed;
     }
     move() {
         this.xPosition += this.speed;
@@ -1090,8 +1085,7 @@ class GeneralQuestions {
         this.images.push(new UpperLane((this.canvas.width / 3) * 0.60, 200));
         this.images.push(new MidLane((this.canvas.width / 3) * 0.60, 350));
         this.images.push(new DownLane((this.canvas.width / 3) * 0.60, 500));
-        this.images.push(new ShieldBooster((this.canvas.width / 3) * 1, 435));
-        this.images.push(new RocketBooster((this.canvas.width / 3) * 1, 135));
+        this.images.push(new QuestionBoxText((this.canvas.width / 3) * 1, 435));
         this.images.push(new TextCoin((this.canvas.width / 2) * 1.34, 435));
         this.images.push(new TextObstacle((this.canvas.width / 2) * 1.34, 150));
     }
@@ -1101,8 +1095,7 @@ class GeneralQuestions {
         Start.writeTextToCanvas(ctx, "Onderste laan:", 40, (this.canvas.width / 9) * 0.93, 560, "center");
     }
     titleTextBoxes(ctx) {
-        Start.writeTextToCanvas(ctx, "Rocket booster", 35, (this.canvas.width / 3) * 1.4, 140, "center");
-        Start.writeTextToCanvas(ctx, "Shield booster", 35, (this.canvas.width / 3) * 1.4, 435, "center");
+        Start.writeTextToCanvas(ctx, "Questionbox", 35, (this.canvas.width / 3) * 1.4, 435, "center");
         Start.writeTextToCanvas(ctx, "Obstakels", 35, (this.canvas.width / 2) * 1.6, 140, "center");
         Start.writeTextToCanvas(ctx, "Coins", 35, (this.canvas.width / 2) * 1.6, 435, "center");
     }
