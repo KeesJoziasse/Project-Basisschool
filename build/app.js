@@ -204,6 +204,29 @@ class Button {
                 if (this.getButtonName() === "HighScore") {
                     new HighScore(document.getElementById("canvas"));
                 }
+                if (this.getButtonName() === "UnlockDesert") {
+                    console.log("Unlock Desert");
+                }
+                if (this.getButtonName() === "UnlockSwamp") {
+                    console.log("Unlock Swamp");
+                }
+                if (this.getButtonName() === "UnlockArctic") {
+                    console.log("Unlock Arctic");
+                }
+                if (this.getButtonName() === "UnlockYoshi") {
+                    console.log("Unlock Yoshi");
+                }
+                if (this.getButtonName() === "UnlockAmongUs") {
+                    console.log("UnlockAmongUs");
+                }
+                if (this.getButtonName() === "UnlockAsh") {
+                    const ctx = this.canvas.getContext("2d");
+                    ctx.drawImage(Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png"), this.canvas.width / 2.9, this.canvas.height / 6);
+                    console.log("Unlock Ash");
+                }
+                if (this.getButtonName() === "UnlockSonic") {
+                    console.log("Unlock Sonic");
+                }
                 if (this.getButtonName() === "QandA") {
                     new GeneralQuestions(document.getElementById("canvas"));
                 }
