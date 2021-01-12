@@ -69,8 +69,6 @@ class Start {
 
     // in the first loop no images are loaded
     requestAnimationFrame(this.loop);
-
-    //TEST AREA
   };
 
   /**
@@ -200,6 +198,15 @@ class Start {
     //TODO hier dingen pushen zodra unlock button is gedrukt
     this.characterImages.push(
       new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+    );
+    this.characterImages.push(
+      new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+    );
+    this.characterImages.push(
+      new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+    );
+    this.characterImages.push(
+      new GirlCharacterUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
   }
 

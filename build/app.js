@@ -37,7 +37,7 @@ class Game {
         this.loop();
         this.scoringItems = [];
         this.gameState = "Running";
-        this.player.push(new AmongUs(this.canvas, "AmongUs"));
+        this.player.push(new Girl(this.canvas, "AmongUs"));
     }
     scoringItemsOceanWorld() { }
     frameIndex() { }
@@ -922,6 +922,32 @@ class AmongUs extends Player {
         }
     }
 }
+class Girl extends Player {
+    constructor(canvas, characterName) {
+        super(canvas, characterName);
+        this.walk1 = GameItem.loadNewImage("./assets/img/Characters/GirlCharacter/girl-walk-1.png");
+        this.walk2 = GameItem.loadNewImage("./assets/img/Characters/GirlCharacter/girl-walk-2.png");
+        this.walk3 = GameItem.loadNewImage("./assets/img/Characters/GirlCharacter/girl-walk-3.png");
+    }
+    AmongUsAnimation() {
+        this.animationFrame++;
+        if (this.animationFrame >= 20) {
+            this.animationFrame -= 19;
+        }
+        if (this.animationFrame <= 10) {
+            this.image = this.walk1;
+        }
+        else if (this.animationFrame > 10 && this.animationFrame <= 20) {
+            this.image = this.walk2;
+        }
+        else if (this.animationFrame > 20 && this.animationFrame <= 30) {
+            this.image = this.walk3;
+        }
+        else if (this.animationFrame > 30 && this.animationFrame <= 40) {
+            this.image = this.walk2;
+        }
+    }
+}
 class Fish extends ScoringItem {
     constructor(canvas) {
         super(canvas);
@@ -1305,6 +1331,7 @@ class Shop {
         this.drawUnlockableWorlds();
         this.drawImages();
         this.loop();
+        this.numSplice = 1;
         document.addEventListener("click", this.mouseHandler);
         this.draw();
     }
@@ -1471,6 +1498,9 @@ class Start {
     }
     charachterMaker() {
         this.characterImages.push(new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.characterImages.push(new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.characterImages.push(new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.characterImages.push(new GirlCharacterUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
     }
     imageMaker() {
         this.images.push(new Titel(this.canvas.width / 4, -40));
