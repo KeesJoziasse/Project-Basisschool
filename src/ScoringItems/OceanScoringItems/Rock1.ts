@@ -1,10 +1,10 @@
 /// <reference path = "../ScoringItem.ts"/>
 
-class Rock extends ScoringItem {
+class Rock1 extends ScoringItem {
   public constructor(canvas: HTMLCanvasElement) {
     super(canvas);
-    this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanRock1.png");
-    this.points = -20;
+    this.image = this.loadNewImage("assets/img/obstacles/Ocean/oceanRock1.png");
+    this.points = -10;
     this.lives = -1;
     this.earnedCoins = 0;
   }

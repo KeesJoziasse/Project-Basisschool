@@ -865,11 +865,29 @@ class AmongUs extends Player {
         }
     }
 }
+class Coral1 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Ocean/oceanCoral1.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class Coral2 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Ocean/oceanCoral2.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
 class Fish extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanFish.png");
-        this.points = 5;
+        this.image = this.loadNewImage("assets/img/obstacles/Ocean/oceanFish.png");
+        this.points = 20;
         this.lives = 0;
         this.earnedCoins = 0;
     }
@@ -877,17 +895,26 @@ class Fish extends ScoringItem {
 class Pearl extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanParelBooster.png");
+        this.image = this.loadNewImage("assets/img/obstacles/Ocean/oceanPearl.png");
         this.points = 20;
         this.lives = 0;
         this.earnedCoins = 0;
     }
 }
-class Rock extends ScoringItem {
+class Rock1 extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanRock1.png");
-        this.points = -20;
+        this.image = this.loadNewImage("assets/img/obstacles/Ocean/oceanRock1.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class Rock2 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Ocean/oceanFish.png");
+        this.points = -10;
         this.lives = -1;
         this.earnedCoins = 0;
     }
@@ -895,7 +922,7 @@ class Rock extends ScoringItem {
 class Shark extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanShark.png");
+        this.image = this.loadNewImage("assets/img/obstacles/Ocean/oceanShark.png");
         this.points = -20;
         this.lives = -1;
         this.earnedCoins = 0;
@@ -949,7 +976,7 @@ class OceanWorld extends Game {
         }
     }
     scoringItemsOceanWorld() {
-        const random = GameItem.randomInteger(1, 5);
+        const random = GameItem.randomInteger(1, 9);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }
@@ -960,10 +987,19 @@ class OceanWorld extends Game {
             this.scoringItems.push(new Pearl(this.canvas));
         }
         if (random === 4) {
-            this.scoringItems.push(new Rock(this.canvas));
+            this.scoringItems.push(new Rock1(this.canvas));
         }
-        if (random === 5) {
+        if (random === 5 || random === 6) {
             this.scoringItems.push(new inGameCoin(this.canvas));
+        }
+        if (random === 7) {
+            this.scoringItems.push(new Coral1(this.canvas));
+        }
+        if (random === 8) {
+            this.scoringItems.push(new Coral2(this.canvas));
+        }
+        if (random === 9) {
+            this.scoringItems.push(new Rock2(this.canvas));
         }
     }
 }

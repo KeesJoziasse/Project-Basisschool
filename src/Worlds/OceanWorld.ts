@@ -14,23 +14,23 @@ class OceanWorld extends Game {
   }
 
   //Draws the background and animates it so it looks like it moves
-  public drawBackgroundOcean(){
+  public drawBackgroundOcean() {
     const ctx = this.canvas.getContext("2d");
 
     //#TODO FIX BACKGROUND WITH ARRAY
     //#FIX IMPORTANT
-    
+
     this.animationFrameBackground++;
 
     //does a reset
-    if(this.animationFrameBackground === 1200){
+    if (this.animationFrameBackground === 1200) {
       this.animationFrameBackground = -1;
       this.xPos = 0;
       this.beginBackground = 1900;
     }
 
     //First loaded image
-    if(this.animationFrameBackground < 900){
+    if (this.animationFrameBackground < 900) {
       ctx.drawImage(
         GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"),
         this.xPos,
@@ -40,7 +40,7 @@ class OceanWorld extends Game {
     }
 
     //Second image that will be going behind the first
-    if(this.animationFrameBackground > 200){
+    if (this.animationFrameBackground > 200) {
       ctx.drawImage(
         GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"),
         this.beginBackground,
@@ -48,20 +48,19 @@ class OceanWorld extends Game {
       );
       this.beginBackground += this.speed;
     }
-    
   }
 
   public frameIndex() {
     if (this.frame % 100 === 0) {
       this.scoringItemsOceanWorld();
     }
-    if (this.frame % 10 === 0){
+    if (this.frame % 10 === 0) {
       this.score += 1;
     }
   }
 
   public scoringItemsOceanWorld(): void {
-    const random = GameItem.randomInteger(1, 5 );
+    const random = GameItem.randomInteger(1, 9);
     if (random === 1) {
       this.scoringItems.push(new Shark(this.canvas));
     }
@@ -71,12 +70,20 @@ class OceanWorld extends Game {
     if (random === 3) {
       this.scoringItems.push(new Pearl(this.canvas));
     }
-    if(random === 4){
-      this.scoringItems.push(new Rock(this.canvas));
+    if (random === 4) {
+      this.scoringItems.push(new Rock1(this.canvas));
     }
-    if(random === 5){
+    if (random === 5 || random === 6) {
       this.scoringItems.push(new inGameCoin(this.canvas));
+    }
+    if (random === 7) {
+      this.scoringItems.push(new Coral1(this.canvas));
+    }
+    if (random === 8) {
+      this.scoringItems.push(new Coral2(this.canvas));
+    }
+    if (random === 9) {
+      this.scoringItems.push(new Rock2(this.canvas));
     }
   }
 }
-
