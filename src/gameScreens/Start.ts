@@ -108,7 +108,6 @@ class Start {
     for (let i = 0; i < this.worldImages.length; i++) {
       this.worldImages[this.indexCounterWorld].draw(ctx);
     }
-
   }
 
   private buttonMaker() {

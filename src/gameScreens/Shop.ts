@@ -6,6 +6,34 @@ class Shop {
   private characters: Images[];
   private newWorlds: Images[];
   public name: string;
+  private xPos: number;
+  private yPos: number;
+
+  public getButtonXPos(): number {
+    return this.xPos;
+  }
+
+  public getButtonYPos(): number {
+    return this.yPos;
+  }
+
+  /**
+   * Returns the width of the image
+   * @returns {number} - image width
+   */
+  public getButtonImageWidth(): number {
+    return this.image.width;
+  }
+
+  /**
+   * Returns the height of the image
+   * @returns {number} - image height
+   */
+  public getButtonImageHeight(): number {
+    return this.image.height;
+  }
+
+
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
@@ -37,7 +65,7 @@ class Shop {
 
     // Calls the image drawer function
     this.drawImages();
-
+    
     //Calls the loop.
     this.loop();
 
@@ -140,7 +168,7 @@ class Shop {
       "100",
       60,
       this.canvas.width / 1.42,
-      this.canvas.height / 1.1,
+      this.canvas.height / 1.10,
       "center"
     );
 
@@ -149,7 +177,7 @@ class Shop {
       "100",
       60,
       this.canvas.width / 2.01,
-      this.canvas.height / 1.1,
+      this.canvas.height / 1.10,
       "center"
     );
 
@@ -158,7 +186,7 @@ class Shop {
       "100",
       60,
       this.canvas.width / 3.4,
-      this.canvas.height / 1.1,
+      this.canvas.height / 1.10,
       "center"
     );
 
@@ -184,6 +212,7 @@ class Shop {
     });
   }
 
+  //test //Delete
   public drawUnlockables(button: Button, ctx: CanvasRenderingContext2D) {
     if (button.getButtonName() === "UnlockYoshi") {
       ctx.drawImage(

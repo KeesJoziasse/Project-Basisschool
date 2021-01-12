@@ -9,7 +9,7 @@ abstract class Player extends GameItem {
   protected image: HTMLImageElement;
   protected characterName: string;
 
-  constructor(canvas: HTMLCanvasElement, charactername:string) {
+  constructor(canvas: HTMLCanvasElement, charactername: string) {
     super(canvas);
     this.keyboardListener = new KeyboardListener();
     this.yPos = this.canvas.height / 2;
@@ -17,8 +17,7 @@ abstract class Player extends GameItem {
     this.animationFrame = 0;
     this.characterName = charactername;
 
-    if(this.characterName === "AmongUs"){
-      
+    if (this.characterName === "AmongUs") {
     }
   }
 
@@ -26,7 +25,6 @@ abstract class Player extends GameItem {
    * method to move the player between the lanes
    */
   public move() {
-
     //move from middlelane to toplane
     if (
       this.keyboardListener.isKeyDown(KeyboardListener.KEY_1) &&
@@ -54,34 +52,33 @@ abstract class Player extends GameItem {
       this.yPos === this.middleLane
     ) {
       this.yPos = this.lowerLane;
-    } 
-
-
+    }
   }
 
-    //Will be overwritten by AmongUs class
-    public AmongUsAnimation(){}
-
+  //Will be overwritten by AmongUs class
+  public AmongUsAnimation(){}
+  
   public draw(ctx: CanvasRenderingContext2D) {
     //Checks characterName for the right CharacterAnimation
-    if(this.characterName === "AmongUs"){
+    if (this.characterName === "AmongUs") {
       this.AmongUsAnimation();
     }
-    
+
     ctx.drawImage(this.image, this.xPos, this.yPos);
   }
 
-  /**
-   * Method that checks if a gameItem collides with the player
-   * @param ScoringItem
-   */
-  public collidesWithScoringItem(ScoringItem: ScoringItem): boolean {
+  /*** Method that checks if a gameItem collides with the player    
+  ** @param ScoringItem    
+  **/ public collidesWithScoringItem(
+    ScoringItem: ScoringItem
+  ): boolean {
     if (
       this.xPos + this.image.width > ScoringItem.getPositionX() &&
       this.yPos <
-        ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 && 
+        ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
       this.yPos + this.image.height >
-        ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2
+        ScoringItem.getPositionY() + ScoringItem.getImageHeight() / 2 &&
+      this.xPos < ScoringItem.getImageWidth() + ScoringItem.getPositionX()
     ) {
       return true;
     }

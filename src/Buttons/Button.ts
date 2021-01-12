@@ -37,12 +37,8 @@ abstract class Button {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
-
-   
-
+    
    ctx.drawImage(this.image, this.xPos, this.yPos);
-
-   
   }
 
   /**
@@ -52,9 +48,8 @@ abstract class Button {
   public mouseHandler = (event: MouseEvent): void => {
     
     //console.log(`User clicked the: ${this.getButtonName()} button`);
-    
-    
     // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    
     if (
       event.clientX >= this.getButtonXPos() &&
       event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
@@ -64,7 +59,7 @@ abstract class Button {
       // looks if the buttons name match and get you to the right page
       if (this.getButtonName() === "HighScore") {
         new HighScore(document.getElementById("canvas") as HTMLCanvasElement);
-      } 
+      }
       if (this.getButtonName() === "UnlockDesert") {
          console.log("Unlock Desert");
       }
@@ -82,7 +77,7 @@ abstract class Button {
       }
 
       if (this.getButtonName() === "UnlockAmongUs") {
-        this.drawUnlockedAmongUs();
+        console.log("UnlockAmongUs");
       }
 
       if (this.getButtonName() === "UnlockAsh") {
@@ -100,7 +95,9 @@ abstract class Button {
         new Settings(document.getElementById("canvas") as HTMLCanvasElement);
       }
       if (this.getButtonName() === "QandA") {
-        new GeneralQuestions(document.getElementById("canvas") as HTMLCanvasElement);
+        new GeneralQuestions(
+          document.getElementById("canvas") as HTMLCanvasElement
+        );
       }
       if (this.getButtonName() === "Shop") {
         new Shop(document.getElementById("canvas") as HTMLCanvasElement);
@@ -108,13 +105,18 @@ abstract class Button {
       if (this.getButtonName() === "RestartButton"){
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
       }
+      if (this.getButtonName() === "NoButton"){
+        new Start(document.getElementById("canvas") as HTMLCanvasElement);
+      }
       else if (this.getButtonName() === "BackToStart") {
-        //new Start(document.getElementById("canvas") as HTMLCanvasElement);
+        new Start(document.getElementById("canvas") as HTMLCanvasElement);
         
       } else {
         return null;
       }
+      
      }
+    //  console.log(`User clicked the: ${this.getButtonName()} button`);
   };
 
   public drawUnlockedAmongUs(){

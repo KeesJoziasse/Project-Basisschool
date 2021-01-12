@@ -12,7 +12,7 @@ abstract class Game {
   //The score of the player
   protected score: number;
   protected lives: number;
-
+  protected earnedCoins: number;
   //Worldname of the current world
   private worldName: string;
 
@@ -58,8 +58,10 @@ abstract class Game {
     //Setting the score to 0.
     this.score = 0;
     this.lives = 3;
+    this.earnedCoins = 0;
     //Setting the framecounter to 0.
     this.frame = 0;
+
 
     //Authorizing the worldname.
     this.worldName = worldName;
@@ -111,7 +113,6 @@ abstract class Game {
 
 
     requestAnimationFrame(this.loop);
-    console.log(this.scoringItems);
   };
 
   //Handles everything for the scoringitems.
@@ -123,10 +124,17 @@ abstract class Game {
 
       this.player.forEach((player) => {
         for (let i = 0; i < this.scoringItems.length; i++) {
+          
+          if(player.collidesWithScoringItem(this.scoringItems[i]) && this.scoringItems[i].getName() === "QuestionBox"){
+            new InGameQuestions(document.getElementById("canvas") as HTMLCanvasElement);
+          }
+
           if (player.collidesWithScoringItem(this.scoringItems[i])) {
             //#TODO fix first if statement
             this.score += this.scoringItems[i].getPoints();
             this.lives += this.scoringItems[i].getLives();
+            console.log(this.scoringItems[i].getName());
+            this.earnedCoins += this.scoringItems[i].getCoinValue();
             this.scoringItems.splice(i, 1);
           } else if (this.scoringItems[i].outOfCanvas()) {
             this.scoringItems.splice(i, 1);
@@ -137,7 +145,7 @@ abstract class Game {
   }
 
   //This function will be overwritten by Artic,Desert,Ocean,SwampWorlds
-  public drawBackgroundOcean(){}
+  public drawBackgroundOcean() {}
 
   /**
    * Method that writes gameItems on the canvas
@@ -147,9 +155,9 @@ abstract class Game {
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD 
+    //#TODO #FIX THIS IS A FUNCTION OF THE WORLD
     //Sets the background
-    if(this.worldName === "Ocean"){
+    if (this.worldName === "Ocean") {
       this.drawBackgroundOcean();
     }
 
@@ -176,17 +184,6 @@ abstract class Game {
         -100
       );
     }
-
-    //test text write Run!
-    Start.writeTextToCanvas(
-      ctx,
-      "Run!",
-      60,
-      this.canvas.width / 2,
-      80,
-      "center"
-    );
-
     //Drawing the player
     this.player.forEach((player) => {
       player.draw(ctx);
@@ -206,12 +203,25 @@ abstract class Game {
    * @param ctx
    */
   private drawScore(ctx: CanvasRenderingContext2D): void {
+    //Draws the score
     Start.writeTextToCanvas(
       ctx,
       `Score: ${this.score}`,
       60,
-      this.canvas.width / 8,
+      this.canvas.width /2,
       this.canvas.height / 8,
+      null,
+      "red"
+    );
+    
+    //Draws the earned coins
+    ctx.drawImage(GameItem.loadNewImage("assets/img/GameItems/coin.png") , this.canvas.width /20, this.canvas.height / 8)
+    Start.writeTextToCanvas(
+      ctx,
+      `${this.earnedCoins}`,
+      60,
+      this.canvas.width / 8 ,
+      this.canvas.height / 5,
       null,
       "red"
     );
@@ -222,15 +232,41 @@ abstract class Game {
    * @param ctx
    */
   private drawLives(ctx: CanvasRenderingContext2D): void {
-    Start.writeTextToCanvas(
-      ctx,
-      `Lives: ${this.lives}`,
-      60,
-      (this.canvas.width / 8) * 7,
-      this.canvas.height / 8,
-      null,
-      "red"
-    );
+    if (this.lives == 3) {
+      ctx.drawImage(
+        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
+    if (this.lives == 2) {
+      ctx.drawImage(
+        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
+    if (this.lives == 1) {
+      ctx.drawImage(
+        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
+    if (this.lives == 0) {
+      ctx.drawImage(
+        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
+    if (this.lives < 0) {
+      ctx.drawImage(
+        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
   }
 
   private gameOver(){
