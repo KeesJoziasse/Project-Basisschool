@@ -111,6 +111,7 @@ abstract class Button {
       }
       if (this.getButtonName() === "NoButton"){
         //  this.game.getGameState();
+        
          console.log("hallo");
          
       }

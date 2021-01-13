@@ -94,6 +94,11 @@ public setGameState(gameState: string){
   //Creates the scoring items for the ocean world
   public scoringItemsOceanWorld(): void {}
 
+
+  // test
+  //Creates the scoring items for the ocean world
+  public mathRandom(): void {}
+
   //Frameindex for the worlds.
   public frameIndex() {}
 

@@ -2,7 +2,7 @@ class InGameQuestions {
   private canvas: HTMLCanvasElement;
   private images: Images[];
   private buttons: Button[];
-  private score: number;
+  // private score: number;
   private question: Question[];
 
   //Constructor
@@ -29,20 +29,23 @@ class InGameQuestions {
     
     
   }
-  // getters and setters
-  public getScore(): number {
-    return this.score;
-  }
+  // // getters and setters
+  // public getScore(): number {
+  //   return this.score;
+  // }
 
-  public setScore(score: number) {
-    this.score = score;
-  }
+  // public setScore(score: number) {
+  //   this.score = score;
+  // }
 
   /**
    * Method for the Game Loop
    */
   public loop = () => {
-    console.log(this.score);
+    this.mathRandom();{
+      console.log("HOI")
+    }
+    // console.log(this.score);
     this.draw();
     // in the first loop no images are loaded
     requestAnimationFrame(this.loop);
@@ -60,6 +63,7 @@ class InGameQuestions {
     //Draws all the images
     this.images.forEach((image) => {
       image.draw(ctx);
+      this.mathRandom();
     });
 
     //Drawing the buttons
@@ -103,16 +107,17 @@ class InGameQuestions {
   }
 
   //Creates the scoring items for the ocean world
-  
-
 
   public mathRandom(): void {
     const random = GameItem.randomInteger(1, 2);
     if (random === 1) {
-      this.question.push(new Question1(this.canvas));
-    }
+
+      console.log("hey");
+    } this.question.push(new Question1(this.canvas));
     if (random === 2) {
-      this.question.push(new Question2(this.canvas));
+      // this.question.push(new Question2(this.canvas));
+      new Question2 (this.canvas);
+      console.log("hey");
     }
   }
 }

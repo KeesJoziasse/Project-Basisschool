@@ -1,8 +1,9 @@
 abstract class Question {
   private canvas: HTMLCanvasElement;
-  protected text: HTMLImageElement;
+  protected image: HTMLImageElement;
   protected answer: string;
   protected name: string;
+
 
   //Constructor
   public constructor(canvas: HTMLCanvasElement) {
@@ -10,18 +11,17 @@ abstract class Question {
     this.canvas = canvas;
 
     //sub classes info
-    this.text = this.text;
+    this.image = this.image;
     this.answer = this.answer;
     this.name = this.name;
   }
 
+
   // getter 
 
-  public getText():HTMLImageElement{
-    return this.text;
-  }
-
-  public mathRandom(): void {}
+  // public getImage():HTMLImageElement{
+  //   return this.image;
+  // }
   
   //
   /**
@@ -34,6 +34,14 @@ abstract class Question {
     img.src = source;
     return img;
   }
-
+ /**
+     * Generates a random integer number between min and max
+     *
+     * @param {number} min - minimal time
+     * @param {number} max - maximal time
+     */
+    public static randomInteger(min: number, max: number): number {
+      return Math.round(Math.random() * (max - min) + min);
+  }
  
 }

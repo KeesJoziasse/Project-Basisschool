@@ -49,6 +49,7 @@ class Game {
         this.gameState = gameState;
     }
     scoringItemsOceanWorld() { }
+    mathRandom() { }
     frameIndex() { }
     forScoringItems() {
         if (this.frame > 1) {
@@ -735,7 +736,10 @@ class OceanImage extends Images {
 class InGameQuestions {
     constructor(canvasId) {
         this.loop = () => {
-            console.log(this.score);
+            this.mathRandom();
+            {
+                console.log("HOI");
+            }
             this.draw();
             requestAnimationFrame(this.loop);
         };
@@ -748,16 +752,11 @@ class InGameQuestions {
         this.imageMaker();
         this.loop();
     }
-    getScore() {
-        return this.score;
-    }
-    setScore(score) {
-        this.score = score;
-    }
     draw() {
         const ctx = this.canvas.getContext("2d");
         this.images.forEach((image) => {
             image.draw(ctx);
+            this.mathRandom();
         });
         this.buttons.forEach((button) => {
             button.draw(ctx);
@@ -777,34 +776,35 @@ class InGameQuestions {
     mathRandom() {
         const random = GameItem.randomInteger(1, 2);
         if (random === 1) {
-            this.question.push(new Question1(this.canvas));
+            console.log("hey");
         }
+        this.question.push(new Question1(this.canvas));
         if (random === 2) {
-            this.question.push(new Question2(this.canvas));
+            new Question2(this.canvas);
+            console.log("hey");
         }
     }
 }
 class Question {
     constructor(canvas) {
         this.canvas = canvas;
-        this.text = this.text;
+        this.image = this.image;
         this.answer = this.answer;
         this.name = this.name;
     }
-    getText() {
-        return this.text;
-    }
-    mathRandom() { }
     loadNewImage(source) {
         const img = new Image();
         img.src = source;
         return img;
     }
+    static randomInteger(min, max) {
+        return Math.round(Math.random() * (max - min) + min);
+    }
 }
 class Question1 extends Question {
     constructor(canvas) {
         super(canvas);
-        this.text = this.loadNewImage("assets/img/GameItems/ocean/oceanParelBooster.png");
+        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanParelBooster.png");
         this.answer = "no";
         this.name = "Question1";
     }
@@ -812,7 +812,7 @@ class Question1 extends Question {
 class Question2 extends Question {
     constructor(canvas) {
         super(canvas);
-        this.text = this.loadNewImage("assets/img/GameItems/ocean/oceanShark.png");
+        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanShark.png");
         this.answer = "Yes";
         this.name = "Question2";
     }
