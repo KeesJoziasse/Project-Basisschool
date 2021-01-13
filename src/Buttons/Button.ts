@@ -8,12 +8,14 @@ abstract class Button {
   protected xVelocity: number;
   protected canvas: HTMLCanvasElement;
   protected images: Images;
+  protected ingameQuestion: InGameQuestions;
 
   constructor(xPos: number, yPos: number, canvas: HTMLCanvasElement) {
     this.xPos = xPos;
     this.yPos = yPos;
     document.addEventListener("click", this.mouseHandler);
     this.canvas = canvas;
+    this.images = this.images;
   }
 
   public move(canvas: HTMLCanvasElement) {}
@@ -37,8 +39,7 @@ abstract class Button {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
-    
-   ctx.drawImage(this.image, this.xPos, this.yPos);
+    ctx.drawImage(this.image, this.xPos, this.yPos);
   }
 
   /**
@@ -46,10 +47,9 @@ abstract class Button {
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandler = (event: MouseEvent): void => {
-    
     //console.log(`User clicked the: ${this.getButtonName()} button`);
     // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
-    
+
     if (
       event.clientX >= this.getButtonXPos() &&
       event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
@@ -61,7 +61,7 @@ abstract class Button {
         new HighScore(document.getElementById("canvas") as HTMLCanvasElement);
       }
       if (this.getButtonName() === "UnlockDesert") {
-         console.log("Unlock Desert");
+        console.log("Unlock Desert");
       }
 
       if (this.getButtonName() === "UnlockSwamp") {
@@ -82,15 +82,19 @@ abstract class Button {
 
       if (this.getButtonName() === "UnlockAsh") {
         const ctx = this.canvas.getContext("2d");
-        
-        ctx.drawImage(Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png"), this.canvas.width / 2.9, this.canvas.height / 6 );
+
+        ctx.drawImage(
+          Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png"),
+          this.canvas.width / 2.9,
+          this.canvas.height / 6
+        );
         console.log("Unlock Ash");
       }
 
       if (this.getButtonName() === "UnlockMorty") {
         console.log("Unlock Morty");
       }
-      
+
       if (this.getButtonName() === "QandA") {
         new GeneralQuestions(
           document.getElementById("canvas") as HTMLCanvasElement
@@ -99,31 +103,34 @@ abstract class Button {
       if (this.getButtonName() === "Shop") {
         new Shop(document.getElementById("canvas") as HTMLCanvasElement);
       }
-      if (this.getButtonName() === "RestartButton"){
+      if (this.getButtonName() === "RestartButton") {
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
       }
-      if (this.getButtonName() === "NoButton"){
-        //  this.game.getGameState();
-        
-         console.log("hallo");
-         
+
+      if (this.getButtonName() === "NoButton") {
+        //  if (this.name === "no") {
+        //   console.log("NO is het goede antwoord +1");
+        // }else {
+        //   console.log("NO is het verkeerde antwoord -1");
+        // }
+         //  this.game.getGameState();
+        console.log("Nee button is geklikt");
       }
-      if (this.getButtonName() === "YesButton"){
-        // this.game.getGameState(); 
-        console.log("hallo");
-     }
+
+      if (this.getButtonName() === "YesButton") {
+       console.log("Ja buttons is geklikt!");
+      } 
+
       else if (this.getButtonName() === "BackToStart") {
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
-        
       } else {
         return null;
       }
-      
-     }
+    }
     //  console.log(`User clicked the: ${this.getButtonName()} button`);
   };
 
-  public drawUnlockedAmongUs(){
+  public drawUnlockedAmongUs() {
     // will be overwritten by UnlockAmongUs.TS
   }
 

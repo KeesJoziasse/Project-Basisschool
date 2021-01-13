@@ -137,7 +137,6 @@ public setGameState(gameState: string){
         ) {
             this.gameState = "question";
             console.log(this.score);
-          );
         }
         if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
           //#TODO fix first if statement

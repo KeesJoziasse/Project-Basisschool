@@ -2,8 +2,7 @@ class InGameQuestions {
   private canvas: HTMLCanvasElement;
   private images: Images[];
   private buttons: Button[];
-  // private score: number;
-  private question: Question[];
+  private image: Images;
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
@@ -23,28 +22,16 @@ class InGameQuestions {
 
     //Calling the image maker method
     this.imageMaker();
+    // gives a random question
+    this.mathRandom();
 
     this.loop();
-
-    
-    
   }
-  // // getters and setters
-  // public getScore(): number {
-  //   return this.score;
-  // }
-
-  // public setScore(score: number) {
-  //   this.score = score;
-  // }
 
   /**
    * Method for the Game Loop
    */
   public loop = () => {
-    this.mathRandom();{
-      console.log("HOI")
-    }
     // console.log(this.score);
     this.draw();
     // in the first loop no images are loaded
@@ -58,12 +45,11 @@ class InGameQuestions {
     const ctx = this.canvas.getContext("2d");
 
     //Clears the canvas every frame
-    //   ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
     //Draws all the images
     this.images.forEach((image) => {
       image.draw(ctx);
-      this.mathRandom();
     });
 
     //Drawing the buttons
@@ -76,7 +62,6 @@ class InGameQuestions {
   private imageMaker() {
     // draws interface
     this.images.push(new InGameQuestionImage(this.canvas.width / 3, 150));
-      // this.images.push(new RandomQuestion(this.canvas.width/3, 150));
   }
 
   //
@@ -97,11 +82,15 @@ class InGameQuestions {
     this.buttons.push(
       new YesButton(
         (this.canvas.width / 3) * 1.05,
-        (this.canvas.height / 2) * 1.5
-      ),
+        (this.canvas.height / 2) * 1.5,
+        this.canvas
+      )
+    );
+    this.buttons.push(
       new NoButton(
         (this.canvas.width / 2) * 1.05,
-        (this.canvas.height / 2) * 1.5
+        (this.canvas.height / 2) * 1.5,
+        this.canvas
       )
     );
   }
@@ -109,15 +98,30 @@ class InGameQuestions {
   //Creates the scoring items for the ocean world
 
   public mathRandom(): void {
-    const random = GameItem.randomInteger(1, 2);
+    const random = GameItem.randomInteger(1, 6);
     if (random === 1) {
-
-      console.log("hey");
-    } this.question.push(new Question1(this.canvas));
+      console.log("Random was 1 push question 1");
+      this.images.push(new Question1((this.canvas.width/3)*1.2, this.canvas.height/3));
+    }
     if (random === 2) {
-      // this.question.push(new Question2(this.canvas));
-      new Question2 (this.canvas);
-      console.log("hey");
+      console.log("Random was 2 push question 2");
+      this.images.push(new Question2((this.canvas.width/3)*1.2, this.canvas.height/3));
+    }
+    if (random === 3) {
+      console.log("Random was 3 push question 3");
+      this.images.push(new Question3((this.canvas.width/3)*1.2, this.canvas.height/3));
+    }
+    if (random === 4) {
+      console.log("Random was 4 push question 4");
+      this.images.push(new Question4((this.canvas.width/3)*1.2, this.canvas.height/3));
+    }
+    if (random === 5) {
+      console.log("Random was 5 push question 5");
+      this.images.push(new Question5((this.canvas.width/3)*1.2, this.canvas.height/3));
+    }
+    if (random === 6) {
+      console.log("Random was 6 push question 6");
+      this.images.push(new Question6((this.canvas.width/3)*1.2, this.canvas.height/3));
     }
   }
 }
