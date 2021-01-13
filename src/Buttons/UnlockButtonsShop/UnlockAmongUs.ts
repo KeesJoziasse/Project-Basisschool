@@ -2,11 +2,18 @@
 
 class UnlockAmongUs extends Button {
 
-    public constructor(xPos: number, yPos: number){
-        super(xPos, yPos);
+    public constructor(xPos: number, yPos: number, canvas:HTMLCanvasElement){
+        super(xPos, yPos, canvas);
         this.name = "UnlockAmongUs";
         this.image = Start.loadNewImage(
             "./assets/img/buttons/unlock.png"
-          );
+        );
+        this.canvas = canvas;
+    }
+
+    public drawUnlockedAmongUs(){
+        const ctx = this.canvas.getContext("2d");
+        
+        ctx.drawImage(Start.loadNewImage("./assets/img/players/YellowAUUnlocked.png"), this.canvas.width / 2.9, this.canvas.height / 6 );
     }
 }

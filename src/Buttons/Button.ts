@@ -6,16 +6,14 @@ abstract class Button {
   protected image: HTMLImageElement;
   protected name: string;
   protected xVelocity: number;
-  private canvas: HTMLCanvasElement;
-  private shop: Shop[];
-  // private game: Game;
-  // private inGameQuestions: InGameQuestions;
+  protected canvas: HTMLCanvasElement;
+  protected images: Images;
 
-  constructor(xPos: number, yPos: number) {
+  constructor(xPos: number, yPos: number, canvas: HTMLCanvasElement) {
     this.xPos = xPos;
     this.yPos = yPos;
     document.addEventListener("click", this.mouseHandler);
-    this.shop = [];
+    this.canvas = canvas;
   }
 
   public move(canvas: HTMLCanvasElement) {}
@@ -41,10 +39,6 @@ abstract class Button {
   public draw(ctx: CanvasRenderingContext2D) {
     
    ctx.drawImage(this.image, this.xPos, this.yPos);
-
-   
-
-   
   }
 
   /**
@@ -53,10 +47,9 @@ abstract class Button {
    */
   public mouseHandler = (event: MouseEvent): void => {
     
-    
-    
-    
+    //console.log(`User clicked the: ${this.getButtonName()} button`);
     // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    
     if (
       event.clientX >= this.getButtonXPos() &&
       event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
@@ -84,10 +77,13 @@ abstract class Button {
       }
 
       if (this.getButtonName() === "UnlockAmongUs") {
-        console.log("Unlock AmongUs");
+        console.log("UnlockAmongUs");
       }
 
       if (this.getButtonName() === "UnlockAsh") {
+        const ctx = this.canvas.getContext("2d");
+        
+        ctx.drawImage(Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png"), this.canvas.width / 2.9, this.canvas.height / 6 );
         console.log("Unlock Ash");
       }
 
@@ -95,9 +91,6 @@ abstract class Button {
         console.log("Unlock Morty");
       }
       
-      if (this.getButtonName() === "Settings") {
-        new Settings(document.getElementById("canvas") as HTMLCanvasElement);
-      }
       if (this.getButtonName() === "QandA") {
         new GeneralQuestions(
           document.getElementById("canvas") as HTMLCanvasElement
@@ -121,6 +114,7 @@ abstract class Button {
      }
       else if (this.getButtonName() === "BackToStart") {
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
+        
       } else {
         return null;
       }
@@ -128,6 +122,10 @@ abstract class Button {
      }
     //  console.log(`User clicked the: ${this.getButtonName()} button`);
   };
+
+  public drawUnlockedAmongUs(){
+    // will be overwritten by UnlockAmongUs.TS
+  }
 
   /**
    * Returns the width of the image
@@ -144,7 +142,4 @@ abstract class Button {
   public getButtonImageHeight(): number {
     return this.image.height;
   }
-
- 
-
 }
