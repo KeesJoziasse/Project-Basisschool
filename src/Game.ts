@@ -101,7 +101,9 @@ public setGameState(gameState: string){
   public loop = 
   () => {
     if(this.gameState === "question"){
-      new InGameQuestions(document.getElementById("canvas") as HTMLCanvasElement)
+      new InGameQuestions(
+        document.getElementById("canvas") as HTMLCanvasElement
+      );
     }
     // console.log(this.gameState);
     if (this.gameState === "Running") {

@@ -1,31 +1,68 @@
-class InGameQuestions {
+ class InGameQuestions {
   private canvas: HTMLCanvasElement;
-  private images: Images[];
+  private ingameQuestion: Images;
   private buttons: Button[];
-  private image: Images;
+  private questionBackground: Images;
+  // private imageTest: Images;
+  // private button: Button;
+  // test
+  public name: string;
+  private xPos: number;
+  private yPos: number;
+  private image: HTMLImageElement;
+
+  public getButtonXPos(): number {
+    return this.xPos;
+  }
+
+  public getButtonYPos(): number {
+    return this.yPos;
+  }
+
+  /**
+   * Returns the width of the image
+   * @returns {number} - image width
+   */
+  public getButtonImageWidth(): number {
+    return this.image.width;
+  }
+
+  /**
+   * Returns the height of the image
+   * @returns {number} - image height
+   */
+  public getButtonImageHeight(): number {
+    return this.image.height;
+  }
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
+    document.addEventListener("click", this.mouseHandler);
     // Construct all of the canvas
     this.canvas = canvasId;
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-    //The overall image array
-    this.images = [];
-
     //The button array
     this.buttons = [];
 
-    //Calling the button maker method.
-    this.buttonMaker();
+    //Question background
+    this.questionBackground = new InGameQuestionImage(
+      this.canvas.width / 3,
+      150
+    );
 
-    //Calling the image maker method
-    this.imageMaker();
+    //Calling the button maker method.
+    this.buttonMaker(); //TODO
+
     // gives a random question
-    this.mathRandom();
+    this.randomQuestionGenerator();
 
     this.loop();
+  }
+
+  public getButtonName(): string {
+    return this.name;
   }
 
   /**
@@ -33,7 +70,9 @@ class InGameQuestions {
    */
   public loop = () => {
     // console.log(this.score);
+    // console.log(this.ingameQuestion.getAnswer()); //TODO deze werkt wel
     this.draw();
+
     // in the first loop no images are loaded
     requestAnimationFrame(this.loop);
   };
@@ -47,23 +86,15 @@ class InGameQuestions {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    this.questionBackground.draw(ctx);
     //Draws all the images
-    this.images.forEach((image) => {
-      image.draw(ctx);
-    });
+    this.ingameQuestion.draw(ctx);
 
     //Drawing the buttons
     this.buttons.forEach((button) => {
       button.draw(ctx);
     });
   }
-
-  // locatie images op canvas
-  private imageMaker() {
-    // draws interface
-    this.images.push(new InGameQuestionImage(this.canvas.width / 3, 150));
-  }
-
   //
   /**
    * Loads an image so it doesn't flicker
@@ -86,6 +117,7 @@ class InGameQuestions {
         this.canvas
       )
     );
+
     this.buttons.push(
       new NoButton(
         (this.canvas.width / 2) * 1.05,
@@ -97,31 +129,62 @@ class InGameQuestions {
 
   //Creates the scoring items for the ocean world
 
-  public mathRandom(): void {
-    const random = GameItem.randomInteger(1, 6);
+  public randomQuestionGenerator(): void {
+    const random = GameItem.randomInteger(1, 1);
     if (random === 1) {
       console.log("Random was 1 push question 1");
-      this.images.push(new Question1((this.canvas.width/3)*1.2, this.canvas.height/2.5));
+      this.ingameQuestion = new Question1(
+        (this.canvas.width / 3) * 1.2,
+        this.canvas.height / 2.5
+      );
     }
-    if (random === 2) {
-      console.log("Random was 2 push question 2");
-      this.images.push(new Question2((this.canvas.width/3)*1.2, this.canvas.height/2.5));
-    }
-    if (random === 3) {
-      console.log("Random was 3 push question 3");
-      this.images.push(new Question3((this.canvas.width/3)*1.2, this.canvas.height/2.5));
-    }
-    if (random === 4) {
-      console.log("Random was 4 push question 4");
-      this.images.push(new Question4((this.canvas.width/3)*1.2, this.canvas.height/2.5));
-    }
-    if (random === 5) {
-      console.log("Random was 5 push question 5");
-      this.images.push(new Question5((this.canvas.width/3)*1.2, this.canvas.height/2.5));
-    }
-    if (random === 6) {
-      console.log("Random was 6 push question 6");
-      this.images.push(new Question6((this.canvas.width/3)*1.2, this.canvas.height/2.5));
-    }
+    // if (random === 2) {
+    //   console.log("Random was 2 push question 2");
+    //   this.ingameQuestion.push(new Question2((this.canvas.width/3)*1.2, this.canvas.height/2.5));
+    // }
+    // if (random === 3) {
+    //   console.log("Random was 3 push question 3");
+    //   this.ingameQuestion.push(new Question3((this.canvas.width/3)*1.2, this.canvas.height/2.5));
+    // }
+    // if (random === 4) {
+    //   console.log("Random was 4 push question 4");
+    //   this.ingameQuestion.push(new Question4((this.canvas.width/3)*1.2, this.canvas.height/2.5));
+    // }
+    // if (random === 5) {
+    //   console.log("Random was 5 push question 5");
+    //   this.ingameQuestion.push(new Question5((this.canvas.width/3)*1.2, this.canvas.height/2.5));
+    // }
+    // if (random === 6) {
+    //   console.log("Random was 6 push question 6");
+    //   this.ingameQuestion.push(new Question6((this.canvas.width/3)*1.2, this.canvas.height/2.5));
+    // }
   }
+
+  /**
+   * Method to handle the mouse event
+   * @param {MouseEvent} event - mouse event
+   */
+  public mouseHandler = (event: MouseEvent): void => {
+    console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    this.buttons.forEach((button) => {
+      if (
+        event.clientX >= button.getButtonXPos() &&
+        event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
+        event.clientY >= button.getButtonYPos() &&
+        event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
+      ) {
+        if (button.getButtonName() === "YesButton" && this.ingameQuestion.getAnswer()=== "yes") {
+          console.log("Goed het antwoord is Yes");
+        } if(button.getButtonName() === "YesButton" && this.ingameQuestion.getAnswer()=== "no"){
+          console.log("Fout het antwoord is Yes")
+        }
+         if(button.getButtonName() === "NoButton" && this.ingameQuestion.getAnswer()=== "no") {
+          console.log("Goed het antwoord is NO");
+        }  
+        if(button.getButtonName() === "NoButton" && this.ingameQuestion.getAnswer()=== "yes") {
+          console.log("Fout het antwoord is NO");
+        }   
+      }
+    });
+  };
 }

@@ -1,13 +1,13 @@
-abstract class Button {
+ class Button {
   // #MERGEFIX DIT OOK VOOR DE IMG DOEN , dan hoef je alleen de x en y pos te fixen.
 
   protected xPos: number;
   protected yPos: number;
   protected image: HTMLImageElement;
-  protected name: string;
+  public name: string;
   protected xVelocity: number;
   protected canvas: HTMLCanvasElement;
-  protected images: Images;
+  private images: Images;
   protected ingameQuestion: InGameQuestions;
 
   constructor(xPos: number, yPos: number, canvas: HTMLCanvasElement) {
@@ -16,6 +16,7 @@ abstract class Button {
     document.addEventListener("click", this.mouseHandler);
     this.canvas = canvas;
     // this.images = this.images;
+    console.log(this.images);
   }
 
   public move(canvas: HTMLCanvasElement) {}
@@ -25,6 +26,7 @@ abstract class Button {
   public getButtonName(): string {
     return this.name;
   }
+ 
 
   public getButtonXPos(): number {
     return this.xPos;
@@ -49,13 +51,13 @@ abstract class Button {
   public mouseHandler = (event: MouseEvent): void => {
     //console.log(`User clicked the: ${this.getButtonName()} button`);
     // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
-
-    if (
+     if (
       event.clientX >= this.getButtonXPos() &&
       event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
       event.clientY >= this.getButtonYPos() &&
       event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()
     ) {
+
       // looks if the buttons name match and get you to the right page
       if (this.getButtonName() === "HighScore") {
         new HighScore(document.getElementById("canvas") as HTMLCanvasElement);
@@ -106,22 +108,12 @@ abstract class Button {
       if (this.getButtonName() === "RestartButton") {
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
       }
-
-      if (this.getButtonName() === "NoButton") {
-        //  if (this.name === "no") {
-        //   console.log("NO is het goede antwoord +1");
-        // }else {
-        //   console.log("NO is het verkeerde antwoord -1");
-        // }
-         //  this.game.getGameState();
-        console.log("Nee button is geklikt");
-      }
-
-      if (this.getButtonName() === "YesButton"){
-        if(this.images.getImageName() === "yes"){
-          console.log("goede antwoord yes!");
-        }
-      } 
+      // if (this.getButtonName() === "YesButton") {
+      //   this.ingameQuestion.mouseHandler(event);
+      // }
+      // if (this.getButtonName() === "NoButton") {
+      //   this.ingameQuestion.mouseHandler(event);
+      // }
 
       else if (this.getButtonName() === "BackToStart") {
         new Start(document.getElementById("canvas") as HTMLCanvasElement);
@@ -135,6 +127,7 @@ abstract class Button {
   public drawUnlockedAmongUs() {
     // will be overwritten by UnlockAmongUs.TS
   }
+ 
 
   /**
    * Returns the width of the image
