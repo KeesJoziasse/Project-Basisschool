@@ -65,6 +65,7 @@ abstract class Game {
     this.speed;
 
     //Calling the loop
+    //TODO fix that no loop needed
     this.loop();
 
     //Scoringitems array
