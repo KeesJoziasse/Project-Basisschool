@@ -18,14 +18,14 @@ class SwampWorld extends Game {
 
   //Pushes the scoring items to the array
   public randomScoringItems(): void {
-    const random = GameItem.randomInteger(1, 7);
+    const random = GameItem.randomInteger(1, 9);
     if (random === 1) {
       this.scoringItems.push(new Frog(this.canvas));
     }
     if (random === 2) {
       this.scoringItems.push(new SwampStone1(this.canvas));
     }
-    if (random === 3) {
+    if (random === 3 || random === 8) {
       this.scoringItems.push(new SwampStone2(this.canvas));
     }
     if (random === 4) {
@@ -36,6 +36,9 @@ class SwampWorld extends Game {
     }
     if (random === 7) {
       this.scoringItems.push(new SwampTree2(this.canvas));
+    }
+    if (random === 9) {
+      this.scoringItems.push(new GoldenFrog(this.canvas));
     }
   }
 }

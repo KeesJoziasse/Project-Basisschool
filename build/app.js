@@ -1228,6 +1228,15 @@ class Frog extends ScoringItem {
         this.earnedCoins = 0;
     }
 }
+class GoldenFrog extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Swamp/GoldenFrog.png");
+        this.points = 20;
+        this.lives = 0;
+        this.earnedCoins = 0;
+    }
+}
 class SwampStone1 extends ScoringItem {
     constructor(canvas) {
         super(canvas);
@@ -1402,14 +1411,14 @@ class SwampWorld extends Game {
         ctx.drawImage(this.background, this.xPos, this.yPos);
     }
     randomScoringItems() {
-        const random = GameItem.randomInteger(1, 7);
+        const random = GameItem.randomInteger(1, 9);
         if (random === 1) {
             this.scoringItems.push(new Frog(this.canvas));
         }
         if (random === 2) {
             this.scoringItems.push(new SwampStone1(this.canvas));
         }
-        if (random === 3) {
+        if (random === 3 || random === 8) {
             this.scoringItems.push(new SwampStone2(this.canvas));
         }
         if (random === 4) {
@@ -1420,6 +1429,9 @@ class SwampWorld extends Game {
         }
         if (random === 7) {
             this.scoringItems.push(new SwampTree2(this.canvas));
+        }
+        if (random === 9) {
+            this.scoringItems.push(new GoldenFrog(this.canvas));
         }
     }
 }
