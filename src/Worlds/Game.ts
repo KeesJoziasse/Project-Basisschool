@@ -2,13 +2,14 @@
  * Class Game: Responsible for the gameloop and will activate the class: GameItem, Player, ScoringItem
  */
 abstract class Game {
+
   //The canvas
   protected canvas: HTMLCanvasElement;
 
   //The ingame player
   private player: Player;
-  // #TODO screen: Screen[]
 
+  // #TODO screen: Screen[]
   //The score of the player
   protected score: number;
   protected lives: number;
@@ -31,9 +32,9 @@ abstract class Game {
 
   //xpos of the worldImage
   protected yPos: number;
-
+  
   //image of the world
-  protected image: HTMLImageElement;
+  //protected image: HTMLImageElement; #Remove
 
   //GameOverState
   private gameState: string;
@@ -51,7 +52,7 @@ abstract class Game {
 
     //Making the player
     //#TODO fix that the new player made is chosen by startscreen
-    this.player = new Player(this.canvas);
+    this.player = new AmongUs(this.canvas);
 
     //Setting the score to 0.
     this.score = 0;
@@ -75,15 +76,23 @@ abstract class Game {
   }
 
   //Creates the scoring items for the ocean world
-  public scoringItemsOceanWorld(): void {}
+  public randomScoringItems(): void {}
 
   //Frameindex for the worlds.
-  public frameIndex() {}
+  public frameIndex() {
+    if (this.frame % 100 === 0) {
+      this.randomScoringItems();
+    }
+    if (this.frame % 10 === 0) {
+      this.score += 1;
+    }
+  }
 
   /**
    * Method that checks the gamestate
    */
   public loop = () => {
+    // console.log(this.player);
     // console.log(this.gameState);
     if (this.gameState === "Running") {
       this.frame++;
@@ -95,12 +104,10 @@ abstract class Game {
         this.player.move();
       }
     }
-
     if (this.lives < 0) {
       this.gameState = "GameOver";
       this.gameOver();
     }
-
     requestAnimationFrame(this.loop);
   };
 
@@ -137,6 +144,7 @@ abstract class Game {
 
   //This function will be overwritten by DesertWorld
   public drawBackground() {}
+  public characterAnimationTest() {}
 
   /**
    * Method that writes gameItems on the canvas
@@ -145,12 +153,9 @@ abstract class Game {
     const ctx = this.canvas.getContext("2d");
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     this.drawBackground();
-
     //Drawing the player
     this.player.draw();
-
     //Draws all the scoring items.
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
