@@ -1,4 +1,4 @@
-/// <reference path="../Game.ts" />
+/// <reference path="./Game.ts" />
 
 class OceanWorld extends Game {
 
@@ -6,7 +6,7 @@ class OceanWorld extends Game {
 
   constructor(canvas: HTMLCanvasElement) {
     super(canvas);
-    this.background = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
+    this.background = Utility.loadNewImage("./assets/img/world/OceanBG.jpg");
     this.xPos = 0;
     this.yPos = -100;
   }

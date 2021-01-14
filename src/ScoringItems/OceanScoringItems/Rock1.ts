@@ -3,8 +3,8 @@
 class Rock1 extends ScoringItem {
   public constructor(canvas: HTMLCanvasElement) {
     super(canvas);
-    this.image = this.loadNewImage("assets/img/obstacles/Ocean/oceanRock1.png");
-    this.points = -10;
+    this.image = Utility.loadNewImage("assets/img/GameItems/ocean/oceanRock1.png");
+    this.points = -20;
     this.lives = -1;
     this.name = "Rock";
     this.earnedCoins = 0;

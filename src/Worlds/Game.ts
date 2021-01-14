@@ -160,7 +160,7 @@ abstract class Game {
    */
   private drawScore(ctx: CanvasRenderingContext2D): void {
     //Draws the score
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       `Score: ${this.score}`,
       60,
@@ -172,11 +172,11 @@ abstract class Game {
 
     //Draws the earned coins
     ctx.drawImage(
-      GameItem.loadNewImage("assets/img/GameItems/coin.png"),
+      Utility.loadNewImage("assets/img/GameItems/coin.png"),
       this.canvas.width / 20,
       this.canvas.height / 8
     );
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       `${this.earnedCoins}`,
       60,
@@ -194,35 +194,35 @@ abstract class Game {
   private drawLives(ctx: CanvasRenderingContext2D): void {
     if (this.lives == 3) {
       ctx.drawImage(
-        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"),
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives == 2) {
       ctx.drawImage(
-        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"),
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives == 1) {
       ctx.drawImage(
-        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"),
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives == 0) {
       ctx.drawImage(
-        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"),
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives < 0) {
       ctx.drawImage(
-        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"),
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );

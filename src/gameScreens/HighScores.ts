@@ -5,6 +5,7 @@ class HighScore {
 
   //Constructor
   public constructor(canvasId: HTMLCanvasElement) {
+
     // Construct all of the canvas
     this.canvas = canvasId;
     this.canvas.width = window.innerWidth;
@@ -60,18 +61,6 @@ class HighScore {
     this.images.push(new HighScoreTitle(this.canvas.width / 3, 0));
 // ranking image
     this.images.push(new Ranking(this.canvas.width / 5, 200));
-  }
-  
-  // 
-  /**
-   * Loads an image so it doesn't flicker
-   * @param {HTMLImageElement} source
-   * @return HTMLImageElement - returns an image
-   */
-  public static loadNewImage(source: string): HTMLImageElement {
-    const img = new Image();
-    img.src = source;
-    return img;
   }
 
   private buttonMaker() {

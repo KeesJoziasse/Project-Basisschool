@@ -4,6 +4,7 @@ class GeneralQuestions {
   private images: Images[];
 
   public constructor(canvasId: HTMLCanvasElement) {
+
     // Construct all of the canvas
     this.canvas = canvasId;
     this.canvas.width = window.innerWidth;
@@ -80,9 +81,9 @@ class GeneralQuestions {
     this.images.push(new Control((this.canvas.width / 15) * 0.1, 110));
     this.images.push(new Questions(this.canvas.width / 3, 0));
     // besturing
-    this.images.push(new UpperLane((this.canvas.width / 3) * 0.60, 200));
-    this.images.push(new MidLane((this.canvas.width / 3) * 0.60, 350));
-    this.images.push(new DownLane((this.canvas.width / 3) * 0.60, 500));
+    this.images.push(new UpperLane((this.canvas.width / 3) * 0.6, 200));
+    this.images.push(new MidLane((this.canvas.width / 3) * 0.6, 350));
+    this.images.push(new DownLane((this.canvas.width / 3) * 0.6, 500));
     // shield
     this.images.push(new ShieldBooster((this.canvas.width / 3) * 1, 435));
     // rocket
@@ -95,7 +96,7 @@ class GeneralQuestions {
 
   // function to draw all control text on the canvas
   private controls(ctx: CanvasRenderingContext2D) {
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Bovenste laan:",
       40,
@@ -104,7 +105,7 @@ class GeneralQuestions {
       "center"
     );
 
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Middelste laan:",
       40,
@@ -113,7 +114,7 @@ class GeneralQuestions {
       "center"
     );
 
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Onderste laan:",
       40,
@@ -122,9 +123,9 @@ class GeneralQuestions {
       "center"
     );
   }
-// function to draw als textbox titles to the canvas
+  // function to draw als textbox titles to the canvas
   private titleTextBoxes(ctx: CanvasRenderingContext2D) {
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Rocket booster",
       35,
@@ -133,7 +134,7 @@ class GeneralQuestions {
       "center"
     );
 
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Shield booster",
       35,
@@ -142,7 +143,7 @@ class GeneralQuestions {
       "center"
     );
     // title coins & obstacle
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Obstakels",
       35,
@@ -150,7 +151,7 @@ class GeneralQuestions {
       140,
       "center"
     );
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Coins",
       35,

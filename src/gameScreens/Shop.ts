@@ -1,14 +1,39 @@
 class Shop {
   private canvas: HTMLCanvasElement;
   private image: HTMLImageElement;
-  private images: Images[];
-  private buttons: Button[];
+  protected shopImages: Images[];
+  protected buttons: Button[];
   private characters: Images[];
   private newWorlds: Images[];
-  public name: string;
+  private name: string;
   private xPos: number;
   private yPos: number;
-  private numSplice: number;
+
+  //Constructor
+  public constructor(canvas: HTMLCanvasElement) {
+
+    // Construct all of the canvas
+    this.canvas = canvas;
+
+    // The button array
+    this.buttons = [];
+
+    // The scoring item array
+    this.shopImages = [];
+
+    //Calls button maker function
+    this.buttonMaker();
+
+    // The unlockable player array
+    this.characters = [];
+
+    // The unlockable world array
+    this.newWorlds = [];
+
+    // add an mouse event
+    document.addEventListener("click", this.mouseHandler);
+
+  }
 
   public getButtonXPos(): number {
     return this.xPos;
@@ -35,63 +60,9 @@ class Shop {
   }
 
 
-
-  //Constructor
-  public constructor(canvasId: HTMLCanvasElement) {
-    // Construct all of the canvas
-    this.canvas = canvasId;
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-
-    // The button array
-    this.buttons = [];
-
-    // The scoring item array
-    this.images = [];
-
-    //Calls button maker function
-    this.buttonMaker();
-
-    // The unlockable player array
-    this.characters = [];
-
-    // The unlockable world array
-    this.newWorlds = [];
-
-    // Calls the character maker function
-    this.drawUnlockableCharacter();
-
-    // Calls the world maker function
-    this.drawUnlockableWorlds();
-
-    // Calls the image drawer function
-    this.drawImages();
-    
-    //Calls the loop.
-    this.loop();
-
-    //Counter to splice
-    this.numSplice = 1;
-
-    // add an mouse event
-    document.addEventListener("click", this.mouseHandler);
-
-    this.draw();
-  }
-
   public getButtonName(): string {
     return this.name;
   }
-
-  /**
-   * Method for the Game Loop
-   */
-  public loop = () => {
-    this.draw();
-
-    // in the first loop no images are loaded
-    requestAnimationFrame(this.loop);
-  };
 
   /**
    * Draws all the necessary elements to the canvas
@@ -102,14 +73,23 @@ class Shop {
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    ctx.drawImage(GameItem.loadNewImage("./assets/img/background/EndscreenBackground.jpg"), 0, 0);
+    ctx.drawImage(Utility.loadNewImage("./assets/img/background/EndscreenBackground.jpg"), 0, 0);
+
+    // Calls the character maker function
+    this.drawUnlockableCharacter();
+
+    // Calls the world maker function
+    this.drawUnlockableWorlds();
+
+    // Calls the image drawer function
+    this.drawImages();
 
     this.buttons.forEach((button) => {
       button.draw(ctx);
     });
 
     // Amount of money in the player's bank
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "200",
       60,
@@ -120,7 +100,7 @@ class Shop {
     );
 
     // Price of Stewie
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "50",
       60,
@@ -131,7 +111,7 @@ class Shop {
     );
 
     // Price for yellow Among Us character
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "50",
       60,
@@ -142,7 +122,7 @@ class Shop {
     );
 
     // Price for Ash
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "50",
       60,
@@ -153,7 +133,7 @@ class Shop {
     );
 
     // Price for Morty
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "50",
       60,
@@ -164,7 +144,7 @@ class Shop {
     );
 
     // Price for desert level
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "100",
       60,
@@ -174,7 +154,7 @@ class Shop {
       "white"
     );
 
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "100",
       60,
@@ -184,7 +164,7 @@ class Shop {
       "white"
     );
 
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "100",
       60,
@@ -195,10 +175,10 @@ class Shop {
     );
 
     // Drawing the images
-    this.images.forEach((image) => {
-      image.move(this.canvas);
-      image.reloadImage(this.canvas);
-      image.draw(ctx);
+    this.shopImages.forEach((shopImage) => {
+      shopImage.move(this.canvas);
+      shopImage.reloadImage(this.canvas);
+      shopImage.draw(ctx);
     });
 
     //Drawing the characters
@@ -220,7 +200,7 @@ class Shop {
   public drawUnlockables(button: Button, ctx: CanvasRenderingContext2D) {
     if (button.getButtonName() === "UnlockYoshi") {
       ctx.drawImage(
-        GameItem.loadNewImage("./assets/img/players/YoshiUnlocked.png"),
+        Utility.loadNewImage("./assets/img/players/YoshiUnlocked.png"),
         this.canvas.width / 7.9,
         this.canvas.width / 6
       );
@@ -230,28 +210,28 @@ class Shop {
   public drawImages() {
     // Draw coins
     // #TODO fix code duplication
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 2.3, this.canvas.height / 1.17)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 4.4, this.canvas.height / 1.17)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 1.56, this.canvas.height / 1.17)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 3, this.canvas.height / 2.56)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 1.33, this.canvas.height / 2.56)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 9, this.canvas.height / 2.56)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 1.85, this.canvas.height / 2.56)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 2.35, this.canvas.height / 22)
     );
   }
@@ -418,15 +398,4 @@ class Shop {
       }
     });
   };
-
-  /**
-   * Loads an image in such a way that the screen doesn't constantly flicker
-   * @param {HTMLImageElement} source
-   * @return HTMLImageElement - returns an image
-   */
-  public loadNewImage(source: string): HTMLImageElement {
-    const img = new Image();
-    img.src = source;
-    return img;
-  }
 }

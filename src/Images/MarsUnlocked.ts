@@ -4,6 +4,6 @@ class MarsUnlocked extends Images {
   public constructor(xPos: number, yPos: number) {
     super(xPos, yPos);
     this.name = "MarsUnlocked";
-    this.image = Start.loadNewImage("./assets/img/world/MarsUnlocked.png");
+    this.image = Utility.loadNewImage("./assets/img/world/MarsUnlocked.png");
   }
 }

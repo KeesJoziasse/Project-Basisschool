@@ -3,7 +3,7 @@
 class Cloud extends Images {
   public constructor(xPos: number, yPos: number, xVelocity: number) {
     super(xPos, yPos);
-    this.image = Start.loadNewImage("./assets/img/background/cloud.png");
+    this.image = Utility.loadNewImage("./assets/img/background/cloud.png");
     this.xVelocity = xVelocity;
   }
 
