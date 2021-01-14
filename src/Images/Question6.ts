@@ -3,8 +3,8 @@
 class Question6 extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "yes";
-      this.image = Start.loadNewImage("./assets/img/world/MarsUnlocked.png");
+      this.name = "no";
+      this.image = Start.loadNewImage("/assets/img/QuestionsImages/question6.png");
     }
   }
   

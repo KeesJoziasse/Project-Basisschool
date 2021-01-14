@@ -229,7 +229,9 @@ class Button {
                     console.log("Nee button is geklikt");
                 }
                 if (this.getButtonName() === "YesButton") {
-                    console.log("Ja buttons is geklikt!");
+                    if (this.images.getImageName() === "yes") {
+                        console.log("goede antwoord yes!");
+                    }
                 }
                 else if (this.getButtonName() === "BackToStart") {
                     new Start(document.getElementById("canvas"));
@@ -243,7 +245,6 @@ class Button {
         this.yPos = yPos;
         document.addEventListener("click", this.mouseHandler);
         this.canvas = canvas;
-        this.images = this.images;
     }
     move(canvas) { }
     reloadImage(canvas) { }
@@ -584,43 +585,43 @@ class MoonUnlocked extends Images {
 class Question1 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "yes";
-        this.image = Start.loadNewImage("./assets/img/world/ocean.png");
+        this.name = "no";
+        this.image = Start.loadNewImage("/assets/img/QuestionsImages/question1.png");
     }
 }
 class Question2 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "yes";
-        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/textCoin.png");
+        this.name = "no";
+        this.image = Start.loadNewImage("/assets/img/QuestionsImages/question2.png");
     }
 }
 class Question3 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "yes";
-        this.image = Start.loadNewImage("./assets/img/world/SwampUnlocked.png");
+        this.name = "no";
+        this.image = Start.loadNewImage("/assets/img/QuestionsImages/question3.png");
     }
 }
 class Question4 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "yes";
-        this.image = Start.loadNewImage("./assets/img/players/WazigGirl.png");
+        this.name = "no";
+        this.image = Start.loadNewImage("/assets/img/QuestionsImages/question4.png");
     }
 }
 class Question5 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "yes";
-        this.image = Start.loadNewImage("/assets/img/world/DesertPlanet.png");
+        this.name = "no";
+        this.image = Start.loadNewImage("/assets/img/QuestionsImages/question5.png");
     }
 }
 class Question6 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
-        this.name = "yes";
-        this.image = Start.loadNewImage("./assets/img/world/MarsUnlocked.png");
+        this.name = "no";
+        this.image = Start.loadNewImage("/assets/img/QuestionsImages/question6.png");
     }
 }
 class QuestionBoxText extends Images {
@@ -826,27 +827,27 @@ class InGameQuestions {
         const random = GameItem.randomInteger(1, 6);
         if (random === 1) {
             console.log("Random was 1 push question 1");
-            this.images.push(new Question1((this.canvas.width / 3) * 1.2, this.canvas.height / 3));
+            this.images.push(new Question1((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5));
         }
         if (random === 2) {
             console.log("Random was 2 push question 2");
-            this.images.push(new Question2((this.canvas.width / 3) * 1.2, this.canvas.height / 3));
+            this.images.push(new Question2((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5));
         }
         if (random === 3) {
             console.log("Random was 3 push question 3");
-            this.images.push(new Question3((this.canvas.width / 3) * 1.2, this.canvas.height / 3));
+            this.images.push(new Question3((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5));
         }
         if (random === 4) {
             console.log("Random was 4 push question 4");
-            this.images.push(new Question4((this.canvas.width / 3) * 1.2, this.canvas.height / 3));
+            this.images.push(new Question4((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5));
         }
         if (random === 5) {
             console.log("Random was 5 push question 5");
-            this.images.push(new Question5((this.canvas.width / 3) * 1.2, this.canvas.height / 3));
+            this.images.push(new Question5((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5));
         }
         if (random === 6) {
             console.log("Random was 6 push question 6");
-            this.images.push(new Question6((this.canvas.width / 3) * 1.2, this.canvas.height / 3));
+            this.images.push(new Question6((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5));
         }
     }
 }

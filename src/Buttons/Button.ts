@@ -15,7 +15,7 @@ abstract class Button {
     this.yPos = yPos;
     document.addEventListener("click", this.mouseHandler);
     this.canvas = canvas;
-    this.images = this.images;
+    // this.images = this.images;
   }
 
   public move(canvas: HTMLCanvasElement) {}
@@ -117,8 +117,10 @@ abstract class Button {
         console.log("Nee button is geklikt");
       }
 
-      if (this.getButtonName() === "YesButton") {
-       console.log("Ja buttons is geklikt!");
+      if (this.getButtonName() === "YesButton"){
+        if(this.images.getImageName() === "yes"){
+          console.log("goede antwoord yes!");
+        }
       } 
 
       else if (this.getButtonName() === "BackToStart") {

@@ -3,7 +3,7 @@
 class Question4 extends Images {
     public constructor(xPos: number, yPos: number) {
       super(xPos, yPos);
-      this.name = "yes";
-      this.image = Start.loadNewImage("./assets/img/players/WazigGirl.png");
+      this.name = "no";
+      this.image = Start.loadNewImage("/assets/img/QuestionsImages/question4.png");
     }
   }

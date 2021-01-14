@@ -101,27 +101,27 @@ class InGameQuestions {
     const random = GameItem.randomInteger(1, 6);
     if (random === 1) {
       console.log("Random was 1 push question 1");
-      this.images.push(new Question1((this.canvas.width/3)*1.2, this.canvas.height/3));
+      this.images.push(new Question1((this.canvas.width/3)*1.2, this.canvas.height/2.5));
     }
     if (random === 2) {
       console.log("Random was 2 push question 2");
-      this.images.push(new Question2((this.canvas.width/3)*1.2, this.canvas.height/3));
+      this.images.push(new Question2((this.canvas.width/3)*1.2, this.canvas.height/2.5));
     }
     if (random === 3) {
       console.log("Random was 3 push question 3");
-      this.images.push(new Question3((this.canvas.width/3)*1.2, this.canvas.height/3));
+      this.images.push(new Question3((this.canvas.width/3)*1.2, this.canvas.height/2.5));
     }
     if (random === 4) {
       console.log("Random was 4 push question 4");
-      this.images.push(new Question4((this.canvas.width/3)*1.2, this.canvas.height/3));
+      this.images.push(new Question4((this.canvas.width/3)*1.2, this.canvas.height/2.5));
     }
     if (random === 5) {
       console.log("Random was 5 push question 5");
-      this.images.push(new Question5((this.canvas.width/3)*1.2, this.canvas.height/3));
+      this.images.push(new Question5((this.canvas.width/3)*1.2, this.canvas.height/2.5));
     }
     if (random === 6) {
       console.log("Random was 6 push question 6");
-      this.images.push(new Question6((this.canvas.width/3)*1.2, this.canvas.height/3));
+      this.images.push(new Question6((this.canvas.width/3)*1.2, this.canvas.height/2.5));
     }
   }
 }
