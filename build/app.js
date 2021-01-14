@@ -24,78 +24,6 @@ class DangerDash {
         this.start = new Start(canvas);
         this.DangerDashFrame = 0;
         this.loop();
-        this.scoringItems = [];
-        this.gameState = "Running";
-    }
-    randomScoringItems() { }
-    frameIndex() {
-        if (this.frame % 100 === 0) {
-            this.randomScoringItems();
-        }
-        if (this.frame % 10 === 0) {
-            this.score += 1;
-        }
-    }
-    forScoringItems() {
-        if (this.frame > 1) {
-            this.scoringItems.forEach((scoringItem) => {
-                scoringItem.move();
-            });
-            for (let i = 0; i < this.scoringItems.length; i++) {
-                if (this.player.collidesWithScoringItem(this.scoringItems[i]) &&
-                    this.scoringItems[i].getName() === "QuestionBox") {
-                    new InGameQuestions(document.getElementById("canvas"));
-                }
-                if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
-                    this.score += this.scoringItems[i].getPoints();
-                    this.lives += this.scoringItems[i].getLives();
-                    console.log(this.scoringItems[i].getName());
-                    this.earnedCoins += this.scoringItems[i].getCoinValue();
-                    this.scoringItems.splice(i, 1);
-                }
-                else if (this.scoringItems[i].outOfCanvas()) {
-                    this.scoringItems.splice(i, 1);
-                }
-            }
-        }
-    }
-    drawBackground() { }
-    characterAnimationTest() { }
-    draw() {
-        const ctx = this.canvas.getContext("2d");
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.drawBackground();
-        this.player.draw(ctx);
-        if (this.frame > 1) {
-            this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
-        }
-        this.drawScore(ctx);
-        this.drawLives(ctx);
-    }
-    drawScore(ctx) {
-        Start.writeTextToCanvas(ctx, `Score: ${this.score}`, 60, this.canvas.width / 2, this.canvas.height / 8, null, "red");
-        ctx.drawImage(GameItem.loadNewImage("assets/img/GameItems/coin.png"), this.canvas.width / 20, this.canvas.height / 8);
-        Start.writeTextToCanvas(ctx, `${this.earnedCoins}`, 60, this.canvas.width / 8, this.canvas.height / 5, null, "red");
-    }
-    drawLives(ctx) {
-        if (this.lives == 3) {
-            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-        if (this.lives == 2) {
-            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-        if (this.lives == 1) {
-            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-        if (this.lives == 0) {
-            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-        if (this.lives < 0) {
-            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-    }
-    gameOver() {
-        new Endscreen(this.canvas, this.score);
     }
 }
 class KeyboardListener {
@@ -840,7 +768,7 @@ class Question extends ScoringItem {
 class QuestionBox extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.image = this.loadNewImage("assets/img/GameItems/ocean/questionBox.png");
+        this.image = Utility.loadNewImage("assets/img/GameItems/ocean/questionBox.png");
         this.points = 0;
         this.lives = +1;
         this.earnedCoins = 0;
@@ -1198,17 +1126,18 @@ class Pearl extends ScoringItem {
 class Rock1 extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.image = Utility.loadNewImage("assets/img/GameItems/ocean/questionBox.png");
-        this.points = 0;
-        this.lives = +1;
-        this.name = "QuestionBox";
+        this.image = Utility.loadNewImage("assets/img/GameItems/ocean/oceanRock1.png");
+        this.points = -20;
+        this.lives = -1;
+        this.name = "Rock";
+        this.earnedCoins = 0;
     }
 }
 class Rock2 extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.image = Utility.loadNewImage("assets/img/GameItems/ocean/oceanRock1.png");
-        this.points = -20;
+        this.image = this.loadNewImage("assets/img/obstacles/Ocean/oceanFish.png");
+        this.points = -10;
         this.lives = -1;
         this.earnedCoins = 0;
     }
@@ -1275,6 +1204,8 @@ class SwampTree2 extends ScoringItem {
         this.points = -10;
         this.lives = -1;
         this.earnedCoins = 0;
+    }
+}
 class Game {
     constructor(canvasId) {
         this.loop = () => {
@@ -1296,7 +1227,6 @@ class Game {
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.player = new Player(this.canvas);
         this.score = 0;
         this.lives = 3;
         this.earnedCoins = 0;
@@ -1336,7 +1266,7 @@ class Game {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawBackground();
-        this.player.draw();
+        this.player.draw(ctx);
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
         }
