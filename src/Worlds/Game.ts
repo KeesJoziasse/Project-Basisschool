@@ -2,6 +2,7 @@
  * Class Game: Responsible for the gameloop and will activate the class: GameItem, Player, ScoringItem
  */
 abstract class Game {
+
   //The canvas
   protected canvas: HTMLCanvasElement;
   //The ingame player
@@ -23,6 +24,7 @@ abstract class Game {
   protected xPos: number;
   //xpos of the worldImage
   protected yPos: number;
+  
   //image of the world
   //protected image: HTMLImageElement; #Remove
 
@@ -134,7 +136,7 @@ abstract class Game {
 
   //This function will be overwritten by DesertWorld
   public drawBackground() {}
-  public characterAnimationTest(){}
+  public characterAnimationTest() {}
 
   /**
    * Method that writes gameItems on the canvas
@@ -146,3 +148,90 @@ abstract class Game {
     this.drawBackground();
     //Drawing the player
     this.player.draw(ctx);
+    //Draws all the scoring items.
+    if (this.frame > 1) {
+      this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+    }
+    this.drawScore(ctx);
+    this.drawLives(ctx);
+  }
+
+  /**
+   * Draw the score on a canvas
+   * @param ctx
+   */
+  private drawScore(ctx: CanvasRenderingContext2D): void {
+    //Draws the score
+    Utility.writeTextToCanvas(
+      ctx,
+      `Score: ${this.score}`,
+      60,
+      this.canvas.width / 2,
+      this.canvas.height / 8,
+      null,
+      "red"
+    );
+
+    //Draws the earned coins
+    ctx.drawImage(
+      Utility.loadNewImage("assets/img/GameItems/coin.png"),
+      this.canvas.width / 20,
+      this.canvas.height / 8
+    );
+    Utility.writeTextToCanvas(
+      ctx,
+      `${this.earnedCoins}`,
+      60,
+      this.canvas.width / 8,
+      this.canvas.height / 5,
+      null,
+      "red"
+    );
+  }
+
+  /**
+   * Draw the score on a canvas
+   * @param ctx
+   */
+  private drawLives(ctx: CanvasRenderingContext2D): void {
+    if (this.lives == 3) {
+      ctx.drawImage(
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
+    if (this.lives == 2) {
+      ctx.drawImage(
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
+    if (this.lives == 1) {
+      ctx.drawImage(
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
+    if (this.lives == 0) {
+      ctx.drawImage(
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
+    if (this.lives < 0) {
+      ctx.drawImage(
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"),
+        (this.canvas.width / 8) * 7,
+        this.canvas.height / 8
+      );
+    }
+  }
+
+  private gameOver() {
+    new Endscreen(this.canvas, this.score);
+  }
+}
