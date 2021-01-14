@@ -7,17 +7,17 @@ class AmongUs extends Player {
 
   public constructor(canvas: HTMLCanvasElement) {
     super(canvas);
-    this.image = GameItem.loadNewImage(
+    this.image = Utility.loadNewImage(
       "./assets/img/Characters/AmongUs/among-us-walk-2.png"
     );
 
-    this.walk1 = GameItem.loadNewImage(
+    this.walk1 = Utility.loadNewImage(
       "./assets/img/Characters/AmongUs/among-us-walk-1.png"
     );
-    this.walk2 = GameItem.loadNewImage(
+    this.walk2 = Utility.loadNewImage(
       "./assets/img/Characters/AmongUs/among-us-walk-2.png"
     );
-    this.walk3 = GameItem.loadNewImage(
+    this.walk3 = Utility.loadNewImage(
       "./assets/img/Characters/AmongUs/among-us-walk-3.png"
     );
   }

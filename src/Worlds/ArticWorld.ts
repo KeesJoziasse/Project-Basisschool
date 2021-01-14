@@ -1,11 +1,11 @@
-/// <reference path="../Game.ts" />
+/// <reference path="./Game.ts" />
 
 class ArticWorld extends Game {
   private background: HTMLImageElement;
 
   constructor(canvas: HTMLCanvasElement) {
     super(canvas);
-    this.background = GameItem.loadNewImage("./assets/img/world/ArticBG.jpg");
+    this.background = Utility.loadNewImage("./assets/img/world/ArticBG.jpg");
     this.xPos = 0;
     this.yPos = -100;
   }

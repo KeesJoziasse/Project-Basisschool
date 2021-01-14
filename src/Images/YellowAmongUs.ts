@@ -5,6 +5,6 @@ class YellowAmongUsUnlockable extends Images {
     super(xPos, yPos);
     this.name = "YellowAmongUs";
     //Unclear Image
-    this.image = Start.loadNewImage("./assets/img/players/yellowAU.png");
+    this.image = Utility.loadNewImage("./assets/img/players/yellowAU.png");
   }
 }
