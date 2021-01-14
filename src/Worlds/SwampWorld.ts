@@ -15,4 +15,27 @@ class SwampWorld extends Game {
     const ctx = this.canvas.getContext("2d");
     ctx.drawImage(this.background, this.xPos, this.yPos);
   }
+
+  //Pushes the scoring items to the array
+  public randomScoringItems(): void {
+    const random = GameItem.randomInteger(1, 7);
+    if (random === 1) {
+      this.scoringItems.push(new Frog(this.canvas));
+    }
+    if (random === 2) {
+      this.scoringItems.push(new SwampStone1(this.canvas));
+    }
+    if (random === 3) {
+      this.scoringItems.push(new SwampStone2(this.canvas));
+    }
+    if (random === 4) {
+      this.scoringItems.push(new SwampTree1(this.canvas));
+    }
+    if (random === 5 || random === 6) {
+      this.scoringItems.push(new inGameCoin(this.canvas));
+    }
+    if (random === 7) {
+      this.scoringItems.push(new SwampTree2(this.canvas));
+    }
+  }
 }

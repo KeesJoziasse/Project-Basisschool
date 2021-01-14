@@ -66,10 +66,17 @@ abstract class Game {
   }
 
   //Creates the scoring items for the ocean world
-  public scoringItemsOceanWorld(): void {}
+  public randomScoringItems(): void {}
 
   //Frameindex for the worlds.
-  public frameIndex() {}
+  public frameIndex() {
+    if (this.frame % 100 === 0) {
+      this.randomScoringItems();
+    }
+    if (this.frame % 10 === 0) {
+      this.score += 1;
+    }
+  }
 
   /**
    * Method that checks the gamestate

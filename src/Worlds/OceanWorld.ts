@@ -14,20 +14,10 @@ class OceanWorld extends Game {
   //Draws the background 
   public drawBackground(){
     const ctx = this.canvas.getContext("2d");
-
     ctx.drawImage(this.background, this.xPos, this.yPos);
   }
 
-  public frameIndex() {
-    if (this.frame % 100 === 0) {
-      this.scoringItemsOceanWorld();
-    }
-    if (this.frame % 10 === 0) {
-      this.score += 1;
-    }
-  }
-
-  public scoringItemsOceanWorld(): void {
+  public randomScoringItems(): void {
     const random = GameItem.randomInteger(1, 10);
     if (random === 1) {
       this.scoringItems.push(new Shark(this.canvas));
@@ -43,9 +33,7 @@ class OceanWorld extends Game {
     }
     if (random === 5 || random === 6) {
       this.scoringItems.push(new inGameCoin(this.canvas));
-    } if (random === 10){
-      this.scoringItems.push(new QuestionBox(this.canvas));
-    }
+    } 
     if (random === 7) {
       this.scoringItems.push(new Coral1(this.canvas));
     }
@@ -54,6 +42,9 @@ class OceanWorld extends Game {
     }
     if (random === 9) {
       this.scoringItems.push(new Rock2(this.canvas));
+    }
+    if (random === 10){
+      this.scoringItems.push(new QuestionBox(this.canvas));
     }
   }
 }

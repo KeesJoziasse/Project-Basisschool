@@ -34,8 +34,15 @@ class Game {
         this.scoringItems = [];
         this.gameState = "Running";
     }
-    scoringItemsOceanWorld() { }
-    frameIndex() { }
+    randomScoringItems() { }
+    frameIndex() {
+        if (this.frame % 100 === 0) {
+            this.randomScoringItems();
+        }
+        if (this.frame % 10 === 0) {
+            this.score += 1;
+        }
+    }
     forScoringItems() {
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => {
@@ -836,6 +843,132 @@ class QuestionBox extends ScoringItem {
         this.name = "QuestionBox";
     }
 }
+class IceBerg1 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Artic/articIceBerg1.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class IceBerg2 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Artic/articIceBerg2.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class IceBerg3 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Artic/articIceBerg3.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class IcePool extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Artic/articIcePool.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class Penguin extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Artic/articPenguin.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class SeaLion extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Artic/articSeaLion.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class Bushes extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Desert/desertBushes.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class Cactus1 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Desert/Cactus1.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class Cactus2 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Desert/Cactus2.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class DesertCoin extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Desert/desertCoin.png");
+        this.points = 15;
+        this.lives = 0;
+        this.earnedCoins = 1;
+    }
+}
+class DesertStone1 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Desert/desertStone1.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class DesertStone2 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Desert/desertStone2.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class Skull extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Desert/desertSkull.png");
+        this.points = 20;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class Urn extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Desert/Urn.png");
+        this.points = 20;
+        this.lives = 0;
+        this.earnedCoins = 0;
+    }
+}
 class Player extends GameItem {
     constructor(canvas) {
         super(canvas);
@@ -1086,6 +1219,51 @@ class Shark extends ScoringItem {
         this.earnedCoins = 0;
     }
 }
+class Frog extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Swamp/Frog.png");
+        this.points = 20;
+        this.lives = 0;
+        this.earnedCoins = 0;
+    }
+}
+class SwampStone1 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Swamp/swampStone1.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class SwampStone2 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Swamp/swampStone2.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class SwampTree1 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Swamp/swampTree1.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
+class SwampTree2 extends ScoringItem {
+    constructor(canvas) {
+        super(canvas);
+        this.image = this.loadNewImage("assets/img/obstacles/Swamp/swampTree2.png");
+        this.points = -10;
+        this.lives = -1;
+        this.earnedCoins = 0;
+    }
+}
 class ArticWorld extends Game {
     constructor(canvas) {
         super(canvas);
@@ -1096,6 +1274,33 @@ class ArticWorld extends Game {
     drawBackground() {
         const ctx = this.canvas.getContext("2d");
         ctx.drawImage(this.background, this.xPos, this.yPos);
+    }
+    randomScoringItems() {
+        const random = GameItem.randomInteger(1, 10);
+        if (random === 1) {
+            this.scoringItems.push(new IceBerg1(this.canvas));
+        }
+        if (random === 2) {
+            this.scoringItems.push(new IceBerg2(this.canvas));
+        }
+        if (random === 3) {
+            this.scoringItems.push(new IceBerg3(this.canvas));
+        }
+        if (random === 4) {
+            this.scoringItems.push(new IcePool(this.canvas));
+        }
+        if (random === 5 || random === 6) {
+            this.scoringItems.push(new inGameCoin(this.canvas));
+        }
+        if (random === 7) {
+            this.scoringItems.push(new QuestionBox(this.canvas));
+        }
+        if (random === 8) {
+            this.scoringItems.push(new Penguin(this.canvas));
+        }
+        if (random === 9) {
+            this.scoringItems.push(new SeaLion(this.canvas));
+        }
     }
 }
 class DesertWorld extends Game {
@@ -1109,6 +1314,39 @@ class DesertWorld extends Game {
         const ctx = this.canvas.getContext("2d");
         ctx.drawImage(this.background, this.xPos, this.yPos);
     }
+    randomScoringItems() {
+        const random = GameItem.randomInteger(1, 11);
+        if (random === 1) {
+            this.scoringItems.push(new Bushes(this.canvas));
+        }
+        if (random === 2) {
+            this.scoringItems.push(new Cactus1(this.canvas));
+        }
+        if (random === 3) {
+            this.scoringItems.push(new Cactus2(this.canvas));
+        }
+        if (random === 4) {
+            this.scoringItems.push(new DesertStone2(this.canvas));
+        }
+        if (random === 5 || random === 6) {
+            this.scoringItems.push(new inGameCoin(this.canvas));
+        }
+        if (random === 7) {
+            this.scoringItems.push(new QuestionBox(this.canvas));
+        }
+        if (random === 8) {
+            this.scoringItems.push(new DesertStone1(this.canvas));
+        }
+        if (random === 9) {
+            this.scoringItems.push(new Skull(this.canvas));
+        }
+        if (random === 10) {
+            this.scoringItems.push(new DesertCoin(this.canvas));
+        }
+        if (random === 11) {
+            this.scoringItems.push(new Urn(this.canvas));
+        }
+    }
 }
 class OceanWorld extends Game {
     constructor(canvas) {
@@ -1121,15 +1359,7 @@ class OceanWorld extends Game {
         const ctx = this.canvas.getContext("2d");
         ctx.drawImage(this.background, this.xPos, this.yPos);
     }
-    frameIndex() {
-        if (this.frame % 100 === 0) {
-            this.scoringItemsOceanWorld();
-        }
-        if (this.frame % 10 === 0) {
-            this.score += 1;
-        }
-    }
-    scoringItemsOceanWorld() {
+    randomScoringItems() {
         const random = GameItem.randomInteger(1, 10);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
@@ -1146,9 +1376,6 @@ class OceanWorld extends Game {
         if (random === 5 || random === 6) {
             this.scoringItems.push(new inGameCoin(this.canvas));
         }
-        if (random === 10) {
-            this.scoringItems.push(new QuestionBox(this.canvas));
-        }
         if (random === 7) {
             this.scoringItems.push(new Coral1(this.canvas));
         }
@@ -1157,6 +1384,9 @@ class OceanWorld extends Game {
         }
         if (random === 9) {
             this.scoringItems.push(new Rock2(this.canvas));
+        }
+        if (random === 10) {
+            this.scoringItems.push(new QuestionBox(this.canvas));
         }
     }
 }
@@ -1170,6 +1400,27 @@ class SwampWorld extends Game {
     drawBackground() {
         const ctx = this.canvas.getContext("2d");
         ctx.drawImage(this.background, this.xPos, this.yPos);
+    }
+    randomScoringItems() {
+        const random = GameItem.randomInteger(1, 7);
+        if (random === 1) {
+            this.scoringItems.push(new Frog(this.canvas));
+        }
+        if (random === 2) {
+            this.scoringItems.push(new SwampStone1(this.canvas));
+        }
+        if (random === 3) {
+            this.scoringItems.push(new SwampStone2(this.canvas));
+        }
+        if (random === 4) {
+            this.scoringItems.push(new SwampTree1(this.canvas));
+        }
+        if (random === 5 || random === 6) {
+            this.scoringItems.push(new inGameCoin(this.canvas));
+        }
+        if (random === 7) {
+            this.scoringItems.push(new SwampTree2(this.canvas));
+        }
     }
 }
 class Endscreen {
