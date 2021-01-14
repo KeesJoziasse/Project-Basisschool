@@ -794,16 +794,20 @@ class InGameQuestions {
                     event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
                     event.clientY >= button.getButtonYPos() &&
                     event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
-                    if (button.getButtonName() === "YesButton" && this.ingameQuestion.getAnswer() === "yes") {
+                    if (button.getButtonName() === "YesButton" &&
+                        this.ingameQuestion.getAnswer() === "yes") {
                         console.log("Goed het antwoord is Yes");
                     }
-                    if (button.getButtonName() === "YesButton" && this.ingameQuestion.getAnswer() === "no") {
+                    if (button.getButtonName() === "YesButton" &&
+                        this.ingameQuestion.getAnswer() === "no") {
                         console.log("Fout het antwoord is Yes");
                     }
-                    if (button.getButtonName() === "NoButton" && this.ingameQuestion.getAnswer() === "no") {
+                    if (button.getButtonName() === "NoButton" &&
+                        this.ingameQuestion.getAnswer() === "no") {
                         console.log("Goed het antwoord is NO");
                     }
-                    if (button.getButtonName() === "NoButton" && this.ingameQuestion.getAnswer() === "yes") {
+                    if (button.getButtonName() === "NoButton" &&
+                        this.ingameQuestion.getAnswer() === "yes") {
                         console.log("Fout het antwoord is NO");
                     }
                 }
@@ -853,10 +857,30 @@ class InGameQuestions {
         this.buttons.push(new NoButton((this.canvas.width / 2) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
     }
     randomQuestionGenerator() {
-        const random = GameItem.randomInteger(1, 1);
+        const random = GameItem.randomInteger(1, 6);
         if (random === 1) {
             console.log("Random was 1 push question 1");
             this.ingameQuestion = new Question1((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+        }
+        if (random === 2) {
+            console.log("Random was 2 push question 2");
+            this.ingameQuestion = new Question2((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+        }
+        if (random === 3) {
+            console.log("Random was 3 push question 3");
+            this.ingameQuestion = new Question3((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+        }
+        if (random === 4) {
+            console.log("Random was 4 push question 4");
+            this.ingameQuestion = new Question4((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+        }
+        if (random === 5) {
+            console.log("Random was 5 push question 5");
+            this.ingameQuestion = new Question5((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+        }
+        if (random === 6) {
+            console.log("Random was 6 push question 6");
+            this.ingameQuestion = new Question6((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
         }
     }
 }
