@@ -97,8 +97,7 @@ class InGameQuestions {
 
     //Drawing the buttons
     this.buttons.forEach((button) => {
-      button.draw(ctx);
-      console.log("button is getekend");
+      button.draw();
     });
   }
   //

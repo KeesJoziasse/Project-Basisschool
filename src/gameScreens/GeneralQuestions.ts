@@ -50,7 +50,7 @@ class GeneralQuestions {
 
     // Draws all the buttons
     this.buttons.forEach((button) => {
-      button.draw(ctx);
+      button.draw();
     });
 
     //Draws all the images
