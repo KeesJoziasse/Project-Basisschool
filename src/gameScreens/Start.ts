@@ -53,7 +53,7 @@ class Start {
     this.backgroundLoop();
 
     //The clickhandler
-    //document.addEventListener("click", this.mouseHandler);
+    // document.addEventListener("click", this.mouseHandler);
   }
 
   /**
@@ -249,7 +249,7 @@ class Start {
    * Method to select the world you want to play.
    * @param button
    */
-  private worldSelector(button: Button) {
+  public worldSelector(button: Button) {
     if (
       this.indexCounterWorld == this.worldImages.length - 1 &&
       button.getButtonName() == "NextWorld"
@@ -275,7 +275,7 @@ class Start {
    * @param button
    */
 
-  private characterSelector(button: Button) {
+  public characterSelector(button: Button) {
     if (
       this.indexCounterCharacter == this.characterImages.length - 1 &&
       button.getButtonName() == "NextCharacter"
@@ -320,7 +320,7 @@ class Start {
   //   }
   // }
 
-  private checkCharacterName(button: Button) {
+  public checkCharacterName(button: Button) {
     if (
       button.getButtonName() == "StartGame" &&
       this.characterImages[this.indexCounterCharacter].getImageName() ===

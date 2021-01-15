@@ -7,31 +7,36 @@ class DangerDash {
     constructor(canvas) {
         this.loop = () => {
             this.DangerDashFrame++;
-            if (this.screenName === "Start") {
+            if (this.screenName === 1) {
                 document.addEventListener("click", this.mouseHandlerStart);
                 this.start.draw();
                 if (this.DangerDashFrame === 1) {
-                    this.buttonMaker();
+                    this.buttonMakerStartScreen();
                     console.log(this.buttons);
                 }
                 this.buttons.forEach((button) => {
                     button.draw();
                 });
             }
+            if (this.screenName === 2) {
+                console.log("GAME RUNNING");
+                this.game.draw();
+            }
             requestAnimationFrame(this.loop);
         };
         this.mouseHandlerStart = (event) => {
-            console.log(`xPos ${event.clientX}, yPos ${event.clientY}`);
-            console.log(this.buttons);
             this.buttons.forEach((button) => {
-                console.log("ree");
                 if (event.clientX >= button.getButtonXPos() &&
                     event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
                     event.clientY >= button.getButtonYPos() &&
                     event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
+                    this.start.worldSelector(button);
+                    this.start.characterSelector(button);
+                    button.logButtonName();
                     if (button.getButtonName() === "StartGame") {
-                        console.log("ree new game");
-                        new Game(this.canvas);
+                        this.screenName++;
+                        console.log(this.screenName);
+                        this.start.checkCharacterName(button);
                     }
                 }
                 else {
@@ -43,16 +48,14 @@ class DangerDash {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.earnedCoins = 0;
-        this.screenName = "Start";
+        this.screenName = 1;
         this.start = new Start(canvas);
+        this.game = new Game(this.canvas);
         this.DangerDashFrame = 0;
         this.buttons = [];
         this.loop();
     }
-    getScreenName() {
-        return this.screenName;
-    }
-    buttonMaker() {
+    buttonMakerStartScreen() {
         this.buttons.push(new StartGameButton(this.canvas.width / 2 - 329 / 2, (this.canvas.height / 5) * 4 - 100 / 2, this.canvas));
         this.buttons.push(new ShopButton(this.canvas.width / 5 - 329 / 2, (this.canvas.height / 6) * 4, this.canvas));
         this.buttons.push(new HighscoreButton((this.canvas.width / 5) * 4 - 329 / 2, (this.canvas.height / 6) * 4, this.canvas));

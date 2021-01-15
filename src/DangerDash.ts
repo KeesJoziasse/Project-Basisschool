@@ -8,7 +8,7 @@ class DangerDash {
   private start: Start;
   private shop: Shop;
 
-  private screenName: string;
+  private screenName: number;
 
   public constructor(canvas: HTMLCanvasElement) {
     //canvas
@@ -17,7 +17,7 @@ class DangerDash {
     this.canvas.height = window.innerHeight;
 
     this.earnedCoins = 0;
-    this.screenName = "Start";
+    this.screenName = 1;
 
     this.start = new Start(canvas);
 
@@ -29,11 +29,6 @@ class DangerDash {
     this.loop();
   }
 
-  //Gets the screenName
-  public getScreenName(): string {
-    return this.screenName;
-  }
-
   /**
    * Method that checks the gamestate
    */
@@ -41,7 +36,7 @@ class DangerDash {
     this.DangerDashFrame++;
     //console.log(this.DangerDashFrame);
 
-    if (this.screenName === "Start") {
+    if (this.screenName === 1) {
       //Adds EventListener on buttons
       document.addEventListener("click", this.mouseHandlerStart);
 
@@ -50,7 +45,7 @@ class DangerDash {
 
       if(this.DangerDashFrame === 1){
         //Pushing the startButtons
-        this.buttonMaker();
+        this.buttonMakerStartScreen();
         console.log(this.buttons);
       }
       
@@ -63,6 +58,12 @@ class DangerDash {
       //this.deleteButtons();
     }
 
+    if (this.screenName === 2){
+      console.log("GAME RUNNING");
+      this.game.draw();
+      
+    }
+
     //console.log(this.screenName);
     requestAnimationFrame(this.loop);
   };
@@ -72,29 +73,30 @@ class DangerDash {
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandlerStart = (event: MouseEvent): void => {
-    console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
-    console.log(this.buttons);
+    //console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
     this.buttons.forEach((button) => {
-      console.log("ree");
       if (
         event.clientX >= button.getButtonXPos() &&
         event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
         event.clientY >= button.getButtonYPos() &&
         event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
       ) {
-        
-        //button.logButtonName();
+        this.start.worldSelector(button);
+        this.start.characterSelector(button);
+        button.logButtonName();
         if (button.getButtonName() === "StartGame") {
-          console.log("ree new game");
-          new Game(this.canvas);
+          this.screenName++;
+          console.log(this.screenName);
+          this.start.checkCharacterName(button);
         }
+        
       } else {
         return null;
       }
     });
   };
 
-  private buttonMaker() {
+  private buttonMakerStartScreen() {
     //Initializing the buttons and pushing them to the array
     //Making the start button
     this.buttons.push(
