@@ -7,13 +7,13 @@ class DangerDash {
     constructor(canvas) {
         this.loop = () => {
             this.DangerDashFrame++;
-            console.log(this.DangerDashFrame);
             if (this.screenName === "Start") {
                 this.start.draw();
             }
             if (this.screenName === "Shop") {
                 this.shop.draw();
             }
+            console.log(this.screenName);
             requestAnimationFrame(this.loop);
         };
         this.canvas = canvas;
@@ -24,6 +24,9 @@ class DangerDash {
         this.start = new Start(canvas);
         this.DangerDashFrame = 0;
         this.loop();
+    }
+    getScreenName() {
+        return this.screenName;
     }
 }
 class KeyboardListener {
@@ -124,50 +127,10 @@ class Button {
                 event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
                 event.clientY >= this.getButtonYPos() &&
                 event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()) {
-                if (this.getButtonName() === "HighScore") {
-                    new HighScore(document.getElementById("canvas"));
-                }
-                if (this.getButtonName() === "UnlockDesert") {
-                    console.log("Unlock Desert");
-                }
-                if (this.getButtonName() === "UnlockSwamp") {
-                    console.log("Unlock Swamp");
-                }
-                if (this.getButtonName() === "UnlockArctic") {
-                    console.log("Unlock Arctic");
-                }
-                if (this.getButtonName() === "UnlockYoshi") {
-                    console.log("Unlock Yoshi");
-                }
-                if (this.getButtonName() === "UnlockAmongUs") {
-                    console.log("UnlockAmongUs");
-                }
-                if (this.getButtonName() === "UnlockAsh") {
-                    const ctx = this.canvas.getContext("2d");
-                    ctx.drawImage(Utility.loadNewImage("./assets/img/players/yellowAUUnlocked.png"), this.canvas.width / 2.9, this.canvas.height / 6);
-                    console.log("Unlock Ash");
-                }
-                if (this.getButtonName() === "UnlockMorty") {
-                    console.log("Unlock Morty");
-                }
-                if (this.getButtonName() === "QandA") {
-                    new GeneralQuestions(this.canvas);
-                }
-                if (this.getButtonName() === "Shop") {
-                    console.log("shopbutton clicked!");
-                }
-                if (this.getButtonName() === "RestartButton") {
-                    new Start(this.canvas);
-                }
-                if (this.getButtonName() === "NoButton") {
-                    new Start(this.canvas);
-                }
-                else if (this.getButtonName() === "BackToStart") {
-                    new Start(this.canvas);
-                }
-                else {
-                    return null;
-                }
+                this.logButtonName();
+            }
+            else {
+                return null;
             }
         };
         this.xPos = xPos;
@@ -192,7 +155,8 @@ class Button {
     draw(ctx) {
         ctx.drawImage(this.image, this.xPos, this.yPos);
     }
-    drawUnlockedAmongUs() {
+    logButtonName() {
+        console.log(this.name);
     }
     getButtonImageWidth() {
         return this.image.width;
