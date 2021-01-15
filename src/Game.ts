@@ -1,7 +1,7 @@
 /**
  * Class Game: Responsible for the gameloop and will activate the class: GameItem, Player, ScoringItem
  */
-abstract class Game {
+ class Game {
   //The canvas
   protected canvas: HTMLCanvasElement;
 
@@ -254,6 +254,16 @@ public setGameState(gameState: string){
     }
   }
 
+  public test(){
+    this.frame++;
+    this.draw();
+    this.forScoringItems();
+    this.frameIndex();
+    //Refacture to method #TODO JUSTIN
+    if (this.frame % 10 === 0) {
+      this.player.move();
+  }
+  }
   private gameOver() {
     new Endscreen(this.canvas, this.score);
   }

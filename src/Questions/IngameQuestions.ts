@@ -3,13 +3,11 @@ class InGameQuestions {
   private ingameQuestion: Images;
   private buttons: Button[];
   private questionBackground: Images;
-  // private imageTest: Images;
-  // private button: Button;
-  // test
-  public name: string;
+  private name: string;
   private xPos: number;
   private yPos: number;
   private image: HTMLImageElement;
+
 
   public getButtonXPos(): number {
     return this.xPos;
@@ -127,7 +125,7 @@ class InGameQuestions {
     );
   }
 
-  //Creates the scoring items for the ocean world
+  //Creates the Questions
 
   public randomQuestionGenerator(): void {
     const random = GameItem.randomInteger(1, 6);
@@ -193,24 +191,28 @@ class InGameQuestions {
           this.ingameQuestion.getAnswer() === "yes"
         ) {
           console.log("Goed het antwoord is Yes");
+          new Game(document.getElementById("canvas") as HTMLCanvasElement)
         }
         if (
           button.getButtonName() === "YesButton" &&
           this.ingameQuestion.getAnswer() === "no"
         ) {
           console.log("Fout het antwoord is Yes");
+          new Start(document.getElementById("canvas") as HTMLCanvasElement);
         }
         if (
           button.getButtonName() === "NoButton" &&
           this.ingameQuestion.getAnswer() === "no"
         ) {
           console.log("Goed het antwoord is NO");
+          new Game(document.getElementById("canvas") as HTMLCanvasElement);
         }
         if (
           button.getButtonName() === "NoButton" &&
           this.ingameQuestion.getAnswer() === "yes"
         ) {
           console.log("Fout het antwoord is NO");
+          new Start(document.getElementById("canvas") as HTMLCanvasElement);
         }
       }
     });

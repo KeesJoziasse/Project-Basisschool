@@ -104,6 +104,15 @@ class Game {
             ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
     }
+    test() {
+        this.frame++;
+        this.draw();
+        this.forScoringItems();
+        this.frameIndex();
+        if (this.frame % 10 === 0) {
+            this.player.move();
+        }
+    }
     gameOver() {
         new Endscreen(this.canvas, this.score);
     }
@@ -797,18 +806,22 @@ class InGameQuestions {
                     if (button.getButtonName() === "YesButton" &&
                         this.ingameQuestion.getAnswer() === "yes") {
                         console.log("Goed het antwoord is Yes");
+                        new Game(document.getElementById("canvas"));
                     }
                     if (button.getButtonName() === "YesButton" &&
                         this.ingameQuestion.getAnswer() === "no") {
                         console.log("Fout het antwoord is Yes");
+                        new Start(document.getElementById("canvas"));
                     }
                     if (button.getButtonName() === "NoButton" &&
                         this.ingameQuestion.getAnswer() === "no") {
                         console.log("Goed het antwoord is NO");
+                        new Game(document.getElementById("canvas"));
                     }
                     if (button.getButtonName() === "NoButton" &&
                         this.ingameQuestion.getAnswer() === "yes") {
                         console.log("Fout het antwoord is NO");
+                        new Start(document.getElementById("canvas"));
                     }
                 }
             });
