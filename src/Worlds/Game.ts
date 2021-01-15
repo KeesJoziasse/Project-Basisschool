@@ -1,7 +1,7 @@
 /**
  * Class Game: Responsible for the gameloop and will activate the class: GameItem, Player, ScoringItem
  */
-abstract class Game {
+ class Game {
   //The canvas
   protected canvas: HTMLCanvasElement;
 
@@ -70,9 +70,24 @@ abstract class Game {
     //Endstate
     this.gameState = "Running";
   }
+// getters and setters
+
+public getGameState(): string {
+  return this.gameState;
+}
+
+public setGameState(gameState: string){
+  this.gameState = gameState;
+}
+  
 
   //Creates the scoring items for the ocean world
   public scoringItemsOceanWorld(): void {}
+
+
+  // test
+  //Creates the scoring items for the ocean world
+  public mathRandom(): void {}
 
   //Frameindex for the worlds.
   public frameIndex() {}
@@ -80,7 +95,13 @@ abstract class Game {
   /**
    * Method that checks the gamestate
    */
-  public loop = () => {
+  public loop = 
+  () => {
+    if(this.gameState === "question"){
+      new InGameQuestions(
+        document.getElementById("canvas") as HTMLCanvasElement
+      );
+    }
     // console.log(this.gameState);
     if (this.gameState === "Running") {
       this.frame++;
@@ -113,11 +134,9 @@ abstract class Game {
           this.player.collidesWithScoringItem(this.scoringItems[i]) &&
           this.scoringItems[i].getName() === "QuestionBox"
         ) {
-          new InGameQuestions(
-            document.getElementById("canvas") as HTMLCanvasElement
-          );
+            this.gameState = "question";
+            console.log(this.score);
         }
-
         if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
           //#TODO fix first if statement
           this.score += this.scoringItems[i].getPoints();
@@ -132,6 +151,7 @@ abstract class Game {
     }
   }
 
+           
   //This function will be overwritten by DesertWorld
   public drawBackground() {}
 
@@ -231,6 +251,16 @@ abstract class Game {
     }
   }
 
+  public test(){
+    this.frame++;
+    this.draw();
+    this.forScoringItems();
+    this.frameIndex();
+    //Refacture to method #TODO JUSTIN
+    if (this.frame % 10 === 0) {
+      this.player.move();
+  }
+  }
   private gameOver() {
     new Endscreen(this.canvas, this.score);
   }

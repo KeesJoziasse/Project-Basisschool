@@ -24,9 +24,87 @@ class DangerDash {
         this.start = new Start(canvas);
         this.DangerDashFrame = 0;
         this.loop();
+        this.scoringItems = [];
+        this.gameState = "Running";
     }
-    getScreenName() {
-        return this.screenName;
+    getGameState() {
+        return this.gameState;
+    }
+    setGameState(gameState) {
+        this.gameState = gameState;
+    }
+    scoringItemsOceanWorld() { }
+    mathRandom() { }
+    frameIndex() { }
+    forScoringItems() {
+        if (this.frame > 1) {
+            this.scoringItems.forEach((scoringItem) => {
+                scoringItem.move();
+            });
+            for (let i = 0; i < this.scoringItems.length; i++) {
+                if (this.player.collidesWithScoringItem(this.scoringItems[i]) &&
+                    this.scoringItems[i].getName() === "QuestionBox") {
+                    this.gameState = "question";
+                    console.log(this.score);
+                }
+                if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
+                    this.score += this.scoringItems[i].getPoints();
+                    this.lives += this.scoringItems[i].getLives();
+                    console.log(this.scoringItems[i].getName());
+                    this.earnedCoins += this.scoringItems[i].getCoinValue();
+                    this.scoringItems.splice(i, 1);
+                }
+                else if (this.scoringItems[i].outOfCanvas()) {
+                    this.scoringItems.splice(i, 1);
+                }
+            }
+        }
+    }
+    drawBackground() { }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.drawBackground();
+        this.player.draw();
+        if (this.frame > 1) {
+            this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+        }
+        this.drawScore(ctx);
+        this.drawLives(ctx);
+    }
+    drawScore(ctx) {
+        Start.writeTextToCanvas(ctx, `Score: ${this.score}`, 60, this.canvas.width / 2, this.canvas.height / 8, null, "red");
+        ctx.drawImage(GameItem.loadNewImage("assets/img/GameItems/coin.png"), this.canvas.width / 20, this.canvas.height / 8);
+        Start.writeTextToCanvas(ctx, `${this.earnedCoins}`, 60, this.canvas.width / 8, this.canvas.height / 5, null, "red");
+    }
+    drawLives(ctx) {
+        if (this.lives == 3) {
+            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives == 2) {
+            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives == 1) {
+            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives == 0) {
+            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives < 0) {
+            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+    }
+    test() {
+        this.frame++;
+        this.draw();
+        this.forScoringItems();
+        this.frameIndex();
+        if (this.frame % 10 === 0) {
+            this.player.move();
+        }
+    }
+    gameOver() {
+        new Endscreen(this.canvas, this.score);
     }
 }
 class KeyboardListener {
@@ -137,6 +215,7 @@ class Button {
         this.yPos = yPos;
         document.addEventListener("click", this.mouseHandler);
         this.canvas = canvas;
+        console.log(this.images);
     }
     move(canvas) { }
     reloadImage(canvas) { }
@@ -317,6 +396,9 @@ class Images {
     }
     move(canvas) { }
     reloadImage(canvas) { }
+    getAnswer() {
+        return this.answer;
+    }
     getImageName() {
         return this.name;
     }
@@ -475,6 +557,55 @@ class MoonUnlocked extends Images {
         this.image = Utility.loadNewImage("./assets/img/world/MoonUnlocked.png");
     }
 }
+class Question1 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "yes";
+        this.image = Start.loadNewImage("/assets/img/QuestionsImages/question1.png");
+    }
+}
+class Question2 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "no";
+        this.image = Start.loadNewImage("/assets/img/QuestionsImages/question2.png");
+    }
+}
+class Question3 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "no";
+        this.image = Start.loadNewImage("/assets/img/QuestionsImages/question3.png");
+    }
+}
+class Question4 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "no";
+        this.image = Start.loadNewImage("/assets/img/QuestionsImages/question4.png");
+    }
+}
+class Question5 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "no";
+        this.image = Start.loadNewImage("/assets/img/QuestionsImages/question5.png");
+    }
+}
+class Question6 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "no";
+        this.image = Start.loadNewImage("/assets/img/QuestionsImages/question6.png");
+    }
+}
+class QuestionBoxText extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.name = "questionBox";
+        this.image = Start.loadNewImage("./assets/img/GeneralQuestions/questionBox.png");
+    }
+}
 class Questions extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -487,13 +618,6 @@ class Ranking extends Images {
         super(xPos, yPos);
         this.name = "ranking";
         this.image = Utility.loadNewImage("./assets/img/Highscore/ranking.png");
-    }
-}
-class RocketBooster extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "rocketBooster";
-        this.image = Utility.loadNewImage("./assets/img/GeneralQuestions/rocketBooster.png");
     }
 }
 class ShieldBooster extends Images {
@@ -636,6 +760,113 @@ class OceanImage extends Images {
         this.image = Utility.loadNewImage("./assets/img/world/ocean.png");
     }
 }
+class InGameQuestions {
+    constructor(canvasId) {
+        this.loop = () => {
+            this.draw();
+            requestAnimationFrame(this.loop);
+        };
+        this.mouseHandler = (event) => {
+            console.log(`xPos ${event.clientX}, yPos ${event.clientY}`);
+            this.buttons.forEach((button) => {
+                if (event.clientX >= button.getButtonXPos() &&
+                    event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
+                    event.clientY >= button.getButtonYPos() &&
+                    event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
+                    if (button.getButtonName() === "YesButton" &&
+                        this.ingameQuestion.getAnswer() === "yes") {
+                        console.log("Goed het antwoord is Yes");
+                        new Game(document.getElementById("canvas"));
+                    }
+                    if (button.getButtonName() === "YesButton" &&
+                        this.ingameQuestion.getAnswer() === "no") {
+                        console.log("Fout het antwoord is Yes");
+                        new Start(document.getElementById("canvas"));
+                    }
+                    if (button.getButtonName() === "NoButton" &&
+                        this.ingameQuestion.getAnswer() === "no") {
+                        console.log("Goed het antwoord is NO");
+                        new Game(document.getElementById("canvas"));
+                    }
+                    if (button.getButtonName() === "NoButton" &&
+                        this.ingameQuestion.getAnswer() === "yes") {
+                        console.log("Fout het antwoord is NO");
+                        new Start(document.getElementById("canvas"));
+                    }
+                }
+            });
+        };
+        document.addEventListener("click", this.mouseHandler);
+        this.canvas = canvasId;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.buttons = [];
+        this.questionBackground = new InGameQuestionImage(this.canvas.width / 3, 150);
+        this.buttonMaker();
+        this.randomQuestionGenerator();
+        this.loop();
+    }
+    getButtonXPos() {
+        return this.xPos;
+    }
+    getButtonYPos() {
+        return this.yPos;
+    }
+    getButtonImageWidth() {
+        return this.image.width;
+    }
+    getButtonImageHeight() {
+        return this.image.height;
+    }
+    getButtonName() {
+        return this.name;
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.questionBackground.draw(ctx);
+        this.ingameQuestion.draw(ctx);
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+        });
+    }
+    static loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
+    buttonMaker() {
+        this.buttons.push(new YesButton((this.canvas.width / 3) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
+        this.buttons.push(new NoButton((this.canvas.width / 2) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
+    }
+    randomQuestionGenerator() {
+        const random = GameItem.randomInteger(1, 6);
+        if (random === 1) {
+            console.log("Random was 1 push question 1");
+            this.ingameQuestion = new Question1((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+        }
+        if (random === 2) {
+            console.log("Random was 2 push question 2");
+            this.ingameQuestion = new Question2((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+        }
+        if (random === 3) {
+            console.log("Random was 3 push question 3");
+            this.ingameQuestion = new Question3((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+        }
+        if (random === 4) {
+            console.log("Random was 4 push question 4");
+            this.ingameQuestion = new Question4((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+        }
+        if (random === 5) {
+            console.log("Random was 5 push question 5");
+            this.ingameQuestion = new Question5((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+        }
+        if (random === 6) {
+            console.log("Random was 6 push question 6");
+            this.ingameQuestion = new Question6((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+        }
+    }
+}
 class ScoringItem {
     constructor(canvas) {
         this.canvas = canvas;
@@ -678,6 +909,9 @@ class ScoringItem {
     }
     getCoinValue() {
         return this.earnedCoins;
+    }
+    getSpeed() {
+        return this.speed;
     }
     move() {
         this.xPosition += this.speed;
@@ -1488,11 +1722,10 @@ class GeneralQuestions {
     imageMaker() {
         this.images.push(new Control((this.canvas.width / 15) * 0.1, 110));
         this.images.push(new Questions(this.canvas.width / 3, 0));
-        this.images.push(new UpperLane((this.canvas.width / 3) * 0.6, 200));
-        this.images.push(new MidLane((this.canvas.width / 3) * 0.6, 350));
-        this.images.push(new DownLane((this.canvas.width / 3) * 0.6, 500));
-        this.images.push(new ShieldBooster((this.canvas.width / 3) * 1, 435));
-        this.images.push(new RocketBooster((this.canvas.width / 3) * 1, 135));
+        this.images.push(new UpperLane((this.canvas.width / 3) * 0.60, 200));
+        this.images.push(new MidLane((this.canvas.width / 3) * 0.60, 350));
+        this.images.push(new DownLane((this.canvas.width / 3) * 0.60, 500));
+        this.images.push(new QuestionBoxText((this.canvas.width / 3) * 1, 435));
         this.images.push(new TextCoin((this.canvas.width / 2) * 1.34, 435));
         this.images.push(new TextObstacle((this.canvas.width / 2) * 1.34, 150));
     }
@@ -1502,10 +1735,9 @@ class GeneralQuestions {
         Utility.writeTextToCanvas(ctx, "Onderste laan:", 40, (this.canvas.width / 9) * 0.93, 560, "center");
     }
     titleTextBoxes(ctx) {
-        Utility.writeTextToCanvas(ctx, "Rocket booster", 35, (this.canvas.width / 3) * 1.4, 140, "center");
-        Utility.writeTextToCanvas(ctx, "Shield booster", 35, (this.canvas.width / 3) * 1.4, 435, "center");
-        Utility.writeTextToCanvas(ctx, "Obstakels", 35, (this.canvas.width / 2) * 1.6, 140, "center");
-        Utility.writeTextToCanvas(ctx, "Coins", 35, (this.canvas.width / 2) * 1.6, 435, "center");
+        Start.writeTextToCanvas(ctx, "Questionbox", 35, (this.canvas.width / 3) * 1.4, 435, "center");
+        Start.writeTextToCanvas(ctx, "Obstakels", 35, (this.canvas.width / 2) * 1.6, 140, "center");
+        Start.writeTextToCanvas(ctx, "Coins", 35, (this.canvas.width / 2) * 1.6, 435, "center");
     }
 }
 class HighScore {

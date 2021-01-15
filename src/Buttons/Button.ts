@@ -6,17 +6,21 @@ abstract class Button {
   protected xPos: number;
   protected yPos: number;
   protected image: HTMLImageElement;
-  protected name: string;
+  public name: string;
   protected xVelocity: number;
   protected canvas: HTMLCanvasElement;
   protected images: Images;
   protected checkGameName: DangerDash;
+  // private images: Images;
+  protected ingameQuestion: InGameQuestions;
 
   constructor(xPos: number, yPos: number, canvas: HTMLCanvasElement) {
     this.xPos = xPos;
     this.yPos = yPos;
     document.addEventListener("click", this.mouseHandler);
     this.canvas = canvas;
+    // this.images = this.images;
+    console.log(this.images);
   }
 
   public move(canvas: HTMLCanvasElement) {}
@@ -26,6 +30,7 @@ abstract class Button {
   public getButtonName(): string {
     return this.name;
   }
+ 
 
   public getButtonXPos(): number {
     return this.xPos;
@@ -47,6 +52,7 @@ abstract class Button {
   public logButtonName() {
     console.log(this.name);
   }
+ 
 
   /**
    * Returns the width of the image
