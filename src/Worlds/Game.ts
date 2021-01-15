@@ -38,6 +38,9 @@
   //GameOverState
   private gameState: string;
 
+//test
+ private ingameQuestion: InGameQuestions;
+
   /**
    * Constructor
    * @param canvasId HTML canvas where the game will be displayed on
@@ -70,7 +73,7 @@
     //Endstate
     this.gameState = "Running";
 
-    this.player = new AmongUs(this.canvas);
+    this.player = new Girl(this.canvas);
   }
 // getters and setters
 
@@ -84,7 +87,7 @@ public setGameState(gameState: string){
   
 
   //Creates the scoring items for the ocean world
-  public scoringItemsOceanWorld(): void {}
+  public randomScoringItems(): void {}
 
 
   // test
@@ -92,18 +95,31 @@ public setGameState(gameState: string){
   public mathRandom(): void {}
 
   //Frameindex for the worlds.
-  public frameIndex() {}
+  public frameIndex() {
+if(this.frame % 10 === 0){
+  this.score++
+}if(this.frame % 100 === 0){
+  this.randomScoringItems();
+}
+  }
 
   /**
    * Method that checks the gamestate
    */
   public loop = 
   () => {
+    console.log(this.gameState);
+
+    // if(this.gameState === "question"){
+    //   this.gameState === "Test";
+    //   // new InGameQuestions (document.getElementById("canvas") as HTMLCanvasElement);
+    // }
+
     if(this.gameState === "question"){
-      new InGameQuestions(
-        document.getElementById("canvas") as HTMLCanvasElement
-      );
+      console.log(this.gameState);
     }
+
+
     // console.log(this.gameState);
     if (this.gameState === "Running") {
       this.frame++;
@@ -114,6 +130,7 @@ public setGameState(gameState: string){
       if (this.frame % 10 === 0) {
         this.player.move();
       }
+      
     }
 
     if (this.lives < 0) {
@@ -136,8 +153,10 @@ public setGameState(gameState: string){
           this.player.collidesWithScoringItem(this.scoringItems[i]) &&
           this.scoringItems[i].getName() === "QuestionBox"
         ) {
-            this.gameState = "question";
-            console.log(this.score);
+          new InGameQuestions (document.getElementById("canvas") as HTMLCanvasElement);
+          this.gameState = "question";
+          // this.ingameQuestion.draw();
+          // console.log(this.score);
         }
         if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
           //#TODO fix first if statement

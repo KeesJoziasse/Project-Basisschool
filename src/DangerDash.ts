@@ -39,6 +39,7 @@ class DangerDash {
     // console.log(this.DangerDashFrame);
     if (this.screenName === "Start") {
       this.start.draw();
+      
     }
     if (this.screenName === "Shop"){
       this.shop.draw();
@@ -48,5 +49,5 @@ class DangerDash {
     requestAnimationFrame(this.loop);
   };
 
-
+  
 }
