@@ -80,7 +80,8 @@ class HighScore {
     this.buttons.push(
       new BackToStart(
         (this.canvas.width / 7) * 0.09,
-        (this.canvas.height / 3) * 0.08
+        (this.canvas.height / 3) * 0.08,
+        this.canvas
       )
     );
   }

@@ -1,21 +1,17 @@
 abstract class ScoringItem {
   private canvas: HTMLCanvasElement;
-
   private topLane: number;
   private middleLane: number;
   private lowerLane: number;
-
   protected points: number;
   protected image: HTMLImageElement;
-<<<<<<< Updated upstream
   protected speed: number;
   protected lives: number;
-=======
-
-  protected speed: number;
->>>>>>> Stashed changes
+  protected name: string;
+  protected earnedCoins: number;
   private xPosition: number;
   private yPosition: number;
+  
 
   public constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -36,12 +32,9 @@ abstract class ScoringItem {
     }
 
     //Speed of the scoring objects
-<<<<<<< Updated upstream
     this.speed = -(this.canvas.width / 100);
-=======
     this.speed;
->>>>>>> Stashed changes
-
+    this.speed = -12;
     this.xPosition = this.canvas.width;
   }
 
@@ -63,6 +56,13 @@ abstract class ScoringItem {
   }
   public getLives(): number{
     return this.lives;
+  }
+  public getName(): string{
+    return this.name;
+  }
+
+  public getCoinValue(): number{
+    return this.earnedCoins;
   }
 
   /**

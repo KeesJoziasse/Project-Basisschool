@@ -7,6 +7,8 @@ class Fish extends ScoringItem {
 <<<<<<< Updated upstream
     this.points = 5;
     this.lives = 0;
+    this.name = "Fish";
+    this.earnedCoins = 0;
   }
 }
 =======

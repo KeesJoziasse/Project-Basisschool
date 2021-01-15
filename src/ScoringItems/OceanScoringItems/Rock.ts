@@ -6,5 +6,7 @@ class Rock extends ScoringItem {
     this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanRock1.png");
     this.points = -20;
     this.lives = -1;
+    this.name = "Rock";
+    this.earnedCoins = 0;
   }
 }

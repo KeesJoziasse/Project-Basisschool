@@ -1,66 +1,34 @@
-/// <reference path="../Game.ts" />
+/// <reference path="Game.ts" />
 
 class OceanWorld extends Game {
-  private beginBackground: number;
-  private animationFrameBackground: number;
 
-  constructor(canvas: HTMLCanvasElement, worldName: string) {
-    super(canvas, worldName);
-    this.image = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
-    this.speed = -3;
+  private background: HTMLImageElement;
+
+  constructor(canvas: HTMLCanvasElement) {
+    super(canvas);
+    this.background = GameItem.loadNewImage("./assets/img/world/OceanBG.jpg");
     this.xPos = 0;
     this.yPos = -100;
-    this.beginBackground = 1900;
-    this.animationFrameBackground = 0;
   }
 
-  //Draws the background and animates it so it looks like it moves
-  public drawBackgroundOcean(){
+  //Draws the background 
+  public drawBackground(){
     const ctx = this.canvas.getContext("2d");
-    
-    this.animationFrameBackground++;
-    console.log(this.animationFrameBackground);
 
-    //does a reset
-    if(this.animationFrameBackground === 1200){
-      this.animationFrameBackground = -1;
-      this.xPos = 0;
-      this.beginBackground = 1900;
-    }
-
-    //First loaded image
-    if(this.animationFrameBackground < 900){
-      ctx.drawImage(
-        GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"),
-        this.xPos,
-        this.yPos
-      );
-      this.xPos += this.speed;
-    }
-
-    //Second image that will be going behind the first
-    if(this.animationFrameBackground > 200){
-      ctx.drawImage(
-        GameItem.loadNewImage("./assets/img/world/OceanBG.jpg"),
-        this.beginBackground,
-        this.yPos
-      );
-      this.beginBackground += this.speed;
-    }
-    
+    ctx.drawImage(this.background, this.xPos, this.yPos);
   }
 
   public frameIndex() {
-    if (this.frame % 40 === 0) {
+    if (this.frame % 100 === 0) {
       this.scoringItemsOceanWorld();
     }
     if (this.frame % 10 === 0){
-      this.score += 1
+      this.score += 1;
     }
   }
 
   public scoringItemsOceanWorld(): void {
-    const random = GameItem.randomInteger(1, 4);
+    const random = GameItem.randomInteger(3, 6);
     if (random === 1) {
       this.scoringItems.push(new Shark(this.canvas));
     }
@@ -72,6 +40,11 @@ class OceanWorld extends Game {
     }
     if(random === 4){
       this.scoringItems.push(new Rock(this.canvas));
+    }
+    if(random === 5){
+      this.scoringItems.push(new inGameCoin(this.canvas));
+    } if (random === 6){
+      this.scoringItems.push(new QuestionBox(this.canvas));
     }
   }
 }

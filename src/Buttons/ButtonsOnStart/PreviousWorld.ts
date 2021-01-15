@@ -1,8 +1,8 @@
 /// <reference path="../Button.ts" />
 
 class PreviousWorld extends Button {
-    public constructor(xPos: number, yPos: number) {
-      super(xPos, yPos);
+    public constructor(xPos: number, yPos: number, canvas:HTMLCanvasElement) {
+      super(xPos, yPos, canvas);
       this.name = "PreviousWorld";
       this.image = Start.loadNewImage("./assets/img/buttons/left-arrow.png");
     }
