@@ -7,6 +7,7 @@ class DangerDash {
     constructor(canvas) {
         this.loop = () => {
             this.DangerDashFrame++;
+            console.log(this.DangerDashFrame);
             if (this.screenName === "Start") {
                 this.start.draw();
             }
