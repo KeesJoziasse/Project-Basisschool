@@ -11,6 +11,9 @@ class DangerDash {
   private screenName: string;
 
   public constructor(canvas: HTMLCanvasElement) {
+    //Adds EventListener on buttons
+    document.addEventListener("click", this.mouseHandlerStart);
+
     //canvas
     this.canvas = canvas;
     this.canvas.width = window.innerWidth;
@@ -43,22 +46,22 @@ class DangerDash {
 
     if (this.screenName === "Start") {
       //Draws startScreen
-      this.start.draw();
+      //this.start.draw();
 
       //Pushing the startButtons
       this.buttonMaker();
-
-      //Adds EventListener on buttons
-      document.addEventListener("click", this.mouseHandlerStart);
+      //console.log(this.buttons);
 
       //Draws all the buttons
       this.buttons.forEach((button) => {
-        button.draw();
+        //button.draw();
+        const ctx = this.canvas.getContext("2d");
+        ctx.drawImage(button.getButtonImage(), button.getButtonXPos(), button.getButtonYPos());
       });
-      
+
       this.deleteButtons();
     }
-    
+
     //console.log(this.screenName);
     requestAnimationFrame(this.loop);
   };
@@ -68,8 +71,7 @@ class DangerDash {
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandlerStart = (event: MouseEvent): void => {
-    //console.log(`User clicked the: ${this.getButtonName()} button`);
-    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
     this.buttons.forEach((button) => {
       if (
         event.clientX >= button.getButtonXPos() &&
@@ -78,9 +80,9 @@ class DangerDash {
         event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
       ) {
         //button.logButtonName();
-        if(button.getButtonName() === "StartGame"){
+        if (button.getButtonName() === "StartGame") {
+          console.log("ree new game");
           new Game(this.canvas);
-          console.log("ree new game")
         }
       } else {
         return null;
@@ -161,14 +163,14 @@ class DangerDash {
     );
   }
 
-  private deleteButtons(){
-    this.buttons.splice(0,1);
-    this.buttons.splice(0,1);
-    this.buttons.splice(0,1);
-    this.buttons.splice(0,1);
-    this.buttons.splice(0,1);
-    this.buttons.splice(0,1);
-    this.buttons.splice(0,1);
-    this.buttons.splice(0,1);
+  private deleteButtons() {
+    this.buttons.splice(0, 1);
+    this.buttons.splice(0, 1);
+    this.buttons.splice(0, 1);
+    this.buttons.splice(0, 1);
+    this.buttons.splice(0, 1);
+    this.buttons.splice(0, 1);
+    this.buttons.splice(0, 1);
+    this.buttons.splice(0, 1);
   }
 }

@@ -46,6 +46,7 @@ abstract class Button {
 
   public draw() {
     const ctx = this.canvas.getContext("2d");
+    
     ctx.drawImage(this.image, this.xPos, this.yPos);
   }
 

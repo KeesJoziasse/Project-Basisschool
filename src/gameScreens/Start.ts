@@ -1,15 +1,13 @@
 class Start {
   //Attributes
   private canvas: HTMLCanvasElement;
-  private buttons: Button[];
+  //private buttons: Button[];
   private worldImages: Images[];
   private characterImages: Images[];
   private startImages: Images[];
   private background: Images[];
   private indexCounterWorld: number;
   private indexCounterCharacter: number;
-
-  private test: DangerDash;
 
   //Constructor
   public constructor(canvas: HTMLCanvasElement) {
@@ -19,7 +17,7 @@ class Start {
     this.canvas.height = window.innerHeight;
 
     //The button array
-    this.buttons = [];
+    //this.buttons = [];
 
     //The world images array
     this.worldImages = [];
@@ -54,10 +52,8 @@ class Start {
     //Background loop
     this.backgroundLoop();
 
-    this.draw();
-
     //The clickhandler
-    document.addEventListener("click", this.mouseHandler);
+    //document.addEventListener("click", this.mouseHandler);
   }
 
   /**
@@ -228,26 +224,26 @@ class Start {
     this.background.push(new Cloud(0, this.canvas.height / 4, 0.5));
   }
 
-  /**
-   * Method to handle the mouse event
-   * @param {MouseEvent} event - mouse event
-   */
-  public mouseHandler = (event: MouseEvent): void => {
-    //console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
-    this.buttons.forEach((button) => {
-      if (
-        event.clientX >= button.getButtonXPos() &&
-        event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
-        event.clientY >= button.getButtonYPos() &&
-        event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
-      ) {
-        this.worldSelector(button);
-        this.characterSelector(button);
-        //this.startLevel(button);
-        this.checkCharacterName(button);
-      }
-    });
-  };
+  // /**
+  //  * Method to handle the mouse event
+  //  * @param {MouseEvent} event - mouse event
+  //  */
+  // public mouseHandler = (event: MouseEvent): void => {
+  //   //console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+  //   this.buttons.forEach((button) => {
+  //     if (
+  //       event.clientX >= button.getButtonXPos() &&
+  //       event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
+  //       event.clientY >= button.getButtonYPos() &&
+  //       event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
+  //     ) {
+  //       this.worldSelector(button);
+  //       this.characterSelector(button);
+  //       //this.startLevel(button);
+  //       this.checkCharacterName(button);
+  //     }
+  //   });
+  // };
 
   /**
    * Method to select the world you want to play.

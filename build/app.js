@@ -7,25 +7,25 @@ class DangerDash {
     constructor(canvas) {
         this.loop = () => {
             if (this.screenName === "Start") {
-                this.start.draw();
                 this.buttonMaker();
-                document.addEventListener("click", this.mouseHandlerStart);
                 this.buttons.forEach((button) => {
-                    button.draw();
+                    const ctx = this.canvas.getContext("2d");
+                    ctx.drawImage(button.getButtonImage(), button.getButtonXPos(), button.getButtonYPos());
                 });
                 this.deleteButtons();
             }
             requestAnimationFrame(this.loop);
         };
         this.mouseHandlerStart = (event) => {
+            console.log(`xPos ${event.clientX}, yPos ${event.clientY}`);
             this.buttons.forEach((button) => {
                 if (event.clientX >= button.getButtonXPos() &&
                     event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
                     event.clientY >= button.getButtonYPos() &&
                     event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
                     if (button.getButtonName() === "StartGame") {
-                        new Game(this.canvas);
                         console.log("ree new game");
+                        new Game(this.canvas);
                     }
                 }
                 else {
@@ -33,6 +33,7 @@ class DangerDash {
                 }
             });
         };
+        document.addEventListener("click", this.mouseHandlerStart);
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
@@ -1910,22 +1911,9 @@ class Shop {
 }
 class Start {
     constructor(canvas) {
-        this.mouseHandler = (event) => {
-            this.buttons.forEach((button) => {
-                if (event.clientX >= button.getButtonXPos() &&
-                    event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
-                    event.clientY >= button.getButtonYPos() &&
-                    event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
-                    this.worldSelector(button);
-                    this.characterSelector(button);
-                    this.checkCharacterName(button);
-                }
-            });
-        };
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.buttons = [];
         this.worldImages = [];
         this.characterImages = [];
         this.startImages = [];
@@ -1936,8 +1924,6 @@ class Start {
         this.charachterMaker();
         this.imageMaker();
         this.backgroundLoop();
-        this.draw();
-        document.addEventListener("click", this.mouseHandler);
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
