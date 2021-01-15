@@ -69,6 +69,8 @@
 
     //Endstate
     this.gameState = "Running";
+
+    this.player = new AmongUs(this.canvas);
   }
 // getters and setters
 
