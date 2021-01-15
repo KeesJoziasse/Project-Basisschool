@@ -11,9 +11,6 @@ class DangerDash {
   private screenName: string;
 
   public constructor(canvas: HTMLCanvasElement) {
-    //Adds EventListener on buttons
-    document.addEventListener("click", this.mouseHandlerStart);
-
     //canvas
     this.canvas = canvas;
     this.canvas.width = window.innerWidth;
@@ -41,25 +38,29 @@ class DangerDash {
    * Method that checks the gamestate
    */
   public loop = () => {
-    //this.DangerDashFrame++;
+    this.DangerDashFrame++;
     //console.log(this.DangerDashFrame);
 
     if (this.screenName === "Start") {
+      //Adds EventListener on buttons
+      document.addEventListener("click", this.mouseHandlerStart);
+
       //Draws startScreen
-      //this.start.draw();
+      this.start.draw();
 
-      //Pushing the startButtons
-      this.buttonMaker();
-      //console.log(this.buttons);
-
+      if(this.DangerDashFrame === 1){
+        //Pushing the startButtons
+        this.buttonMaker();
+        console.log(this.buttons);
+      }
+      
       //Draws all the buttons
       this.buttons.forEach((button) => {
-        //button.draw();
-        const ctx = this.canvas.getContext("2d");
-        ctx.drawImage(button.getButtonImage(), button.getButtonXPos(), button.getButtonYPos());
+        button.draw();
       });
 
-      this.deleteButtons();
+      //remind gebruik deze bij de mousehandler zodra er een knop / screenname veranderd
+      //this.deleteButtons();
     }
 
     //console.log(this.screenName);
@@ -72,13 +73,16 @@ class DangerDash {
    */
   public mouseHandlerStart = (event: MouseEvent): void => {
     console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    console.log(this.buttons);
     this.buttons.forEach((button) => {
+      console.log("ree");
       if (
         event.clientX >= button.getButtonXPos() &&
         event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
         event.clientY >= button.getButtonYPos() &&
         event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
       ) {
+        
         //button.logButtonName();
         if (button.getButtonName() === "StartGame") {
           console.log("ree new game");

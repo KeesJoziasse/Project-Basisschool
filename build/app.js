@@ -6,19 +6,25 @@ window.addEventListener("load", init);
 class DangerDash {
     constructor(canvas) {
         this.loop = () => {
+            this.DangerDashFrame++;
             if (this.screenName === "Start") {
-                this.buttonMaker();
+                document.addEventListener("click", this.mouseHandlerStart);
+                this.start.draw();
+                if (this.DangerDashFrame === 1) {
+                    this.buttonMaker();
+                    console.log(this.buttons);
+                }
                 this.buttons.forEach((button) => {
-                    const ctx = this.canvas.getContext("2d");
-                    ctx.drawImage(button.getButtonImage(), button.getButtonXPos(), button.getButtonYPos());
+                    button.draw();
                 });
-                this.deleteButtons();
             }
             requestAnimationFrame(this.loop);
         };
         this.mouseHandlerStart = (event) => {
             console.log(`xPos ${event.clientX}, yPos ${event.clientY}`);
+            console.log(this.buttons);
             this.buttons.forEach((button) => {
+                console.log("ree");
                 if (event.clientX >= button.getButtonXPos() &&
                     event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
                     event.clientY >= button.getButtonYPos() &&
@@ -33,7 +39,6 @@ class DangerDash {
                 }
             });
         };
-        document.addEventListener("click", this.mouseHandlerStart);
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
