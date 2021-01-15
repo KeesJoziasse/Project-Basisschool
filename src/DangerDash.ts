@@ -103,6 +103,7 @@ class DangerDash {
     });
   };
 
+  //Pushing buttons to buttons[]
   private buttonMakerStartScreen() {
     //Initializing the buttons and pushing them to the array
     //Making the start button
@@ -176,6 +177,7 @@ class DangerDash {
     );
   }
 
+  //Clears the Buttons[] and makes it empty again
   private deleteButtons() {
     this.buttons = [];
   }
