@@ -8,7 +8,7 @@ class DangerDash {
   private start: Start;
   private shop: Shop;
 
-  private screenName: number;
+  private screenName: string;
 
   public constructor(canvas: HTMLCanvasElement) {
     //canvas
@@ -17,7 +17,7 @@ class DangerDash {
     this.canvas.height = window.innerHeight;
 
     this.earnedCoins = 0;
-    this.screenName = 1;
+    this.screenName = "StartScreen";
 
     this.start = new Start(canvas);
 
@@ -33,10 +33,11 @@ class DangerDash {
    * Method that checks the gamestate
    */
   public loop = () => {
+    //Counting Frames of main loop
     this.DangerDashFrame++;
     //console.log(this.DangerDashFrame);
 
-    if (this.screenName === 1) {
+    if (this.screenName === "StartScreen") {
       //Adds EventListener on buttons
       document.addEventListener("click", this.mouseHandlerStart);
 
@@ -58,10 +59,15 @@ class DangerDash {
       //this.deleteButtons();
     }
 
-    if (this.screenName === 2){
+    if(this.screenName === "GameScreen"){
       console.log("GAME RUNNING");
-      this.game.draw();
-      
+      //clears the array of buttons
+      this.buttons = [];
+      console.log(this.buttons);
+    }
+
+    if(this.screenName === "ShopScreen"){
+      console.log("SHOP RUNNING");
     }
 
     //console.log(this.screenName);
@@ -85,11 +91,12 @@ class DangerDash {
         this.start.characterSelector(button);
         button.logButtonName();
         if (button.getButtonName() === "StartGame") {
-          this.screenName++;
+          this.screenName = "GameScreen";
           console.log(this.screenName);
           this.start.checkCharacterName(button);
+        } else if(button.getButtonName() === "Shop"){
+          this.screenName = "Shop";
         }
-        
       } else {
         return null;
       }
@@ -170,13 +177,6 @@ class DangerDash {
   }
 
   private deleteButtons() {
-    this.buttons.splice(0, 1);
-    this.buttons.splice(0, 1);
-    this.buttons.splice(0, 1);
-    this.buttons.splice(0, 1);
-    this.buttons.splice(0, 1);
-    this.buttons.splice(0, 1);
-    this.buttons.splice(0, 1);
-    this.buttons.splice(0, 1);
+    this.buttons = [];
   }
 }

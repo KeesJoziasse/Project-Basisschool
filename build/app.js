@@ -7,7 +7,7 @@ class DangerDash {
     constructor(canvas) {
         this.loop = () => {
             this.DangerDashFrame++;
-            if (this.screenName === 1) {
+            if (this.screenName === "StartScreen") {
                 document.addEventListener("click", this.mouseHandlerStart);
                 this.start.draw();
                 if (this.DangerDashFrame === 1) {
@@ -18,9 +18,13 @@ class DangerDash {
                     button.draw();
                 });
             }
-            if (this.screenName === 2) {
+            if (this.screenName === "GameScreen") {
                 console.log("GAME RUNNING");
-                this.game.draw();
+                this.buttons = [];
+                console.log(this.buttons);
+            }
+            if (this.screenName === "ShopScreen") {
+                console.log("SHOP RUNNING");
             }
             requestAnimationFrame(this.loop);
         };
@@ -34,9 +38,12 @@ class DangerDash {
                     this.start.characterSelector(button);
                     button.logButtonName();
                     if (button.getButtonName() === "StartGame") {
-                        this.screenName++;
+                        this.screenName = "GameScreen";
                         console.log(this.screenName);
                         this.start.checkCharacterName(button);
+                    }
+                    else if (button.getButtonName() === "Shop") {
+                        this.screenName = "Shop";
                     }
                 }
                 else {
@@ -48,9 +55,8 @@ class DangerDash {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.earnedCoins = 0;
-        this.screenName = 1;
+        this.screenName = "StartScreen";
         this.start = new Start(canvas);
-        this.game = new Game(this.canvas);
         this.DangerDashFrame = 0;
         this.buttons = [];
         this.loop();
@@ -66,14 +72,7 @@ class DangerDash {
         this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 180, 50, this.canvas));
     }
     deleteButtons() {
-        this.buttons.splice(0, 1);
-        this.buttons.splice(0, 1);
-        this.buttons.splice(0, 1);
-        this.buttons.splice(0, 1);
-        this.buttons.splice(0, 1);
-        this.buttons.splice(0, 1);
-        this.buttons.splice(0, 1);
-        this.buttons.splice(0, 1);
+        this.buttons = [];
     }
 }
 class KeyboardListener {
