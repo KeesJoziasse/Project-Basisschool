@@ -38,20 +38,28 @@ class DangerDash {
    * Method that checks the gamestate
    */
   public loop = () => {
-    this.DangerDashFrame++;
-    console.log(this.DangerDashFrame);
+    //this.DangerDashFrame++;
+    //console.log(this.DangerDashFrame);
+
     if (this.screenName === "Start") {
+      //Draws startScreen
       this.start.draw();
+
+      //Pushing the startButtons
       this.buttonMaker();
-      //Draws all the buttons
-      const ctx = this.canvas.getContext("2d");
-      this.buttons.forEach((button) => {
-        button.draw(ctx);
-      });
+
+      //Adds EventListener on buttons
       document.addEventListener("click", this.mouseHandlerStart);
+
+      //Draws all the buttons
+      this.buttons.forEach((button) => {
+        button.draw();
+      });
+      
+      this.deleteButtons();
     }
     
-    console.log(this.screenName);
+    //console.log(this.screenName);
     requestAnimationFrame(this.loop);
   };
 
@@ -62,16 +70,22 @@ class DangerDash {
   public mouseHandlerStart = (event: MouseEvent): void => {
     //console.log(`User clicked the: ${this.getButtonName()} button`);
     // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
-    if (
-      event.clientX >= this.getButtonXPos() &&
-      event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
-      event.clientY >= this.getButtonYPos() &&
-      event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()
-    ) {
-      this.logButtonName();
-    } else {
-      return null;
-    }
+    this.buttons.forEach((button) => {
+      if (
+        event.clientX >= button.getButtonXPos() &&
+        event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
+        event.clientY >= button.getButtonYPos() &&
+        event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
+      ) {
+        //button.logButtonName();
+        if(button.getButtonName() === "StartGame"){
+          new Game(this.canvas);
+          console.log("ree new game")
+        }
+      } else {
+        return null;
+      }
+    });
   };
 
   private buttonMaker() {
@@ -145,5 +159,16 @@ class DangerDash {
     this.buttons.push(
       new QuestionsAnswersButton(this.canvas.width - 180, 50, this.canvas)
     );
+  }
+
+  private deleteButtons(){
+    this.buttons.splice(0,1);
+    this.buttons.splice(0,1);
+    this.buttons.splice(0,1);
+    this.buttons.splice(0,1);
+    this.buttons.splice(0,1);
+    this.buttons.splice(0,1);
+    this.buttons.splice(0,1);
+    this.buttons.splice(0,1);
   }
 }

@@ -51,7 +51,7 @@ class HighScore {
 
     //Drawing the buttons
     this.buttons.forEach((button) => {
-      button.draw(ctx);
+      button.draw();
     });
   }
 

@@ -40,7 +40,7 @@ class Start {
     this.indexCounterCharacter = 0;
 
     //Calling the button maker method.
-    this.buttonMaker();
+    //this.buttonMaker();
 
     //Calling the IMG maker method
     this.worldImageMaker();
