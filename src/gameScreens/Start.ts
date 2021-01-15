@@ -3,7 +3,7 @@ class Start {
   private canvas: HTMLCanvasElement;
   private buttons: Button[];
   private worldImages: Images[];
-  private characterImages: Images[];
+  private shopImages: Images[];
   private images: Images[];
   private background: Images[];
   private indexCounterWorld: number;
@@ -23,7 +23,7 @@ class Start {
     this.worldImages = [];
 
     //The world images array
-    this.characterImages = [];
+    this.shopImages = [];
 
     //The overall image array
     this.images = [];
@@ -97,8 +97,8 @@ class Start {
     });
 
     //Drawing the characters
-    for (let i = 0; i < this.characterImages.length; i++) {
-      this.characterImages[this.indexCounterCharacter].draw(ctx);
+    for (let i = 0; i < this.shopImages.length; i++) {
+      this.shopImages[this.indexCounterCharacter].draw(ctx);
     }
 
     //Forloop to decide what world img is goint to be drawed
@@ -196,19 +196,19 @@ class Start {
   private charachterMaker() {
     //TODO alleen dingen pushen die echt in de game komen
     //TODO hier dingen pushen zodra unlock button is gedrukt
-    this.characterImages.push(
+    this.shopImages.push(
       new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
-    this.characterImages.push(
+    this.shopImages.push(
       new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
-    this.characterImages.push(
+    this.shopImages.push(
       new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
-    this.characterImages.push(
+    this.shopImages.push(
       new GirlCharacterUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
-    this.characterImages.push(
+    this.shopImages.push(
       new SonicUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     )
   }
@@ -273,7 +273,7 @@ class Start {
 
   private characterSelector(button: Button) {
     if (
-      this.indexCounterCharacter == this.characterImages.length - 1 &&
+      this.indexCounterCharacter == this.shopImages.length - 1 &&
       button.getButtonName() == "NextCharacter"
     ) {
       this.indexCounterCharacter = 0;
@@ -281,7 +281,7 @@ class Start {
       this.indexCounterCharacter == 0 &&
       button.getButtonName() == "PreviousCharacter"
     ) {
-      this.indexCounterCharacter += this.characterImages.length - 1;
+      this.indexCounterCharacter += this.shopImages.length - 1;
     } else if (
       button.getButtonName() == "PreviousCharacter" &&
       this.indexCounterCharacter > 0

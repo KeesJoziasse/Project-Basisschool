@@ -116,9 +116,7 @@ abstract class Button {
     //  console.log(`User clicked the: ${this.getButtonName()} button`);
   };
 
-  public drawUnlockedAmongUs(){
-    // will be overwritten by UnlockAmongUs.TS
-  }
+ 
 
   /**
    * Returns the width of the image

@@ -1,7 +1,7 @@
 class Shop {
   private canvas: HTMLCanvasElement;
   private image: HTMLImageElement;
-  private images: Images[];
+  private shopImages: Images[];
   private buttons: Button[];
   private characters: Images[];
   private newWorlds: Images[];
@@ -47,7 +47,7 @@ class Shop {
     this.buttons = [];
 
     // The scoring item array
-    this.images = [];
+    this.shopImages = [];
 
     //Calls button maker function
     this.buttonMaker();
@@ -195,10 +195,10 @@ class Shop {
     );
 
     // Drawing the images
-    this.images.forEach((image) => {
-      image.move(this.canvas);
-      image.reloadImage(this.canvas);
-      image.draw(ctx);
+    this.shopImages.forEach((characterImage) => {
+      characterImage.move(this.canvas);
+      characterImage.reloadImage(this.canvas);
+      characterImage.draw(ctx);
     });
 
     //Drawing the characters
@@ -230,28 +230,28 @@ class Shop {
   public drawImages() {
     // Draw coins
     // #TODO fix code duplication
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 2.3, this.canvas.height / 1.17)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 4.4, this.canvas.height / 1.17)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 1.56, this.canvas.height / 1.17)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 3, this.canvas.height / 2.56)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 1.33, this.canvas.height / 2.56)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 9, this.canvas.height / 2.56)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 1.85, this.canvas.height / 2.56)
     );
-    this.images.push(
+    this.shopImages.push(
       new coinForShop(this.canvas.width / 2.35, this.canvas.height / 22)
     );
   }

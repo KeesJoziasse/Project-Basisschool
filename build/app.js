@@ -269,8 +269,6 @@ class Button {
     draw(ctx) {
         ctx.drawImage(this.image, this.xPos, this.yPos);
     }
-    drawUnlockedAmongUs() {
-    }
     getButtonImageWidth() {
         return this.image.width;
     }
@@ -568,25 +566,11 @@ class InGameQuestionImage extends Images {
         this.image = InGameQuestions.loadNewImage("./assets/img/InGameQuestions/inGameQuestionsImage.png");
     }
 }
-class MarsUnlocked extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "MarsUnlocked";
-        this.image = Start.loadNewImage("./assets/img/world/MarsUnlocked.png");
-    }
-}
 class MidLane extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.name = "midLane";
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/midLane.png");
-    }
-}
-class MoonUnlocked extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "MoonUnlocked";
-        this.image = Start.loadNewImage("./assets/img/world/MoonUnlocked.png");
     }
 }
 class Questions extends Images {
@@ -629,13 +613,6 @@ class SonicUnlocked extends Images {
         super(xPos, yPos);
         this.name = "SonicUnlocked";
         this.image = Start.loadNewImage("./assets/img/players/SonicUnlocked.png");
-    }
-}
-class StewieUnlocked extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "StewieUnlocked";
-        this.image = Start.loadNewImage("./assets/img/players/StewieUnlocked.png");
     }
 }
 class Stickman extends Images {
@@ -692,13 +669,6 @@ class UpperLane extends Images {
         super(xPos, yPos);
         this.name = "upperLane";
         this.image = Start.loadNewImage("./assets/img/GeneralQuestions/upperLane.png");
-    }
-}
-class VenusUnlocked extends Images {
-    constructor(xPos, yPos) {
-        super(xPos, yPos);
-        this.name = "VenusUnlocked";
-        this.image = Start.loadNewImage("./assets/img/world/VenusUnlocked.png");
     }
 }
 class YellowAmongUs extends Images {
@@ -1323,7 +1293,7 @@ class Shop {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.buttons = [];
-        this.images = [];
+        this.shopImages = [];
         this.buttonMaker();
         this.characters = [];
         this.newWorlds = [];
@@ -1365,10 +1335,10 @@ class Shop {
         Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 1.42, this.canvas.height / 1.10, "center", "white");
         Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 2.01, this.canvas.height / 1.10, "center", "white");
         Start.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 3.4, this.canvas.height / 1.10, "center", "white");
-        this.images.forEach((image) => {
-            image.move(this.canvas);
-            image.reloadImage(this.canvas);
-            image.draw(ctx);
+        this.shopImages.forEach((characterImage) => {
+            characterImage.move(this.canvas);
+            characterImage.reloadImage(this.canvas);
+            characterImage.draw(ctx);
         });
         this.characters.forEach((character) => {
             character.move(this.canvas);
@@ -1387,14 +1357,14 @@ class Shop {
         }
     }
     drawImages() {
-        this.images.push(new coinForShop(this.canvas.width / 2.3, this.canvas.height / 1.17));
-        this.images.push(new coinForShop(this.canvas.width / 4.4, this.canvas.height / 1.17));
-        this.images.push(new coinForShop(this.canvas.width / 1.56, this.canvas.height / 1.17));
-        this.images.push(new coinForShop(this.canvas.width / 3, this.canvas.height / 2.56));
-        this.images.push(new coinForShop(this.canvas.width / 1.33, this.canvas.height / 2.56));
-        this.images.push(new coinForShop(this.canvas.width / 9, this.canvas.height / 2.56));
-        this.images.push(new coinForShop(this.canvas.width / 1.85, this.canvas.height / 2.56));
-        this.images.push(new coinForShop(this.canvas.width / 2.35, this.canvas.height / 22));
+        this.shopImages.push(new coinForShop(this.canvas.width / 2.3, this.canvas.height / 1.17));
+        this.shopImages.push(new coinForShop(this.canvas.width / 4.4, this.canvas.height / 1.17));
+        this.shopImages.push(new coinForShop(this.canvas.width / 1.56, this.canvas.height / 1.17));
+        this.shopImages.push(new coinForShop(this.canvas.width / 3, this.canvas.height / 2.56));
+        this.shopImages.push(new coinForShop(this.canvas.width / 1.33, this.canvas.height / 2.56));
+        this.shopImages.push(new coinForShop(this.canvas.width / 9, this.canvas.height / 2.56));
+        this.shopImages.push(new coinForShop(this.canvas.width / 1.85, this.canvas.height / 2.56));
+        this.shopImages.push(new coinForShop(this.canvas.width / 2.35, this.canvas.height / 22));
     }
     drawUnlockableWorlds() {
         this.newWorlds.push(new DesertPlanet(this.canvas.width / 4.3, this.canvas.height / 1.6));
@@ -1446,7 +1416,7 @@ class Start {
         this.canvas.height = window.innerHeight;
         this.buttons = [];
         this.worldImages = [];
-        this.characterImages = [];
+        this.shopImages = [];
         this.images = [];
         this.background = [];
         this.indexCounterWorld = 0;
@@ -1473,8 +1443,8 @@ class Start {
         this.buttons.forEach((button) => {
             button.draw(ctx);
         });
-        for (let i = 0; i < this.characterImages.length; i++) {
-            this.characterImages[this.indexCounterCharacter].draw(ctx);
+        for (let i = 0; i < this.shopImages.length; i++) {
+            this.shopImages[this.indexCounterCharacter].draw(ctx);
         }
         for (let i = 0; i < this.worldImages.length; i++) {
             this.worldImages[this.indexCounterWorld].draw(ctx);
@@ -1497,11 +1467,11 @@ class Start {
         this.worldImages.push(new ArticImage(this.canvas.width / 2 - 250, this.canvas.height / 3 - 150));
     }
     charachterMaker() {
-        this.characterImages.push(new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
-        this.characterImages.push(new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
-        this.characterImages.push(new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
-        this.characterImages.push(new GirlCharacterUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
-        this.characterImages.push(new SonicUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.shopImages.push(new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.shopImages.push(new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.shopImages.push(new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.shopImages.push(new GirlCharacterUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
+        this.shopImages.push(new SonicUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120));
     }
     imageMaker() {
         this.images.push(new Titel(this.canvas.width / 4, -40));
@@ -1527,13 +1497,13 @@ class Start {
         }
     }
     characterSelector(button) {
-        if (this.indexCounterCharacter == this.characterImages.length - 1 &&
+        if (this.indexCounterCharacter == this.shopImages.length - 1 &&
             button.getButtonName() == "NextCharacter") {
             this.indexCounterCharacter = 0;
         }
         else if (this.indexCounterCharacter == 0 &&
             button.getButtonName() == "PreviousCharacter") {
-            this.indexCounterCharacter += this.characterImages.length - 1;
+            this.indexCounterCharacter += this.shopImages.length - 1;
         }
         else if (button.getButtonName() == "PreviousCharacter" &&
             this.indexCounterCharacter > 0) {
