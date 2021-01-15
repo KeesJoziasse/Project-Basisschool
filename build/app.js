@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new DangerDash(document.getElementById("canvas"));
+    new Start(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class DangerDash {
@@ -13,7 +13,6 @@ class DangerDash {
             if (this.screenName === "Shop") {
                 this.shop.draw();
             }
-            console.log(this.screenName);
             requestAnimationFrame(this.loop);
         };
         this.canvas = canvas;
@@ -128,6 +127,7 @@ class Button {
                 event.clientY >= this.getButtonYPos() &&
                 event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()) {
                 this.logButtonName();
+                this.checkGameName.getScreenName();
             }
             else {
                 return null;
@@ -1615,8 +1615,9 @@ class QuestionAndAnswer {
         this.buttons.push(new BackToStart((this.canvas.width / 7) * 0.09, (this.canvas.height / 3) * 0.08, this.canvas));
     }
 }
-class Shop {
+class Shop extends DangerDash {
     constructor(canvas) {
+        super(canvas);
         this.mouseHandler = (event) => {
             this.buttons.forEach((button) => {
                 if (event.clientX >= button.getButtonXPos() &&
@@ -1775,6 +1776,7 @@ class Start {
         document.addEventListener("click", this.mouseHandler);
     }
     draw() {
+        console.log("Draw in start");
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.background.forEach((backgroundImage) => {

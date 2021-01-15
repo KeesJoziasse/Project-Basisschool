@@ -10,7 +10,7 @@ abstract class Button {
   protected xVelocity: number;
   protected canvas: HTMLCanvasElement;
   protected images: Images;
-  protected checkGameName: DangerDash;
+  private checkGameName: DangerDash;
 
   constructor(xPos: number, yPos: number, canvas: HTMLCanvasElement) {
     this.xPos = xPos;
@@ -47,7 +47,6 @@ abstract class Button {
   public logButtonName() {
     console.log(this.name);
   }
-
   /**
    * Returns the width of the image
    * @returns {number} - image width
@@ -78,6 +77,7 @@ abstract class Button {
       event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()
     ) {
       this.logButtonName();
+      this.checkGameName.getScreenName();
     } else {
       return null;
     }

@@ -64,6 +64,8 @@ class Start {
    * Draws all the necessary elements to the canvas
    */
   public draw() {
+    console.log("Draw in start");
+    
     const ctx = this.canvas.getContext("2d");
 
     //Clears the canvas every frame

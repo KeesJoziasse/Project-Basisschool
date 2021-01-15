@@ -1,5 +1,5 @@
-class Shop {
-  private canvas: HTMLCanvasElement;
+class Shop extends DangerDash {
+  // private canvas: HTMLCanvasElement;
   private image: HTMLImageElement;
   protected shopImages: Images[];
   protected buttons: Button[];
@@ -11,7 +11,7 @@ class Shop {
 
   //Constructor
   public constructor(canvas: HTMLCanvasElement) {
-
+    super(canvas)
     // Construct all of the canvas
     this.canvas = canvas;
 
@@ -69,15 +69,12 @@ class Shop {
    */
   public draw() {
     const ctx = this.canvas.getContext("2d");
-
-    //Clears the canvas every frame
+    // //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     ctx.drawImage(Utility.loadNewImage("./assets/img/background/EndscreenBackground.jpg"), 0, 0);
-
     // Calls the character maker function
     this.drawUnlockableCharacter();
-
     // Calls the world maker function
     this.drawUnlockableWorlds();
 

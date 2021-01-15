@@ -1,13 +1,13 @@
-class DangerDash {
+abstract class DangerDash {
   //#TODO make abstract class GameScreen or Screens
-  private canvas: HTMLCanvasElement;
+  protected canvas: HTMLCanvasElement;
   private earnedCoins: number;
   private DangerDashFrame: number;
-
   private start: Start;
   private shop: Shop;
-
-  private screenName: string;
+  protected screenName: string;
+  //Backgrond
+  protected background: HTMLImageElement;
 
   public constructor(canvas: HTMLCanvasElement) {
     //canvas
@@ -28,7 +28,7 @@ class DangerDash {
 
   //Gets the screenName
   public getScreenName(): string {
-    return this.screenName;
+    return this.screenName
   }
 
   /**
@@ -36,6 +36,7 @@ class DangerDash {
    */
   public loop = () => {
     this.DangerDashFrame++;
+    // this.getScreenName();
     // console.log(this.DangerDashFrame);
     if (this.screenName === "Start") {
       this.start.draw();
@@ -44,7 +45,7 @@ class DangerDash {
       this.shop.draw();
     }
     
-    console.log(this.screenName);
+    // console.log(this.screenName);
     requestAnimationFrame(this.loop);
   };
 
