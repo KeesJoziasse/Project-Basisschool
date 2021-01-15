@@ -1,5 +1,4 @@
 abstract class Images {
-  
   protected xPos: number;
   protected yPos: number;
   protected image: HTMLImageElement;
@@ -32,7 +31,7 @@ abstract class Images {
     return this.image;
   }
 
-    /**
+  /**
    * Returns the width of the image
    * @returns {number} - image width
    */
@@ -50,7 +49,6 @@ abstract class Images {
 
   public draw(ctx: CanvasRenderingContext2D) {
     ctx.drawImage(this.image, this.xPos, this.yPos);
-    console.log(this.getImageName());
-    
+    //console.log(this.getImageName());
   }
 }

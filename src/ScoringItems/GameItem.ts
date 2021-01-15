@@ -6,7 +6,6 @@ abstract class GameItem {
     //shared with subclasses
     protected canvas: HTMLCanvasElement;
     protected name: string;
-
     private earnedCoins: number;
 
     //Lanes
@@ -37,17 +36,6 @@ abstract class GameItem {
     public getTotalCoins(){
         this.earnedCoins++;
         console.log(this.earnedCoins);
-    }
-
-    /**
-     * Loads an image in such a way that the screen doesn't constantly flicker
-     * @param {HTMLImageElement} source
-     * @return HTMLImageElement - returns an image
-     */
-    public static loadNewImage(source: string): HTMLImageElement {
-        const img = new Image();
-        img.src = source;
-        return img;
     }
 
     /**

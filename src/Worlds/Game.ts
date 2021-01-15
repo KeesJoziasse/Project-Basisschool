@@ -6,16 +6,13 @@ abstract class Game {
   protected canvas: HTMLCanvasElement;
 
   //The ingame player
-  private player: Player[];
+  private player: Player;
   // #TODO screen: Screen[]
 
   //The score of the player
   protected score: number;
   protected lives: number;
   protected earnedCoins: number;
-
-  //Worldname of the current world
-  private worldName: string;
 
   //Amount of frames that have passed
   protected frame: number;
@@ -45,16 +42,12 @@ abstract class Game {
    * Constructor
    * @param canvasId HTML canvas where the game will be displayed on
    */
-  public constructor(canvasId: HTMLCanvasElement, worldName: string) {
+  public constructor(canvasId: HTMLCanvasElement) {
     this.canvas = canvasId;
 
     //Making the canvas width + canvas height
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
-
-    //Making the player
-    //#TODO fix that the new player made is chosen by startscreen
-    this.player = [];
 
     //Setting the score to 0.
     this.score = 0;
@@ -64,13 +57,11 @@ abstract class Game {
     //Setting the framecounter to 0.
     this.frame = 0;
 
-    //Authorizing the worldname.
-    this.worldName = worldName;
-
     //Speed of the world on canvas
     this.speed;
 
     //Calling the loop
+    //TODO fix that no loop needed
     this.loop();
 
     //Scoringitems array
@@ -78,9 +69,6 @@ abstract class Game {
 
     //Endstate
     this.gameState = "Running";
-
-    //TODO fix that this isn't always the character
-    this.player.push(new Girl(this.canvas, "AmongUs"));
   }
 
   //Creates the scoring items for the ocean world
@@ -93,26 +81,22 @@ abstract class Game {
    * Method that checks the gamestate
    */
   public loop = () => {
-    console.log(this.gameState);
-
-    if(this.gameState === "Running"){
+    // console.log(this.gameState);
+    if (this.gameState === "Running") {
       this.frame++;
       this.draw();
       this.forScoringItems();
       this.frameIndex();
       //Refacture to method #TODO JUSTIN
       if (this.frame % 10 === 0) {
-        this.player.forEach((player) => {
-          player.move();
-        });
+        this.player.move();
       }
     }
-    
+
     if (this.lives < 0) {
       this.gameState = "GameOver";
       this.gameOver();
     }
-
 
     requestAnimationFrame(this.loop);
   };
@@ -124,36 +108,32 @@ abstract class Game {
         scoringItem.move();
       });
 
-      this.player.forEach((player) => {
-        for (let i = 0; i < this.scoringItems.length; i++) {
-          
-          if(player.collidesWithScoringItem(this.scoringItems[i]) && this.scoringItems[i].getName() === "QuestionBox"){
-            new InGameQuestions(document.getElementById("canvas") as HTMLCanvasElement);
-          }
-
-          if (player.collidesWithScoringItem(this.scoringItems[i])) {
-            //#TODO fix first if statement
-            this.score += this.scoringItems[i].getPoints();
-            this.lives += this.scoringItems[i].getLives();
-            console.log(this.scoringItems[i].getName());
-            this.earnedCoins += this.scoringItems[i].getCoinValue();
-            this.scoringItems.splice(i, 1);
-          } else if (this.scoringItems[i].outOfCanvas()) {
-            this.scoringItems.splice(i, 1);
-          }
+      for (let i = 0; i < this.scoringItems.length; i++) {
+        if (
+          this.player.collidesWithScoringItem(this.scoringItems[i]) &&
+          this.scoringItems[i].getName() === "QuestionBox"
+        ) {
+          new InGameQuestions(
+            document.getElementById("canvas") as HTMLCanvasElement
+          );
         }
-      });
+
+        if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
+          //#TODO fix first if statement
+          this.score += this.scoringItems[i].getPoints();
+          this.lives += this.scoringItems[i].getLives();
+          console.log(this.scoringItems[i].getName());
+          this.earnedCoins += this.scoringItems[i].getCoinValue();
+          this.scoringItems.splice(i, 1);
+        } else if (this.scoringItems[i].outOfCanvas()) {
+          this.scoringItems.splice(i, 1);
+        }
+      }
     }
   }
 
-  //This function will be overwritten by OceanWorld
-  public drawBackgroundOcean() {}
   //This function will be overwritten by DesertWorld
-  public drawBackgroundDesert() {}
-  //This function will be overwritten by ArticWorld
-  public drawBackgroundArtic() {}
-  //This function will be overwritten by SwampWorld
-  public drawBackgroundSwamp() {}
+  public drawBackground() {}
 
   /**
    * Method that writes gameItems on the canvas
@@ -163,34 +143,15 @@ abstract class Game {
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    //Sets the background
-    if (this.worldName === "Ocean") {
-      this.drawBackgroundOcean();
-    }
-
-    if (this.worldName === "Desert") {
-      this.drawBackgroundDesert();
-    }
-
-    if (this.worldName === "Artic") {
-      this.drawBackgroundArtic();
-    }
-
-    if (this.worldName === "Swamp") {
-     this.drawBackgroundSwamp();
-    }
+    this.drawBackground();
 
     //Drawing the player
-    //TODO ifstatement to check what character it shoudl be
-    this.player.forEach((player) => {
-      player.draw(ctx);
-    });
+    this.player.draw(ctx);
 
     //Draws all the scoring items.
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
     }
-
     this.drawScore(ctx);
     this.drawLives(ctx);
   }
@@ -201,23 +162,27 @@ abstract class Game {
    */
   private drawScore(ctx: CanvasRenderingContext2D): void {
     //Draws the score
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       `Score: ${this.score}`,
       60,
-      this.canvas.width /2,
+      this.canvas.width / 2,
       this.canvas.height / 8,
       null,
       "red"
     );
-    
+
     //Draws the earned coins
-    ctx.drawImage(GameItem.loadNewImage("assets/img/GameItems/coin.png") , this.canvas.width /20, this.canvas.height / 8)
-    Start.writeTextToCanvas(
+    ctx.drawImage(
+      Utility.loadNewImage("assets/img/GameItems/coin.png"),
+      this.canvas.width / 20,
+      this.canvas.height / 8
+    );
+    Utility.writeTextToCanvas(
       ctx,
       `${this.earnedCoins}`,
       60,
-      this.canvas.width / 8 ,
+      this.canvas.width / 8,
       this.canvas.height / 5,
       null,
       "red"
@@ -231,42 +196,42 @@ abstract class Game {
   private drawLives(ctx: CanvasRenderingContext2D): void {
     if (this.lives == 3) {
       ctx.drawImage(
-        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"),
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives == 2) {
       ctx.drawImage(
-        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"),
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives == 1) {
       ctx.drawImage(
-        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"),
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives == 0) {
       ctx.drawImage(
-        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"),
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives < 0) {
       ctx.drawImage(
-        GameItem.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"),
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
   }
 
-  private gameOver(){
+  private gameOver() {
     new Endscreen(this.canvas, this.score);
   }
 }

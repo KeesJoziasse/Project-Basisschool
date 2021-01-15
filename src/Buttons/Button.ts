@@ -1,3 +1,5 @@
+/// <reference path="../DangerDash.ts" />
+
 abstract class Button {
   // #MERGEFIX DIT OOK VOOR DE IMG DOEN , dan hoef je alleen de x en y pos te fixen.
 
@@ -8,6 +10,7 @@ abstract class Button {
   protected xVelocity: number;
   protected canvas: HTMLCanvasElement;
   protected images: Images;
+  protected checkGameName: DangerDash;
 
   constructor(xPos: number, yPos: number, canvas: HTMLCanvasElement) {
     this.xPos = xPos;
@@ -37,87 +40,12 @@ abstract class Button {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
-    
-   ctx.drawImage(this.image, this.xPos, this.yPos);
+    ctx.drawImage(this.image, this.xPos, this.yPos);
   }
 
-  /**
-   * Method to handle the mouse event
-   * @param {MouseEvent} event - mouse event
-   */
-  public mouseHandler = (event: MouseEvent): void => {
-    
-    //console.log(`User clicked the: ${this.getButtonName()} button`);
-    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
-    
-    if (
-      event.clientX >= this.getButtonXPos() &&
-      event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
-      event.clientY >= this.getButtonYPos() &&
-      event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()
-    ) {
-      // looks if the buttons name match and get you to the right page
-      if (this.getButtonName() === "HighScore") {
-        new HighScore(document.getElementById("canvas") as HTMLCanvasElement);
-      }
-      if (this.getButtonName() === "UnlockDesert") {
-         console.log("Unlock Desert");
-      }
-
-      if (this.getButtonName() === "UnlockSwamp") {
-        console.log("Unlock Swamp");
-      }
-
-      if (this.getButtonName() === "UnlockArctic") {
-        console.log("Unlock Arctic");
-      }
-
-      if (this.getButtonName() === "UnlockYoshi") {
-        console.log("Unlock Yoshi");
-      }
-
-      if (this.getButtonName() === "UnlockAmongUs") {
-        console.log("UnlockAmongUs");
-      }
-
-      if (this.getButtonName() === "UnlockAsh") {
-        const ctx = this.canvas.getContext("2d");
-        
-        ctx.drawImage(Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png"), this.canvas.width / 2.9, this.canvas.height / 6 );
-        console.log("Unlock Ash");
-      }
-
-      if (this.getButtonName() === "UnlockSonic") {
-        console.log("Unlock Sonic");
-      }
-      
-      if (this.getButtonName() === "QandA") {
-        new GeneralQuestions(
-          document.getElementById("canvas") as HTMLCanvasElement
-        );
-      }
-      if (this.getButtonName() === "Shop") {
-        new Shop(document.getElementById("canvas") as HTMLCanvasElement);
-      }
-      if (this.getButtonName() === "RestartButton"){
-        new Start(document.getElementById("canvas") as HTMLCanvasElement);
-      }
-      if (this.getButtonName() === "NoButton"){
-        new Start(document.getElementById("canvas") as HTMLCanvasElement);
-      }
-      else if (this.getButtonName() === "BackToStart") {
-        new Start(document.getElementById("canvas") as HTMLCanvasElement);
-        
-      } else {
-        return null;
-      }
-      
-     }
-    //  console.log(`User clicked the: ${this.getButtonName()} button`);
-  };
-
-  public drawUnlockedAmongUs(){
-    // will be overwritten by UnlockAmongUs.TS
+  //TESTING
+  public logButtonName() {
+    console.log(this.name);
   }
 
   /**
@@ -136,6 +64,22 @@ abstract class Button {
     return this.image.height;
   }
 
- 
-
+  /**
+   * Method to handle the mouse event
+   * @param {MouseEvent} event - mouse event
+   */
+  public mouseHandler = (event: MouseEvent): void => {
+    //console.log(`User clicked the: ${this.getButtonName()} button`);
+    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    if (
+      event.clientX >= this.getButtonXPos() &&
+      event.clientX < this.getButtonXPos() + this.getButtonImageWidth() &&
+      event.clientY >= this.getButtonYPos() &&
+      event.clientY <= this.getButtonYPos() + this.getButtonImageHeight()
+    ) {
+      this.logButtonName();
+    } else {
+      return null;
+    }
+  };
 }

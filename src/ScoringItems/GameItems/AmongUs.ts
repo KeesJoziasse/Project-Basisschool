@@ -1,25 +1,28 @@
 /// <reference path="Player.ts" />
 
 class AmongUs extends Player {
+  private walk1: HTMLImageElement;
+  private walk2: HTMLImageElement;
+  private walk3: HTMLImageElement;
 
-  private walk1:HTMLImageElement;
-  private walk2:HTMLImageElement;
-  private walk3:HTMLImageElement;
-
-  public constructor(canvas: HTMLCanvasElement, characterName: string) {
-    super(canvas, characterName);
-    this.walk1 = GameItem.loadNewImage(
-      "./assets/img/Characters/AmongUs/among-us-walk-1.png"
-    );
-    this.walk2 = GameItem.loadNewImage(
+  public constructor(canvas: HTMLCanvasElement) {
+    super(canvas);
+    this.image = Utility.loadNewImage(
       "./assets/img/Characters/AmongUs/among-us-walk-2.png"
     );
-    this.walk3 = GameItem.loadNewImage(
+
+    this.walk1 = Utility.loadNewImage(
+      "./assets/img/Characters/AmongUs/among-us-walk-1.png"
+    );
+    this.walk2 = Utility.loadNewImage(
+      "./assets/img/Characters/AmongUs/among-us-walk-2.png"
+    );
+    this.walk3 = Utility.loadNewImage(
       "./assets/img/Characters/AmongUs/among-us-walk-3.png"
     );
   }
 
-  public AmongUsAnimation() {
+  public characterAnimationTest() {
     //Adds 1 to the frame counter.
     this.animationFrame++;
 

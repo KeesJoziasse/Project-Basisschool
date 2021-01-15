@@ -4,15 +4,17 @@ class Start {
   private buttons: Button[];
   private worldImages: Images[];
   private characterImages: Images[];
-  private images: Images[];
+  private startImages: Images[];
   private background: Images[];
   private indexCounterWorld: number;
   private indexCounterCharacter: number;
 
+  private test: DangerDash;
+
   //Constructor
-  public constructor(canvasId: HTMLCanvasElement) {
+  public constructor(canvas: HTMLCanvasElement) {
     // Construct all of the canvas
-    this.canvas = canvasId;
+    this.canvas = canvas;
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
@@ -26,7 +28,7 @@ class Start {
     this.characterImages = [];
 
     //The overall image array
-    this.images = [];
+    this.startImages = [];
 
     //Background cloud array
     this.background = [];
@@ -51,25 +53,12 @@ class Start {
 
     //Background loop
     this.backgroundLoop();
-    //The game loop.
-    this.loop();
+
+    this.draw();
 
     //The clickhandler
     document.addEventListener("click", this.mouseHandler);
-
-    //TEST AREA
   }
-
-  /**
-   * Method for the Game Loop
-   */
-  public loop = () => {
-    //Draws everythin while in the loop
-    this.draw();
-
-    // in the first loop no images are loaded
-    requestAnimationFrame(this.loop);
-  };
 
   /**
    * Draws all the necessary elements to the canvas
@@ -87,8 +76,8 @@ class Start {
     });
 
     //Draws all the images
-    this.images.forEach((image) => {
-      image.draw(ctx);
+    this.startImages.forEach((startImage) => {
+      startImage.draw(ctx);
     });
 
     //Draws all the buttons
@@ -108,7 +97,6 @@ class Start {
   }
 
   private buttonMaker() {
-
     //Initializing the buttons and pushing them to the array
     //Making the start button
     this.buttons.push(
@@ -139,7 +127,11 @@ class Start {
 
     //Making the left arrow for character selector
     this.buttons.push(
-      new PreviousCharacter(this.canvas.width / 4, this.canvas.height / 2 - 89, this.canvas)
+      new PreviousCharacter(
+        this.canvas.width / 4,
+        this.canvas.height / 2 - 89,
+        this.canvas
+      )
     );
 
     //Making the right arrow for character selector
@@ -172,7 +164,9 @@ class Start {
     );
 
     //QandA Button
-    this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 180, 50, this.canvas));
+    this.buttons.push(
+      new QuestionsAnswersButton(this.canvas.width - 180, 50, this.canvas)
+    );
   }
 
   private worldImageMaker() {
@@ -200,21 +194,33 @@ class Start {
       new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
     this.characterImages.push(
-      new YoshiUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+      new YoshiUnlocked(
+        this.canvas.width / 2 - 90,
+        this.canvas.height / 2 - 120
+      )
     );
     this.characterImages.push(
-      new YellowAmongUsUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+      new YellowAmongUsUnlocked(
+        this.canvas.width / 2 - 90,
+        this.canvas.height / 2 - 120
+      )
     );
     this.characterImages.push(
-      new GirlCharacterUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
+      new GirlCharacterUnlocked(
+        this.canvas.width / 2 - 90,
+        this.canvas.height / 2 - 120
+      )
     );
     this.characterImages.push(
-      new SonicUnlocked(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
-    )
+      new SonicUnlocked(
+        this.canvas.width / 2 - 90,
+        this.canvas.height / 2 - 120
+      )
+    );
   }
 
   private imageMaker() {
-    this.images.push(new Titel(this.canvas.width / 4, -40));
+    this.startImages.push(new Titel(this.canvas.width / 4, -40));
   }
 
   private backgroundLoop() {
@@ -237,6 +243,7 @@ class Start {
         this.worldSelector(button);
         this.characterSelector(button);
         this.startLevel(button);
+        this.checkCharacterName(button);
       }
     });
   };
@@ -297,82 +304,57 @@ class Start {
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
     ) {
-      new OceanWorld(
-        this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName(),
-      );
+      new OceanWorld(this.canvas);
     } else if (
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Artic"
     ) {
-      new ArticWorld(
-        this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName(),
-      );
+      new ArticWorld(this.canvas);
     } else if (
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
     ) {
-      new DesertWorld(
-        this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName(),
-      );
+      new DesertWorld(this.canvas);
     } else if (
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Swamp"
     ) {
-      new SwampWorld(
-        this.canvas,
-        this.worldImages[this.indexCounterWorld].getImageName(),
-      );
+      new SwampWorld(this.canvas);
     }
-
-    //this.player.push(new AmongUs(this.canvas, "AmongUs"));
-    //push player to array of Player[] 
   }
 
-  /**
-   * Writes text to the canvas
-   * @param {string} text - Text to write
-   * @param {number} fontSize - Font size in pixels
-   * @param {number} xCoordinate - Horizontal coordinate in pixels
-   * @param {number} yCoordinate - Vertical coordinate in pixels
-   * @param {string} alignment - Where to align the text
-   * @param {string} color - The color of the text
-   */
-  public static writeTextToCanvas(
-    ctx: CanvasRenderingContext2D,
-    text: string,
-    fontSize: number = 20,
-    xCoordinate: number,
-    yCoordinate: number,
-    alignment: CanvasTextAlign = "center",
-    color: string = "black"
-
-  ) {
-    ctx.font = `${fontSize}px Arial`;
-    ctx.fillStyle = color;
-    ctx.textAlign = alignment;
-    ctx.fillText(text, xCoordinate, yCoordinate);
-  }
-
-  /**
-   * Renders a random number between min and max
-   * @param {number} min - minimal time
-   * @param {number} max - maximal time
-   */
-  public static randomNumber(min: number, max: number): number {
-    return Math.round(Math.random() * (max - min) + min);
-  }
-
-  /**
-   * Loads an image so it doesn't flicker
-   * @param {HTMLImageElement} source
-   * @return HTMLImageElement - returns an image
-   */
-  public static loadNewImage(source: string): HTMLImageElement {
-    const img = new Image();
-    img.src = source;
-    return img;
+  private checkCharacterName(button: Button) {
+    if (
+      button.getButtonName() == "StartGame" &&
+      this.characterImages[this.indexCounterCharacter].getImageName() ===
+        "AmongUsLime"
+    ) {
+      new AmongUs(this.canvas);
+      console.log("AmongUsLime");
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.characterImages[this.indexCounterCharacter].getImageName() ===
+        "YoshiUnlocked"
+    ) {
+      new Yoshi(this.canvas);
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.characterImages[this.indexCounterCharacter].getImageName() ===
+        "UnlockYellowAmongUs"
+    ) {
+      new YellowAmongUs(this.canvas);
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.characterImages[this.indexCounterCharacter].getImageName() ===
+        "GirlCharacterUnlocked"
+    ) {
+      new Girl(this.canvas);
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.characterImages[this.indexCounterCharacter].getImageName() ==
+        "SonicUnlocked"
+    ) {
+      new Sonic(this.canvas);
+    }
   }
 }
