@@ -53,20 +53,14 @@ abstract class Player extends GameItem {
   }
 
   //Will be overwritten by AmongUs class
-  public characterAnimationTest(){}
+  public characterAnimation(){}
 
   /**
   //  * Render the objects
   //  * @param ctx The CanvasRenderingContext2D of the canvas to draw on
   //  */
   public draw(ctx: CanvasRenderingContext2D) {
-    this.characterAnimationTest();
-    ctx.drawImage(
-      this.image,
-      // Center the image in the lane with the x coordinates
-      this.xPos,
-      this.yPos
-    );
+    this.characterAnimation();
   }
 
   /*** Method that checks if a gameItem collides with the player    

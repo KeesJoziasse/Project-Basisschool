@@ -7,6 +7,7 @@ class DangerDash {
     constructor(canvas) {
         this.loop = () => {
             this.DangerDashFrame++;
+            console.log(this.DangerDashFrame);
             if (this.screenName === "Start") {
                 this.start.draw();
             }
@@ -1045,10 +1046,9 @@ class Player extends GameItem {
             this.yPos = this.lowerLane;
         }
     }
-    characterAnimationTest() { }
+    characterAnimation() { }
     draw(ctx) {
-        this.characterAnimationTest();
-        ctx.drawImage(this.image, this.xPos, this.yPos);
+        this.characterAnimation();
     }
     collidesWithScoringItem(ScoringItem) {
         if (this.xPos + this.image.width > ScoringItem.getPositionX() &&
@@ -1070,7 +1070,7 @@ class AmongUs extends Player {
         this.walk2 = Utility.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
         this.walk3 = Utility.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-3.png");
     }
-    characterAnimationTest() {
+    characterAnimation() {
         this.animationFrame++;
         if (this.animationFrame >= 20) {
             this.animationFrame -= 19;
