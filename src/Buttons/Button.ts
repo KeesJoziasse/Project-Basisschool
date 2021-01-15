@@ -1,3 +1,5 @@
+/// <reference path="../DangerDash.ts" />
+
 abstract class Button {
   // #MERGEFIX DIT OOK VOOR DE IMG DOEN , dan hoef je alleen de x en y pos te fixen.
 
@@ -83,7 +85,7 @@ abstract class Button {
       if (this.getButtonName() === "UnlockAsh") {
         const ctx = this.canvas.getContext("2d");
         
-        ctx.drawImage(Start.loadNewImage("./assets/img/players/yellowAUUnlocked.png"), this.canvas.width / 2.9, this.canvas.height / 6 );
+        ctx.drawImage(Utility.loadNewImage("./assets/img/players/yellowAUUnlocked.png"), this.canvas.width / 2.9, this.canvas.height / 6 );
         console.log("Unlock Ash");
       }
 
@@ -93,20 +95,21 @@ abstract class Button {
       
       if (this.getButtonName() === "QandA") {
         new GeneralQuestions(
-          document.getElementById("canvas") as HTMLCanvasElement
+          this.canvas
         );
       }
       if (this.getButtonName() === "Shop") {
-        new Shop(document.getElementById("canvas") as HTMLCanvasElement);
+        console.log("shopbutton clicked!");
+        
       }
       if (this.getButtonName() === "RestartButton"){
-        new Start(document.getElementById("canvas") as HTMLCanvasElement);
+        new Start(this.canvas);
       }
       if (this.getButtonName() === "NoButton"){
-        new Start(document.getElementById("canvas") as HTMLCanvasElement);
+        new Start(this.canvas);
       }
       else if (this.getButtonName() === "BackToStart") {
-        new Start(document.getElementById("canvas") as HTMLCanvasElement);
+        new Start(this.canvas);
         
       } else {
         return null;
@@ -133,7 +136,4 @@ abstract class Button {
   public getButtonImageHeight(): number {
     return this.image.height;
   }
-
- 
-
 }
