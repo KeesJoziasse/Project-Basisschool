@@ -80,10 +80,11 @@ class Start {
       startImage.draw(ctx);
     });
 
-    //Draws all the buttons
-    this.buttons.forEach((button) => {
-      button.draw(ctx);
-    });
+    //Overwritten by DangerDash.ts
+    // //Draws all the buttons
+    // this.buttons.forEach((button) => {
+    //   button.draw(ctx);
+    // });
 
     //Drawing the characters
     for (let i = 0; i < this.characterImages.length; i++) {
@@ -96,78 +97,78 @@ class Start {
     }
   }
 
-  private buttonMaker() {
-    //Initializing the buttons and pushing them to the array
-    //Making the start button
-    this.buttons.push(
-      new StartGameButton(
-        this.canvas.width / 2 - 329 / 2, //Fix this secton for centering no magic numbers #TODO
-        (this.canvas.height / 5) * 4 - 100 / 2, //Fix this secton for centering no magic numbers #TODO
-        this.canvas
-      )
-    );
+  // private buttonMaker() {
+  //   //Initializing the buttons and pushing them to the array
+  //   //Making the start button
+  //   this.buttons.push(
+  //     new StartGameButton(
+  //       this.canvas.width / 2 - 329 / 2, //Fix this secton for centering no magic numbers #TODO
+  //       (this.canvas.height / 5) * 4 - 100 / 2, //Fix this secton for centering no magic numbers #TODO
+  //       this.canvas
+  //     )
+  //   );
 
-    //Making the shop button
-    this.buttons.push(
-      new ShopButton(
-        this.canvas.width / 5 - 329 / 2,
-        (this.canvas.height / 6) * 4,
-        this.canvas
-      )
-    );
+  //   //Making the shop button
+  //   this.buttons.push(
+  //     new ShopButton(
+  //       this.canvas.width / 5 - 329 / 2,
+  //       (this.canvas.height / 6) * 4,
+  //       this.canvas
+  //     )
+  //   );
 
-    //Making the highscore button
-    this.buttons.push(
-      new HighscoreButton(
-        (this.canvas.width / 5) * 4 - 329 / 2,
-        (this.canvas.height / 6) * 4,
-        this.canvas
-      )
-    );
+  //   //Making the highscore button
+  //   this.buttons.push(
+  //     new HighscoreButton(
+  //       (this.canvas.width / 5) * 4 - 329 / 2,
+  //       (this.canvas.height / 6) * 4,
+  //       this.canvas
+  //     )
+  //   );
 
-    //Making the left arrow for character selector
-    this.buttons.push(
-      new PreviousCharacter(
-        this.canvas.width / 4,
-        this.canvas.height / 2 - 89,
-        this.canvas
-      )
-    );
+  //   //Making the left arrow for character selector
+  //   this.buttons.push(
+  //     new PreviousCharacter(
+  //       this.canvas.width / 4,
+  //       this.canvas.height / 2 - 89,
+  //       this.canvas
+  //     )
+  //   );
 
-    //Making the right arrow for character selector
-    this.buttons.push(
-      new NextCharacter(
-        (this.canvas.width / 4) * 3 - 143,
-        this.canvas.height / 2 - 89,
-        1,
-        this.canvas
-      )
-    );
+  //   //Making the right arrow for character selector
+  //   this.buttons.push(
+  //     new NextCharacter(
+  //       (this.canvas.width / 4) * 3 - 143,
+  //       this.canvas.height / 2 - 89,
+  //       1,
+  //       this.canvas
+  //     )
+  //   );
 
-    //Making the left arrow for level selector
-    this.buttons.push(
-      new PreviousWorld(
-        (this.canvas.width / 7) * 2,
-        this.canvas.height / 3 - 89,
-        this.canvas
-      )
-    );
+  //   //Making the left arrow for level selector
+  //   this.buttons.push(
+  //     new PreviousWorld(
+  //       (this.canvas.width / 7) * 2,
+  //       this.canvas.height / 3 - 89,
+  //       this.canvas
+  //     )
+  //   );
 
-    //Making the right arrow for level selector
-    this.buttons.push(
-      new NextWorld(
-        (this.canvas.width / 7) * 5 - 143,
-        this.canvas.height / 3 - 89,
-        1,
-        this.canvas
-      )
-    );
+  //   //Making the right arrow for level selector
+  //   this.buttons.push(
+  //     new NextWorld(
+  //       (this.canvas.width / 7) * 5 - 143,
+  //       this.canvas.height / 3 - 89,
+  //       1,
+  //       this.canvas
+  //     )
+  //   );
 
-    //QandA Button
-    this.buttons.push(
-      new QuestionsAnswersButton(this.canvas.width - 180, 50, this.canvas)
-    );
-  }
+  //   //QandA Button
+  //   this.buttons.push(
+  //     new QuestionsAnswersButton(this.canvas.width - 180, 50, this.canvas)
+  //   );
+  // }
 
   private worldImageMaker() {
     this.worldImages.push(
@@ -242,7 +243,7 @@ class Start {
       ) {
         this.worldSelector(button);
         this.characterSelector(button);
-        this.startLevel(button);
+        //this.startLevel(button);
         this.checkCharacterName(button);
       }
     });
@@ -299,29 +300,29 @@ class Start {
     }
   }
 
-  private startLevel(button: Button) {
-    if (
-      button.getButtonName() == "StartGame" &&
-      this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
-    ) {
-      new OceanWorld(this.canvas);
-    } else if (
-      button.getButtonName() == "StartGame" &&
-      this.worldImages[this.indexCounterWorld].getImageName() == "Artic"
-    ) {
-      new ArticWorld(this.canvas);
-    } else if (
-      button.getButtonName() == "StartGame" &&
-      this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
-    ) {
-      new DesertWorld(this.canvas);
-    } else if (
-      button.getButtonName() == "StartGame" &&
-      this.worldImages[this.indexCounterWorld].getImageName() == "Swamp"
-    ) {
-      new SwampWorld(this.canvas);
-    }
-  }
+  // private startLevel(button: Button) {
+  //   if (
+  //     button.getButtonName() == "StartGame" &&
+  //     this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
+  //   ) {
+  //     new OceanWorld(this.canvas);
+  //   } else if (
+  //     button.getButtonName() == "StartGame" &&
+  //     this.worldImages[this.indexCounterWorld].getImageName() == "Artic"
+  //   ) {
+  //     new ArticWorld(this.canvas);
+  //   } else if (
+  //     button.getButtonName() == "StartGame" &&
+  //     this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
+  //   ) {
+  //     new DesertWorld(this.canvas);
+  //   } else if (
+  //     button.getButtonName() == "StartGame" &&
+  //     this.worldImages[this.indexCounterWorld].getImageName() == "Swamp"
+  //   ) {
+  //     new SwampWorld(this.canvas);
+  //   }
+  // }
 
   private checkCharacterName(button: Button) {
     if (
