@@ -4,6 +4,7 @@ class DangerDash {
   private earnedCoins: number;
   private DangerDashFrame: number;
   private buttons: Button[];
+  private images: Images[];
 
   private start: Start;
   private shop: Shop;
@@ -18,7 +19,7 @@ class DangerDash {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-    this.earnedCoins = 0;
+    this.earnedCoins = 450;
     this.screenName = "StartScreen";
 
     this.start = new Start(this.canvas);
@@ -29,6 +30,7 @@ class DangerDash {
     this.DangerDashFrame = 0;
 
     this.buttons = [];
+    this.images = [];
 
     //Adding an EventListener for clickdetection
     document.addEventListener("click", this.mouseHandlerStart);
@@ -44,7 +46,7 @@ class DangerDash {
     //Counting Frames of main loop
     this.DangerDashFrame++;
     //console.log(this.DangerDashFrame);
-    console.log(this.buttons);
+    //console.log(this.buttons);
 
     if (this.screenName === "StartScreen") {
       //FirstFrame sets buttons in the buttons[]
@@ -66,12 +68,14 @@ class DangerDash {
     }
 
     if (this.screenName === "ShopScreen") {
-      console.log("SHOP RUNNING");
-      this.shop.draw();
+      //FirstFrame sets buttons in the buttons[]
+      if (this.DangerDashFrame === 1) {
+        this.buttonMakerShopScreen();
+      }
+      this.DrawShop();
     }
 
     if (this.screenName === "HighScoreScreen") {
-      console.log("Highscore RUNNING");
       //FirstFrame sets buttons in the buttons[]
       if (this.DangerDashFrame === 1) {
         this.buttonMakerGeneralQuestions();
@@ -107,15 +111,15 @@ class DangerDash {
         //Based on the screenName you have a clickDetection
         if (this.screenName === "StartScreen") {
           this.startScreenDetection(button);
-        } else if (this.screenName === "GameScreen"){
-
-        } else if (this.screenName === "ShopScreen"){
-          
-        } else if (this.screenName === "HighScoreScreen"){
+        } else if (this.screenName === "GameScreen") {
+          //ree
+        } else if (this.screenName === "ShopScreen") {
+          this.ShopScreenDetection(button);
+        } else if (this.screenName === "HighScoreScreen") {
           this.HighScoreScreenDetection(button);
-        }  else if (this.screenName === "Q&AScreen"){
+        } else if (this.screenName === "Q&AScreen") {
           this.QAndAScreenDetection(button);
-        }        
+        }
       } else {
         return null;
       }
@@ -123,8 +127,119 @@ class DangerDash {
   };
 
   /**
+   * Draws the Shop (images,buttons, + earnedCoins(Dynamic))
+   */
+  private DrawShop() {
+    this.shop.draw();
+    // Amount of money in the player's bank
+    const ctx = this.canvas.getContext("2d");
+    Utility.writeTextToCanvas(
+      ctx,
+      `${this.earnedCoins}`,
+      60,
+      this.canvas.width / 2,
+      this.canvas.height / 10,
+      "center",
+      "white"
+    );
+
+    this.images.forEach((image) => {
+      image.draw(ctx);
+    });
+    this.buttons.forEach((button) => {
+      button.draw();
+    });
+  }
+
+  /**
+   * ShopScreen button detections that if you click on a certain button the screenName will be changed
+   * @param button
+   */
+  private ShopScreenDetection(button: Button) {
+    if (button.getButtonName() === "BackToStart") {
+      this.screenName = "StartScreen";
+      this.resetButtonsAndDangerDashFrame();
+    }
+    //UnlockButtons
+    if (button.getButtonName() === "UnlockYoshi" && this.earnedCoins >= 50) {
+      this.earnedCoins -= 50;
+      this.images.push(
+        new YoshiUnlocked(
+          this.canvas.width / 7.9,
+          this.canvas.height / 6
+        )
+      );
+      this.DeleteSpecificShopButton("UnlockYoshi");
+      console.log(this.images);
+    } else if (button.getButtonName() === "UnlockAmongUs" && this.earnedCoins >= 100) {
+      this.earnedCoins -= 100;
+      this.images.push(
+        new YellowAmongUsUnlocked(
+          this.canvas.width / 2.9,
+          this.canvas.height / 6
+        )
+      );
+      this.DeleteSpecificShopButton("UnlockAmongUs");
+    } else if (button.getButtonName() === "UnlockGirlCharacter" && this.earnedCoins >= 150) {
+      this.earnedCoins -= 150;
+      this.images.push(
+        new GirlCharacterUnlocked(
+          this.canvas.width / 1.75,
+          this.canvas.height / 6
+        )
+      );
+      this.DeleteSpecificShopButton("UnlockGirlCharacter");
+    } else if (button.getButtonName() === "UnlockSonic" && this.earnedCoins >= 200) {
+      this.earnedCoins -= 200;
+      this.images.push(
+        new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6)
+      );
+      this.DeleteSpecificShopButton("UnlockSonic");
+    } else if (button.getButtonName() === "UnlockSwamp" && this.earnedCoins >= 200) {
+      this.earnedCoins -= 200;
+      this.images.push(
+        new SwampPlanetUnlocked(
+          this.canvas.width / 2.33,
+          this.canvas.height / 1.64
+        )
+      );
+      this.DeleteSpecificShopButton("UnlockSwamp");
+    } else if (button.getButtonName() === "UnlockDesert" && this.earnedCoins >= 100) {
+      this.earnedCoins -= 100;
+      this.images.push(
+        new DesertPlanetUnlocked(
+          this.canvas.width / 4.3,
+          this.canvas.height / 1.6
+        )
+      );
+      this.DeleteSpecificShopButton("UnlockDesert");
+    } else if (button.getButtonName() === "UnlockArctic" && this.earnedCoins >= 300) {
+      this.earnedCoins -= 300;
+      this.images.push(
+        new ArcticPlanetUnlocked(
+          this.canvas.width / 1.56,
+          this.canvas.height / 1.646
+        )
+      );
+      this.DeleteSpecificShopButton("UnlockArctic");
+    }
+  }
+
+  /**
+   * Splices the right button based on name
+   * @param buttonname name of the button that will be deleted
+   */
+  private DeleteSpecificShopButton(buttonname: string) {
+    this.buttons.forEach((button, index) => {
+      if (button.getButtonName() === `${buttonname}`) {
+        this.buttons.splice(index, 1);
+      }
+    });
+  }
+
+  /**
    * HighScorescreen button detections that if you click on a certain button the screenName will be changed
-   * @param button 
+   * @param button
    */
   private HighScoreScreenDetection(button: Button) {
     if (button.getButtonName() === "BackToStart") {
@@ -135,7 +250,7 @@ class DangerDash {
 
   /**
    * QAndAscreen button detections that if you click on a certain button the screenName will be changed
-   * @param button 
+   * @param button
    */
   private QAndAScreenDetection(button: Button) {
     if (button.getButtonName() === "BackToStart") {
@@ -182,7 +297,7 @@ class DangerDash {
     );
   }
 
-  //Pushing buttons to buttons[]
+  //Pushing Start-Buttons to buttons[]
   private buttonMakerStartScreen() {
     //Initializing the buttons and pushing them to the array
     //Making the start button
@@ -253,6 +368,70 @@ class DangerDash {
     //QandA Button
     this.buttons.push(
       new QuestionsAnswersButton(this.canvas.width - 180, 50, this.canvas)
+    );
+  }
+
+  //Pushing the Shop-Buttons to buttons[]
+  private buttonMakerShopScreen() {
+    this.buttons.push(
+      new BackToStart(
+        (this.canvas.width / 5) * 0.05,
+        (this.canvas.height / 5) * 0.09,
+        this.canvas
+      )
+    );
+
+    // Unlock buttons for the worlds
+    this.buttons.push(
+      new UnlockDesert(
+        this.canvas.width / 4.5,
+        this.canvas.height / 1.08,
+        this.canvas
+      )
+    );
+    this.buttons.push(
+      new UnlockArctic(
+        this.canvas.width / 1.56,
+        this.canvas.height / 1.08,
+        this.canvas
+      )
+    );
+    this.buttons.push(
+      new UnlockSwamp(
+        this.canvas.width / 2.31,
+        this.canvas.height / 1.08,
+        this.canvas
+      )
+    );
+
+    /// Unlock buttons for the characters
+    this.buttons.push(
+      new UnlockYoshi(
+        this.canvas.width / 9,
+        this.canvas.height / 2.15,
+        this.canvas
+      )
+    );
+    this.buttons.push(
+      new UnlockAmongUs(
+        this.canvas.width / 3.1,
+        this.canvas.height / 2.15,
+        this.canvas
+      )
+    );
+    this.buttons.push(
+      new UnlockGirlCharacter(
+        this.canvas.width / 1.87,
+        this.canvas.height / 2.15,
+        this.canvas
+      )
+    );
+    this.buttons.push(
+      new UnlockSonic(
+        this.canvas.width / 1.34,
+        this.canvas.height / 2.15,
+        this.canvas
+      )
     );
   }
 
