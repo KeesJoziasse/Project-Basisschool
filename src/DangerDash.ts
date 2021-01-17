@@ -4,12 +4,13 @@ class DangerDash {
   private earnedCoins: number;
   private DangerDashFrame: number;
   private buttons: Button[];
-  private shopImages: Images[];
+  private images: Images[];
 
   private start: Start;
   private shop: Shop;
   private highScore: HighScore;
   private generalQuestions: GeneralQuestions;
+  private game: Game;
 
   private screenName: string;
 
@@ -26,11 +27,12 @@ class DangerDash {
     this.shop = new Shop(this.canvas);
     this.highScore = new HighScore(this.canvas);
     this.generalQuestions = new GeneralQuestions(this.canvas);
+    this.game = new Game(this.canvas)
 
     this.DangerDashFrame = 0;
 
     this.buttons = [];
-    this.shopImages = [];
+    this.images = [];
 
     //Adding an EventListener for clickdetection
     document.addEventListener("click", this.mouseHandlerStart);
@@ -44,27 +46,24 @@ class DangerDash {
    */
   public loop = () => {
     //Counting Frames of main loop
+    console.log(this.screenName);
+    
     this.DangerDashFrame++;
-    //console.log(this.DangerDashFrame);
-    //console.log(this.buttons);
-
     if (this.screenName === "StartScreen") {
       //FirstFrame sets buttons in the buttons[]
       if (this.DangerDashFrame === 1) {
         this.buttonMakerStartScreen();
       }
-
       //Draws startScreen
       this.start.draw();
-
       //Draws all the buttons
       this.buttons.forEach((button) => {
         button.draw();
       });
     }
-
+    
     if (this.screenName === "GameScreen") {
-      console.log("GAME RUNNING");
+      // this.game.draw();
     }
 
     if (this.screenName === "ShopScreen") {
@@ -112,8 +111,7 @@ class DangerDash {
         //Based on the screenName you have a clickDetection
         if (this.screenName === "StartScreen") {
           this.startScreenDetection(button);
-        } else if (this.screenName === "GameScreen"){
-
+        } else if (this.screenName === "GameScreen"){          
         } else if (this.screenName === "ShopScreen"){
           if (button.getButtonName() === "BackToStart") {
             this.screenName = "StartScreen";
@@ -190,8 +188,10 @@ class DangerDash {
     this.start.characterSelector(button);
     button.logButtonName();
     if (button.getButtonName() === "StartGame") {
+      console.log("Start button has been clicked.");
       this.screenName = "GameScreen";
       this.start.checkCharacterName(button);
+      this.start.startLevel(button);
       //Clears the ButtonArray
       this.resetButtonsAndDangerDashFrame();
     } else if (button.getButtonName() === "Shop") {

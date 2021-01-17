@@ -296,29 +296,29 @@ class Start {
     }
   }
 
-  // private startLevel(button: Button) {
-  //   if (
-  //     button.getButtonName() == "StartGame" &&
-  //     this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
-  //   ) {
-  //     new OceanWorld(this.canvas);
-  //   } else if (
-  //     button.getButtonName() == "StartGame" &&
-  //     this.worldImages[this.indexCounterWorld].getImageName() == "Artic"
-  //   ) {
-  //     new ArticWorld(this.canvas);
-  //   } else if (
-  //     button.getButtonName() == "StartGame" &&
-  //     this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
-  //   ) {
-  //     new DesertWorld(this.canvas);
-  //   } else if (
-  //     button.getButtonName() == "StartGame" &&
-  //     this.worldImages[this.indexCounterWorld].getImageName() == "Swamp"
-  //   ) {
-  //     new SwampWorld(this.canvas);
-  //   }
-  // }
+  public startLevel(button: Button) {
+    if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
+    ) {
+      new OceanWorld(this.canvas);
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Artic"
+    ) {
+      new ArticWorld(this.canvas);
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
+    ) {
+      new DesertWorld(this.canvas);
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Swamp"
+    ) {
+      new SwampWorld(this.canvas);
+    }
+  }
 
   public checkCharacterName(button: Button) {
     if (
@@ -327,7 +327,6 @@ class Start {
         "AmongUsLime"
     ) {
       new AmongUs(this.canvas);
-      console.log("AmongUsLime");
     } else if (
       button.getButtonName() == "StartGame" &&
       this.characterImages[this.indexCounterCharacter].getImageName() ===
