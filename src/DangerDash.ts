@@ -23,7 +23,7 @@ class DangerDash {
 
     this.start = new Start(this.canvas);
     this.shop = new Shop(this.canvas);
-    //this.highScore = new HighScore(this.canvas);
+    this.highScore = new HighScore(this.canvas);
     this.generalQuestions = new GeneralQuestions(this.canvas);
 
     this.DangerDashFrame = 0;
@@ -44,43 +44,46 @@ class DangerDash {
     //Counting Frames of main loop
     this.DangerDashFrame++;
     //console.log(this.DangerDashFrame);
+    console.log(this.buttons);
 
     if (this.screenName === "StartScreen") {
+      //FirstFrame sets buttons in the buttons[]
+      if (this.DangerDashFrame === 1) {
+        this.buttonMakerStartScreen();
+      }
 
       //Draws startScreen
       this.start.draw();
 
-      if(this.DangerDashFrame === 1){
-        //Pushing the startButtons
-        this.buttonMakerStartScreen();
-        console.log(this.buttons);
-      }
-      
       //Draws all the buttons
       this.buttons.forEach((button) => {
         button.draw();
       });
     }
 
-    if(this.screenName === "GameScreen"){
+    if (this.screenName === "GameScreen") {
       console.log("GAME RUNNING");
-      //clears the array of buttons
-      this.buttons = [];
-      console.log(this.buttons);
     }
 
-    if(this.screenName === "ShopScreen"){
+    if (this.screenName === "ShopScreen") {
       console.log("SHOP RUNNING");
       this.shop.draw();
     }
 
-    if(this.screenName === "HighScoreScreen"){
+    if (this.screenName === "HighScoreScreen") {
       console.log("Highscore RUNNING");
-      //TODO highscore loop weghalen
+      //FirstFrame sets buttons in the buttons[]
+      if (this.DangerDashFrame === 1) {
+        this.buttonMakerGeneralQuestions();
+      }
+      this.highScore.draw();
     }
 
-    if(this.screenName === "Q&AScreen"){
-      console.log("Q&A RUNNING");
+    if (this.screenName === "Q&AScreen") {
+      //FirstFrame sets buttons in the buttons[]
+      if (this.DangerDashFrame === 1) {
+        this.buttonMakerGeneralQuestions();
+      }
       this.generalQuestions.draw();
     }
 
@@ -102,9 +105,17 @@ class DangerDash {
         event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
       ) {
         //Based on the screenName you have a clickDetection
-        if(this.screenName === "StartScreen") {
-          this.startScreenDetection(button); 
-        } 
+        if (this.screenName === "StartScreen") {
+          this.startScreenDetection(button);
+        } else if (this.screenName === "GameScreen"){
+
+        } else if (this.screenName === "ShopScreen"){
+          
+        } else if (this.screenName === "HighScoreScreen"){
+          this.HighScoreScreenDetection(button);
+        }  else if (this.screenName === "Q&AScreen"){
+          this.QAndAScreenDetection(button);
+        }        
       } else {
         return null;
       }
@@ -112,8 +123,30 @@ class DangerDash {
   };
 
   /**
-   * Startscreen button detections that if you click on a certain button the screenName will be changed
+   * HighScorescreen button detections that if you click on a certain button the screenName will be changed
    * @param button 
+   */
+  private HighScoreScreenDetection(button: Button) {
+    if (button.getButtonName() === "BackToStart") {
+      this.screenName = "StartScreen";
+      this.resetButtonsAndDangerDashFrame();
+    }
+  }
+
+  /**
+   * QAndAscreen button detections that if you click on a certain button the screenName will be changed
+   * @param button 
+   */
+  private QAndAScreenDetection(button: Button) {
+    if (button.getButtonName() === "BackToStart") {
+      this.screenName = "StartScreen";
+      this.resetButtonsAndDangerDashFrame();
+    }
+  }
+
+  /**
+   * Startscreen button detections that if you click on a certain button the screenName will be changed
+   * @param button
    */
   private startScreenDetection(button: Button) {
     this.start.worldSelector(button);
@@ -121,15 +154,32 @@ class DangerDash {
     button.logButtonName();
     if (button.getButtonName() === "StartGame") {
       this.screenName = "GameScreen";
-      console.log(this.screenName);
       this.start.checkCharacterName(button);
+      //Clears the ButtonArray
+      this.resetButtonsAndDangerDashFrame();
     } else if (button.getButtonName() === "Shop") {
       this.screenName = "ShopScreen";
+      //Clears the ButtonArray
+      this.resetButtonsAndDangerDashFrame();
     } else if (button.getButtonName() === "HighScore") {
       this.screenName = "HighScoreScreen";
+      //Clears the ButtonArray
+      this.resetButtonsAndDangerDashFrame();
     } else if (button.getButtonName() === "QandA") {
       this.screenName = "Q&AScreen";
+      //Clears the ButtonArray
+      this.resetButtonsAndDangerDashFrame();
     }
+  }
+
+  private buttonMakerGeneralQuestions() {
+    this.buttons.push(
+      new BackToStart(
+        (this.canvas.width / 5) * 0.05,
+        (this.canvas.height / 5) * 0.09,
+        this.canvas
+      )
+    );
   }
 
   //Pushing buttons to buttons[]
@@ -207,7 +257,8 @@ class DangerDash {
   }
 
   //Clears the Buttons[] and makes it empty again
-  private deleteButtons() {
+  private resetButtonsAndDangerDashFrame() {
     this.buttons = [];
+    this.DangerDashFrame = 0;
   }
 }

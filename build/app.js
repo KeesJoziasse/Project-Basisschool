@@ -7,20 +7,18 @@ class DangerDash {
     constructor(canvas) {
         this.loop = () => {
             this.DangerDashFrame++;
+            console.log(this.buttons);
             if (this.screenName === "StartScreen") {
-                this.start.draw();
                 if (this.DangerDashFrame === 1) {
                     this.buttonMakerStartScreen();
-                    console.log(this.buttons);
                 }
+                this.start.draw();
                 this.buttons.forEach((button) => {
                     button.draw();
                 });
             }
             if (this.screenName === "GameScreen") {
                 console.log("GAME RUNNING");
-                this.buttons = [];
-                console.log(this.buttons);
             }
             if (this.screenName === "ShopScreen") {
                 console.log("SHOP RUNNING");
@@ -28,9 +26,15 @@ class DangerDash {
             }
             if (this.screenName === "HighScoreScreen") {
                 console.log("Highscore RUNNING");
+                if (this.DangerDashFrame === 1) {
+                    this.buttonMakerGeneralQuestions();
+                }
+                this.highScore.draw();
             }
             if (this.screenName === "Q&AScreen") {
-                console.log("Q&A RUNNING");
+                if (this.DangerDashFrame === 1) {
+                    this.buttonMakerGeneralQuestions();
+                }
                 this.generalQuestions.draw();
             }
             requestAnimationFrame(this.loop);
@@ -45,6 +49,16 @@ class DangerDash {
                     if (this.screenName === "StartScreen") {
                         this.startScreenDetection(button);
                     }
+                    else if (this.screenName === "GameScreen") {
+                    }
+                    else if (this.screenName === "ShopScreen") {
+                    }
+                    else if (this.screenName === "HighScoreScreen") {
+                        this.HighScoreScreenDetection(button);
+                    }
+                    else if (this.screenName === "Q&AScreen") {
+                        this.QAndAScreenDetection(button);
+                    }
                 }
                 else {
                     return null;
@@ -58,11 +72,24 @@ class DangerDash {
         this.screenName = "StartScreen";
         this.start = new Start(this.canvas);
         this.shop = new Shop(this.canvas);
+        this.highScore = new HighScore(this.canvas);
         this.generalQuestions = new GeneralQuestions(this.canvas);
         this.DangerDashFrame = 0;
         this.buttons = [];
         document.addEventListener("click", this.mouseHandlerStart);
         this.loop();
+    }
+    HighScoreScreenDetection(button) {
+        if (button.getButtonName() === "BackToStart") {
+            this.screenName = "StartScreen";
+            this.resetButtonsAndDangerDashFrame();
+        }
+    }
+    QAndAScreenDetection(button) {
+        if (button.getButtonName() === "BackToStart") {
+            this.screenName = "StartScreen";
+            this.resetButtonsAndDangerDashFrame();
+        }
     }
     startScreenDetection(button) {
         this.start.worldSelector(button);
@@ -70,18 +97,24 @@ class DangerDash {
         button.logButtonName();
         if (button.getButtonName() === "StartGame") {
             this.screenName = "GameScreen";
-            console.log(this.screenName);
             this.start.checkCharacterName(button);
+            this.resetButtonsAndDangerDashFrame();
         }
         else if (button.getButtonName() === "Shop") {
             this.screenName = "ShopScreen";
+            this.resetButtonsAndDangerDashFrame();
         }
         else if (button.getButtonName() === "HighScore") {
             this.screenName = "HighScoreScreen";
+            this.resetButtonsAndDangerDashFrame();
         }
         else if (button.getButtonName() === "QandA") {
             this.screenName = "Q&AScreen";
+            this.resetButtonsAndDangerDashFrame();
         }
+    }
+    buttonMakerGeneralQuestions() {
+        this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09, this.canvas));
     }
     buttonMakerStartScreen() {
         this.buttons.push(new StartGameButton(this.canvas.width / 2 - 329 / 2, (this.canvas.height / 5) * 4 - 100 / 2, this.canvas));
@@ -93,8 +126,9 @@ class DangerDash {
         this.buttons.push(new NextWorld((this.canvas.width / 7) * 5 - 143, this.canvas.height / 3 - 89, 1, this.canvas));
         this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 180, 50, this.canvas));
     }
-    deleteButtons() {
+    resetButtonsAndDangerDashFrame() {
         this.buttons = [];
+        this.DangerDashFrame = 0;
     }
 }
 class KeyboardListener {
@@ -1737,10 +1771,6 @@ class GeneralQuestions {
 }
 class HighScore {
     constructor(canvasId) {
-        this.loop = () => {
-            this.draw();
-            requestAnimationFrame(this.loop);
-        };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
@@ -1748,7 +1778,6 @@ class HighScore {
         this.buttons = [];
         this.buttonMaker();
         this.imageMaker();
-        this.loop();
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
