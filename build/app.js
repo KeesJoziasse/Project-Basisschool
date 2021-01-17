@@ -7,7 +7,6 @@ class DangerDash {
     constructor(canvas) {
         this.loop = () => {
             this.DangerDashFrame++;
-            console.log(this.buttons);
             if (this.screenName === "StartScreen") {
                 if (this.DangerDashFrame === 1) {
                     this.buttonMakerStartScreen();
@@ -22,10 +21,12 @@ class DangerDash {
             }
             if (this.screenName === "ShopScreen") {
                 console.log("SHOP RUNNING");
-                this.shop.draw();
+                if (this.DangerDashFrame === 1) {
+                    this.buttonMakerShopScreen();
+                }
+                this.DrawShop();
             }
             if (this.screenName === "HighScoreScreen") {
-                console.log("Highscore RUNNING");
                 if (this.DangerDashFrame === 1) {
                     this.buttonMakerGeneralQuestions();
                 }
@@ -52,6 +53,24 @@ class DangerDash {
                     else if (this.screenName === "GameScreen") {
                     }
                     else if (this.screenName === "ShopScreen") {
+                        if (button.getButtonName() === "BackToStart") {
+                            this.screenName = "StartScreen";
+                            this.resetButtonsAndDangerDashFrame();
+                        }
+                        else if (button.getButtonName() === "UnlockDesert") {
+                        }
+                        else if (button.getButtonName() === "UnlockArctic") {
+                        }
+                        else if (button.getButtonName() === "UnlockSwamp") {
+                        }
+                        else if (button.getButtonName() === "UnlockYoshi") {
+                        }
+                        else if (button.getButtonName() === "UnlockAmongUs") {
+                        }
+                        else if (button.getButtonName() === "UnlockGirlCharacter") {
+                        }
+                        else if (button.getButtonName() === "UnlockSonic") {
+                        }
                     }
                     else if (this.screenName === "HighScoreScreen") {
                         this.HighScoreScreenDetection(button);
@@ -68,7 +87,7 @@ class DangerDash {
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.earnedCoins = 0;
+        this.earnedCoins = 999;
         this.screenName = "StartScreen";
         this.start = new Start(this.canvas);
         this.shop = new Shop(this.canvas);
@@ -76,8 +95,14 @@ class DangerDash {
         this.generalQuestions = new GeneralQuestions(this.canvas);
         this.DangerDashFrame = 0;
         this.buttons = [];
+        this.shopImages = [];
         document.addEventListener("click", this.mouseHandlerStart);
         this.loop();
+    }
+    DrawShop() {
+        this.shop.draw();
+        const ctx = this.canvas.getContext("2d");
+        Utility.writeTextToCanvas(ctx, `${this.earnedCoins}`, 60, this.canvas.width / 2, this.canvas.height / 10, "center", "white");
     }
     HighScoreScreenDetection(button) {
         if (button.getButtonName() === "BackToStart") {
@@ -125,6 +150,16 @@ class DangerDash {
         this.buttons.push(new PreviousWorld((this.canvas.width / 7) * 2, this.canvas.height / 3 - 89, this.canvas));
         this.buttons.push(new NextWorld((this.canvas.width / 7) * 5 - 143, this.canvas.height / 3 - 89, 1, this.canvas));
         this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 180, 50, this.canvas));
+    }
+    buttonMakerShopScreen() {
+        this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09, this.canvas));
+        this.buttons.push(new UnlockDesert(this.canvas.width / 4.5, this.canvas.height / 1.08, this.canvas));
+        this.buttons.push(new UnlockArctic(this.canvas.width / 1.56, this.canvas.height / 1.08, this.canvas));
+        this.buttons.push(new UnlockSwamp(this.canvas.width / 2.31, this.canvas.height / 1.08, this.canvas));
+        this.buttons.push(new UnlockYoshi(this.canvas.width / 9, this.canvas.height / 2.15, this.canvas));
+        this.buttons.push(new UnlockAmongUs(this.canvas.width / 3.1, this.canvas.height / 2.15, this.canvas));
+        this.buttons.push(new UnlockGirlCharacter(this.canvas.width / 1.87, this.canvas.height / 2.15, this.canvas));
+        this.buttons.push(new UnlockSonic(this.canvas.width / 1.34, this.canvas.height / 2.15, this.canvas));
     }
     resetButtonsAndDangerDashFrame() {
         this.buttons = [];
@@ -1848,47 +1883,17 @@ class QuestionAndAnswer {
 }
 class Shop {
     constructor(canvas) {
-        this.mouseHandler = (event) => {
-            this.buttons.forEach((button) => {
-                if (event.clientX >= button.getButtonXPos() &&
-                    event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
-                    event.clientY >= button.getButtonYPos() &&
-                    event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
-                    if (button.getButtonName() === "UnlockYoshi") {
-                        this.characters.push(new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6));
-                    }
-                    if (button.getButtonName() === "UnlockAmongUs") {
-                        this.characters.push(new YellowAmongUsUnlocked(this.canvas.width / 2.9, this.canvas.height / 6));
-                    }
-                    if (button.getButtonName() === "UnlockGirlCharacter") {
-                        this.characters.push(new GirlCharacterUnlocked(this.canvas.width / 1.75, this.canvas.height / 6));
-                    }
-                    if (button.getButtonName() === "UnlockSonic") {
-                        this.characters.push(new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6));
-                    }
-                    if (button.getButtonName() === "UnlockSwamp") {
-                        this.characters.push(new SwampPlanetUnlocked(this.canvas.width / 2.33, this.canvas.height / 1.64));
-                    }
-                    if (button.getButtonName() === "UnlockDesert") {
-                        this.characters.push(new DesertPlanetUnlocked(this.canvas.width / 4.3, this.canvas.height / 1.6));
-                    }
-                    if (button.getButtonName() === "UnlockArctic") {
-                        this.characters.push(new ArcticPlanetUnlocked(this.canvas.width / 1.56, this.canvas.height / 1.646));
-                    }
-                }
-            });
-        };
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.buttons = [];
         this.shopImages = [];
-        this.buttonMaker();
         this.characters = [];
         this.newWorlds = [];
         this.gameState = "Shop";
-        this.screenName = "Shop";
-        document.addEventListener("click", this.mouseHandler);
+        this.buttonMaker();
+        this.drawUnlockableCharacter();
+        this.drawUnlockableWorlds();
     }
     getButtonXPos() {
         return this.xPos;
@@ -1909,40 +1914,30 @@ class Shop {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         ctx.drawImage(Utility.loadNewImage("./assets/img/background/EndscreenBackground.jpg"), 0, 0);
-        this.drawUnlockableCharacter();
-        this.drawUnlockableWorlds();
         this.drawImages();
         this.buttons.forEach((button) => {
             button.draw();
         });
-        Utility.writeTextToCanvas(ctx, "200", 60, this.canvas.width / 2, this.canvas.height / 10, "center", "white");
         Utility.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 5.8, this.canvas.height / 2.25, "center", "white");
         Utility.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 2.55, this.canvas.height / 2.25, "center", "white");
         Utility.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.68, this.canvas.height / 2.25, "center", "white");
         Utility.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.24, this.canvas.height / 2.25, "center", "white");
-        Utility.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 1.42, this.canvas.height / 1.10, "center", "white");
-        Utility.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 2.01, this.canvas.height / 1.10, "center", "white");
-        Utility.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 3.4, this.canvas.height / 1.10, "center", "white");
+        Utility.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 1.42, this.canvas.height / 1.1, "center", "white");
+        Utility.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 2.01, this.canvas.height / 1.1, "center", "white");
+        Utility.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 3.4, this.canvas.height / 1.1, "center", "white");
         this.shopImages.forEach((shopImage) => {
             shopImage.move(this.canvas);
             shopImage.reloadImage(this.canvas);
             shopImage.draw(ctx);
         });
         this.characters.forEach((character) => {
-            character.move(this.canvas);
             character.reloadImage(this.canvas);
             character.draw(ctx);
         });
         this.newWorlds.forEach((world) => {
-            world.move(this.canvas);
             world.reloadImage(this.canvas);
             world.draw(ctx);
         });
-    }
-    drawUnlockables(button, ctx) {
-        if (button.getButtonName() === "UnlockYoshi") {
-            ctx.drawImage(Utility.loadNewImage("./assets/img/players/YoshiUnlocked.png"), this.canvas.width / 7.9, this.canvas.width / 6);
-        }
     }
     drawImages() {
         this.shopImages.push(new coinForShop(this.canvas.width / 2.3, this.canvas.height / 1.17));

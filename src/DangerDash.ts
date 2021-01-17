@@ -4,6 +4,7 @@ class DangerDash {
   private earnedCoins: number;
   private DangerDashFrame: number;
   private buttons: Button[];
+  private shopImages: Images[];
 
   private start: Start;
   private shop: Shop;
@@ -18,7 +19,7 @@ class DangerDash {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-    this.earnedCoins = 0;
+    this.earnedCoins = 999;
     this.screenName = "StartScreen";
 
     this.start = new Start(this.canvas);
@@ -29,6 +30,7 @@ class DangerDash {
     this.DangerDashFrame = 0;
 
     this.buttons = [];
+    this.shopImages = [];
 
     //Adding an EventListener for clickdetection
     document.addEventListener("click", this.mouseHandlerStart);
@@ -44,7 +46,7 @@ class DangerDash {
     //Counting Frames of main loop
     this.DangerDashFrame++;
     //console.log(this.DangerDashFrame);
-    console.log(this.buttons);
+    //console.log(this.buttons);
 
     if (this.screenName === "StartScreen") {
       //FirstFrame sets buttons in the buttons[]
@@ -67,11 +69,14 @@ class DangerDash {
 
     if (this.screenName === "ShopScreen") {
       console.log("SHOP RUNNING");
-      this.shop.draw();
+      //FirstFrame sets buttons in the buttons[]
+      if (this.DangerDashFrame === 1) {
+        this.buttonMakerShopScreen();
+      }
+      this.DrawShop();
     }
 
     if (this.screenName === "HighScoreScreen") {
-      console.log("Highscore RUNNING");
       //FirstFrame sets buttons in the buttons[]
       if (this.DangerDashFrame === 1) {
         this.buttonMakerGeneralQuestions();
@@ -110,7 +115,24 @@ class DangerDash {
         } else if (this.screenName === "GameScreen"){
 
         } else if (this.screenName === "ShopScreen"){
-          
+          if (button.getButtonName() === "BackToStart") {
+            this.screenName = "StartScreen";
+            this.resetButtonsAndDangerDashFrame();
+          } else if(button.getButtonName() === "UnlockDesert"){
+
+          } else if(button.getButtonName() === "UnlockArctic"){
+
+          } else if(button.getButtonName() === "UnlockSwamp"){
+
+          } else if(button.getButtonName() === "UnlockYoshi"){
+            
+          }  else if(button.getButtonName() === "UnlockAmongUs"){
+            
+          }  else if(button.getButtonName() === "UnlockGirlCharacter"){
+            
+          }  else if(button.getButtonName() === "UnlockSonic"){
+            
+          } 
         } else if (this.screenName === "HighScoreScreen"){
           this.HighScoreScreenDetection(button);
         }  else if (this.screenName === "Q&AScreen"){
@@ -121,6 +143,21 @@ class DangerDash {
       }
     });
   };
+
+  private DrawShop() {
+    this.shop.draw();
+     // Amount of money in the player's bank
+     const ctx = this.canvas.getContext("2d");
+     Utility.writeTextToCanvas(
+      ctx,
+      `${this.earnedCoins}`,
+      60,
+      this.canvas.width / 2,
+      this.canvas.height / 10,
+      "center",
+      "white"
+    );
+  }
 
   /**
    * HighScorescreen button detections that if you click on a certain button the screenName will be changed
@@ -182,7 +219,7 @@ class DangerDash {
     );
   }
 
-  //Pushing buttons to buttons[]
+  //Pushing Start-Buttons to buttons[]
   private buttonMakerStartScreen() {
     //Initializing the buttons and pushing them to the array
     //Making the start button
@@ -256,6 +293,69 @@ class DangerDash {
     );
   }
 
+  //Pushing the Shop-Buttons to buttons[]
+  private buttonMakerShopScreen(){
+    this.buttons.push(
+      new BackToStart(
+        (this.canvas.width / 5) * 0.05,
+        (this.canvas.height / 5) * 0.09,
+        this.canvas
+      )
+    );
+
+    // Unlock buttons for the worlds
+    this.buttons.push(
+      new UnlockDesert(
+        this.canvas.width / 4.5,
+        this.canvas.height / 1.08,
+        this.canvas
+      )
+    );
+    this.buttons.push(
+      new UnlockArctic(
+        this.canvas.width / 1.56,
+        this.canvas.height / 1.08,
+        this.canvas
+      )
+    );
+    this.buttons.push(
+      new UnlockSwamp(
+        this.canvas.width / 2.31,
+        this.canvas.height / 1.08,
+        this.canvas
+      )
+    );
+
+    /// Unlock buttons for the characters
+    this.buttons.push(
+      new UnlockYoshi(
+        this.canvas.width / 9,
+        this.canvas.height / 2.15,
+        this.canvas
+      )
+    );
+    this.buttons.push(
+      new UnlockAmongUs(
+        this.canvas.width / 3.1,
+        this.canvas.height / 2.15,
+        this.canvas
+      )
+    );
+    this.buttons.push(
+      new UnlockGirlCharacter(
+        this.canvas.width / 1.87,
+        this.canvas.height / 2.15,
+        this.canvas
+      )
+    );
+    this.buttons.push(
+      new UnlockSonic(
+        this.canvas.width / 1.34,
+        this.canvas.height / 2.15,
+        this.canvas
+      )
+    );
+  }
   //Clears the Buttons[] and makes it empty again
   private resetButtonsAndDangerDashFrame() {
     this.buttons = [];

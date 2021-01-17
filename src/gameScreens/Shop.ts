@@ -14,7 +14,6 @@ class Shop {
 
   //Constructor
   public constructor(canvas: HTMLCanvasElement) {
-
     // Construct all of the canvas
     this.canvas = canvas;
     this.canvas.width = window.innerWidth;
@@ -26,9 +25,6 @@ class Shop {
     // The scoring item array
     this.shopImages = [];
 
-    //Calls button maker function
-    this.buttonMaker();
-
     // The unlockable player array
     this.characters = [];
 
@@ -37,10 +33,14 @@ class Shop {
     
     this.gameState = "Shop";
 
-    this.screenName = "Shop";
-    // add an mouse event
-    document.addEventListener("click", this.mouseHandler);
+    //Calls button maker function
+    this.buttonMaker();
 
+    // Calls the character maker function
+    this.drawUnlockableCharacter();
+
+    // Calls the world maker function
+    this.drawUnlockableWorlds();
   }
 
   public getButtonXPos(): number {
@@ -67,7 +67,6 @@ class Shop {
     return this.image.height;
   }
 
-
   public getButtonName(): string {
     return this.name;
   }
@@ -76,18 +75,18 @@ class Shop {
    * Draws all the necessary elements to the canvas
    */
   public draw() {
+
     const ctx = this.canvas.getContext("2d");
 
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    ctx.drawImage(Utility.loadNewImage("./assets/img/background/EndscreenBackground.jpg"), 0, 0);
-
-    // Calls the character maker function
-    this.drawUnlockableCharacter();
-
-    // Calls the world maker function
-    this.drawUnlockableWorlds();
+    //Draws the background
+    ctx.drawImage(
+      Utility.loadNewImage("./assets/img/background/EndscreenBackground.jpg"),
+      0,
+      0
+    );
 
     // Calls the image drawer function
     this.drawImages();
@@ -96,17 +95,7 @@ class Shop {
       button.draw();
     });
 
-    // Amount of money in the player's bank
-    Utility.writeTextToCanvas(
-      ctx,
-      "200",
-      60,
-      this.canvas.width / 2,
-      this.canvas.height / 10,
-      "center",
-      "white"
-    );
-
+   
     // Price of Stewie
     Utility.writeTextToCanvas(
       ctx,
@@ -157,7 +146,7 @@ class Shop {
       "100",
       60,
       this.canvas.width / 1.42,
-      this.canvas.height / 1.10,
+      this.canvas.height / 1.1,
       "center",
       "white"
     );
@@ -167,7 +156,7 @@ class Shop {
       "100",
       60,
       this.canvas.width / 2.01,
-      this.canvas.height / 1.10,
+      this.canvas.height / 1.1,
       "center",
       "white"
     );
@@ -177,7 +166,7 @@ class Shop {
       "100",
       60,
       this.canvas.width / 3.4,
-      this.canvas.height / 1.10,
+      this.canvas.height / 1.1,
       "center",
       "white"
     );
@@ -191,28 +180,15 @@ class Shop {
 
     //Drawing the characters
     this.characters.forEach((character) => {
-      character.move(this.canvas);
       character.reloadImage(this.canvas);
       character.draw(ctx);
     });
 
     //Drawing the worlds
     this.newWorlds.forEach((world) => {
-      world.move(this.canvas);
       world.reloadImage(this.canvas);
       world.draw(ctx);
     });
-  }
-
-  //test //Delete
-  public drawUnlockables(button: Button, ctx: CanvasRenderingContext2D) {
-    if (button.getButtonName() === "UnlockYoshi") {
-      ctx.drawImage(
-        Utility.loadNewImage("./assets/img/players/YoshiUnlocked.png"),
-        this.canvas.width / 7.9,
-        this.canvas.width / 6
-      );
-    }
   }
 
   public drawImages() {
@@ -269,7 +245,10 @@ class Shop {
     );
 
     this.characters.push(
-      new YellowAmongUsUnlockable(this.canvas.width / 2.9, this.canvas.height / 6)
+      new YellowAmongUsUnlockable(
+        this.canvas.width / 2.9,
+        this.canvas.height / 6
+      )
     );
 
     this.characters.push(
@@ -344,66 +323,45 @@ class Shop {
     );
   }
 
-  //test
-  /**
-   * Method to handle the mouse event
-   * @param {MouseEvent} event - mouse event
-   */
-  public mouseHandler = (event: MouseEvent): void => {
-    //console.log(`User clicked the: ${this.getButtonName()} button`);
-    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
-    //mousehandler checkt of de cordinaten van XPos en Ypos + imageWith + ImageHeight gelijk zijn aan unlock button (plaatje)
-    this.buttons.forEach((button) => {
-      if (
-        event.clientX >= button.getButtonXPos() &&
-        event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
-        event.clientY >= button.getButtonYPos() &&
-        event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
-      ) {
-        if (button.getButtonName() === "UnlockYoshi") {
-          this.characters.push(
-            new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6)
-          );
-        }
+  // if (button.getButtonName() === "UnlockYoshi") {
+  //   this.characters.push(
+  //     new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6)
+  //   );
+  // }
 
-        if (button.getButtonName() === "UnlockAmongUs") {
-          this.characters.push(
-            new YellowAmongUsUnlocked(this.canvas.width / 2.9, this.canvas.height / 6)
-          );
-        }
+  // if (button.getButtonName() === "UnlockAmongUs") {
+  //   this.characters.push(
+  //     new YellowAmongUsUnlocked(this.canvas.width / 2.9, this.canvas.height / 6)
+  //   );
+  // }
 
-        if (button.getButtonName() === "UnlockGirlCharacter") {
-          this.characters.push(
-            new GirlCharacterUnlocked(this.canvas.width / 1.75, this.canvas.height / 6)
-          )
-        }
+  // if (button.getButtonName() === "UnlockGirlCharacter") {
+  //   this.characters.push(
+  //     new GirlCharacterUnlocked(this.canvas.width / 1.75, this.canvas.height / 6)
+  //   )
+  // }
 
-        if (button.getButtonName() === "UnlockSonic") {
-          this.characters.push(
-            new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6)
-          )
-        }
+  // if (button.getButtonName() === "UnlockSonic") {
+  //   this.characters.push(
+  //     new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6)
+  //   )
+  // }
 
-        if (button.getButtonName() === "UnlockSwamp") {
-          this.characters.push(
-            new SwampPlanetUnlocked(this.canvas.width / 2.33, this.canvas.height / 1.64)
-          );
-        }
+  // if (button.getButtonName() === "UnlockSwamp") {
+  //   this.characters.push(
+  //     new SwampPlanetUnlocked(this.canvas.width / 2.33, this.canvas.height / 1.64)
+  //   );
+  // }
 
-        if (button.getButtonName() === "UnlockDesert") {
-          this.characters.push(
-            new DesertPlanetUnlocked(this.canvas.width / 4.3, this.canvas.height / 1.6)
-          );
-        }
+  // if (button.getButtonName() === "UnlockDesert") {
+  //   this.characters.push(
+  //     new DesertPlanetUnlocked(this.canvas.width / 4.3, this.canvas.height / 1.6)
+  //   );
+  // }
 
-        if (button.getButtonName() === "UnlockArctic") {
-          this.characters.push(
-            new ArcticPlanetUnlocked(this.canvas.width / 1.56, this.canvas.height / 1.646)
-          );
-        }
-
-        
-      }
-    });
-  };
+  // if (button.getButtonName() === "UnlockArctic") {
+  //   this.characters.push(
+  //     new ArcticPlanetUnlocked(this.canvas.width / 1.56, this.canvas.height / 1.646)
+  //   );
+  // }
 }
