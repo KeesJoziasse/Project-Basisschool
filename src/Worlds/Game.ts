@@ -1,7 +1,7 @@
 /**
  * Class Game: Responsible for the gameloop and will activate the class: GameItem, Player, ScoringItem
  */
-abstract class Game {
+ class Game {
   //The canvas
   protected canvas: HTMLCanvasElement;
 
@@ -38,6 +38,9 @@ abstract class Game {
   //GameOverState
   private gameState: string;
 
+//test
+ private ingameQuestion: InGameQuestions;
+
   /**
    * Constructor
    * @param canvasId HTML canvas where the game will be displayed on
@@ -69,18 +72,54 @@ abstract class Game {
 
     //Endstate
     this.gameState = "Running";
+
+    this.player = new Girl(this.canvas);
   }
+// getters and setters
+
+public getGameState(): string {
+  return this.gameState;
+}
+
+public setGameState(gameState: string){
+  this.gameState = gameState;
+}
+  
 
   //Creates the scoring items for the ocean world
-  public scoringItemsOceanWorld(): void {}
+  public randomScoringItems(): void {}
+
+
+  // test
+  //Creates the scoring items for the ocean world
+  public mathRandom(): void {}
 
   //Frameindex for the worlds.
-  public frameIndex() {}
+  public frameIndex() {
+if(this.frame % 10 === 0){
+  this.score++
+}if(this.frame % 100 === 0){
+  this.randomScoringItems();
+}
+  }
 
   /**
    * Method that checks the gamestate
    */
-  public loop = () => {
+  public loop = 
+  () => {
+    console.log(this.gameState);
+
+    // if(this.gameState === "question"){
+    //   this.gameState === "Test";
+    //   // new InGameQuestions (document.getElementById("canvas") as HTMLCanvasElement);
+    // }
+
+    if(this.gameState === "question"){
+      console.log(this.gameState);
+    }
+
+
     // console.log(this.gameState);
     if (this.gameState === "Running") {
       this.frame++;
@@ -91,6 +130,7 @@ abstract class Game {
       if (this.frame % 10 === 0) {
         this.player.move();
       }
+      
     }
 
     if (this.lives < 0) {
@@ -113,11 +153,11 @@ abstract class Game {
           this.player.collidesWithScoringItem(this.scoringItems[i]) &&
           this.scoringItems[i].getName() === "QuestionBox"
         ) {
-          new InGameQuestions(
-            document.getElementById("canvas") as HTMLCanvasElement
-          );
+          new InGameQuestions (document.getElementById("canvas") as HTMLCanvasElement);
+          this.gameState = "question";
+          // this.ingameQuestion.draw();
+          // console.log(this.score);
         }
-
         if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
           //#TODO fix first if statement
           this.score += this.scoringItems[i].getPoints();
@@ -132,6 +172,7 @@ abstract class Game {
     }
   }
 
+           
   //This function will be overwritten by DesertWorld
   public drawBackground() {}
 
@@ -231,6 +272,16 @@ abstract class Game {
     }
   }
 
+  public test(){
+    this.frame++;
+    this.draw();
+    this.forScoringItems();
+    this.frameIndex();
+    //Refacture to method #TODO JUSTIN
+    if (this.frame % 10 === 0) {
+      this.player.move();
+  }
+  }
   private gameOver() {
     new Endscreen(this.canvas, this.score);
   }

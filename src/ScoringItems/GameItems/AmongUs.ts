@@ -22,7 +22,7 @@ class AmongUs extends Player {
     );
   }
 
-  public characterAnimationTest() {
+  public characterAnimation() {
     //Adds 1 to the frame counter.
     this.animationFrame++;
 

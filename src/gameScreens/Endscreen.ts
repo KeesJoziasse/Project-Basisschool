@@ -45,7 +45,7 @@ class Endscreen{
     );
 
     this.buttons.forEach((button) => {
-      button.draw(ctx);
+      button.draw();
     });
 
     Utility.writeTextToCanvas(
