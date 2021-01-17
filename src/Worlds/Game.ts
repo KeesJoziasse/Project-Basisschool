@@ -1,52 +1,43 @@
 /**
  * Class Game: Responsible for the gameloop and will activate the class: GameItem, Player, ScoringItem
  */
- class Game {
+class Game extends DangerDash{
   //The canvas
   protected canvas: HTMLCanvasElement;
-
   //The ingame player
   private player: Player;
   // #TODO screen: Screen[]
-
   //The score of the player
   protected score: number;
   protected lives: number;
   protected earnedCoins: number;
-
   //Amount of frames that have passed
   protected frame: number;
-
   //RNG
   protected random: number;
-
   //Scoring items array
   protected scoringItems: ScoringItem[];
-
   //speed of the worldImage
   protected speed: number;
-
   //xpos of the worldImage
   protected xPos: number;
-
   //xpos of the worldImage
   protected yPos: number;
-
   //image of the world
   protected image: HTMLImageElement;
-
   //GameOverState
   private gameState: string;
-
-//test
- private ingameQuestion: InGameQuestions;
+  //test
+  private ingameQuestion: InGameQuestions;
+  private characterName: string;
 
   /**
    * Constructor
    * @param canvasId HTML canvas where the game will be displayed on
    */
-  public constructor(canvasId: HTMLCanvasElement) {
-    this.canvas = canvasId;
+  public constructor(canvas: HTMLCanvasElement, characterName: string) {
+    super(canvas);
+    this.canvas = canvas;
 
     //Making the canvas width + canvas height
     this.canvas.width = window.innerWidth;
@@ -65,30 +56,41 @@
 
     //Calling the loop
     //TODO fix that no loop needed
-    this.loop();
+    //this.loop();
 
     //Scoringitems array
     this.scoringItems = [];
 
     //Endstate
     this.gameState = "Running";
-
-    this.player = new Girl(this.canvas);
+    this.characterName = characterName;
+    console.log(this.characterName)
+    if (this.characterName === "AmongUsLime"){
+      this.player = new AmongUs(canvas);
+    } else if (this.characterName === "Yoshi"){
+      this.player = new Yoshi(canvas);
+    } else if (this.characterName === "YellowAmongUs"){
+      this.player = new YellowAmongUs(canvas);
+    } else if (this.characterName === "Girl"){
+      this.player = new Girl(canvas);
+    } else if(this.characterName === "Sonic"){
+      this.player = new Sonic(canvas);
+    }    
   }
-// getters and setters
-
-public getGameState(): string {
-  return this.gameState;
-}
-
-public setGameState(gameState: string){
-  this.gameState = gameState;
-}
   
+  
+  // getters and setters
+
+  public getGameState(): string {
+    return this.gameState;
+  }
+
+  public setGameState(gameState: string) {
+    this.gameState = gameState;
+  }
 
   //Creates the scoring items for the ocean world
   public randomScoringItems(): void {}
-
 
   // test
   //Creates the scoring items for the ocean world
@@ -96,33 +98,34 @@ public setGameState(gameState: string){
 
   //Frameindex for the worlds.
   public frameIndex() {
-if(this.frame % 10 === 0){
-  this.score++
-}if(this.frame % 100 === 0){
-  this.randomScoringItems();
-}
+    if (this.frame % 10 === 0) {
+      this.score++;
+    }
+    if (this.frame % 75 === 0) {
+      this.randomScoringItems();
+    }
+  }
+
+  public checkGameState(){
+    return this.gameState;
   }
 
   /**
    * Method that checks the gamestate
    */
-  public loop = 
-  () => {
-    console.log(this.gameState);
-
+  public loop = () => {
     // if(this.gameState === "question"){
     //   this.gameState === "Test";
     //   // new InGameQuestions (document.getElementById("canvas") as HTMLCanvasElement);
     // }
+    this.frame++;
 
-    if(this.gameState === "question"){
-      console.log(this.gameState);
+    if (this.gameState === "question") {
+      //console.log(this.gameState);
     }
-
 
     // console.log(this.gameState);
     if (this.gameState === "Running") {
-      this.frame++;
       this.draw();
       this.forScoringItems();
       this.frameIndex();
@@ -130,7 +133,6 @@ if(this.frame % 10 === 0){
       if (this.frame % 10 === 0) {
         this.player.move();
       }
-      
     }
 
     if (this.lives < 0) {
@@ -145,24 +147,15 @@ if(this.frame % 10 === 0){
   private forScoringItems() {
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => {
-        scoringItem.move();
+        scoringItem.move(this.frame);
       });
 
       for (let i = 0; i < this.scoringItems.length; i++) {
-        if (
-          this.player.collidesWithScoringItem(this.scoringItems[i]) &&
-          this.scoringItems[i].getName() === "QuestionBox"
-        ) {
-          new InGameQuestions (document.getElementById("canvas") as HTMLCanvasElement);
-          this.gameState = "question";
-          // this.ingameQuestion.draw();
-          // console.log(this.score);
-        }
         if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
           //#TODO fix first if statement
           this.score += this.scoringItems[i].getPoints();
           this.lives += this.scoringItems[i].getLives();
-          console.log(this.scoringItems[i].getName());
+          //console.log(this.scoringItems[i].getName());
           this.earnedCoins += this.scoringItems[i].getCoinValue();
           this.scoringItems.splice(i, 1);
         } else if (this.scoringItems[i].outOfCanvas()) {
@@ -172,7 +165,6 @@ if(this.frame % 10 === 0){
     }
   }
 
-           
   //This function will be overwritten by DesertWorld
   public drawBackground() {}
 
@@ -180,15 +172,14 @@ if(this.frame % 10 === 0){
    * Method that writes gameItems on the canvas
    */
   public draw() {
+    //console.log("Draw in game");
+
     const ctx = this.canvas.getContext("2d");
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     this.drawBackground();
-
     //Drawing the player
     this.player.draw(ctx);
-
     //Draws all the scoring items.
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
@@ -219,6 +210,7 @@ if(this.frame % 10 === 0){
       this.canvas.width / 20,
       this.canvas.height / 8
     );
+
     Utility.writeTextToCanvas(
       ctx,
       `${this.earnedCoins}`,
@@ -272,16 +264,6 @@ if(this.frame % 10 === 0){
     }
   }
 
-  public test(){
-    this.frame++;
-    this.draw();
-    this.forScoringItems();
-    this.frameIndex();
-    //Refacture to method #TODO JUSTIN
-    if (this.frame % 10 === 0) {
-      this.player.move();
-  }
-  }
   private gameOver() {
     new Endscreen(this.canvas, this.score);
   }

@@ -71,8 +71,26 @@ abstract class ScoringItem {
   /**
    * Moves the scoring items
    */
-  public move() {
-    this.xPosition += this.speed;
+  public move(frame:number) {
+    console.log(frame);
+    if(frame < 500){
+      this.xPosition -= 4;
+    } else if (frame >= 500){
+      this.xPosition -= 8;
+    } else if (frame >= 1000){
+      this.xPosition -= 12;
+    } else if (frame >= 1500){
+      this.xPosition -= 16;
+    } else if (frame >= 2000){
+      this.xPosition -= 20;
+    } else if (frame >= 2500){
+      this.xPosition -= 24;
+    } else if (frame >= 3000){
+      this.xPosition -= 28;
+    } else if (frame >= 3500){
+      this.xPosition -= 32;
+    } 
+    
   }
 
   /**

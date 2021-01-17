@@ -3,8 +3,8 @@
 class ArticWorld extends Game {
   private background: HTMLImageElement;
 
-  constructor(canvas: HTMLCanvasElement) {
-    super(canvas);
+  constructor(canvas: HTMLCanvasElement, characterName:string) {
+    super(canvas, characterName);
     this.background = Utility.loadNewImage("./assets/img/world/ArticBG.jpg");
     this.xPos = 0;
     this.yPos = -100;
@@ -33,7 +33,6 @@ class ArticWorld extends Game {
     if (random === 5 || random === 6) {
       this.scoringItems.push(new inGameCoin(this.canvas));
     } if (random === 7){
-      this.scoringItems.push(new QuestionBox(this.canvas));
     }
     if (random === 8) {
       this.scoringItems.push(new Penguin(this.canvas));

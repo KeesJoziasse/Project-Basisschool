@@ -4,8 +4,8 @@ class OceanWorld extends Game {
 
   private background: HTMLImageElement;
 
-  constructor(canvas: HTMLCanvasElement) {
-    super(canvas);
+  constructor(canvas: HTMLCanvasElement, characterName: string) {
+    super(canvas, characterName);
     this.background = Utility.loadNewImage("./assets/img/world/OceanBG.jpg");
     this.xPos = 0;
     this.yPos = -100;
@@ -18,7 +18,7 @@ class OceanWorld extends Game {
   }
 
   public randomScoringItems(): void {
-    const random = GameItem.randomInteger(10, 10);
+    const random = GameItem.randomInteger(1, 9);
     if (random === 1) {
       this.scoringItems.push(new Shark(this.canvas));
     }
@@ -32,7 +32,6 @@ class OceanWorld extends Game {
       this.scoringItems.push(new Rock1(this.canvas));
     }
     if (random === 5 || random === 6) {
-      this.scoringItems.push(new inGameCoin(this.canvas));
     } 
     if (random === 7) {
       this.scoringItems.push(new Coral1(this.canvas));
@@ -42,9 +41,6 @@ class OceanWorld extends Game {
     }
     if (random === 9) {
       this.scoringItems.push(new Rock2(this.canvas));
-    }
-    if (random === 10){
-      this.scoringItems.push(new QuestionBox(this.canvas));
     }
   }
 }
