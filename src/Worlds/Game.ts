@@ -64,7 +64,7 @@ class Game {
     //Endstate
     this.gameState = "Running";
 
-    // this.player = new Girl(this.canvas);
+    this.player = new Girl(this.canvas);
   }
   
   

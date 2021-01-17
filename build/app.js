@@ -1513,6 +1513,7 @@ class Game {
         this.loop();
         this.scoringItems = [];
         this.gameState = "Running";
+        this.player = new Girl(this.canvas);
     }
     getGameState() {
         return this.gameState;
