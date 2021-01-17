@@ -7,10 +7,6 @@ class AmongUs extends Player {
 
   public constructor(canvas: HTMLCanvasElement) {
     super(canvas);
-    this.image = Utility.loadNewImage(
-      "./assets/img/Characters/AmongUs/among-us-walk-2.png"
-    );
-
     this.walk1 = Utility.loadNewImage(
       "./assets/img/Characters/AmongUs/among-us-walk-1.png"
     );
@@ -24,6 +20,8 @@ class AmongUs extends Player {
 
   public characterAnimation() {
     //Adds 1 to the frame counter.
+    const ctx = this.canvas.getContext("2d");
+
     this.animationFrame++;
 
     if (this.animationFrame >= 20) {
@@ -38,5 +36,6 @@ class AmongUs extends Player {
     } else if (this.animationFrame > 30 && this.animationFrame <= 40) {
       this.image = this.walk2;
     }
+    ctx.drawImage(this.image, this.xPos, this.yPos);
   }
 }

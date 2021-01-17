@@ -8,7 +8,7 @@ class Start {
   private background: Images[];
   private indexCounterWorld: number;
   private indexCounterCharacter: number;
-  private game: Game;
+  private characterName:string;
 
   //Test
   private testPlayer: Player;
@@ -19,6 +19,8 @@ class Start {
     this.canvas = canvas;
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
+
+    this.characterName = "";
 
     //The button array
     //this.buttons = [];
@@ -105,15 +107,21 @@ class Start {
     this.worldImages.push(
       new OceanImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 130)
     );
-
+  }
+  
+  public pushDesert(){
     this.worldImages.push(
       new DesertImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 80)
     );
+  }
 
+  public pushSwamp(){
     this.worldImages.push(
       new SwampImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 90)
     );
+  }
 
+  public pushArtic(){
     this.worldImages.push(
       new ArticImage(this.canvas.width / 2 - 250, this.canvas.height / 3 - 150)
     );
@@ -125,24 +133,35 @@ class Start {
     this.characterImages.push(
       new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
+  }
+
+  public pushYoshi(){
     this.characterImages.push(
-      new YoshiUnlocked(
-        this.canvas.width / 2 - 90,
-        this.canvas.height / 2 - 120
-      )
+    new YoshiUnlocked(
+      this.canvas.width / 2 - 90,
+      this.canvas.height / 2 - 120)
     );
+  }
+  
+  public pushYellowAmongUs(){
     this.characterImages.push(
       new YellowAmongUsUnlocked(
         this.canvas.width / 2 - 90,
         this.canvas.height / 2 - 120
       )
     );
+  }
+
+  public pushGirl(){
     this.characterImages.push(
       new GirlCharacterUnlocked(
         this.canvas.width / 2 - 90,
         this.canvas.height / 2 - 120
       )
     );
+  }
+
+  public pushSonic(){
     this.characterImages.push(
       new SonicUnlocked(
         this.canvas.width / 2 - 90,
@@ -211,26 +230,27 @@ class Start {
   }
 
   public startLevel(button: Button) {
+    this.CharacterName();
     if (
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
     ) {
-      new OceanWorld(this.canvas);
+      new OceanWorld(this.canvas,`${this.characterName}`);
     } else if (
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Artic"
     ) {
-      new ArticWorld(this.canvas);
+      new ArticWorld(this.canvas,`${this.characterName}`);
     } else if (
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
     ) {
-      new DesertWorld(this.canvas);
+      new DesertWorld(this.canvas,`${this.characterName}`);
     } else if (
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Swamp"
     ) {
-      new SwampWorld(this.canvas);
+      new SwampWorld(this.canvas,`${this.characterName}`);
     }
   }
 
@@ -265,6 +285,35 @@ class Start {
         "SonicUnlocked"
     ) {
       new Sonic(this.canvas);
+    } 
+  }
+
+  public CharacterName() {
+    if (
+      this.characterImages[this.indexCounterCharacter].getImageName() ===
+        "AmongUsLime"
+    ) {
+      this.characterName = "AmongUsLime";
+    } else if (
+      this.characterImages[this.indexCounterCharacter].getImageName() ===
+        "YoshiUnlocked"
+    ) {
+      this.characterName = "Yoshi";
+    } else if (
+      this.characterImages[this.indexCounterCharacter].getImageName() ===
+        "UnlockYellowAmongUs"
+    ) {
+      this.characterName = "YellowAmongUs";
+    } else if (
+      this.characterImages[this.indexCounterCharacter].getImageName() ===
+        "GirlCharacterUnlocked"
+    ) {
+      this.characterName = "Girl";
+    } else if (
+      this.characterImages[this.indexCounterCharacter].getImageName() ==
+        "SonicUnlocked"
+    ) {
+      this.characterName = "Sonic";
     } 
   }
 }

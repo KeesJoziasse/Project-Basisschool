@@ -3,8 +3,8 @@
 class DesertWorld extends Game {
   private background: HTMLImageElement;
 
-  constructor(canvas: HTMLCanvasElement) {
-    super(canvas);
+  constructor(canvas: HTMLCanvasElement, characterName: string) {
+    super(canvas, characterName);
     this.background = Utility.loadNewImage("./assets/img/world/DesertBG.jpg");
     this.xPos = 0;
     this.yPos = -100;

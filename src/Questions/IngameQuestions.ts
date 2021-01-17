@@ -198,7 +198,7 @@ class InGameQuestions {
           this.ingameQuestion.getAnswer() === "yes"
         ) {
           console.log("Goed het antwoord is Yes");
-          new Game(document.getElementById("canvas") as HTMLCanvasElement)
+          //new Game(document.getElementById("canvas") as HTMLCanvasElement)
         }
         if (
           button.getButtonName() === "YesButton" &&
@@ -212,7 +212,7 @@ class InGameQuestions {
           this.ingameQuestion.getAnswer() === "no"
         ) {
           console.log("Goed het antwoord is NO");
-          new Game(document.getElementById("canvas") as HTMLCanvasElement);
+          //new Game(document.getElementById("canvas") as HTMLCanvasElement);
         }
         if (
           button.getButtonName() === "NoButton" &&

@@ -24,9 +24,6 @@ class Endscreen{
     // Calls the background maker
 
     this.score = 200;
-
-    // Add a mouse event
-    document.addEventListener("click", this.mouseHandler);
     
     //Draw this screen
     this.draw();
@@ -79,9 +76,4 @@ class Endscreen{
     );
   }
 
-  /**
-   * Method to handle the mouse event
-   * @param {MouseEvent} event - mouse event
-   */
-  public mouseHandler = (event: MouseEvent) => {};
 }

@@ -3,8 +3,8 @@
 class ArticWorld extends Game {
   private background: HTMLImageElement;
 
-  constructor(canvas: HTMLCanvasElement) {
-    super(canvas);
+  constructor(canvas: HTMLCanvasElement, characterName:string) {
+    super(canvas, characterName);
     this.background = Utility.loadNewImage("./assets/img/world/ArticBG.jpg");
     this.xPos = 0;
     this.yPos = -100;

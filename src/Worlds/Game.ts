@@ -1,7 +1,7 @@
 /**
  * Class Game: Responsible for the gameloop and will activate the class: GameItem, Player, ScoringItem
  */
-class Game {
+class Game extends DangerDash{
   //The canvas
   protected canvas: HTMLCanvasElement;
   //The ingame player
@@ -29,15 +29,15 @@ class Game {
   private gameState: string;
   //test
   private ingameQuestion: InGameQuestions;
-  //Oke
-  private start: Start;
+  private characterName: string;
 
   /**
    * Constructor
    * @param canvasId HTML canvas where the game will be displayed on
    */
-  public constructor(canvasId: HTMLCanvasElement) {
-    this.canvas = canvasId;
+  public constructor(canvas: HTMLCanvasElement, characterName: string) {
+    super(canvas);
+    this.canvas = canvas;
 
     //Making the canvas width + canvas height
     this.canvas.width = window.innerWidth;
@@ -56,15 +56,26 @@ class Game {
 
     //Calling the loop
     //TODO fix that no loop needed
-    this.loop();
+    //this.loop();
 
     //Scoringitems array
     this.scoringItems = [];
 
     //Endstate
     this.gameState = "Running";
-
-    this.player = new Girl(this.canvas);
+    this.characterName = characterName;
+    console.log(this.characterName)
+    if (this.characterName === "AmongUsLime"){
+      this.player = new AmongUs(canvas);
+    } else if (this.characterName === "Yoshi"){
+      this.player = new Yoshi(canvas);
+    } else if (this.characterName === "YellowAmongUs"){
+      this.player = new YellowAmongUs(canvas);
+    } else if (this.characterName === "Girl"){
+      this.player = new Girl(canvas);
+    } else if(this.characterName === "Sonic"){
+      this.player = new Sonic(canvas);
+    }    
   }
   
   
@@ -206,6 +217,7 @@ class Game {
       this.canvas.width / 20,
       this.canvas.height / 8
     );
+
     Utility.writeTextToCanvas(
       ctx,
       `${this.earnedCoins}`,
@@ -259,16 +271,6 @@ class Game {
     }
   }
 
-  public test() {
-    this.frame++;
-    this.draw();
-    this.forScoringItems();
-    this.frameIndex();
-    //Refacture to method #TODO JUSTIN
-    if (this.frame % 10 === 0) {
-      this.player.move();
-    }
-  }
   private gameOver() {
     new Endscreen(this.canvas, this.score);
   }
