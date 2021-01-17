@@ -1,6 +1,6 @@
 console.log("The game is working");
 let init = () => {
-    new Game(document.getElementById("canvas"));
+    new DangerDash(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class DangerDash {
@@ -8,7 +8,6 @@ class DangerDash {
         this.loop = () => {
             this.DangerDashFrame++;
             if (this.screenName === "StartScreen") {
-                document.addEventListener("click", this.mouseHandlerStart);
                 this.start.draw();
                 if (this.DangerDashFrame === 1) {
                     this.buttonMakerStartScreen();
@@ -25,25 +24,26 @@ class DangerDash {
             }
             if (this.screenName === "ShopScreen") {
                 console.log("SHOP RUNNING");
+                this.shop.draw();
+            }
+            if (this.screenName === "HighScoreScreen") {
+                console.log("Highscore RUNNING");
+            }
+            if (this.screenName === "Q&AScreen") {
+                console.log("Q&A RUNNING");
+                this.generalQuestions.draw();
             }
             requestAnimationFrame(this.loop);
         };
         this.mouseHandlerStart = (event) => {
+            console.log(`xPos ${event.clientX}, yPos ${event.clientY}`);
             this.buttons.forEach((button) => {
                 if (event.clientX >= button.getButtonXPos() &&
                     event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
                     event.clientY >= button.getButtonYPos() &&
                     event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
-                    this.start.worldSelector(button);
-                    this.start.characterSelector(button);
-                    button.logButtonName();
-                    if (button.getButtonName() === "StartGame") {
-                        this.screenName = "GameScreen";
-                        console.log(this.screenName);
-                        this.start.checkCharacterName(button);
-                    }
-                    else if (button.getButtonName() === "Shop") {
-                        this.screenName = "Shop";
+                    if (this.screenName === "StartScreen") {
+                        this.startScreenDetection(button);
                     }
                 }
                 else {
@@ -56,10 +56,32 @@ class DangerDash {
         this.canvas.height = window.innerHeight;
         this.earnedCoins = 0;
         this.screenName = "StartScreen";
-        this.start = new Start(canvas);
+        this.start = new Start(this.canvas);
+        this.shop = new Shop(this.canvas);
+        this.generalQuestions = new GeneralQuestions(this.canvas);
         this.DangerDashFrame = 0;
         this.buttons = [];
+        document.addEventListener("click", this.mouseHandlerStart);
         this.loop();
+    }
+    startScreenDetection(button) {
+        this.start.worldSelector(button);
+        this.start.characterSelector(button);
+        button.logButtonName();
+        if (button.getButtonName() === "StartGame") {
+            this.screenName = "GameScreen";
+            console.log(this.screenName);
+            this.start.checkCharacterName(button);
+        }
+        else if (button.getButtonName() === "Shop") {
+            this.screenName = "ShopScreen";
+        }
+        else if (button.getButtonName() === "HighScore") {
+            this.screenName = "HighScoreScreen";
+        }
+        else if (button.getButtonName() === "QandA") {
+            this.screenName = "Q&AScreen";
+        }
     }
     buttonMakerStartScreen() {
         this.buttons.push(new StartGameButton(this.canvas.width / 2 - 329 / 2, (this.canvas.height / 5) * 4 - 100 / 2, this.canvas));
@@ -1667,10 +1689,6 @@ class Endscreen {
 }
 class GeneralQuestions {
     constructor(canvasId) {
-        this.loop = () => {
-            this.draw();
-            requestAnimationFrame(this.loop);
-        };
         this.mouseHandler = (event) => { };
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
@@ -1679,7 +1697,6 @@ class GeneralQuestions {
         this.buttons = [];
         this.buttonMaker();
         this.imageMaker();
-        this.loop();
         document.addEventListener("click", this.mouseHandler);
     }
     draw() {

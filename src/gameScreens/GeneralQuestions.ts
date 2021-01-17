@@ -22,22 +22,9 @@ class GeneralQuestions {
     //Calling the image maker method
     this.imageMaker();
 
-    // Calls the loop
-    this.loop();
-
     // Add a mouse event
     document.addEventListener("click", this.mouseHandler);
   }
-
-  /**
-   * Method for the Game Loop
-   */
-  public loop = () => {
-    this.draw();
-
-    // in the first loop no images are loaded
-    requestAnimationFrame(this.loop);
-  };
 
   /**
    * Draws all the necessary elements to the canvas

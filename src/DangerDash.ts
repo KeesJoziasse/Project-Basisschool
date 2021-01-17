@@ -7,6 +7,8 @@ class DangerDash {
 
   private start: Start;
   private shop: Shop;
+  private highScore: HighScore;
+  private generalQuestions: GeneralQuestions;
 
   private screenName: string;
 
@@ -19,11 +21,17 @@ class DangerDash {
     this.earnedCoins = 0;
     this.screenName = "StartScreen";
 
-    this.start = new Start(canvas);
+    this.start = new Start(this.canvas);
+    this.shop = new Shop(this.canvas);
+    //this.highScore = new HighScore(this.canvas);
+    this.generalQuestions = new GeneralQuestions(this.canvas);
 
     this.DangerDashFrame = 0;
 
     this.buttons = [];
+
+    //Adding an EventListener for clickdetection
+    document.addEventListener("click", this.mouseHandlerStart);
 
     //Calling the loop
     this.loop();
@@ -38,8 +46,6 @@ class DangerDash {
     //console.log(this.DangerDashFrame);
 
     if (this.screenName === "StartScreen") {
-      //Adds EventListener on buttons
-      document.addEventListener("click", this.mouseHandlerStart);
 
       //Draws startScreen
       this.start.draw();
@@ -54,9 +60,6 @@ class DangerDash {
       this.buttons.forEach((button) => {
         button.draw();
       });
-
-      //remind gebruik deze bij de mousehandler zodra er een knop / screenname veranderd
-      //this.deleteButtons();
     }
 
     if(this.screenName === "GameScreen"){
@@ -68,6 +71,17 @@ class DangerDash {
 
     if(this.screenName === "ShopScreen"){
       console.log("SHOP RUNNING");
+      this.shop.draw();
+    }
+
+    if(this.screenName === "HighScoreScreen"){
+      console.log("Highscore RUNNING");
+      //TODO highscore loop weghalen
+    }
+
+    if(this.screenName === "Q&AScreen"){
+      console.log("Q&A RUNNING");
+      this.generalQuestions.draw();
     }
 
     //console.log(this.screenName);
@@ -79,7 +93,7 @@ class DangerDash {
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandlerStart = (event: MouseEvent): void => {
-    //console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
     this.buttons.forEach((button) => {
       if (
         event.clientX >= button.getButtonXPos() &&
@@ -87,21 +101,36 @@ class DangerDash {
         event.clientY >= button.getButtonYPos() &&
         event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
       ) {
-        this.start.worldSelector(button);
-        this.start.characterSelector(button);
-        button.logButtonName();
-        if (button.getButtonName() === "StartGame") {
-          this.screenName = "GameScreen";
-          console.log(this.screenName);
-          this.start.checkCharacterName(button);
-        } else if(button.getButtonName() === "Shop"){
-          this.screenName = "Shop";
-        }
+        //Based on the screenName you have a clickDetection
+        if(this.screenName === "StartScreen") {
+          this.startScreenDetection(button); 
+        } 
       } else {
         return null;
       }
     });
   };
+
+  /**
+   * Startscreen button detections that if you click on a certain button the screenName will be changed
+   * @param button 
+   */
+  private startScreenDetection(button: Button) {
+    this.start.worldSelector(button);
+    this.start.characterSelector(button);
+    button.logButtonName();
+    if (button.getButtonName() === "StartGame") {
+      this.screenName = "GameScreen";
+      console.log(this.screenName);
+      this.start.checkCharacterName(button);
+    } else if (button.getButtonName() === "Shop") {
+      this.screenName = "ShopScreen";
+    } else if (button.getButtonName() === "HighScore") {
+      this.screenName = "HighScoreScreen";
+    } else if (button.getButtonName() === "QandA") {
+      this.screenName = "Q&AScreen";
+    }
+  }
 
   //Pushing buttons to buttons[]
   private buttonMakerStartScreen() {
