@@ -93,7 +93,7 @@ class Shop {
     this.drawImages();
 
     this.buttons.forEach((button) => {
-      button.draw(ctx);
+      button.draw();
     });
 
     // Amount of money in the player's bank

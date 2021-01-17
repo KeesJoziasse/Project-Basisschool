@@ -1,7 +1,7 @@
 /**
  * Class Game: Responsible for the gameloop and will activate the class: GameItem, Player, ScoringItem
  */
-class Game {
+ class Game {
   //The canvas
   protected canvas: HTMLCanvasElement;
 
@@ -73,7 +73,7 @@ class Game {
     //Endstate
     this.gameState = "Running";
 
-    this.player = new YellowAmongUs(this.canvas);
+    this.player = new Girl(this.canvas);
   }
 // getters and setters
 

@@ -5,6 +5,7 @@ abstract class Images {
   protected name: string;
   protected xVelocity: number;
   protected canvas: HTMLCanvasElement;
+  protected answer: string;
 
   constructor(xPos: number, yPos: number) {
     this.xPos = xPos;
@@ -14,6 +15,10 @@ abstract class Images {
   public move(canvas: HTMLCanvasElement) {}
 
   public reloadImage(canvas: HTMLCanvasElement) {}
+
+  public getAnswer(): string {
+    return this.answer;
+  }
 
   public getImageName(): string {
     return this.name;
