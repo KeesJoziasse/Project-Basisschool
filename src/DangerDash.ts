@@ -195,8 +195,8 @@ class DangerDash {
         new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6)
       );
       this.DeleteSpecificShopButton("UnlockSonic");
-    } else if (button.getButtonName() === "UnlockSwamp" && this.earnedCoins >= 100) {
-      this.earnedCoins -= 100;
+    } else if (button.getButtonName() === "UnlockSwamp" && this.earnedCoins >= 200) {
+      this.earnedCoins -= 200;
       this.images.push(
         new SwampPlanetUnlocked(
           this.canvas.width / 2.33,
@@ -204,8 +204,8 @@ class DangerDash {
         )
       );
       this.DeleteSpecificShopButton("UnlockSwamp");
-    } else if (button.getButtonName() === "UnlockDesert" && this.earnedCoins >= 200) {
-      this.earnedCoins -= 200;
+    } else if (button.getButtonName() === "UnlockDesert" && this.earnedCoins >= 100) {
+      this.earnedCoins -= 100;
       this.images.push(
         new DesertPlanetUnlocked(
           this.canvas.width / 4.3,
