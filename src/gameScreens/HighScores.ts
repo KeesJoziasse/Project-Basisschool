@@ -22,18 +22,7 @@ class HighScore {
 
     //Calling the image maker method
     this.imageMaker();
-
-    this.loop();
   }
-
-  /**
-   * Method for the Game Loop
-   */
-  public loop = () => {
-    this.draw();
-    // in the first loop no images are loaded
-    requestAnimationFrame(this.loop);
-  };
 
   /**
    * Draws all the necessary elements to the canvas
@@ -51,7 +40,7 @@ class HighScore {
 
     //Drawing the buttons
     this.buttons.forEach((button) => {
-      button.draw(ctx);
+      button.draw();
     });
   }
 

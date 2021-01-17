@@ -55,7 +55,7 @@ class QuestionAndAnswer {
 
     //Drawing the buttons
     this.buttons.forEach((button) => {
-      button.draw(ctx);
+      button.draw();
       button.move(this.canvas);
       button.reloadImage(this.canvas); //#TODO
     });
