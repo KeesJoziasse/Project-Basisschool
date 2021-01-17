@@ -3,7 +3,6 @@ let init = () => {
     new DangerDash(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
-<<<<<<< Updated upstream
 class DangerDash {
     constructor(canvas) {
         this.loop = () => {
@@ -28,122 +27,6 @@ class DangerDash {
     }
     getScreenName() {
         return this.screenName;
-=======
-class Game {
-    constructor(canvasId, worldName) {
-        this.loop = () => {
-            console.log(this.gameState);
-            if (this.gameState === "Running") {
-                this.frame++;
-                this.draw();
-                this.forScoringItems();
-                this.frameIndex();
-                if (this.frame % 10 === 0) {
-                    this.player.forEach((player) => {
-                        player.move();
-                    });
-                }
-            }
-            if (this.lives < 0) {
-                this.gameState = "GameOver";
-                this.gameOver();
-            }
-            requestAnimationFrame(this.loop);
-        };
-        this.canvas = canvasId;
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-        this.player = [];
-        this.score = 0;
-        this.lives = 3;
-        this.earnedCoins = 0;
-        this.frame = 0;
-        this.worldName = worldName;
-        this.speed;
-        this.loop();
-        this.scoringItems = [];
-        this.gameState = "Running";
-        this.player.push(new Girl(this.canvas, "AmongUs"));
-    }
-    scoringItemsOceanWorld() { }
-    frameIndex() { }
-    forScoringItems() {
-        if (this.frame > 1) {
-            this.scoringItems.forEach((scoringItem) => {
-                scoringItem.move();
-            });
-            this.player.forEach((player) => {
-                for (let i = 0; i < this.scoringItems.length; i++) {
-                    if (player.collidesWithScoringItem(this.scoringItems[i]) && this.scoringItems[i].getName() === "QuestionBox") {
-                        new InGameQuestions(document.getElementById("canvas"));
-                    }
-                    if (player.collidesWithScoringItem(this.scoringItems[i])) {
-                        this.score += this.scoringItems[i].getPoints();
-                        this.lives += this.scoringItems[i].getLives();
-                        console.log(this.scoringItems[i].getName());
-                        this.earnedCoins += this.scoringItems[i].getCoinValue();
-                        this.scoringItems.splice(i, 1);
-                    }
-                    else if (this.scoringItems[i].outOfCanvas()) {
-                        this.scoringItems.splice(i, 1);
-                    }
-                }
-            });
-        }
-    }
-    drawBackgroundOcean() { }
-    drawBackgroundDesert() { }
-    drawBackgroundArtic() { }
-    drawBackgroundSwamp() { }
-    draw() {
-        const ctx = this.canvas.getContext("2d");
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        if (this.worldName === "Ocean") {
-            this.drawBackgroundOcean();
-        }
-        if (this.worldName === "Desert") {
-            this.drawBackgroundDesert();
-        }
-        if (this.worldName === "Artic") {
-            this.drawBackgroundArtic();
-        }
-        if (this.worldName === "Swamp") {
-            this.drawBackgroundSwamp();
-        }
-        this.player.forEach((player) => {
-            player.draw(ctx);
-        });
-        if (this.frame > 1) {
-            this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
-        }
-        this.drawScore(ctx);
-        this.drawLives(ctx);
-    }
-    drawScore(ctx) {
-        Start.writeTextToCanvas(ctx, `Score: ${this.score}`, 60, this.canvas.width / 2, this.canvas.height / 8, null, "red");
-        ctx.drawImage(GameItem.loadNewImage("assets/img/GameItems/coin.png"), this.canvas.width / 20, this.canvas.height / 8);
-        Start.writeTextToCanvas(ctx, `${this.earnedCoins}`, 60, this.canvas.width / 8, this.canvas.height / 5, null, "red");
-    }
-    drawLives(ctx) {
-        if (this.lives == 3) {
-            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-        if (this.lives == 2) {
-            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-        if (this.lives == 1) {
-            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-        if (this.lives == 0) {
-            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-        if (this.lives < 0) {
-            ctx.drawImage(GameItem.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-    }
-    gameOver() {
-        new Endscreen(this.canvas, this.score);
->>>>>>> Stashed changes
     }
 }
 class KeyboardListener {
@@ -1233,7 +1116,6 @@ class Shark extends ScoringItem {
         this.earnedCoins = 0;
     }
 }
-<<<<<<< Updated upstream
 class Frog extends ScoringItem {
     constructor(canvas) {
         super(canvas);
@@ -1381,8 +1263,6 @@ class Game {
         new Endscreen(this.canvas, this.score);
     }
 }
-=======
->>>>>>> Stashed changes
 class ArticWorld extends Game {
     constructor(canvas) {
         super(canvas);
