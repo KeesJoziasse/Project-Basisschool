@@ -1026,8 +1026,32 @@ class ScoringItem {
     getSpeed() {
         return this.speed;
     }
-    move() {
-        this.xPosition += this.speed;
+    move(frame) {
+        console.log(frame);
+        if (frame < 500) {
+            this.xPosition -= 4;
+        }
+        else if (frame >= 500) {
+            this.xPosition -= 8;
+        }
+        else if (frame >= 1000) {
+            this.xPosition -= 12;
+        }
+        else if (frame >= 1500) {
+            this.xPosition -= 16;
+        }
+        else if (frame >= 2000) {
+            this.xPosition -= 20;
+        }
+        else if (frame >= 2500) {
+            this.xPosition -= 24;
+        }
+        else if (frame >= 3000) {
+            this.xPosition -= 28;
+        }
+        else if (frame >= 3500) {
+            this.xPosition -= 32;
+        }
     }
     draw(ctx) {
         ctx.drawImage(this.image, this.xPosition, this.yPosition);
@@ -1519,10 +1543,10 @@ class Game extends DangerDash {
     constructor(canvas, characterName) {
         super(canvas);
         this.loop = () => {
+            this.frame++;
             if (this.gameState === "question") {
             }
             if (this.gameState === "Running") {
-                this.frame++;
                 this.draw();
                 this.forScoringItems();
                 this.frameIndex();
@@ -1576,7 +1600,7 @@ class Game extends DangerDash {
         if (this.frame % 10 === 0) {
             this.score++;
         }
-        if (this.frame % 100 === 0) {
+        if (this.frame % 75 === 0) {
             this.randomScoringItems();
         }
     }
@@ -1586,7 +1610,7 @@ class Game extends DangerDash {
     forScoringItems() {
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => {
-                scoringItem.move();
+                scoringItem.move(this.frame);
             });
             for (let i = 0; i < this.scoringItems.length; i++) {
                 if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
@@ -1668,7 +1692,6 @@ class ArticWorld extends Game {
             this.scoringItems.push(new inGameCoin(this.canvas));
         }
         if (random === 7) {
-            this.scoringItems.push(new QuestionBox(this.canvas));
         }
         if (random === 8) {
             this.scoringItems.push(new Penguin(this.canvas));
@@ -1707,7 +1730,6 @@ class DesertWorld extends Game {
             this.scoringItems.push(new inGameCoin(this.canvas));
         }
         if (random === 7) {
-            this.scoringItems.push(new QuestionBox(this.canvas));
         }
         if (random === 8) {
             this.scoringItems.push(new DesertStone1(this.canvas));
@@ -1735,7 +1757,7 @@ class OceanWorld extends Game {
         ctx.drawImage(this.background, this.xPos, this.yPos);
     }
     randomScoringItems() {
-        const random = GameItem.randomInteger(1, 10);
+        const random = GameItem.randomInteger(1, 9);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }
@@ -1749,7 +1771,6 @@ class OceanWorld extends Game {
             this.scoringItems.push(new Rock1(this.canvas));
         }
         if (random === 5 || random === 6) {
-            this.scoringItems.push(new inGameCoin(this.canvas));
         }
         if (random === 7) {
             this.scoringItems.push(new Coral1(this.canvas));
@@ -1759,9 +1780,6 @@ class OceanWorld extends Game {
         }
         if (random === 9) {
             this.scoringItems.push(new Rock2(this.canvas));
-        }
-        if (random === 10) {
-            this.scoringItems.push(new QuestionBox(this.canvas));
         }
     }
 }

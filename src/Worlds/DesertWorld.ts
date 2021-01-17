@@ -34,7 +34,6 @@ class DesertWorld extends Game {
       this.scoringItems.push(new inGameCoin(this.canvas));
     }
     if (random === 7) {
-      this.scoringItems.push(new QuestionBox(this.canvas));
     }
     if (random === 8) {
       this.scoringItems.push(new DesertStone1(this.canvas));

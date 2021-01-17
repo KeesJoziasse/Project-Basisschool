@@ -101,7 +101,7 @@ class Game extends DangerDash{
     if (this.frame % 10 === 0) {
       this.score++;
     }
-    if (this.frame % 100 === 0) {
+    if (this.frame % 75 === 0) {
       this.randomScoringItems();
     }
   }
@@ -118,6 +118,7 @@ class Game extends DangerDash{
     //   this.gameState === "Test";
     //   // new InGameQuestions (document.getElementById("canvas") as HTMLCanvasElement);
     // }
+    this.frame++;
 
     if (this.gameState === "question") {
       //console.log(this.gameState);
@@ -125,7 +126,6 @@ class Game extends DangerDash{
 
     // console.log(this.gameState);
     if (this.gameState === "Running") {
-      this.frame++;
       this.draw();
       this.forScoringItems();
       this.frameIndex();
@@ -147,7 +147,7 @@ class Game extends DangerDash{
   private forScoringItems() {
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => {
-        scoringItem.move();
+        scoringItem.move(this.frame);
       });
 
       for (let i = 0; i < this.scoringItems.length; i++) {

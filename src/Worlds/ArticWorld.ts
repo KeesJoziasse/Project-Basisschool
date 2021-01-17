@@ -33,7 +33,6 @@ class ArticWorld extends Game {
     if (random === 5 || random === 6) {
       this.scoringItems.push(new inGameCoin(this.canvas));
     } if (random === 7){
-      this.scoringItems.push(new QuestionBox(this.canvas));
     }
     if (random === 8) {
       this.scoringItems.push(new Penguin(this.canvas));
