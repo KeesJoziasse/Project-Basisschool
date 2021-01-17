@@ -49,10 +49,6 @@ abstract class Game {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-    //Making the player
-    //#TODO fix that the new player made is chosen by startscreen
-    this.player = new Player(this.canvas);
-
     //Setting the score to 0.
     this.score = 0;
     this.lives = 3;
@@ -150,7 +146,7 @@ abstract class Game {
     this.drawBackground();
 
     //Drawing the player
-    this.player.draw();
+    this.player.draw(ctx);
 
     //Draws all the scoring items.
     if (this.frame > 1) {

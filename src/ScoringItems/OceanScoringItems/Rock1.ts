@@ -1,6 +1,6 @@
 /// <reference path = "../ScoringItem.ts"/>
 
-class Rock extends ScoringItem {
+class Rock1 extends ScoringItem {
   public constructor(canvas: HTMLCanvasElement) {
     super(canvas);
     this.image = Utility.loadNewImage("assets/img/GameItems/ocean/oceanRock1.png");

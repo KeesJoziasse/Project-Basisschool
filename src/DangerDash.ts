@@ -26,19 +26,26 @@ class DangerDash {
     this.loop();
   }
 
+  //Gets the screenName
+  public getScreenName(): string {
+    return this.screenName;
+  }
+
   /**
    * Method that checks the gamestate
    */
   public loop = () => {
     this.DangerDashFrame++;
-    console.log(this.DangerDashFrame);
+    // console.log(this.DangerDashFrame);
     if (this.screenName === "Start") {
       this.start.draw();
     }
     if (this.screenName === "Shop"){
       this.shop.draw();
     }
-
+    
+    
+    console.log(this.screenName);
     requestAnimationFrame(this.loop);
   };
 

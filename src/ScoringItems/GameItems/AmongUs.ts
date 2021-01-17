@@ -22,9 +22,7 @@ class AmongUs extends Player {
     );
   }
 
-  public characterAnimation() {
-    const ctx = this.canvas.getContext("2d"); 
-   
+  public characterAnimationTest() {
     //Adds 1 to the frame counter.
     this.animationFrame++;
 
@@ -40,7 +38,5 @@ class AmongUs extends Player {
     } else if (this.animationFrame > 30 && this.animationFrame <= 40) {
       this.image = this.walk2;
     }
-    ctx.drawImage(this.image, this.xPos, this.yPos);
   }
-
 }

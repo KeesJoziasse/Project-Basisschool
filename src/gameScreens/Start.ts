@@ -25,7 +25,7 @@ class Start {
     this.worldImages = [];
 
     //The world images array
-    this.shopImages = [];
+    this.characterImages = [];
 
     //The overall image array
     this.startImages = [];
@@ -86,8 +86,8 @@ class Start {
     });
 
     //Drawing the characters
-    for (let i = 0; i < this.shopImages.length; i++) {
-      this.shopImages[this.indexCounterCharacter].draw(ctx);
+    for (let i = 0; i < this.characterImages.length; i++) {
+      this.characterImages[this.indexCounterCharacter].draw(ctx);
     }
 
     //Forloop to decide what world img is goint to be drawed
@@ -190,7 +190,7 @@ class Start {
   private charachterMaker() {
     //TODO alleen dingen pushen die echt in de game komen
     //TODO hier dingen pushen zodra unlock button is gedrukt
-    this.shopImages.push(
+    this.characterImages.push(
       new AmongUsChar(this.canvas.width / 2 - 90, this.canvas.height / 2 - 120)
     );
     this.characterImages.push(
@@ -280,7 +280,7 @@ class Start {
 
   private characterSelector(button: Button) {
     if (
-      this.indexCounterCharacter == this.shopImages.length - 1 &&
+      this.indexCounterCharacter == this.characterImages.length - 1 &&
       button.getButtonName() == "NextCharacter"
     ) {
       this.indexCounterCharacter = 0;
@@ -288,7 +288,7 @@ class Start {
       this.indexCounterCharacter == 0 &&
       button.getButtonName() == "PreviousCharacter"
     ) {
-      this.indexCounterCharacter += this.shopImages.length - 1;
+      this.indexCounterCharacter += this.characterImages.length - 1;
     } else if (
       button.getButtonName() == "PreviousCharacter" &&
       this.indexCounterCharacter > 0

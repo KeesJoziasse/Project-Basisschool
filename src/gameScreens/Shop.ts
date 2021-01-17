@@ -1,19 +1,22 @@
 class Shop {
   private canvas: HTMLCanvasElement;
   private image: HTMLImageElement;
-  private shopImages: Images[];
-  private buttons: Button[];
+  protected shopImages: Images[];
+  protected buttons: Button[];
   private characters: Images[];
   private newWorlds: Images[];
   private name: string;
   private xPos: number;
   private yPos: number;
+  private screenName: string;
 
   //Constructor
   public constructor(canvas: HTMLCanvasElement) {
 
     // Construct all of the canvas
     this.canvas = canvas;
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
 
     // The button array
     this.buttons = [];
@@ -30,6 +33,7 @@ class Shop {
     // The unlockable world array
     this.newWorlds = [];
 
+    this.screenName = "Shop";
     // add an mouse event
     document.addEventListener("click", this.mouseHandler);
 
