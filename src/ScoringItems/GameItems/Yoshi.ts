@@ -5,7 +5,7 @@ class Yoshi extends Player {
 
   public constructor(canvas: HTMLCanvasElement) {
     super(canvas);
-    this.walk1 = GameItem.loadNewImage(
+    this.walk1 = Utility.loadNewImage(
       "./assets/img/Characters/Yoshi/yoshi.png"
     );
   }

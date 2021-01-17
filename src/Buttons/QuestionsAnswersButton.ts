@@ -4,6 +4,6 @@ class QuestionsAnswersButton extends Button {
   public constructor(xPos: number, yPos: number, canvas: HTMLCanvasElement) {
     super(xPos, yPos, canvas);
     this.name = "QandA";
-    this.image = Start.loadNewImage("./assets/img/buttons/info-button.png");
+    this.image = Utility.loadNewImage("./assets/img/buttons/info-button.png");
   }
 }

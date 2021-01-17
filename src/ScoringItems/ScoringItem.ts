@@ -64,6 +64,10 @@ abstract class ScoringItem {
   public getCoinValue(): number{
     return this.earnedCoins;
   }
+// test
+  public getSpeed(): number{
+    return this.speed;
+  }
 
   /**
    * Moves the scoring items

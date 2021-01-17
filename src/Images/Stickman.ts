@@ -4,7 +4,7 @@ class Stickman extends Images {
   public constructor(xPos: number, yPos: number) {
     super(xPos, yPos);
     this.name = "Stickman";
-    this.image = Start.loadNewImage(
+    this.image = Utility.loadNewImage(
       "./assets/img/Characters/Stickman/stickman.png"
     );
   }

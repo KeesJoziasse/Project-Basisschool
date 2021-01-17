@@ -4,6 +4,7 @@ class GeneralQuestions {
   private images: Images[];
 
   public constructor(canvasId: HTMLCanvasElement) {
+
     // Construct all of the canvas
     this.canvas = canvasId;
     this.canvas.width = window.innerWidth;
@@ -21,22 +22,9 @@ class GeneralQuestions {
     //Calling the image maker method
     this.imageMaker();
 
-    // Calls the loop
-    this.loop();
-
     // Add a mouse event
     document.addEventListener("click", this.mouseHandler);
   }
-
-  /**
-   * Method for the Game Loop
-   */
-  public loop = () => {
-    this.draw();
-
-    // in the first loop no images are loaded
-    requestAnimationFrame(this.loop);
-  };
 
   /**
    * Draws all the necessary elements to the canvas
@@ -49,7 +37,7 @@ class GeneralQuestions {
 
     // Draws all the buttons
     this.buttons.forEach((button) => {
-      button.draw(ctx);
+      button.draw();
     });
 
     //Draws all the images
@@ -83,10 +71,8 @@ class GeneralQuestions {
     this.images.push(new UpperLane((this.canvas.width / 3) * 0.60, 200));
     this.images.push(new MidLane((this.canvas.width / 3) * 0.60, 350));
     this.images.push(new DownLane((this.canvas.width / 3) * 0.60, 500));
-    // shield
-    this.images.push(new ShieldBooster((this.canvas.width / 3) * 1, 435));
-    // rocket
-    this.images.push(new RocketBooster((this.canvas.width / 3) * 1, 135));
+    // questionBox
+    this.images.push(new QuestionBoxText((this.canvas.width / 3) * 1, 435));
     // coin
     this.images.push(new TextCoin((this.canvas.width / 2) * 1.34, 435));
     // obstacle
@@ -95,7 +81,7 @@ class GeneralQuestions {
 
   // function to draw all control text on the canvas
   private controls(ctx: CanvasRenderingContext2D) {
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Bovenste laan:",
       40,
@@ -104,7 +90,7 @@ class GeneralQuestions {
       "center"
     );
 
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Middelste laan:",
       40,
@@ -113,7 +99,7 @@ class GeneralQuestions {
       "center"
     );
 
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Onderste laan:",
       40,
@@ -122,27 +108,19 @@ class GeneralQuestions {
       "center"
     );
   }
-// function to draw als textbox titles to the canvas
+  // function to draw als textbox titles to the canvas
   private titleTextBoxes(ctx: CanvasRenderingContext2D) {
-    Start.writeTextToCanvas(
-      ctx,
-      "Rocket booster",
-      35,
-      (this.canvas.width / 3) * 1.4,
-      140,
-      "center"
-    );
 
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
-      "Shield booster",
+      "Questionbox",
       35,
       (this.canvas.width / 3) * 1.4,
       435,
       "center"
     );
     // title coins & obstacle
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Obstakels",
       35,
@@ -150,7 +128,7 @@ class GeneralQuestions {
       140,
       "center"
     );
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Coins",
       35,

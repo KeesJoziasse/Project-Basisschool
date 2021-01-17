@@ -1,10 +1,11 @@
-class Endscreen {
+class Endscreen{
   private canvas: HTMLCanvasElement;
   private buttons: Button[];
   private image: Images[];
   private score: number;
 
   public constructor(canvasId: HTMLCanvasElement, score: number) {
+
     // Construct the canvas
     this.canvas = canvasId;
     this.canvas.width = window.innerWidth;
@@ -22,24 +23,11 @@ class Endscreen {
 
     // Calls the background maker
 
-    // Calls the loop
-    this.loop();
-
     this.score = 200;
-
-    // Add a mouse event
-    document.addEventListener("click", this.mouseHandler);
-  }
-
-  /**
-   * Method for the Game Loop
-   */
-  public loop = () => {
+    
+    //Draw this screen
     this.draw();
-
-    // in the first loop no images are loaded
-    requestAnimationFrame(this.loop);
-  };
+  }
 
   public draw() {
     const ctx = this.canvas.getContext("2d");
@@ -48,16 +36,16 @@ class Endscreen {
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     ctx.drawImage(
-      GameItem.loadNewImage("./assets/img/background/EndscreenBackground.jpg"),
+      Utility.loadNewImage("./assets/img/background/EndscreenBackground.jpg"),
       0,
       0
     );
 
     this.buttons.forEach((button) => {
-      button.draw(ctx);
+      button.draw();
     });
 
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Game Over!",
       120,
@@ -67,7 +55,7 @@ class Endscreen {
       "white"
     );
 
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       `Your score is ${this.score}`,
       60,
@@ -88,9 +76,4 @@ class Endscreen {
     );
   }
 
-  /**
-   * Method to handle the mouse event
-   * @param {MouseEvent} event - mouse event
-   */
-  public mouseHandler = (event: MouseEvent) => {};
 }

@@ -4,6 +4,6 @@ class Titel extends Images {
   public constructor(xPos: number, yPos: number) {
     super(xPos, yPos);
     this.name = "Titel";
-    this.image = Start.loadNewImage("./assets/img/world/Titel.png");
+    this.image = Utility.loadNewImage("./assets/img/world/Titel.png");
   }
 }

@@ -1,20 +1,22 @@
 /// <reference path = "../GameItem.ts"/>
 
-class Player extends GameItem {
+abstract class Player extends GameItem {
   private keyboardListener: KeyboardListener;
 
   protected animationFrame: number;
   protected yPos: number;
   protected xPos: number;
   protected image: HTMLImageElement;
+  protected characterName: string;
 
   constructor(canvas: HTMLCanvasElement) {
     super(canvas);
     this.keyboardListener = new KeyboardListener();
-    // this.yPos = this.canvas.height / 2;
-    // this.xPos = this.canvas.width / 7;
+    this.yPos = this.canvas.height / 2;
+    this.xPos = this.canvas.width / 7;
     this.animationFrame = 0;
   }
+
 
   /**
    * method to move the player between the lanes
@@ -52,9 +54,13 @@ class Player extends GameItem {
 
   //Will be overwritten by AmongUs class
   public characterAnimation(){}
-  
-  public draw() {
-    console.log(this.image);
+
+  /**
+  //  * Render the objects
+  //  * @param ctx The CanvasRenderingContext2D of the canvas to draw on
+  //  */
+  public draw(ctx: CanvasRenderingContext2D) {
+    // ctx.drawImage(this.image, this.xPos, this.yPos);
     this.characterAnimation();
   }
 

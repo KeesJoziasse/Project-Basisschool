@@ -7,25 +7,21 @@ class AmongUs extends Player {
 
   public constructor(canvas: HTMLCanvasElement) {
     super(canvas);
-    this.image = GameItem.loadNewImage(
-      "./assets/img/Characters/AmongUs/among-us-walk-2.png"
-    );
-
-    this.walk1 = GameItem.loadNewImage(
+    this.walk1 = Utility.loadNewImage(
       "./assets/img/Characters/AmongUs/among-us-walk-1.png"
     );
-    this.walk2 = GameItem.loadNewImage(
+    this.walk2 = Utility.loadNewImage(
       "./assets/img/Characters/AmongUs/among-us-walk-2.png"
     );
-    this.walk3 = GameItem.loadNewImage(
+    this.walk3 = Utility.loadNewImage(
       "./assets/img/Characters/AmongUs/among-us-walk-3.png"
     );
   }
 
   public characterAnimation() {
-    const ctx = this.canvas.getContext("2d"); 
-   
     //Adds 1 to the frame counter.
+    const ctx = this.canvas.getContext("2d");
+
     this.animationFrame++;
 
     if (this.animationFrame >= 20) {
@@ -42,5 +38,4 @@ class AmongUs extends Player {
     }
     ctx.drawImage(this.image, this.xPos, this.yPos);
   }
-
 }

@@ -4,7 +4,7 @@ class MidLane extends Images {
   public constructor(xPos: number, yPos: number) {
     super(xPos, yPos);
     this.name = "midLane";
-    this.image = Start.loadNewImage(
+    this.image = Utility.loadNewImage(
       "./assets/img/GeneralQuestions/midLane.png"
     );
   }
