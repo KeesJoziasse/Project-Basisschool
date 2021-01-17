@@ -26,9 +26,6 @@ class Shop {
     // The unlockable world array
     this.newWorlds = [];
 
-    //Calls button maker function
-    this.buttonMaker();
-
     // Calls the character maker function
     this.drawUnlockableCharacter();
 
@@ -68,7 +65,6 @@ class Shop {
    * Draws all the necessary elements to the canvas
    */
   public draw() {
-
     const ctx = this.canvas.getContext("2d");
 
     //Clears the canvas every frame
@@ -88,8 +84,7 @@ class Shop {
       button.draw();
     });
 
-   
-    // Price of Stewie
+    // Price of Yoshi
     Utility.writeTextToCanvas(
       ctx,
       "50",
@@ -103,7 +98,7 @@ class Shop {
     // Price for yellow Among Us character
     Utility.writeTextToCanvas(
       ctx,
-      "50",
+      "100",
       60,
       this.canvas.width / 2.55,
       this.canvas.height / 2.25,
@@ -114,7 +109,7 @@ class Shop {
     // Price for Ash
     Utility.writeTextToCanvas(
       ctx,
-      "50",
+      "150",
       60,
       this.canvas.width / 1.68,
       this.canvas.height / 2.25,
@@ -125,7 +120,7 @@ class Shop {
     // Price for Morty
     Utility.writeTextToCanvas(
       ctx,
-      "50",
+      "200",
       60,
       this.canvas.width / 1.24,
       this.canvas.height / 2.25,
@@ -136,7 +131,7 @@ class Shop {
     // Price for desert level
     Utility.writeTextToCanvas(
       ctx,
-      "100",
+      "300",
       60,
       this.canvas.width / 1.42,
       this.canvas.height / 1.1,
@@ -146,7 +141,7 @@ class Shop {
 
     Utility.writeTextToCanvas(
       ctx,
-      "100",
+      "200",
       60,
       this.canvas.width / 2.01,
       this.canvas.height / 1.1,
@@ -252,109 +247,4 @@ class Shop {
       new SonicUnlockable(this.canvas.width / 1.29, this.canvas.height / 6)
     );
   }
-
-  private buttonMaker() {
-    this.buttons.push(
-      new BackToStart(
-        (this.canvas.width / 5) * 0.05,
-        (this.canvas.height / 5) * 0.09,
-        this.canvas
-      )
-    );
-
-    // Unlock buttons for the worlds
-    this.buttons.push(
-      new UnlockDesert(
-        this.canvas.width / 4.5,
-        this.canvas.height / 1.08,
-        this.canvas
-      )
-    );
-    this.buttons.push(
-      new UnlockArctic(
-        this.canvas.width / 1.56,
-        this.canvas.height / 1.08,
-        this.canvas
-      )
-    );
-    this.buttons.push(
-      new UnlockSwamp(
-        this.canvas.width / 2.31,
-        this.canvas.height / 1.08,
-        this.canvas
-      )
-    );
-
-    /// Unlock buttons for the characters
-    this.buttons.push(
-      new UnlockYoshi(
-        this.canvas.width / 9,
-        this.canvas.height / 2.15,
-        this.canvas
-      )
-    );
-    this.buttons.push(
-      new UnlockAmongUs(
-        this.canvas.width / 3.1,
-        this.canvas.height / 2.15,
-        this.canvas
-      )
-    );
-    this.buttons.push(
-      new UnlockGirlCharacter(
-        this.canvas.width / 1.87,
-        this.canvas.height / 2.15,
-        this.canvas
-      )
-    );
-    this.buttons.push(
-      new UnlockSonic(
-        this.canvas.width / 1.34,
-        this.canvas.height / 2.15,
-        this.canvas
-      )
-    );
-  }
-
-  // if (button.getButtonName() === "UnlockYoshi") {
-  //   this.characters.push(
-  //     new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6)
-  //   );
-  // }
-
-  // if (button.getButtonName() === "UnlockAmongUs") {
-  //   this.characters.push(
-  //     new YellowAmongUsUnlocked(this.canvas.width / 2.9, this.canvas.height / 6)
-  //   );
-  // }
-
-  // if (button.getButtonName() === "UnlockGirlCharacter") {
-  //   this.characters.push(
-  //     new GirlCharacterUnlocked(this.canvas.width / 1.75, this.canvas.height / 6)
-  //   )
-  // }
-
-  // if (button.getButtonName() === "UnlockSonic") {
-  //   this.characters.push(
-  //     new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6)
-  //   )
-  // }
-
-  // if (button.getButtonName() === "UnlockSwamp") {
-  //   this.characters.push(
-  //     new SwampPlanetUnlocked(this.canvas.width / 2.33, this.canvas.height / 1.64)
-  //   );
-  // }
-
-  // if (button.getButtonName() === "UnlockDesert") {
-  //   this.characters.push(
-  //     new DesertPlanetUnlocked(this.canvas.width / 4.3, this.canvas.height / 1.6)
-  //   );
-  // }
-
-  // if (button.getButtonName() === "UnlockArctic") {
-  //   this.characters.push(
-  //     new ArcticPlanetUnlocked(this.canvas.width / 1.56, this.canvas.height / 1.646)
-  //   );
-  // }
 }

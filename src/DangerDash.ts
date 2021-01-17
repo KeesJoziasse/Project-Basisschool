@@ -19,7 +19,7 @@ class DangerDash {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-    this.earnedCoins = 0;
+    this.earnedCoins = 200;
     this.screenName = "StartScreen";
 
     this.start = new Start(this.canvas);
@@ -68,7 +68,6 @@ class DangerDash {
     }
 
     if (this.screenName === "ShopScreen") {
-      console.log("SHOP RUNNING");
       //FirstFrame sets buttons in the buttons[]
       if (this.DangerDashFrame === 1) {
         this.buttonMakerShopScreen();
@@ -128,62 +127,8 @@ class DangerDash {
   };
 
   /**
-   * ShopScreen button detections that if you click on a certain button the screenName will be changed
-   * @param button
+   * Draws the Shop (images,buttons, + earnedCoins(Dynamic))
    */
-  private ShopScreenDetection(button: Button) {
-    if (button.getButtonName() === "BackToStart") {
-      this.screenName = "StartScreen";
-      this.resetButtonsAndDangerDashFrame();
-    } if (button.getButtonName() === "UnlockYoshi") {
-      this.images.push(
-        new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6)
-      );
-    } else if (button.getButtonName() === "UnlockAmongUs") {
-      this.images.push(
-        new YellowAmongUsUnlocked(
-          this.canvas.width / 2.9,
-          this.canvas.height / 6
-        )
-      );
-    } else if (button.getButtonName() === "UnlockGirlCharacter") {
-      this.images.push(
-        new GirlCharacterUnlocked(
-          this.canvas.width / 1.75,
-          this.canvas.height / 6
-        )
-      );
-    } else if (button.getButtonName() === "UnlockSonic") {
-      this.images.push(
-        new SonicUnlocked(
-          this.canvas.width / 1.29,
-          this.canvas.height / 6
-        )
-      );
-    } else if (button.getButtonName() === "UnlockSwamp") {
-      this.images.push(
-        new SwampPlanetUnlocked(
-          this.canvas.width / 2.33,
-          this.canvas.height / 1.64
-        )
-      );
-    } else if (button.getButtonName() === "UnlockDesert") {
-      this.images.push(
-        new DesertPlanetUnlocked(
-          this.canvas.width / 4.3,
-          this.canvas.height / 1.6
-        )
-      );
-    } else if (button.getButtonName() === "UnlockArctic") {
-      this.images.push(
-        new ArcticPlanetUnlocked(
-          this.canvas.width / 1.56,
-          this.canvas.height / 1.646
-        )
-      );
-    }
-  }
-
   private DrawShop() {
     this.shop.draw();
     // Amount of money in the player's bank
@@ -200,6 +145,95 @@ class DangerDash {
 
     this.images.forEach((image) => {
       image.draw(ctx);
+    });
+    this.buttons.forEach((button) => {
+      button.draw();
+    });
+  }
+
+  /**
+   * ShopScreen button detections that if you click on a certain button the screenName will be changed
+   * @param button
+   */
+  private ShopScreenDetection(button: Button) {
+    if (button.getButtonName() === "BackToStart") {
+      this.screenName = "StartScreen";
+      this.resetButtonsAndDangerDashFrame();
+    }
+    //UnlockButtons
+    if (button.getButtonName() === "UnlockYoshi" && this.earnedCoins >= 50) {
+      this.earnedCoins -= 50;
+      this.images.push(
+        new YoshiUnlocked(
+          this.canvas.width / 7.9,
+          this.canvas.height / 6
+        )
+      );
+      this.DeleteSpecificShopButton("UnlockYoshi");
+      console.log(this.images);
+    } else if (button.getButtonName() === "UnlockAmongUs" && this.earnedCoins >= 100) {
+      this.earnedCoins -= 100;
+      this.images.push(
+        new YellowAmongUsUnlocked(
+          this.canvas.width / 2.9,
+          this.canvas.height / 6
+        )
+      );
+      this.DeleteSpecificShopButton("UnlockAmongUs");
+    } else if (button.getButtonName() === "UnlockGirlCharacter" && this.earnedCoins >= 150) {
+      this.earnedCoins -= 150;
+      this.images.push(
+        new GirlCharacterUnlocked(
+          this.canvas.width / 1.75,
+          this.canvas.height / 6
+        )
+      );
+      this.DeleteSpecificShopButton("UnlockGirlCharacter");
+    } else if (button.getButtonName() === "UnlockSonic" && this.earnedCoins >= 200) {
+      this.earnedCoins -= 200;
+      this.images.push(
+        new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6)
+      );
+      this.DeleteSpecificShopButton("UnlockSonic");
+    } else if (button.getButtonName() === "UnlockSwamp" && this.earnedCoins >= 100) {
+      this.earnedCoins -= 100;
+      this.images.push(
+        new SwampPlanetUnlocked(
+          this.canvas.width / 2.33,
+          this.canvas.height / 1.64
+        )
+      );
+      this.DeleteSpecificShopButton("UnlockSwamp");
+    } else if (button.getButtonName() === "UnlockDesert" && this.earnedCoins >= 200) {
+      this.earnedCoins -= 200;
+      this.images.push(
+        new DesertPlanetUnlocked(
+          this.canvas.width / 4.3,
+          this.canvas.height / 1.6
+        )
+      );
+      this.DeleteSpecificShopButton("UnlockDesert");
+    } else if (button.getButtonName() === "UnlockArctic" && this.earnedCoins >= 300) {
+      this.earnedCoins -= 300;
+      this.images.push(
+        new ArcticPlanetUnlocked(
+          this.canvas.width / 1.56,
+          this.canvas.height / 1.646
+        )
+      );
+      this.DeleteSpecificShopButton("UnlockArctic");
+    }
+  }
+
+  /**
+   * Splices the right button based on name
+   * @param buttonname name of the button that will be deleted
+   */
+  private DeleteSpecificShopButton(buttonname: string) {
+    this.buttons.forEach((button, index) => {
+      if (button.getButtonName() === `${buttonname}`) {
+        this.buttons.splice(index, 1);
+      }
     });
   }
 
@@ -400,6 +434,7 @@ class DangerDash {
       )
     );
   }
+
   //Clears the Buttons[] and makes it empty again
   private resetButtonsAndDangerDashFrame() {
     this.buttons = [];

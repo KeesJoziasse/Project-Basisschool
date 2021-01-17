@@ -20,7 +20,6 @@ class DangerDash {
                 console.log("GAME RUNNING");
             }
             if (this.screenName === "ShopScreen") {
-                console.log("SHOP RUNNING");
                 if (this.DangerDashFrame === 1) {
                     this.buttonMakerShopScreen();
                 }
@@ -70,7 +69,7 @@ class DangerDash {
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.earnedCoins = 0;
+        this.earnedCoins = 200;
         this.screenName = "StartScreen";
         this.start = new Start(this.canvas);
         this.shop = new Shop(this.canvas);
@@ -82,39 +81,64 @@ class DangerDash {
         document.addEventListener("click", this.mouseHandlerStart);
         this.loop();
     }
-    ShopScreenDetection(button) {
-        if (button.getButtonName() === "BackToStart") {
-            this.screenName = "StartScreen";
-            this.resetButtonsAndDangerDashFrame();
-        }
-        if (button.getButtonName() === "UnlockYoshi") {
-            this.images.push(new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6));
-        }
-        else if (button.getButtonName() === "UnlockAmongUs") {
-            this.images.push(new YellowAmongUsUnlocked(this.canvas.width / 2.9, this.canvas.height / 6));
-        }
-        else if (button.getButtonName() === "UnlockGirlCharacter") {
-            this.images.push(new GirlCharacterUnlocked(this.canvas.width / 1.75, this.canvas.height / 6));
-        }
-        else if (button.getButtonName() === "UnlockSonic") {
-            this.images.push(new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6));
-        }
-        else if (button.getButtonName() === "UnlockSwamp") {
-            this.images.push(new SwampPlanetUnlocked(this.canvas.width / 2.33, this.canvas.height / 1.64));
-        }
-        else if (button.getButtonName() === "UnlockDesert") {
-            this.images.push(new DesertPlanetUnlocked(this.canvas.width / 4.3, this.canvas.height / 1.6));
-        }
-        else if (button.getButtonName() === "UnlockArctic") {
-            this.images.push(new ArcticPlanetUnlocked(this.canvas.width / 1.56, this.canvas.height / 1.646));
-        }
-    }
     DrawShop() {
         this.shop.draw();
         const ctx = this.canvas.getContext("2d");
         Utility.writeTextToCanvas(ctx, `${this.earnedCoins}`, 60, this.canvas.width / 2, this.canvas.height / 10, "center", "white");
         this.images.forEach((image) => {
             image.draw(ctx);
+        });
+        this.buttons.forEach((button) => {
+            button.draw();
+        });
+    }
+    ShopScreenDetection(button) {
+        if (button.getButtonName() === "BackToStart") {
+            this.screenName = "StartScreen";
+            this.resetButtonsAndDangerDashFrame();
+        }
+        if (button.getButtonName() === "UnlockYoshi" && this.earnedCoins >= 50) {
+            this.earnedCoins -= 50;
+            this.images.push(new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6));
+            this.DeleteSpecificShopButton("UnlockYoshi");
+            console.log(this.images);
+        }
+        else if (button.getButtonName() === "UnlockAmongUs" && this.earnedCoins >= 100) {
+            this.earnedCoins -= 100;
+            this.images.push(new YellowAmongUsUnlocked(this.canvas.width / 2.9, this.canvas.height / 6));
+            this.DeleteSpecificShopButton("UnlockAmongUs");
+        }
+        else if (button.getButtonName() === "UnlockGirlCharacter" && this.earnedCoins >= 150) {
+            this.earnedCoins -= 150;
+            this.images.push(new GirlCharacterUnlocked(this.canvas.width / 1.75, this.canvas.height / 6));
+            this.DeleteSpecificShopButton("UnlockGirlCharacter");
+        }
+        else if (button.getButtonName() === "UnlockSonic" && this.earnedCoins >= 200) {
+            this.earnedCoins -= 200;
+            this.images.push(new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6));
+            this.DeleteSpecificShopButton("UnlockSonic");
+        }
+        else if (button.getButtonName() === "UnlockSwamp" && this.earnedCoins >= 100) {
+            this.earnedCoins -= 100;
+            this.images.push(new SwampPlanetUnlocked(this.canvas.width / 2.33, this.canvas.height / 1.64));
+            this.DeleteSpecificShopButton("UnlockSwamp");
+        }
+        else if (button.getButtonName() === "UnlockDesert" && this.earnedCoins >= 200) {
+            this.earnedCoins -= 200;
+            this.images.push(new DesertPlanetUnlocked(this.canvas.width / 4.3, this.canvas.height / 1.6));
+            this.DeleteSpecificShopButton("UnlockDesert");
+        }
+        else if (button.getButtonName() === "UnlockArctic" && this.earnedCoins >= 300) {
+            this.earnedCoins -= 300;
+            this.images.push(new ArcticPlanetUnlocked(this.canvas.width / 1.56, this.canvas.height / 1.646));
+            this.DeleteSpecificShopButton("UnlockArctic");
+        }
+    }
+    DeleteSpecificShopButton(buttonname) {
+        this.buttons.forEach((button, index) => {
+            if (button.getButtonName() === `${buttonname}`) {
+                this.buttons.splice(index, 1);
+            }
         });
     }
     HighScoreScreenDetection(button) {
@@ -1895,7 +1919,6 @@ class Shop {
         this.shopImages = [];
         this.characters = [];
         this.newWorlds = [];
-        this.buttonMaker();
         this.drawUnlockableCharacter();
         this.drawUnlockableWorlds();
     }
@@ -1923,11 +1946,11 @@ class Shop {
             button.draw();
         });
         Utility.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 5.8, this.canvas.height / 2.25, "center", "white");
-        Utility.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 2.55, this.canvas.height / 2.25, "center", "white");
-        Utility.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.68, this.canvas.height / 2.25, "center", "white");
-        Utility.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.24, this.canvas.height / 2.25, "center", "white");
-        Utility.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 1.42, this.canvas.height / 1.1, "center", "white");
-        Utility.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 2.01, this.canvas.height / 1.1, "center", "white");
+        Utility.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 2.55, this.canvas.height / 2.25, "center", "white");
+        Utility.writeTextToCanvas(ctx, "150", 60, this.canvas.width / 1.68, this.canvas.height / 2.25, "center", "white");
+        Utility.writeTextToCanvas(ctx, "200", 60, this.canvas.width / 1.24, this.canvas.height / 2.25, "center", "white");
+        Utility.writeTextToCanvas(ctx, "300", 60, this.canvas.width / 1.42, this.canvas.height / 1.1, "center", "white");
+        Utility.writeTextToCanvas(ctx, "200", 60, this.canvas.width / 2.01, this.canvas.height / 1.1, "center", "white");
         Utility.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 3.4, this.canvas.height / 1.1, "center", "white");
         this.shopImages.forEach((shopImage) => {
             shopImage.move(this.canvas);
@@ -1963,16 +1986,6 @@ class Shop {
         this.characters.push(new YellowAmongUsUnlockable(this.canvas.width / 2.9, this.canvas.height / 6));
         this.characters.push(new GirlCharacter(this.canvas.width / 1.75, this.canvas.height / 6));
         this.characters.push(new SonicUnlockable(this.canvas.width / 1.29, this.canvas.height / 6));
-    }
-    buttonMaker() {
-        this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09, this.canvas));
-        this.buttons.push(new UnlockDesert(this.canvas.width / 4.5, this.canvas.height / 1.08, this.canvas));
-        this.buttons.push(new UnlockArctic(this.canvas.width / 1.56, this.canvas.height / 1.08, this.canvas));
-        this.buttons.push(new UnlockSwamp(this.canvas.width / 2.31, this.canvas.height / 1.08, this.canvas));
-        this.buttons.push(new UnlockYoshi(this.canvas.width / 9, this.canvas.height / 2.15, this.canvas));
-        this.buttons.push(new UnlockAmongUs(this.canvas.width / 3.1, this.canvas.height / 2.15, this.canvas));
-        this.buttons.push(new UnlockGirlCharacter(this.canvas.width / 1.87, this.canvas.height / 2.15, this.canvas));
-        this.buttons.push(new UnlockSonic(this.canvas.width / 1.34, this.canvas.height / 2.15, this.canvas));
     }
 }
 class Start {
