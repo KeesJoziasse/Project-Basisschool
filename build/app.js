@@ -6,7 +6,6 @@ window.addEventListener("load", init);
 class DangerDash {
     constructor(canvas) {
         this.loop = () => {
-            console.log(this.screenName);
             this.DangerDashFrame++;
             if (this.screenName === "StartScreen") {
                 if (this.DangerDashFrame === 1) {
@@ -18,6 +17,7 @@ class DangerDash {
                 });
             }
             if (this.screenName === "GameScreen") {
+                this.game.draw();
             }
             if (this.screenName === "ShopScreen") {
                 console.log("SHOP RUNNING");
@@ -41,7 +41,6 @@ class DangerDash {
             requestAnimationFrame(this.loop);
         };
         this.mouseHandlerStart = (event) => {
-            console.log(`xPos ${event.clientX}, yPos ${event.clientY}`);
             this.buttons.forEach((button) => {
                 if (event.clientX >= button.getButtonXPos() &&
                     event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
@@ -122,9 +121,7 @@ class DangerDash {
         this.start.characterSelector(button);
         button.logButtonName();
         if (button.getButtonName() === "StartGame") {
-            console.log("Start button has been clicked.");
             this.screenName = "GameScreen";
-            this.start.checkCharacterName(button);
             this.start.startLevel(button);
             this.resetButtonsAndDangerDashFrame();
         }
@@ -1479,7 +1476,6 @@ class Game {
         this.loop();
         this.scoringItems = [];
         this.gameState = "Running";
-        this.player = new Girl(this.canvas);
     }
     getGameState() {
         return this.gameState;
@@ -1665,7 +1661,7 @@ class OceanWorld extends Game {
         ctx.drawImage(this.background, this.xPos, this.yPos);
     }
     randomScoringItems() {
-        const random = GameItem.randomInteger(10, 10);
+        const random = GameItem.randomInteger(1, 10);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }
@@ -1981,6 +1977,9 @@ class Start {
         this.charachterMaker();
         this.imageMaker();
         this.backgroundLoop();
+    }
+    getTest() {
+        return console.log(this.testPlayer);
     }
     draw() {
         const ctx = this.canvas.getContext("2d");

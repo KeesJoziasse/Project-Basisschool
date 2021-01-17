@@ -46,8 +46,8 @@ class DangerDash {
    */
   public loop = () => {
     //Counting Frames of main loop
-    console.log(this.screenName);
-    
+    //console.log(this.screenName);
+
     this.DangerDashFrame++;
     if (this.screenName === "StartScreen") {
       //FirstFrame sets buttons in the buttons[]
@@ -61,9 +61,9 @@ class DangerDash {
         button.draw();
       });
     }
-    
+
     if (this.screenName === "GameScreen") {
-      // this.game.draw();
+      this.game.draw();
     }
 
     if (this.screenName === "ShopScreen") {
@@ -100,7 +100,7 @@ class DangerDash {
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandlerStart = (event: MouseEvent): void => {
-    console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    // console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
     this.buttons.forEach((button) => {
       if (
         event.clientX >= button.getButtonXPos() &&
@@ -111,31 +111,24 @@ class DangerDash {
         //Based on the screenName you have a clickDetection
         if (this.screenName === "StartScreen") {
           this.startScreenDetection(button);
-        } else if (this.screenName === "GameScreen"){          
-        } else if (this.screenName === "ShopScreen"){
+        } else if (this.screenName === "GameScreen") {
+        } else if (this.screenName === "ShopScreen") {
           if (button.getButtonName() === "BackToStart") {
             this.screenName = "StartScreen";
             this.resetButtonsAndDangerDashFrame();
-          } else if(button.getButtonName() === "UnlockDesert"){
-
-          } else if(button.getButtonName() === "UnlockArctic"){
-
-          } else if(button.getButtonName() === "UnlockSwamp"){
-
-          } else if(button.getButtonName() === "UnlockYoshi"){
-            
-          }  else if(button.getButtonName() === "UnlockAmongUs"){
-            
-          }  else if(button.getButtonName() === "UnlockGirlCharacter"){
-            
-          }  else if(button.getButtonName() === "UnlockSonic"){
-            
-          } 
-        } else if (this.screenName === "HighScoreScreen"){
+          } else if (button.getButtonName() === "UnlockDesert") {
+          } else if (button.getButtonName() === "UnlockArctic") {
+          } else if (button.getButtonName() === "UnlockSwamp") {
+          } else if (button.getButtonName() === "UnlockYoshi") {
+          } else if (button.getButtonName() === "UnlockAmongUs") {
+          } else if (button.getButtonName() === "UnlockGirlCharacter") {
+          } else if (button.getButtonName() === "UnlockSonic") {
+          }
+        } else if (this.screenName === "HighScoreScreen") {
           this.HighScoreScreenDetection(button);
-        }  else if (this.screenName === "Q&AScreen"){
+        } else if (this.screenName === "Q&AScreen") {
           this.QAndAScreenDetection(button);
-        }        
+        }
       } else {
         return null;
       }
@@ -144,9 +137,9 @@ class DangerDash {
 
   private DrawShop() {
     this.shop.draw();
-     // Amount of money in the player's bank
-     const ctx = this.canvas.getContext("2d");
-     Utility.writeTextToCanvas(
+    // Amount of money in the player's bank
+    const ctx = this.canvas.getContext("2d");
+    Utility.writeTextToCanvas(
       ctx,
       `${this.earnedCoins}`,
       60,
@@ -159,7 +152,7 @@ class DangerDash {
 
   /**
    * HighScorescreen button detections that if you click on a certain button the screenName will be changed
-   * @param button 
+   * @param button
    */
   private HighScoreScreenDetection(button: Button) {
     if (button.getButtonName() === "BackToStart") {
@@ -170,7 +163,7 @@ class DangerDash {
 
   /**
    * QAndAscreen button detections that if you click on a certain button the screenName will be changed
-   * @param button 
+   * @param button
    */
   private QAndAScreenDetection(button: Button) {
     if (button.getButtonName() === "BackToStart") {
@@ -184,13 +177,18 @@ class DangerDash {
    * @param button
    */
   private startScreenDetection(button: Button) {
+    //Makes the arrow slecetors work
     this.start.worldSelector(button);
     this.start.characterSelector(button);
+    //Logs the button name that is clicked
+
     button.logButtonName();
     if (button.getButtonName() === "StartGame") {
-      console.log("Start button has been clicked.");
       this.screenName = "GameScreen";
-      this.start.checkCharacterName(button);
+      // console.log(this.start.getTest());
+      //console.log("Start button has been clicked.");
+      
+      //console.log(this.start.checkCharacterName(button));
       this.start.startLevel(button);
       //Clears the ButtonArray
       this.resetButtonsAndDangerDashFrame();
@@ -294,7 +292,7 @@ class DangerDash {
   }
 
   //Pushing the Shop-Buttons to buttons[]
-  private buttonMakerShopScreen(){
+  private buttonMakerShopScreen() {
     this.buttons.push(
       new BackToStart(
         (this.canvas.width / 5) * 0.05,

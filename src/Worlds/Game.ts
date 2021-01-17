@@ -4,42 +4,33 @@
 class Game {
   //The canvas
   protected canvas: HTMLCanvasElement;
-
   //The ingame player
   private player: Player;
   // #TODO screen: Screen[]
-
   //The score of the player
   protected score: number;
   protected lives: number;
   protected earnedCoins: number;
-
   //Amount of frames that have passed
   protected frame: number;
-
   //RNG
   protected random: number;
-
   //Scoring items array
   protected scoringItems: ScoringItem[];
-
   //speed of the worldImage
   protected speed: number;
-
   //xpos of the worldImage
   protected xPos: number;
-
   //xpos of the worldImage
   protected yPos: number;
-
   //image of the world
   protected image: HTMLImageElement;
-
   //GameOverState
   private gameState: string;
-
   //test
   private ingameQuestion: InGameQuestions;
+  //Oke
+  private start: Start;
 
   /**
    * Constructor
@@ -73,8 +64,10 @@ class Game {
     //Endstate
     this.gameState = "Running";
 
-    this.player = new Girl(this.canvas);
+    // this.player = new Girl(this.canvas);
   }
+  
+  
   // getters and setters
 
   public getGameState(): string {
