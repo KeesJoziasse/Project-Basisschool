@@ -25,13 +25,18 @@ class DangerDash {
             }
             if (this.screenName === "Question") {
                 if (this.DangerDashFrame = 1) {
-                    new InGameQuestionImage(this.canvas.width / 3, 150);
+                    this.buttonMakerQuestions();
+                    this.questionArray.push(new InGameQuestionImage(this.canvas.width / 3, 150));
+                    console.log(this.buttons);
+                    this.buttons.forEach((button) => {
+                        button.draw();
+                    });
                 }
                 this.inGameQuestions.draw();
             }
             if (this.screenName === "Endscreen") {
                 console.log("been here");
-                new Endscreen(this.canvas, 99999999);
+                new Endscreen(this.canvas, 0);
             }
             if (this.screenName === "ShopScreen") {
                 this.DrawShop();
@@ -65,6 +70,9 @@ class DangerDash {
                     else if (this.screenName === "Q&AScreen") {
                         this.QAndAScreenDetection(button);
                     }
+                    else if (this.screenName === "Question") {
+                        this.checkAnswer(button);
+                    }
                 }
                 else {
                     return null;
@@ -84,7 +92,7 @@ class DangerDash {
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.earnedCoins = 450;
+        this.earnedCoins = 200;
         this.screenName = "StartScreen";
         this.start = new Start(this.canvas);
         this.shop = new Shop(this.canvas);
@@ -92,6 +100,7 @@ class DangerDash {
         this.generalQuestions = new GeneralQuestions(this.canvas);
         this.inGameQuestions = new InGameQuestions(this.canvas);
         this.DangerDashFrame = 0;
+        this.questionArray = [];
         this.shopButtons = [];
         this.buttonMakerShopScreen();
         this.buttons = [];
@@ -106,6 +115,31 @@ class DangerDash {
             this.screenName = "ShopScreen";
         }
         console.log(this.screenName);
+    }
+    getCoins() {
+        return this.earnedCoins;
+    }
+    checkAnswer(button) {
+        this.questionArray.forEach((image) => {
+            if (button.getButtonName() === "YesButton" &&
+                image.getAnswer() === "yes") {
+                console.log("goed gedaan retard");
+            }
+            if (button.getButtonName() === "YesButton" &&
+                image.getAnswer() === "no") {
+                console.log("sukkel het antwoord was yes");
+                new Start(document.getElementById("canvas"));
+            }
+            if (button.getButtonName() === "NoButton" &&
+                image.getAnswer() === "no") {
+                console.log("klopt het is nee hahahah");
+            }
+            if (button.getButtonName() === "NoButton" &&
+                image.getAnswer() === "yes") {
+                console.log("FOUT!! het antwoord is nee");
+                new Start(document.getElementById("canvas"));
+            }
+        });
     }
     DrawShop() {
         this.shop.draw();
@@ -202,13 +236,17 @@ class DangerDash {
             this.resetButtonsAndDangerDashFrame();
         }
         else if (button.getButtonName() === "HighScore") {
-            this.screenName = "HighScoreScreen";
+            this.screenName = "Question";
             this.resetButtonsAndDangerDashFrame();
         }
         else if (button.getButtonName() === "QandA") {
             this.screenName = "Q&AScreen";
             this.resetButtonsAndDangerDashFrame();
         }
+    }
+    buttonMakerQuestions() {
+        this.buttons.push(new YesButton((this.canvas.width / 3) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
+        this.buttons.push(new NoButton((this.canvas.width / 2) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
     }
     buttonMakerGeneralQuestions() {
         this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09, this.canvas));
@@ -881,49 +919,13 @@ class OceanImage extends Images {
 }
 class InGameQuestions {
     constructor(canvasId) {
-        this.mouseHandler = (event) => {
-            console.log(`xPos ${event.clientX}, yPos ${event.clientY}`);
-            this.buttons.forEach((button) => {
-                if (event.clientX >= button.getButtonXPos() &&
-                    event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
-                    event.clientY >= button.getButtonYPos() &&
-                    event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
-                    if (button.getButtonName() === "YesButton" &&
-                        this.ingameQuestion.getAnswer() === "yes") {
-                        console.log("Goed het antwoord is Yes");
-                    }
-                    if (button.getButtonName() === "YesButton" &&
-                        this.ingameQuestion.getAnswer() === "no") {
-                        console.log("Fout het antwoord is Yes");
-                        new Start(document.getElementById("canvas"));
-                    }
-                    if (button.getButtonName() === "NoButton" &&
-                        this.ingameQuestion.getAnswer() === "no") {
-                        console.log("Goed het antwoord is NO");
-                    }
-                    if (button.getButtonName() === "NoButton" &&
-                        this.ingameQuestion.getAnswer() === "yes") {
-                        console.log("Fout het antwoord is NO");
-                        new Start(document.getElementById("canvas"));
-                    }
-                }
-            });
-        };
-        document.addEventListener("click", this.mouseHandler);
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.buttons = [];
         this.questionBackground = new InGameQuestionImage(this.canvas.width / 3, 150);
-        this.buttonMaker();
         this.randomQuestionGenerator();
         this.draw();
-    }
-    getButtonXPos() {
-        return this.xPos;
-    }
-    getButtonYPos() {
-        return this.yPos;
     }
     getButtonImageWidth() {
         return this.image.width;
@@ -931,17 +933,12 @@ class InGameQuestions {
     getButtonImageHeight() {
         return this.image.height;
     }
-    getButtonName() {
-        return this.name;
-    }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.questionBackground.draw(ctx);
-        this.ingameQuestion.getImageImage();
-        this.buttons.forEach((button) => {
-            button.draw();
-        });
+        this.imageQuestion.draw(ctx);
+        this.imageQuestion.getImageImage();
     }
     static loadNewImage(source) {
         const img = new Image();
@@ -949,34 +946,32 @@ class InGameQuestions {
         return img;
     }
     buttonMaker() {
-        this.buttons.push(new YesButton((this.canvas.width / 3) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
-        this.buttons.push(new NoButton((this.canvas.width / 2) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
     }
     randomQuestionGenerator() {
         const random = GameItem.randomInteger(1, 6);
         if (random === 1) {
             console.log("Random was 1 push question 1");
-            this.ingameQuestion = new Question1((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+            this.imageQuestion = new Question1((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
         }
         if (random === 2) {
             console.log("Random was 2 push question 2");
-            this.ingameQuestion = new Question2((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+            this.imageQuestion = new Question2((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
         }
         if (random === 3) {
             console.log("Random was 3 push question 3");
-            this.ingameQuestion = new Question3((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+            this.imageQuestion = new Question3((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
         }
         if (random === 4) {
             console.log("Random was 4 push question 4");
-            this.ingameQuestion = new Question4((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+            this.imageQuestion = new Question4((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
         }
         if (random === 5) {
             console.log("Random was 5 push question 5");
-            this.ingameQuestion = new Question5((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+            this.imageQuestion = new Question5((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
         }
         if (random === 6) {
             console.log("Random was 6 push question 6");
-            this.ingameQuestion = new Question6((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+            this.imageQuestion = new Question6((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
         }
     }
 }

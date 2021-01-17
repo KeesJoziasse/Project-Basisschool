@@ -6,6 +6,7 @@ class DangerDash {
   private buttons: Button[];
   private shopButtons: Button[];
   private images: Images[];
+  private questionArray: Images[];
 
   private start: Start;
   private shop: Shop;
@@ -13,7 +14,7 @@ class DangerDash {
   private generalQuestions: GeneralQuestions;
   private inGameQuestions: InGameQuestions;
 
-  protected screenName: string;
+  public screenName: string;
 
   public constructor(canvas: HTMLCanvasElement) {
     //canvas
@@ -21,7 +22,7 @@ class DangerDash {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-    this.earnedCoins = 450;
+    this.earnedCoins = 200;
     this.screenName = "StartScreen";
 
     this.start = new Start(this.canvas);
@@ -32,6 +33,7 @@ class DangerDash {
 
     this.DangerDashFrame = 0;
 
+    this.questionArray = [];
     this.shopButtons = [];
     this.buttonMakerShopScreen();
     this.buttons = [];
@@ -54,6 +56,10 @@ class DangerDash {
       this.screenName = "ShopScreen";
     }
     console.log(this.screenName);
+  }
+
+  public getCoins():number{
+    return this.earnedCoins;
   }
 
   /**
@@ -88,17 +94,24 @@ class DangerDash {
 
     if(this.screenName === "Question"){
       if(this.DangerDashFrame = 1){
-        new InGameQuestionImage(
-          this.canvas.width / 3,
-          150
+          this.buttonMakerQuestions();
+          this.questionArray.push(
+          new InGameQuestionImage(
+            this.canvas.width / 3,
+            150
+          )
         );
+        console.log(this.buttons)
+        this.buttons.forEach((button) => {
+          button.draw();
+        });
       }
       this.inGameQuestions.draw();
     }
 
     if(this.screenName === "Endscreen"){
       console.log("been here");
-      new Endscreen(this.canvas, 99999999);
+      new Endscreen(this.canvas, 0);
     }
 
     if (this.screenName === "ShopScreen") {
@@ -145,6 +158,8 @@ class DangerDash {
           this.HighScoreScreenDetection(button);
         } else if (this.screenName === "Q&AScreen") {
           this.QAndAScreenDetection(button);
+        } else if (this.screenName === "Question"){
+          this.checkAnswer(button);
         }
       } else {
         return null;
@@ -163,6 +178,40 @@ class DangerDash {
       }
     });
   };
+
+  public checkAnswer(button:Button){
+    this.questionArray.forEach((image) => {
+      if (
+        button.getButtonName() === "YesButton" &&
+        image.getAnswer() === "yes"
+      ) {
+        console.log("goed gedaan retard");
+        //new Game(document.getElementById("canvas") as HTMLCanvasElement)
+      }
+      if (
+        button.getButtonName() === "YesButton" &&
+        image.getAnswer() === "no"
+      ) {
+        console.log("sukkel het antwoord was yes");
+        new Start(document.getElementById("canvas") as HTMLCanvasElement);
+      }
+      if (
+        button.getButtonName() === "NoButton" &&
+        image.getAnswer() === "no"
+      ) {
+        console.log("klopt het is nee hahahah");
+        //new Game(document.getElementById("canvas") as HTMLCanvasElement);
+      }
+      if (
+        button.getButtonName() === "NoButton" &&
+        image.getAnswer() === "yes"
+      ) {
+        console.log("FOUT!! het antwoord is nee");
+        new Start(document.getElementById("canvas") as HTMLCanvasElement);
+      }
+    });
+  }
+  
 
   /**
    * Draws the Shop (images,buttons, + earnedCoins(Dynamic))
@@ -331,7 +380,7 @@ class DangerDash {
       //Clears the ButtonArray
       this.resetButtonsAndDangerDashFrame();
     } else if (button.getButtonName() === "HighScore") {
-      this.screenName = "HighScoreScreen";
+      this.screenName = "Question";
       //Clears the ButtonArray
       this.resetButtonsAndDangerDashFrame();
     } else if (button.getButtonName() === "QandA") {
@@ -339,6 +388,24 @@ class DangerDash {
       //Clears the ButtonArray
       this.resetButtonsAndDangerDashFrame();
     }
+  }
+
+  public buttonMakerQuestions(){
+    this.buttons.push(
+      new YesButton(
+        (this.canvas.width / 3) * 1.05,
+        (this.canvas.height / 2) * 1.5,
+        this.canvas
+      )
+    );
+
+    this.buttons.push(
+      new NoButton(
+        (this.canvas.width / 2) * 1.05,
+        (this.canvas.height / 2) * 1.5,
+        this.canvas
+      )
+    );
   }
 
   //Pushing GeneralQuestions-Buttons to buttons[]
