@@ -17,7 +17,7 @@ class DangerDash {
                 });
             }
             if (this.screenName === "GameScreen") {
-                console.log("GAME RUNNING");
+                this.game.draw();
             }
             if (this.screenName === "ShopScreen") {
                 if (this.DangerDashFrame === 1) {
@@ -40,7 +40,6 @@ class DangerDash {
             requestAnimationFrame(this.loop);
         };
         this.mouseHandlerStart = (event) => {
-            console.log(`xPos ${event.clientX}, yPos ${event.clientY}`);
             this.buttons.forEach((button) => {
                 if (event.clientX >= button.getButtonXPos() &&
                     event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
@@ -75,6 +74,7 @@ class DangerDash {
         this.shop = new Shop(this.canvas);
         this.highScore = new HighScore(this.canvas);
         this.generalQuestions = new GeneralQuestions(this.canvas);
+        this.game = new Game(this.canvas);
         this.DangerDashFrame = 0;
         this.buttons = [];
         this.images = [];
@@ -159,7 +159,7 @@ class DangerDash {
         button.logButtonName();
         if (button.getButtonName() === "StartGame") {
             this.screenName = "GameScreen";
-            this.start.checkCharacterName(button);
+            this.start.startLevel(button);
             this.resetButtonsAndDangerDashFrame();
         }
         else if (button.getButtonName() === "Shop") {
@@ -1484,7 +1484,6 @@ class SwampTree2 extends ScoringItem {
 class Game {
     constructor(canvasId) {
         this.loop = () => {
-            console.log(this.gameState);
             if (this.gameState === "question") {
                 console.log(this.gameState);
             }
@@ -1514,7 +1513,6 @@ class Game {
         this.loop();
         this.scoringItems = [];
         this.gameState = "Running";
-        this.player = new Girl(this.canvas);
     }
     getGameState() {
         return this.gameState;
@@ -1558,6 +1556,7 @@ class Game {
     }
     drawBackground() { }
     draw() {
+        console.log("Draw in game");
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawBackground();
@@ -1699,7 +1698,7 @@ class OceanWorld extends Game {
         ctx.drawImage(this.background, this.xPos, this.yPos);
     }
     randomScoringItems() {
-        const random = GameItem.randomInteger(10, 10);
+        const random = GameItem.randomInteger(1, 10);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }
@@ -1852,6 +1851,7 @@ class HighScore {
         this.imageMaker();
     }
     draw() {
+        console.log("Draw in highscore");
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.images.forEach((image) => {
@@ -2004,6 +2004,9 @@ class Start {
         this.imageMaker();
         this.backgroundLoop();
     }
+    getTest() {
+        return console.log(this.testPlayer);
+    }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -2075,12 +2078,29 @@ class Start {
             this.indexCounterCharacter += 1;
         }
     }
+    startLevel(button) {
+        if (button.getButtonName() == "StartGame" &&
+            this.worldImages[this.indexCounterWorld].getImageName() == "Ocean") {
+            new OceanWorld(this.canvas);
+        }
+        else if (button.getButtonName() == "StartGame" &&
+            this.worldImages[this.indexCounterWorld].getImageName() == "Artic") {
+            new ArticWorld(this.canvas);
+        }
+        else if (button.getButtonName() == "StartGame" &&
+            this.worldImages[this.indexCounterWorld].getImageName() == "Desert") {
+            new DesertWorld(this.canvas);
+        }
+        else if (button.getButtonName() == "StartGame" &&
+            this.worldImages[this.indexCounterWorld].getImageName() == "Swamp") {
+            new SwampWorld(this.canvas);
+        }
+    }
     checkCharacterName(button) {
         if (button.getButtonName() == "StartGame" &&
             this.characterImages[this.indexCounterCharacter].getImageName() ===
                 "AmongUsLime") {
             new AmongUs(this.canvas);
-            console.log("AmongUsLime");
         }
         else if (button.getButtonName() == "StartGame" &&
             this.characterImages[this.indexCounterCharacter].getImageName() ===

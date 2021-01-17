@@ -18,7 +18,7 @@ class OceanWorld extends Game {
   }
 
   public randomScoringItems(): void {
-    const random = GameItem.randomInteger(10, 10);
+    const random = GameItem.randomInteger(1, 10);
     if (random === 1) {
       this.scoringItems.push(new Shark(this.canvas));
     }

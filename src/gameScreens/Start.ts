@@ -8,7 +8,11 @@ class Start {
   private background: Images[];
   private indexCounterWorld: number;
   private indexCounterCharacter: number;
+  private game: Game;
 
+  //Test
+  private testPlayer: Player;
+  private testButton: Button;
   //Constructor
   public constructor(canvas: HTMLCanvasElement) {
     // Construct all of the canvas
@@ -56,6 +60,10 @@ class Start {
     // document.addEventListener("click", this.mouseHandler);
   }
 
+  public getTest(): void {
+    return console.log(this.testPlayer);
+  }
+
   /**
    * Draws all the necessary elements to the canvas
    */
@@ -93,7 +101,6 @@ class Start {
     }
   }
 
-  
   private worldImageMaker() {
     this.worldImages.push(
       new OceanImage(this.canvas.width / 2 - 202, this.canvas.height / 3 - 130)
@@ -152,27 +159,6 @@ class Start {
     this.background.push(new Cloud(0, this.canvas.height / 4, 0.5));
   }
 
-  // /**
-  //  * Method to handle the mouse event
-  //  * @param {MouseEvent} event - mouse event
-  //  */
-  // public mouseHandler = (event: MouseEvent): void => {
-  //   //console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
-  //   this.buttons.forEach((button) => {
-  //     if (
-  //       event.clientX >= button.getButtonXPos() &&
-  //       event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
-  //       event.clientY >= button.getButtonYPos() &&
-  //       event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
-  //     ) {
-  //       this.worldSelector(button);
-  //       this.characterSelector(button);
-  //       //this.startLevel(button);
-  //       this.checkCharacterName(button);
-  //     }
-  //   });
-  // };
-
   /**
    * Method to select the world you want to play.
    * @param button
@@ -224,29 +210,29 @@ class Start {
     }
   }
 
-  // private startLevel(button: Button) {
-  //   if (
-  //     button.getButtonName() == "StartGame" &&
-  //     this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
-  //   ) {
-  //     new OceanWorld(this.canvas);
-  //   } else if (
-  //     button.getButtonName() == "StartGame" &&
-  //     this.worldImages[this.indexCounterWorld].getImageName() == "Artic"
-  //   ) {
-  //     new ArticWorld(this.canvas);
-  //   } else if (
-  //     button.getButtonName() == "StartGame" &&
-  //     this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
-  //   ) {
-  //     new DesertWorld(this.canvas);
-  //   } else if (
-  //     button.getButtonName() == "StartGame" &&
-  //     this.worldImages[this.indexCounterWorld].getImageName() == "Swamp"
-  //   ) {
-  //     new SwampWorld(this.canvas);
-  //   }
-  // }
+  public startLevel(button: Button) {
+    if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
+    ) {
+      new OceanWorld(this.canvas);
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Artic"
+    ) {
+      new ArticWorld(this.canvas);
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
+    ) {
+      new DesertWorld(this.canvas);
+    } else if (
+      button.getButtonName() == "StartGame" &&
+      this.worldImages[this.indexCounterWorld].getImageName() == "Swamp"
+    ) {
+      new SwampWorld(this.canvas);
+    }
+  }
 
   public checkCharacterName(button: Button) {
     if (
@@ -255,7 +241,6 @@ class Start {
         "AmongUsLime"
     ) {
       new AmongUs(this.canvas);
-      console.log("AmongUsLime");
     } else if (
       button.getButtonName() == "StartGame" &&
       this.characterImages[this.indexCounterCharacter].getImageName() ===
@@ -280,6 +265,6 @@ class Start {
         "SonicUnlocked"
     ) {
       new Sonic(this.canvas);
-    }
+    } 
   }
 }
