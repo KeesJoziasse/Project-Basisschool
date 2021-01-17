@@ -19,7 +19,7 @@ class DangerDash {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-    this.earnedCoins = 200;
+    this.earnedCoins = 450;
     this.screenName = "StartScreen";
 
     this.start = new Start(this.canvas);
