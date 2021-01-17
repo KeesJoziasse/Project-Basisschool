@@ -1,8 +1,8 @@
 class Shop  {
   private canvas: HTMLCanvasElement;
   private image: HTMLImageElement;
-  protected shopImages: Images[];
-  protected buttons: Button[];
+  private shopImages: Images[];
+  private buttons: Button[];
   private characters: Images[];
   private newWorlds: Images[];
   private name: string;

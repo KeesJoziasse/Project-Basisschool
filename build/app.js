@@ -1,169 +1,31 @@
 console.log("The game is working");
 let init = () => {
-    new Shop(document.getElementById("canvas"));
+    new DangerDash(document.getElementById("canvas"));
 };
 window.addEventListener("load", init);
 class DangerDash {
     constructor(canvas) {
         this.loop = () => {
             this.DangerDashFrame++;
-            if (this.screenName === "StartScreen") {
-                if (this.DangerDashFrame === 1) {
-                    this.buttonMakerStartScreen();
-                }
+            if (this.screenName === "Start") {
                 this.start.draw();
-                this.buttons.forEach((button) => {
-                    button.draw();
-                });
             }
-            if (this.screenName === "GameScreen") {
-                console.log("GAME RUNNING");
-            }
-            if (this.screenName === "ShopScreen") {
-                console.log("SHOP RUNNING");
-                if (this.DangerDashFrame === 1) {
-                    this.buttonMakerShopScreen();
-                }
-                this.DrawShop();
-            }
-            if (this.screenName === "HighScoreScreen") {
-                if (this.DangerDashFrame === 1) {
-                    this.buttonMakerGeneralQuestions();
-                }
-                this.highScore.draw();
-            }
-            if (this.screenName === "Q&AScreen") {
-                if (this.DangerDashFrame === 1) {
-                    this.buttonMakerGeneralQuestions();
-                }
-                this.generalQuestions.draw();
+            if (this.screenName === "Shop") {
+                this.shop.draw();
             }
             requestAnimationFrame(this.loop);
-        };
-        this.mouseHandlerStart = (event) => {
-            console.log(`xPos ${event.clientX}, yPos ${event.clientY}`);
-            this.buttons.forEach((button) => {
-                if (event.clientX >= button.getButtonXPos() &&
-                    event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
-                    event.clientY >= button.getButtonYPos() &&
-                    event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
-                    if (this.screenName === "StartScreen") {
-                        this.startScreenDetection(button);
-                    }
-                    else if (this.screenName === "GameScreen") {
-                    }
-                    else if (this.screenName === "ShopScreen") {
-                        if (button.getButtonName() === "BackToStart") {
-                            this.screenName = "StartScreen";
-                            this.resetButtonsAndDangerDashFrame();
-                        }
-                        else if (button.getButtonName() === "UnlockDesert") {
-                        }
-                        else if (button.getButtonName() === "UnlockArctic") {
-                        }
-                        else if (button.getButtonName() === "UnlockSwamp") {
-                        }
-                        else if (button.getButtonName() === "UnlockYoshi") {
-                        }
-                        else if (button.getButtonName() === "UnlockAmongUs") {
-                        }
-                        else if (button.getButtonName() === "UnlockGirlCharacter") {
-                        }
-                        else if (button.getButtonName() === "UnlockSonic") {
-                        }
-                    }
-                    else if (this.screenName === "HighScoreScreen") {
-                        this.HighScoreScreenDetection(button);
-                    }
-                    else if (this.screenName === "Q&AScreen") {
-                        this.QAndAScreenDetection(button);
-                    }
-                }
-                else {
-                    return null;
-                }
-            });
         };
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.earnedCoins = 999;
-        this.screenName = "StartScreen";
-        this.start = new Start(this.canvas);
-        this.shop = new Shop(this.canvas);
-        this.highScore = new HighScore(this.canvas);
-        this.generalQuestions = new GeneralQuestions(this.canvas);
+        this.earnedCoins = 0;
+        this.screenName = "Start";
+        this.start = new Start(canvas);
         this.DangerDashFrame = 0;
-        this.buttons = [];
-        this.shopImages = [];
-        document.addEventListener("click", this.mouseHandlerStart);
         this.loop();
     }
-    DrawShop() {
-        this.shop.draw();
-        const ctx = this.canvas.getContext("2d");
-        Utility.writeTextToCanvas(ctx, `${this.earnedCoins}`, 60, this.canvas.width / 2, this.canvas.height / 10, "center", "white");
-    }
-    HighScoreScreenDetection(button) {
-        if (button.getButtonName() === "BackToStart") {
-            this.screenName = "StartScreen";
-            this.resetButtonsAndDangerDashFrame();
-        }
-    }
-    QAndAScreenDetection(button) {
-        if (button.getButtonName() === "BackToStart") {
-            this.screenName = "StartScreen";
-            this.resetButtonsAndDangerDashFrame();
-        }
-    }
-    startScreenDetection(button) {
-        this.start.worldSelector(button);
-        this.start.characterSelector(button);
-        button.logButtonName();
-        if (button.getButtonName() === "StartGame") {
-            this.screenName = "GameScreen";
-            this.start.checkCharacterName(button);
-            this.resetButtonsAndDangerDashFrame();
-        }
-        else if (button.getButtonName() === "Shop") {
-            this.screenName = "ShopScreen";
-            this.resetButtonsAndDangerDashFrame();
-        }
-        else if (button.getButtonName() === "HighScore") {
-            this.screenName = "HighScoreScreen";
-            this.resetButtonsAndDangerDashFrame();
-        }
-        else if (button.getButtonName() === "QandA") {
-            this.screenName = "Q&AScreen";
-            this.resetButtonsAndDangerDashFrame();
-        }
-    }
-    buttonMakerGeneralQuestions() {
-        this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09, this.canvas));
-    }
-    buttonMakerStartScreen() {
-        this.buttons.push(new StartGameButton(this.canvas.width / 2 - 329 / 2, (this.canvas.height / 5) * 4 - 100 / 2, this.canvas));
-        this.buttons.push(new ShopButton(this.canvas.width / 5 - 329 / 2, (this.canvas.height / 6) * 4, this.canvas));
-        this.buttons.push(new HighscoreButton((this.canvas.width / 5) * 4 - 329 / 2, (this.canvas.height / 6) * 4, this.canvas));
-        this.buttons.push(new PreviousCharacter(this.canvas.width / 4, this.canvas.height / 2 - 89, this.canvas));
-        this.buttons.push(new NextCharacter((this.canvas.width / 4) * 3 - 143, this.canvas.height / 2 - 89, 1, this.canvas));
-        this.buttons.push(new PreviousWorld((this.canvas.width / 7) * 2, this.canvas.height / 3 - 89, this.canvas));
-        this.buttons.push(new NextWorld((this.canvas.width / 7) * 5 - 143, this.canvas.height / 3 - 89, 1, this.canvas));
-        this.buttons.push(new QuestionsAnswersButton(this.canvas.width - 180, 50, this.canvas));
-    }
-    buttonMakerShopScreen() {
-        this.buttons.push(new BackToStart((this.canvas.width / 5) * 0.05, (this.canvas.height / 5) * 0.09, this.canvas));
-        this.buttons.push(new UnlockDesert(this.canvas.width / 4.5, this.canvas.height / 1.08, this.canvas));
-        this.buttons.push(new UnlockArctic(this.canvas.width / 1.56, this.canvas.height / 1.08, this.canvas));
-        this.buttons.push(new UnlockSwamp(this.canvas.width / 2.31, this.canvas.height / 1.08, this.canvas));
-        this.buttons.push(new UnlockYoshi(this.canvas.width / 9, this.canvas.height / 2.15, this.canvas));
-        this.buttons.push(new UnlockAmongUs(this.canvas.width / 3.1, this.canvas.height / 2.15, this.canvas));
-        this.buttons.push(new UnlockGirlCharacter(this.canvas.width / 1.87, this.canvas.height / 2.15, this.canvas));
-        this.buttons.push(new UnlockSonic(this.canvas.width / 1.34, this.canvas.height / 2.15, this.canvas));
-    }
-    resetButtonsAndDangerDashFrame() {
-        this.buttons = [];
-        this.DangerDashFrame = 0;
+    getScreenName() {
+        return this.screenName;
     }
 }
 class KeyboardListener {
@@ -1875,7 +1737,7 @@ class QuestionAndAnswer {
         this.buttons.push(new BackToStart((this.canvas.width / 7) * 0.09, (this.canvas.height / 3) * 0.08, this.canvas));
     }
 }
-class Shop extends DangerDash {
+class Shop {
     constructor(canvas) {
         this.canvas = canvas;
         this.buttons = [];

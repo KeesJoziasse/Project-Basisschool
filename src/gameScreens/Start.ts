@@ -17,7 +17,7 @@ class Start {
     this.canvas.height = window.innerHeight;
 
     //The button array
-    //this.buttons = [];
+    // this.buttons = [];
 
     //The world images array
     this.worldImages = [];

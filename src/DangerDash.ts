@@ -1,8 +1,9 @@
-abstract class DangerDash {
+class DangerDash {
   //#TODO make abstract class GameScreen or Screens
   protected canvas: HTMLCanvasElement;
   private earnedCoins: number;
   private DangerDashFrame: number;
+  private buttons: Button[];
   private start: Start;
   private shop: Shop;
   protected screenName: string;
