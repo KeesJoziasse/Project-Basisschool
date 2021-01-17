@@ -11,6 +11,7 @@ class DangerDash {
   private shop: Shop;
   private highScore: HighScore;
   private generalQuestions: GeneralQuestions;
+  private inGameQuestions: InGameQuestions;
 
   protected screenName: string;
 
@@ -27,6 +28,7 @@ class DangerDash {
     this.shop = new Shop(this.canvas);
     this.highScore = new HighScore(this.canvas);
     this.generalQuestions = new GeneralQuestions(this.canvas);
+    this.inGameQuestions = new InGameQuestions(this.canvas);
 
     this.DangerDashFrame = 0;
 
@@ -78,11 +80,20 @@ class DangerDash {
     if (this.screenName === "GameScreen") {
       //getter maken in game en deze hier callen met status
       console.log("GameScreen");
-      this.checkGameState();
+      if(this.DangerDashFrame === 1000){
+        this.screenName = "Question";
+        this.DangerDashFrame = 0;
+      }
     }
 
     if(this.screenName === "Question"){
-      console.log("QuestionScreen");
+      if(this.DangerDashFrame = 1){
+        new InGameQuestionImage(
+          this.canvas.width / 3,
+          150
+        );
+      }
+      this.inGameQuestions.draw();
     }
 
     if(this.screenName === "Endscreen"){
@@ -113,11 +124,6 @@ class DangerDash {
     //console.log(this.screenName);
     requestAnimationFrame(this.loop);
   };
-
-  /**
-   * Funtion will be overwritten by Game.TS
-   */
-  public checkGameState(){}
 
   /**
    * Method to handle the mouse event

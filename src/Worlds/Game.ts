@@ -151,17 +151,6 @@ class Game extends DangerDash{
       });
 
       for (let i = 0; i < this.scoringItems.length; i++) {
-        if (
-          this.player.collidesWithScoringItem(this.scoringItems[i]) &&
-          this.scoringItems[i].getName() === "QuestionBox"
-        ) {
-          // new InGameQuestions(
-          //   document.getElementById("canvas") as HTMLCanvasElement
-          // );
-          //this.gameState = "question";
-          // this.ingameQuestion.draw();
-          // console.log(this.score);
-        }
         if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
           //#TODO fix first if statement
           this.score += this.scoringItems[i].getPoints();
