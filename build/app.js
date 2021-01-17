@@ -891,10 +891,9 @@ class Player extends GameItem {
             this.yPos = this.lowerLane;
         }
     }
-    characterAnimationTest() { }
+    characterAnimation() { }
     draw(ctx) {
-        this.characterAnimationTest();
-        ctx.drawImage(this.image, this.xPos, this.yPos);
+        this.characterAnimation();
     }
     collidesWithScoringItem(ScoringItem) {
         if (this.xPos + this.image.width > ScoringItem.getPositionX() &&
@@ -1070,7 +1069,7 @@ class Coral2 extends ScoringItem {
 class Fish extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.image = Utility.loadNewImage("assets/img/GameItems/ocean/oceanFish.png");
+        this.image = Utility.loadNewImage("assets/img/obstacles/Ocean/oceanFish.png");
         this.points = 5;
         this.lives = 0;
         this.name = "Fish";
@@ -1080,7 +1079,7 @@ class Fish extends ScoringItem {
 class Pearl extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.image = Utility.loadNewImage("assets/img/GameItems/ocean/oceanParelBooster.png");
+        this.image = Utility.loadNewImage("assets/img/obstacles/Ocean/oceanPearl.png");
         this.points = 20;
         this.lives = 0;
         this.name = "Pearl";
@@ -1090,7 +1089,7 @@ class Pearl extends ScoringItem {
 class Rock1 extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.image = Utility.loadNewImage("assets/img/GameItems/ocean/oceanRock1.png");
+        this.image = Utility.loadNewImage("assets/img/obstacles/Ocean/oceanRock1.png");
         this.points = -20;
         this.lives = -1;
         this.name = "Rock";
@@ -1109,7 +1108,7 @@ class Rock2 extends ScoringItem {
 class Shark extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.image = Utility.loadNewImage("assets/img/GameItems/ocean/oceanShark.png");
+        this.image = Utility.loadNewImage("assets/img/obstacles/Ocean/oceanShark.png");
         this.points = -20;
         this.lives = -1;
         this.name = "Shark";
@@ -1173,6 +1172,10 @@ class SwampTree2 extends ScoringItem {
 class Game {
     constructor(canvasId) {
         this.loop = () => {
+            console.log(this.gameState);
+            if (this.gameState === "question") {
+                console.log(this.gameState);
+            }
             if (this.gameState === "Running") {
                 this.frame++;
                 this.draw();
@@ -1199,9 +1202,24 @@ class Game {
         this.loop();
         this.scoringItems = [];
         this.gameState = "Running";
+        this.player = new YellowAmongUs(this.canvas);
     }
-    scoringItemsOceanWorld() { }
-    frameIndex() { }
+    getGameState() {
+        return this.gameState;
+    }
+    setGameState(gameState) {
+        this.gameState = gameState;
+    }
+    randomScoringItems() { }
+    mathRandom() { }
+    frameIndex() {
+        if (this.frame % 10 === 0) {
+            this.score++;
+        }
+        if (this.frame % 100 === 0) {
+            this.randomScoringItems();
+        }
+    }
     forScoringItems() {
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => {
@@ -1211,6 +1229,7 @@ class Game {
                 if (this.player.collidesWithScoringItem(this.scoringItems[i]) &&
                     this.scoringItems[i].getName() === "QuestionBox") {
                     new InGameQuestions(document.getElementById("canvas"));
+                    this.gameState = "question";
                 }
                 if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
                     this.score += this.scoringItems[i].getPoints();
@@ -1225,7 +1244,13 @@ class Game {
             }
         }
     }
-    drawBackground() { }
+    drawBackground() {
+        const ctx = this.canvas.getContext("2d");
+        if (this.gameState === "Running") {
+            ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            Utility.loadNewImage("./assets/img/world/OceanBG.jpg");
+        }
+    }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -1257,6 +1282,15 @@ class Game {
         }
         if (this.lives < 0) {
             ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+    }
+    test() {
+        this.frame++;
+        this.draw();
+        this.forScoringItems();
+        this.frameIndex();
+        if (this.frame % 10 === 0) {
+            this.player.move();
         }
     }
     gameOver() {
@@ -1655,6 +1689,7 @@ class Shop {
         this.buttonMaker();
         this.characters = [];
         this.newWorlds = [];
+        this.gameState = "Shop";
         this.screenName = "Shop";
         document.addEventListener("click", this.mouseHandler);
     }

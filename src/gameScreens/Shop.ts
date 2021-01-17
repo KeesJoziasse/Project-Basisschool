@@ -9,6 +9,8 @@ class Shop {
   private xPos: number;
   private yPos: number;
   private screenName: string;
+  //GameOverState
+  private gameState: string;
 
   //Constructor
   public constructor(canvas: HTMLCanvasElement) {
@@ -32,6 +34,8 @@ class Shop {
 
     // The unlockable world array
     this.newWorlds = [];
+    
+    this.gameState = "Shop";
 
     this.screenName = "Shop";
     // add an mouse event
