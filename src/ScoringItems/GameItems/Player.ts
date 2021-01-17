@@ -60,6 +60,7 @@ abstract class Player extends GameItem {
   //  * @param ctx The CanvasRenderingContext2D of the canvas to draw on
   //  */
   public draw(ctx: CanvasRenderingContext2D) {
+    // ctx.drawImage(this.image, this.xPos, this.yPos);
     this.characterAnimation();
   }
 
