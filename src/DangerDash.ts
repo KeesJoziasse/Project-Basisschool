@@ -43,6 +43,18 @@ class DangerDash {
   }
 
   /**
+   * Setter for the ScreenName
+   */
+  public setscreenName(ScreenName:string) {
+    this.screenName = ScreenName;
+    console.log(this.screenName);
+    if(this.screenName === "Endscreen"){
+      this.screenName = "ShopScreen";
+    }
+    console.log(this.screenName);
+  }
+
+  /**
    * Method that checks the gamestate
    */
   public loop = () => {
@@ -65,7 +77,17 @@ class DangerDash {
 
     if (this.screenName === "GameScreen") {
       //getter maken in game en deze hier callen met status
-      //questions maken hier 
+      console.log("GameScreen");
+      this.checkGameState();
+    }
+
+    if(this.screenName === "Question"){
+      console.log("QuestionScreen");
+    }
+
+    if(this.screenName === "Endscreen"){
+      console.log("been here");
+      new Endscreen(this.canvas, 99999999);
     }
 
     if (this.screenName === "ShopScreen") {
@@ -91,6 +113,11 @@ class DangerDash {
     //console.log(this.screenName);
     requestAnimationFrame(this.loop);
   };
+
+  /**
+   * Funtion will be overwritten by Game.TS
+   */
+  public checkGameState(){}
 
   /**
    * Method to handle the mouse event
@@ -282,6 +309,9 @@ class DangerDash {
 
     button.logButtonName();
     if (button.getButtonName() === "StartGame") {
+      if(this.screenName === "Endscreen"){
+        this.screenName = "Endscreen";
+      }
       this.screenName = "GameScreen";
       // console.log(this.start.getTest());
       //console.log("Start button has been clicked.");

@@ -106,6 +106,10 @@ class Game extends DangerDash{
     }
   }
 
+  public checkGameState(){
+    return this.gameState;
+  }
+
   /**
    * Method that checks the gamestate
    */
@@ -116,7 +120,7 @@ class Game extends DangerDash{
     // }
 
     if (this.gameState === "question") {
-      console.log(this.gameState);
+      //console.log(this.gameState);
     }
 
     // console.log(this.gameState);
@@ -151,10 +155,10 @@ class Game extends DangerDash{
           this.player.collidesWithScoringItem(this.scoringItems[i]) &&
           this.scoringItems[i].getName() === "QuestionBox"
         ) {
-          new InGameQuestions(
-            document.getElementById("canvas") as HTMLCanvasElement
-          );
-          this.gameState = "question";
+          // new InGameQuestions(
+          //   document.getElementById("canvas") as HTMLCanvasElement
+          // );
+          //this.gameState = "question";
           // this.ingameQuestion.draw();
           // console.log(this.score);
         }
@@ -162,7 +166,7 @@ class Game extends DangerDash{
           //#TODO fix first if statement
           this.score += this.scoringItems[i].getPoints();
           this.lives += this.scoringItems[i].getLives();
-          console.log(this.scoringItems[i].getName());
+          //console.log(this.scoringItems[i].getName());
           this.earnedCoins += this.scoringItems[i].getCoinValue();
           this.scoringItems.splice(i, 1);
         } else if (this.scoringItems[i].outOfCanvas()) {
@@ -179,7 +183,7 @@ class Game extends DangerDash{
    * Method that writes gameItems on the canvas
    */
   public draw() {
-    console.log("Draw in game");
+    //console.log("Draw in game");
 
     const ctx = this.canvas.getContext("2d");
     //clears the canvas

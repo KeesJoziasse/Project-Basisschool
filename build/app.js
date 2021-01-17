@@ -17,6 +17,15 @@ class DangerDash {
                 });
             }
             if (this.screenName === "GameScreen") {
+                console.log("GameScreen");
+                this.checkGameState();
+            }
+            if (this.screenName === "Question") {
+                console.log("QuestionScreen");
+            }
+            if (this.screenName === "Endscreen") {
+                console.log("been here");
+                new Endscreen(this.canvas, 99999999);
             }
             if (this.screenName === "ShopScreen") {
                 this.DrawShop();
@@ -83,6 +92,15 @@ class DangerDash {
         document.addEventListener("click", this.mouseHandlerStart);
         this.loop();
     }
+    setscreenName(ScreenName) {
+        this.screenName = ScreenName;
+        console.log(this.screenName);
+        if (this.screenName === "Endscreen") {
+            this.screenName = "ShopScreen";
+        }
+        console.log(this.screenName);
+    }
+    checkGameState() { }
     DrawShop() {
         this.shop.draw();
         const ctx = this.canvas.getContext("2d");
@@ -166,6 +184,9 @@ class DangerDash {
         this.start.characterSelector(button);
         button.logButtonName();
         if (button.getButtonName() === "StartGame") {
+            if (this.screenName === "Endscreen") {
+                this.screenName = "Endscreen";
+            }
             this.screenName = "GameScreen";
             this.start.startLevel(button);
             this.resetButtonsAndDangerDashFrame();
@@ -1493,7 +1514,6 @@ class Game extends DangerDash {
         super(canvas);
         this.loop = () => {
             if (this.gameState === "question") {
-                console.log(this.gameState);
             }
             if (this.gameState === "Running") {
                 this.frame++;
@@ -1554,6 +1574,9 @@ class Game extends DangerDash {
             this.randomScoringItems();
         }
     }
+    checkGameState() {
+        return this.gameState;
+    }
     forScoringItems() {
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => {
@@ -1562,13 +1585,10 @@ class Game extends DangerDash {
             for (let i = 0; i < this.scoringItems.length; i++) {
                 if (this.player.collidesWithScoringItem(this.scoringItems[i]) &&
                     this.scoringItems[i].getName() === "QuestionBox") {
-                    new InGameQuestions(document.getElementById("canvas"));
-                    this.gameState = "question";
                 }
                 if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
                     this.score += this.scoringItems[i].getPoints();
                     this.lives += this.scoringItems[i].getLives();
-                    console.log(this.scoringItems[i].getName());
                     this.earnedCoins += this.scoringItems[i].getCoinValue();
                     this.scoringItems.splice(i, 1);
                 }
@@ -1580,7 +1600,6 @@ class Game extends DangerDash {
     }
     drawBackground() { }
     draw() {
-        console.log("Draw in game");
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawBackground();
