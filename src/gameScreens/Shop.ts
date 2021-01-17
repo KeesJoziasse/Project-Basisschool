@@ -107,29 +107,29 @@ class Shop {
       ctx,
       "100",
       60,
-      this.canvas.width / 2.55,
+      this.canvas.width / 2.51,
       this.canvas.height / 2.25,
       "center",
       "white"
     );
 
-    // Price for Ash
+    // Price for girl
     Utility.writeTextToCanvas(
       ctx,
       "150",
       60,
-      this.canvas.width / 1.68,
+      this.canvas.width / 1.63,
       this.canvas.height / 2.25,
       "center",
       "white"
     );
 
-    // Price for Morty
+    // Price for Sonic
     Utility.writeTextToCanvas(
       ctx,
       "200",
       60,
-      this.canvas.width / 1.24,
+      this.canvas.width / 1.21,
       this.canvas.height / 2.25,
       "center",
       "white"
@@ -140,22 +140,24 @@ class Shop {
       ctx,
       "300",
       60,
-      this.canvas.width / 1.42,
+      this.canvas.width / 1.39,
       this.canvas.height / 1.1,
       "center",
       "white"
     );
 
+    // Price for swamp level
     Utility.writeTextToCanvas(
       ctx,
       "200",
       60,
-      this.canvas.width / 2.01,
+      this.canvas.width / 1.97,
       this.canvas.height / 1.1,
       "center",
       "white"
     );
 
+    // Price for arctic level
     Utility.writeTextToCanvas(
       ctx,
       "100",
