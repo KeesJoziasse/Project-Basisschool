@@ -92,7 +92,7 @@ class InGameQuestions {
 
     this.questionBackground.draw(ctx);
     // Draws all the images
-    // this.ingameQuestion.draw(ctx);
+    this.ingameQuestion.draw(ctx);
     this.ingameQuestion.getImageImage();
 
     //Drawing the buttons
@@ -100,17 +100,7 @@ class InGameQuestions {
       button.draw();
     });
   }
-  //
-  /**
-   * Loads an image so it doesn't flicker
-   * @param {HTMLImageElement} source
-   * @return HTMLImageElement - returns an image
-   */
-  public static loadNewImage(source: string): HTMLImageElement {
-    const img = new Image();
-    img.src = source;
-    return img;
-  }
+  
 
   private buttonMaker() {
     //Initializing the buttons and pushing them to the array
@@ -198,28 +188,24 @@ class InGameQuestions {
           this.ingameQuestion.getAnswer() === "yes"
         ) {
           console.log("Goed het antwoord is Yes");
-          //new Game(document.getElementById("canvas") as HTMLCanvasElement)
         }
         if (
           button.getButtonName() === "YesButton" &&
           this.ingameQuestion.getAnswer() === "no"
         ) {
           console.log("Fout het antwoord is Yes");
-          new Start(document.getElementById("canvas") as HTMLCanvasElement);
         }
         if (
           button.getButtonName() === "NoButton" &&
           this.ingameQuestion.getAnswer() === "no"
         ) {
           console.log("Goed het antwoord is NO");
-          //new Game(document.getElementById("canvas") as HTMLCanvasElement);
         }
         if (
           button.getButtonName() === "NoButton" &&
           this.ingameQuestion.getAnswer() === "yes"
         ) {
           console.log("Fout het antwoord is NO");
-          new Start(document.getElementById("canvas") as HTMLCanvasElement);
         }
       }
     });

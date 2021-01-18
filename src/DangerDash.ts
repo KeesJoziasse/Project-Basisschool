@@ -122,6 +122,9 @@ class DangerDash {
           this.screenName = "EndScreen";
           this.earnedCoins += this.oceanWorld.getEarnedCoins();
           this.resetButtonsAndDangerDashFrame();
+        } else if (this.oceanWorld.getQuestionStatus() === "Question"){
+          this.screenName = "Question";
+          this.resetButtonsAndDangerDashFrame();
         }
       } else if (this.start.getWorldName() === "ArticWorld") {
 

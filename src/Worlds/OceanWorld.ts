@@ -134,7 +134,9 @@ class OceanWorld {
    */
   public randomScoringItems(): void {
     console.log(this.scoringItems)
-    const random = GameItem.randomInteger(1, 10);
+
+    //#TODO terugzetten op 1, 10
+    const random = GameItem.randomInteger(10, 10);
     if (random === 1) {
       this.scoringItems.push(new Shark(this.canvas));
     }
@@ -174,6 +176,10 @@ class OceanWorld {
 
       //scoringItmeCollision
       for (let i = 0; i < this.scoringItems.length; i++) {
+        if(this.player.collidesWithScoringItem(this.scoringItems[i]) &&
+        this.scoringItems[i].getName() === "QuestionBox"){
+          this.questionStatus = "Question";
+        }
         if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
           this.score += this.scoringItems[i].getPoints();
           this.lives += this.scoringItems[i].getLives();

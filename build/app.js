@@ -31,6 +31,10 @@ class DangerDash {
                         this.earnedCoins += this.oceanWorld.getEarnedCoins();
                         this.resetButtonsAndDangerDashFrame();
                     }
+                    else if (this.oceanWorld.getQuestionStatus() === "Question") {
+                        this.screenName = "Question";
+                        this.resetButtonsAndDangerDashFrame();
+                    }
                 }
                 else if (this.start.getWorldName() === "ArticWorld") {
                 }
@@ -937,7 +941,6 @@ class InGameQuestions {
                     if (button.getButtonName() === "YesButton" &&
                         this.ingameQuestion.getAnswer() === "no") {
                         console.log("Fout het antwoord is Yes");
-                        new Start(document.getElementById("canvas"));
                     }
                     if (button.getButtonName() === "NoButton" &&
                         this.ingameQuestion.getAnswer() === "no") {
@@ -946,7 +949,6 @@ class InGameQuestions {
                     if (button.getButtonName() === "NoButton" &&
                         this.ingameQuestion.getAnswer() === "yes") {
                         console.log("Fout het antwoord is NO");
-                        new Start(document.getElementById("canvas"));
                     }
                 }
             });
@@ -980,15 +982,11 @@ class InGameQuestions {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.questionBackground.draw(ctx);
+        this.ingameQuestion.draw(ctx);
         this.ingameQuestion.getImageImage();
         this.buttons.forEach((button) => {
             button.draw();
         });
-    }
-    static loadNewImage(source) {
-        const img = new Image();
-        img.src = source;
-        return img;
     }
     buttonMaker() {
         this.buttons.push(new YesButton((this.canvas.width / 3) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
@@ -1842,7 +1840,7 @@ class OceanWorld {
     }
     randomScoringItems() {
         console.log(this.scoringItems);
-        const random = GameItem.randomInteger(1, 10);
+        const random = GameItem.randomInteger(10, 10);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }
@@ -1877,6 +1875,10 @@ class OceanWorld {
                 scoringItem.move();
             });
             for (let i = 0; i < this.scoringItems.length; i++) {
+                if (this.player.collidesWithScoringItem(this.scoringItems[i]) &&
+                    this.scoringItems[i].getName() === "QuestionBox") {
+                    this.questionStatus = "Question";
+                }
                 if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
                     this.score += this.scoringItems[i].getPoints();
                     this.lives += this.scoringItems[i].getLives();
