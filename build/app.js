@@ -152,6 +152,7 @@ class DangerDash {
             this.earnedCoins -= 200;
             this.images.push(new SwampPlanetUnlocked(this.canvas.width / 2.33, this.canvas.height / 1.64));
             this.DeleteSpecificShopButton("UnlockSwamp");
+            this.start.pushSwamp();
         }
         else if (button.getButtonName() === "UnlockDesert" && this.earnedCoins >= 100) {
             this.earnedCoins -= 100;
@@ -997,6 +998,8 @@ class ScoringItem {
             this.yPosition = this.lowerLane;
         }
         this.speed = -(this.canvas.width / 100);
+        this.speed;
+        this.speed = -12;
         this.xPosition = this.canvas.width;
     }
     getPositionX() {
@@ -1240,6 +1243,22 @@ class Player extends GameItem {
     draw(ctx) {
         this.characterAnimation();
     }
+    playerAnimation() {
+        const ctx = this.canvas.getContext("2d");
+        this.animationFrame++;
+        if (this.animationFrame <= 10) {
+            ctx.drawImage(Utility.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-1.png"), this.xPos, this.yPos);
+        }
+        else if (this.animationFrame > 5 && this.animationFrame <= 10) {
+            this.image = Utility.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
+        }
+        else if (this.animationFrame > 10 && this.animationFrame <= 15) {
+            this.image = Utility.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-3.png");
+        }
+        else if (this.animationFrame > 15 && this.animationFrame <= 20) {
+            this.image = Utility.loadNewImage("./assets/img/Characters/AmongUs/among-us-walk-2.png");
+        }
+    }
     collidesWithScoringItem(ScoringItem) {
         if (this.xPos + this.image.width > ScoringItem.getPositionX() &&
             this.yPos <
@@ -1415,11 +1434,10 @@ class Coral2 extends ScoringItem {
 class Fish extends ScoringItem {
     constructor(canvas) {
         super(canvas);
+        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanFish.png");
         this.image = Utility.loadNewImage("assets/img/obstacles/Ocean/oceanFish.png");
         this.points = 5;
         this.lives = 0;
-        this.points = -5;
-        this.speed = -3;
         this.name = "Fish";
         this.earnedCoins = 0;
     }
@@ -1459,8 +1477,8 @@ class Shark extends ScoringItem {
         this.image = Utility.loadNewImage("assets/img/obstacles/Ocean/oceanShark.png");
         this.points = -20;
         this.lives = -1;
+        this.speed = -5;
         this.name = "Shark";
-        this.earnedCoins = 0;
     }
 }
 class Frog extends ScoringItem {
@@ -1546,6 +1564,7 @@ class Game extends DangerDash {
         this.earnedCoins = 0;
         this.frame = 0;
         this.speed;
+        this.speed;
         this.scoringItems = [];
         this.gameState = "Running";
         this.characterName = characterName;
@@ -1607,6 +1626,7 @@ class Game extends DangerDash {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        Utility.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
         this.drawBackground();
         this.player.draw(ctx);
         if (this.frame > 1) {

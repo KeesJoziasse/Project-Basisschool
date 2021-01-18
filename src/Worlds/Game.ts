@@ -182,7 +182,7 @@ class Game extends DangerDash{
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     //test text write Run!
-    Start.writeTextToCanvas(
+    Utility.writeTextToCanvas(
       ctx,
       "Run!",
       60,

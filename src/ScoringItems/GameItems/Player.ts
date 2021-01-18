@@ -74,22 +74,22 @@ abstract class Player extends GameItem {
     //animated so the images will change at a certain amount of frames
     if (this.animationFrame <= 10) {
       ctx.drawImage(
-        GameItem.loadNewImage(
+        Utility.loadNewImage(
           "./assets/img/Characters/AmongUs/among-us-walk-1.png"
         ),
         this.xPos,
         this.yPos
       );
     } else if (this.animationFrame > 5 && this.animationFrame <= 10) {
-      this.image = GameItem.loadNewImage(
+      this.image = Utility.loadNewImage(
         "./assets/img/Characters/AmongUs/among-us-walk-2.png"
       );
     } else if (this.animationFrame > 10 && this.animationFrame <= 15) {
-      this.image = GameItem.loadNewImage(
+      this.image = Utility.loadNewImage(
         "./assets/img/Characters/AmongUs/among-us-walk-3.png"
       );
     } else if (this.animationFrame > 15 && this.animationFrame <= 20) {
-      this.image = GameItem.loadNewImage(
+      this.image = Utility.loadNewImage(
         "./assets/img/Characters/AmongUs/among-us-walk-2.png"
       );
     }

@@ -246,6 +246,7 @@ class DangerDash {
         )
       );
       this.DeleteSpecificShopButton("UnlockSwamp");
+      this.start.pushSwamp();
     } else if (button.getButtonName() === "UnlockDesert" && this.earnedCoins >= 100) {
       this.earnedCoins -= 100;
       this.images.push(
@@ -319,10 +320,6 @@ class DangerDash {
         this.screenName = "Endscreen";
       }
       this.screenName = "GameScreen";
-      // console.log(this.start.getTest());
-      //console.log("Start button has been clicked.");
-      
-      //console.log(this.start.checkCharacterName(button));
       this.start.startLevel(button);
       //Clears the ButtonArray
       this.resetButtonsAndDangerDashFrame();
