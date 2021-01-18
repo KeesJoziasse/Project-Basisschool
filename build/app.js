@@ -159,51 +159,51 @@ class DangerDash {
             this.screenName = "StartScreen";
             this.resetButtonsAndDangerDashFrame();
         }
-        if (button.getButtonName() === "UnlockYoshi" && this.earnedCoins >= 50) {
-            this.earnedCoins -= 50;
+        if (button.getButtonName() === "UnlockYoshi" && this.earnedCoins >= 15) {
+            this.earnedCoins -= 15;
             this.images.push(new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6));
             this.DeleteSpecificShopButton("UnlockYoshi");
             this.start.pushYoshi();
             console.log(this.images);
         }
         else if (button.getButtonName() === "UnlockAmongUs" &&
-            this.earnedCoins >= 100) {
-            this.earnedCoins -= 100;
+            this.earnedCoins >= 30) {
+            this.earnedCoins -= 30;
             this.images.push(new YellowAmongUsUnlocked(this.canvas.width / 2.9, this.canvas.height / 6));
             this.DeleteSpecificShopButton("UnlockAmongUs");
             this.start.pushYellowAmongUs();
         }
         else if (button.getButtonName() === "UnlockGirlCharacter" &&
-            this.earnedCoins >= 150) {
-            this.earnedCoins -= 150;
+            this.earnedCoins >= 45) {
+            this.earnedCoins -= 45;
             this.images.push(new GirlCharacterUnlocked(this.canvas.width / 1.75, this.canvas.height / 6));
             this.DeleteSpecificShopButton("UnlockGirlCharacter");
             this.start.pushGirl();
         }
         else if (button.getButtonName() === "UnlockSonic" &&
-            this.earnedCoins >= 200) {
-            this.earnedCoins -= 200;
+            this.earnedCoins >= 60) {
+            this.earnedCoins -= 60;
             this.images.push(new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6));
             this.DeleteSpecificShopButton("UnlockSonic");
             this.start.pushSonic();
         }
         else if (button.getButtonName() === "UnlockSwamp" &&
-            this.earnedCoins >= 200) {
-            this.earnedCoins -= 200;
+            this.earnedCoins >= 50) {
+            this.earnedCoins -= 50;
             this.images.push(new SwampPlanetUnlocked(this.canvas.width / 2.33, this.canvas.height / 1.64));
             this.DeleteSpecificShopButton("UnlockSwamp");
             this.start.pushSwamp();
         }
         else if (button.getButtonName() === "UnlockDesert" &&
-            this.earnedCoins >= 100) {
-            this.earnedCoins -= 100;
+            this.earnedCoins >= 25) {
+            this.earnedCoins -= 25;
             this.images.push(new DesertPlanetUnlocked(this.canvas.width / 4.3, this.canvas.height / 1.6));
             this.DeleteSpecificShopButton("UnlockDesert");
             this.start.pushDesert();
         }
         else if (button.getButtonName() === "UnlockArctic" &&
-            this.earnedCoins >= 300) {
-            this.earnedCoins -= 300;
+            this.earnedCoins >= 75) {
+            this.earnedCoins -= 75;
             this.images.push(new ArcticPlanetUnlocked(this.canvas.width / 1.56, this.canvas.height / 1.646));
             this.DeleteSpecificShopButton("UnlockArctic");
             this.start.pushArtic();
@@ -936,19 +936,19 @@ class InGameQuestions {
                     event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
                     if (button.getButtonName() === "YesButton" &&
                         this.ingameQuestion.getAnswer() === "yes") {
-                        console.log("Goed het antwoord is Yes");
+                        console.log("Goed antwoord");
                     }
                     if (button.getButtonName() === "YesButton" &&
                         this.ingameQuestion.getAnswer() === "no") {
-                        console.log("Fout het antwoord is Yes");
+                        console.log("fout antwoord");
                     }
                     if (button.getButtonName() === "NoButton" &&
                         this.ingameQuestion.getAnswer() === "no") {
-                        console.log("Goed het antwoord is NO");
+                        console.log("Goed antwoord");
                     }
                     if (button.getButtonName() === "NoButton" &&
                         this.ingameQuestion.getAnswer() === "yes") {
-                        console.log("Fout het antwoord is NO");
+                        console.log("fout antwoord");
                     }
                 }
             });
@@ -1840,7 +1840,7 @@ class OceanWorld {
     }
     randomScoringItems() {
         console.log(this.scoringItems);
-        const random = GameItem.randomInteger(10, 10);
+        const random = GameItem.randomInteger(1, 6);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }
@@ -2127,13 +2127,13 @@ class Shop {
         this.buttons.forEach((button) => {
             button.draw();
         });
-        Utility.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 5.8, this.canvas.height / 2.25, "center", "white");
-        Utility.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 2.55, this.canvas.height / 2.25, "center", "white");
-        Utility.writeTextToCanvas(ctx, "150", 60, this.canvas.width / 1.68, this.canvas.height / 2.25, "center", "white");
-        Utility.writeTextToCanvas(ctx, "200", 60, this.canvas.width / 1.24, this.canvas.height / 2.25, "center", "white");
-        Utility.writeTextToCanvas(ctx, "300", 60, this.canvas.width / 1.42, this.canvas.height / 1.1, "center", "white");
-        Utility.writeTextToCanvas(ctx, "200", 60, this.canvas.width / 2.01, this.canvas.height / 1.1, "center", "white");
-        Utility.writeTextToCanvas(ctx, "100", 60, this.canvas.width / 3.4, this.canvas.height / 1.1, "center", "white");
+        Utility.writeTextToCanvas(ctx, "15", 60, this.canvas.width / 5.8, this.canvas.height / 2.25, "center", "white");
+        Utility.writeTextToCanvas(ctx, "30", 60, this.canvas.width / 2.55, this.canvas.height / 2.25, "center", "white");
+        Utility.writeTextToCanvas(ctx, "45", 60, this.canvas.width / 1.68, this.canvas.height / 2.25, "center", "white");
+        Utility.writeTextToCanvas(ctx, "60", 60, this.canvas.width / 1.24, this.canvas.height / 2.25, "center", "white");
+        Utility.writeTextToCanvas(ctx, "75", 60, this.canvas.width / 1.42, this.canvas.height / 1.1, "center", "white");
+        Utility.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 2.01, this.canvas.height / 1.1, "center", "white");
+        Utility.writeTextToCanvas(ctx, "25", 60, this.canvas.width / 3.4, this.canvas.height / 1.1, "center", "white");
         this.shopImages.forEach((shopImage) => {
             shopImage.move(this.canvas);
             shopImage.reloadImage(this.canvas);

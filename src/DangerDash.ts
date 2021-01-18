@@ -260,8 +260,8 @@ class DangerDash {
       this.resetButtonsAndDangerDashFrame();
     }
     //UnlockButtons
-    if (button.getButtonName() === "UnlockYoshi" && this.earnedCoins >= 50) {
-      this.earnedCoins -= 50;
+    if (button.getButtonName() === "UnlockYoshi" && this.earnedCoins >= 15) {
+      this.earnedCoins -= 15;
       this.images.push(
         new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6)
       );
@@ -270,9 +270,9 @@ class DangerDash {
       console.log(this.images);
     } else if (
       button.getButtonName() === "UnlockAmongUs" &&
-      this.earnedCoins >= 100
+      this.earnedCoins >= 30
     ) {
-      this.earnedCoins -= 100;
+      this.earnedCoins -= 30;
       this.images.push(
         new YellowAmongUsUnlocked(
           this.canvas.width / 2.9,
@@ -283,9 +283,9 @@ class DangerDash {
       this.start.pushYellowAmongUs();
     } else if (
       button.getButtonName() === "UnlockGirlCharacter" &&
-      this.earnedCoins >= 150
+      this.earnedCoins >= 45
     ) {
-      this.earnedCoins -= 150;
+      this.earnedCoins -= 45;
       this.images.push(
         new GirlCharacterUnlocked(
           this.canvas.width / 1.75,
@@ -296,9 +296,9 @@ class DangerDash {
       this.start.pushGirl();
     } else if (
       button.getButtonName() === "UnlockSonic" &&
-      this.earnedCoins >= 200
+      this.earnedCoins >= 60
     ) {
-      this.earnedCoins -= 200;
+      this.earnedCoins -= 60;
       this.images.push(
         new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6)
       );
@@ -306,9 +306,9 @@ class DangerDash {
       this.start.pushSonic();
     } else if (
       button.getButtonName() === "UnlockSwamp" &&
-      this.earnedCoins >= 200
+      this.earnedCoins >= 50
     ) {
-      this.earnedCoins -= 200;
+      this.earnedCoins -= 50;
       this.images.push(
         new SwampPlanetUnlocked(
           this.canvas.width / 2.33,
@@ -319,9 +319,9 @@ class DangerDash {
       this.start.pushSwamp();
     } else if (
       button.getButtonName() === "UnlockDesert" &&
-      this.earnedCoins >= 100
+      this.earnedCoins >= 25
     ) {
-      this.earnedCoins -= 100;
+      this.earnedCoins -= 25;
       this.images.push(
         new DesertPlanetUnlocked(
           this.canvas.width / 4.3,
@@ -332,9 +332,9 @@ class DangerDash {
       this.start.pushDesert();
     } else if (
       button.getButtonName() === "UnlockArctic" &&
-      this.earnedCoins >= 300
+      this.earnedCoins >= 75
     ) {
-      this.earnedCoins -= 300;
+      this.earnedCoins -= 75;
       this.images.push(
         new ArcticPlanetUnlocked(
           this.canvas.width / 1.56,

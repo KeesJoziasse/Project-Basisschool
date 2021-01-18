@@ -187,25 +187,25 @@ class InGameQuestions {
           button.getButtonName() === "YesButton" &&
           this.ingameQuestion.getAnswer() === "yes"
         ) {
-          console.log("Goed het antwoord is Yes");
+          console.log("Goed antwoord");
         }
         if (
           button.getButtonName() === "YesButton" &&
           this.ingameQuestion.getAnswer() === "no"
         ) {
-          console.log("Fout het antwoord is Yes");
+          console.log("fout antwoord");
         }
         if (
           button.getButtonName() === "NoButton" &&
           this.ingameQuestion.getAnswer() === "no"
         ) {
-          console.log("Goed het antwoord is NO");
+          console.log("Goed antwoord");
         }
         if (
           button.getButtonName() === "NoButton" &&
           this.ingameQuestion.getAnswer() === "yes"
         ) {
-          console.log("Fout het antwoord is NO");
+          console.log("fout antwoord");
         }
       }
     });
