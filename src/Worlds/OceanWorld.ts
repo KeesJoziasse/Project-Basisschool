@@ -14,6 +14,7 @@ class OceanWorld {
   private score: number;
   private earnedCoins: number;
   private lives: number;
+  private questionStatus: string;
 
   //Strings
   private characterName: string;
@@ -35,6 +36,7 @@ class OceanWorld {
     this.score = 0;
     this.earnedCoins = 0;
     this.lives = 3;
+    this.questionStatus = "";
 
     this.scoringItems = [];
 
@@ -67,6 +69,10 @@ class OceanWorld {
     return this.score;
   }
 
+  public getQuestionStatus():string {
+    return this.questionStatus;
+  }
+
   //Methods:
 
   public draw(){
@@ -82,7 +88,7 @@ class OceanWorld {
     }
 
     this.drawScore(ctx);
-    
+
     this.drawLives(ctx);
   }
 

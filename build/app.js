@@ -28,6 +28,7 @@ class DangerDash {
                     this.oceanWorld.movePlayer();
                     if (this.oceanWorld.getLives() === -1) {
                         this.screenName = "EndScreen";
+                        this.earnedCoins += this.oceanWorld.getEarnedCoins();
                         this.resetButtonsAndDangerDashFrame();
                     }
                 }
@@ -111,7 +112,7 @@ class DangerDash {
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.earnedCoins = 450;
+        this.earnedCoins = 0;
         this.screenName = "StartScreen";
         this.worldName = "";
         this.DangerDashFrame = 0;
@@ -1774,6 +1775,7 @@ class OceanWorld {
         this.score = 0;
         this.earnedCoins = 0;
         this.lives = 3;
+        this.questionStatus = "";
         this.scoringItems = [];
         this.characterName = characterName;
         if (this.characterName === "AmongUsLime") {
@@ -1803,6 +1805,9 @@ class OceanWorld {
     }
     getScore() {
         return this.score;
+    }
+    getQuestionStatus() {
+        return this.questionStatus;
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
@@ -1951,7 +1956,6 @@ class Endscreen {
         this.score = score;
         this.buttons = [];
         this.buttonMaker();
-        this.image = [];
         this.draw();
     }
     draw() {

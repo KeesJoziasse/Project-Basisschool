@@ -36,7 +36,7 @@ class DangerDash {
     this.canvas.height = window.innerHeight;
 
     //Static properties
-    this.earnedCoins = 450;
+    this.earnedCoins = 0;
     this.screenName = "StartScreen";
     this.worldName = "";
     this.DangerDashFrame = 0;
@@ -120,6 +120,7 @@ class DangerDash {
         this.oceanWorld.movePlayer();
         if(this.oceanWorld.getLives() === -1){
           this.screenName = "EndScreen";
+          this.earnedCoins += this.oceanWorld.getEarnedCoins();
           this.resetButtonsAndDangerDashFrame();
         }
       } else if (this.start.getWorldName() === "ArticWorld") {

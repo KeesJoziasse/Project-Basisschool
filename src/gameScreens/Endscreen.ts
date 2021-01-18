@@ -1,7 +1,6 @@
 class Endscreen{
   private canvas: HTMLCanvasElement;
   private buttons: Button[];
-  private image: Images[];
   private score: number;
 
   public constructor(canvasId: HTMLCanvasElement, score: number) {
@@ -18,9 +17,6 @@ class Endscreen{
     // Calls the button maker function
     this.buttonMaker();
 
-    // Calls the image
-    this.image = [];
-    
     //Draw this screen
     this.draw();
   }
