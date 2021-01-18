@@ -18,10 +18,22 @@ class DangerDash {
             }
             if (this.screenName === "GameScreen") {
                 console.log("GameScreen");
-                if (this.DangerDashFrame === 1000) {
-                    this.screenName = "Question";
-                    this.DangerDashFrame = 0;
+                if (this.DangerDashFrame === 1) {
+                    if (this.start.getWorldName() === "OceanWorld") {
+                        new OceanWorld(this.canvas, this.start.getCharacterName());
+                    }
+                    else if (this.start.getWorldName() === "ArticWorld") {
+                        new ArticWorld(this.canvas, this.start.getCharacterName());
+                    }
+                    else if (this.start.getWorldName() === "DesertWorld") {
+                        new DesertWorld(this.canvas, this.start.getCharacterName());
+                    }
+                    else if (this.start.getWorldName() === "SwampWorld") {
+                        new SwampWorld(this.canvas, this.start.getCharacterName());
+                    }
                 }
+                this.worldName = this.start.getWorldName();
+                console.log(this.worldName);
             }
             if (this.screenName === "Question") {
                 if (this.DangerDashFrame = 1) {
@@ -86,16 +98,17 @@ class DangerDash {
         this.canvas.height = window.innerHeight;
         this.earnedCoins = 450;
         this.screenName = "StartScreen";
+        this.worldName = "";
+        this.DangerDashFrame = 0;
         this.start = new Start(this.canvas);
         this.shop = new Shop(this.canvas);
         this.highScore = new HighScore(this.canvas);
         this.generalQuestions = new GeneralQuestions(this.canvas);
         this.inGameQuestions = new InGameQuestions(this.canvas);
-        this.DangerDashFrame = 0;
         this.shopButtons = [];
-        this.buttonMakerShopScreen();
         this.buttons = [];
         this.images = [];
+        this.buttonMakerShopScreen();
         document.addEventListener("click", this.mouseHandlerStart);
         this.loop();
     }
@@ -1563,8 +1576,6 @@ class Game extends DangerDash {
         this.lives = 3;
         this.earnedCoins = 0;
         this.frame = 0;
-        this.speed;
-        this.speed;
         this.scoringItems = [];
         this.gameState = "Running";
         this.characterName = characterName;
@@ -1626,7 +1637,6 @@ class Game extends DangerDash {
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        Utility.writeTextToCanvas(ctx, "Run!", 60, this.canvas.width / 2, 80, "center");
         this.drawBackground();
         this.player.draw(ctx);
         if (this.frame > 1) {
@@ -1745,12 +1755,31 @@ class DesertWorld extends Game {
         }
     }
 }
-class OceanWorld extends Game {
+class OceanWorld {
     constructor(canvas, characterName) {
-        super(canvas, characterName);
         this.background = Utility.loadNewImage("./assets/img/world/OceanBG.jpg");
         this.xPos = 0;
         this.yPos = -100;
+        this.canvas = canvas;
+        this.characterName = characterName;
+        if (this.characterName === "AmongUsLime") {
+            this.player = new AmongUs(this.canvas);
+        }
+        else if (this.characterName === "Yoshi") {
+            this.player = new Yoshi(this.canvas);
+        }
+        else if (this.characterName === "YellowAmongUs") {
+            this.player = new YellowAmongUs(this.canvas);
+        }
+        else if (this.characterName === "Girl") {
+            this.player = new Girl(this.canvas);
+        }
+        else if (this.characterName === "Sonic") {
+            this.player = new Sonic(this.canvas);
+        }
+        else if (this.characterName === "") {
+            this.player = new AmongUs(this.canvas);
+        }
     }
     drawBackground() {
         const ctx = this.canvas.getContext("2d");
@@ -2051,6 +2080,7 @@ class Start {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.characterName = "";
+        this.worldName = "";
         this.worldImages = [];
         this.characterImages = [];
         this.startImages = [];
@@ -2061,6 +2091,12 @@ class Start {
         this.charachterMaker();
         this.imageMaker();
         this.backgroundLoop();
+    }
+    getWorldName() {
+        return this.worldName;
+    }
+    getCharacterName() {
+        return this.characterName;
     }
     getTest() {
         return console.log(this.testPlayer);
@@ -2154,19 +2190,19 @@ class Start {
         this.CharacterName();
         if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Ocean") {
-            new OceanWorld(this.canvas, `${this.characterName}`);
+            this.worldName = "OceanWorld";
         }
         else if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Artic") {
-            new ArticWorld(this.canvas, `${this.characterName}`);
+            this.worldName = "ArticWorld";
         }
         else if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Desert") {
-            new DesertWorld(this.canvas, `${this.characterName}`);
+            this.worldName = "DesertWorld";
         }
         else if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Swamp") {
-            new SwampWorld(this.canvas, `${this.characterName}`);
+            this.worldName = "SwampWorld";
         }
     }
     checkCharacterName(button) {

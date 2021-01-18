@@ -13,12 +13,8 @@ class Game extends DangerDash{
   protected earnedCoins: number;
   //Amount of frames that have passed
   protected frame: number;
-  //RNG
-  protected random: number;
   //Scoring items array
   protected scoringItems: ScoringItem[];
-  //speed of the worldImage
-  protected speed: number;
   //xpos of the worldImage
   protected xPos: number;
   //xpos of the worldImage
@@ -50,12 +46,6 @@ class Game extends DangerDash{
 
     //Setting the framecounter to 0.
     this.frame = 0;
-
-    //Speed of the world on canvas
-    this.speed;
-
-    //Speed of the world on canvas
-    this.speed;
 
     //Calling the loop
     //TODO fix that no loop needed
@@ -180,16 +170,6 @@ class Game extends DangerDash{
     const ctx = this.canvas.getContext("2d");
     //clears the canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-    //test text write Run!
-    Utility.writeTextToCanvas(
-      ctx,
-      "Run!",
-      60,
-      this.canvas.width / 2,
-      80,
-      "center"
-    );
 
     this.drawBackground();
     //Drawing the player

@@ -1,19 +1,25 @@
 class DangerDash {
-  //#TODO make abstract class GameScreen or Screens
+  //canvas
   protected canvas: HTMLCanvasElement;
+  
+  //static properties
   protected earnedCoins: number;
+  private screenName: string;
+  private worldName: string;
   private DangerDashFrame: number;
-  private buttons: Button[];
-  private shopButtons: Button[];
-  private images: Images[];
 
+  //Screens
   private start: Start;
   private shop: Shop;
   private highScore: HighScore;
   private generalQuestions: GeneralQuestions;
   private inGameQuestions: InGameQuestions;
+  
+  //Array's
+  private buttons: Button[];
+  private shopButtons: Button[];
+  private images: Images[];
 
-  protected screenName: string;
 
   public constructor(canvas: HTMLCanvasElement) {
     //canvas
@@ -21,21 +27,31 @@ class DangerDash {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
+    //Static properties
     this.earnedCoins = 450;
     this.screenName = "StartScreen";
+    this.worldName = "";
+    this.DangerDashFrame = 0;
 
+    //Screens
     this.start = new Start(this.canvas);
     this.shop = new Shop(this.canvas);
     this.highScore = new HighScore(this.canvas);
     this.generalQuestions = new GeneralQuestions(this.canvas);
     this.inGameQuestions = new InGameQuestions(this.canvas);
 
-    this.DangerDashFrame = 0;
+    //Worlds
+    
 
+
+
+    //Array's
     this.shopButtons = [];
-    this.buttonMakerShopScreen();
     this.buttons = [];
     this.images = [];
+
+    //Methods
+    this.buttonMakerShopScreen();
 
     //Adding an EventListener for clickdetection
     document.addEventListener("click", this.mouseHandlerStart);
@@ -57,7 +73,7 @@ class DangerDash {
   }
 
   /**
-   * Method that checks the gamestate
+   * Method that checks the screenstate
    */
   public loop = () => {
     //Counting Frames of main loop
@@ -80,10 +96,21 @@ class DangerDash {
     if (this.screenName === "GameScreen") {
       //getter maken in game en deze hier callen met status
       console.log("GameScreen");
-      if(this.DangerDashFrame === 1000){
-        this.screenName = "Question";
-        this.DangerDashFrame = 0;
+      //Based on the starstcreen there will be created a new world class 
+      //with the right character chosen on startscreen
+      if(this.DangerDashFrame === 1){
+        if(this.start.getWorldName() === "OceanWorld"){
+          new OceanWorld(this.canvas, this.start.getCharacterName());
+        } else if(this.start.getWorldName() === "ArticWorld"){
+          new ArticWorld(this.canvas, this.start.getCharacterName())
+        } else if(this.start.getWorldName() === "DesertWorld"){
+          new DesertWorld(this.canvas, this.start.getCharacterName())
+        } else if(this.start.getWorldName() === "SwampWorld"){
+          new SwampWorld(this.canvas, this.start.getCharacterName())
+        } 
       }
+      this.worldName = this.start.getWorldName();
+      console.log(this.worldName);
     }
 
     if(this.screenName === "Question"){
