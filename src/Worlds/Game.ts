@@ -23,9 +23,7 @@ class Game extends DangerDash{
   protected image: HTMLImageElement;
   //GameOverState
   private gameState: string;
-  //test
   private ingameQuestion: InGameQuestions;
-  private characterName: string;
 
   /**
    * Constructor
@@ -55,20 +53,7 @@ class Game extends DangerDash{
     this.scoringItems = [];
 
     //Endstate
-    this.gameState = "Running";
-    this.characterName = characterName;
-    console.log(this.characterName)
-    if (this.characterName === "AmongUsLime"){
-      this.player = new AmongUs(canvas);
-    } else if (this.characterName === "Yoshi"){
-      this.player = new Yoshi(canvas);
-    } else if (this.characterName === "YellowAmongUs"){
-      this.player = new YellowAmongUs(canvas);
-    } else if (this.characterName === "Girl"){
-      this.player = new Girl(canvas);
-    } else if(this.characterName === "Sonic"){
-      this.player = new Sonic(canvas);
-    }    
+    this.gameState = "Running";   
   }
   
   

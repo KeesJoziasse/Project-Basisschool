@@ -1,12 +1,13 @@
 class DangerDash {
   //canvas
   protected canvas: HTMLCanvasElement;
-  
+
   //static properties
   protected earnedCoins: number;
   private screenName: string;
   private worldName: string;
   private DangerDashFrame: number;
+  private characterName: string;
 
   //Screens
   private start: Start;
@@ -14,12 +15,17 @@ class DangerDash {
   private highScore: HighScore;
   private generalQuestions: GeneralQuestions;
   private inGameQuestions: InGameQuestions;
-  
+
+  //worlds
+  private oceanWorld: OceanWorld;
+  private desertWorld: DesertWorld;
+  private swampWorld: SwampWorld;
+  private articWorld: ArticWorld;
+
   //Array's
   private buttons: Button[];
   private shopButtons: Button[];
   private images: Images[];
-
 
   public constructor(canvas: HTMLCanvasElement) {
     //canvas
@@ -32,6 +38,7 @@ class DangerDash {
     this.screenName = "StartScreen";
     this.worldName = "";
     this.DangerDashFrame = 0;
+    this.characterName = "";
 
     //Screens
     this.start = new Start(this.canvas);
@@ -41,9 +48,10 @@ class DangerDash {
     this.inGameQuestions = new InGameQuestions(this.canvas);
 
     //Worlds
-    
-
-
+    this.oceanWorld = new OceanWorld(this.canvas, "");
+    //this.desertWorld = new DesertWorld(this.canvas, "");
+    //this.swampWorld = new SwampWorld(this.canvas, "");
+    //this.articWorld = new ArticWorld(this.canvas, "");
 
     //Array's
     this.shopButtons = [];
@@ -63,10 +71,10 @@ class DangerDash {
   /**
    * Setter for the ScreenName
    */
-  public setscreenName(ScreenName:string) {
+  public setscreenName(ScreenName: string) {
     this.screenName = ScreenName;
     console.log(this.screenName);
-    if(this.screenName === "Endscreen"){
+    if (this.screenName === "Endscreen") {
       this.screenName = "ShopScreen";
     }
     console.log(this.screenName);
@@ -77,7 +85,6 @@ class DangerDash {
    */
   public loop = () => {
     //Counting Frames of main loop
-    //console.log(this.screenName);
 
     this.DangerDashFrame++;
     if (this.screenName === "StartScreen") {
@@ -94,36 +101,42 @@ class DangerDash {
     }
 
     if (this.screenName === "GameScreen") {
-      //getter maken in game en deze hier callen met status
       console.log("GameScreen");
-      //Based on the starstcreen there will be created a new world class 
+      //Based on the starstcreen there will be created a new world class
       //with the right character chosen on startscreen
-      if(this.DangerDashFrame === 1){
-        if(this.start.getWorldName() === "OceanWorld"){
-          new OceanWorld(this.canvas, this.start.getCharacterName());
-        } else if(this.start.getWorldName() === "ArticWorld"){
-          new ArticWorld(this.canvas, this.start.getCharacterName())
-        } else if(this.start.getWorldName() === "DesertWorld"){
-          new DesertWorld(this.canvas, this.start.getCharacterName())
-        } else if(this.start.getWorldName() === "SwampWorld"){
-          new SwampWorld(this.canvas, this.start.getCharacterName())
-        } 
-      }
       this.worldName = this.start.getWorldName();
-      console.log(this.worldName);
+      this.characterName = this.start.getCharacterName();
+
+      //Based on the worldName chosen in Startscreen a world will be called.
+      if (this.start.getWorldName() === "OceanWorld") {
+        this.oceanWorld.increaseFrame();
+        //draw verwerken in een draw functie
+        this.oceanWorld.draw();
+
+        this.oceanWorld.forScoringItems();
+        this.oceanWorld.scoringItemIndex();
+        this.oceanWorld.movePlayer();
+        //playermove
+
+      } else if (this.start.getWorldName() === "ArticWorld") {
+
+      } else if (this.start.getWorldName() === "DesertWorld") {
+
+      } else if (this.start.getWorldName() === "SwampWorld") {
+
+      }
+
+      //console.log(this.worldName);
     }
 
-    if(this.screenName === "Question"){
-      if(this.DangerDashFrame = 1){
-        new InGameQuestionImage(
-          this.canvas.width / 3,
-          150
-        );
+    if (this.screenName === "Question") {
+      if ((this.DangerDashFrame = 1)) {
+        new InGameQuestionImage(this.canvas.width / 3, 150);
       }
       this.inGameQuestions.draw();
     }
 
-    if(this.screenName === "Endscreen"){
+    if (this.screenName === "Endscreen") {
       console.log("been here");
       new Endscreen(this.canvas, 99999999);
     }
@@ -183,8 +196,8 @@ class DangerDash {
         event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
         event.clientY >= button.getButtonYPos() &&
         event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()
-      ){
-        if(this.screenName === "ShopScreen"){
+      ) {
+        if (this.screenName === "ShopScreen") {
           this.ShopScreenDetection(button);
         }
       }
@@ -229,15 +242,15 @@ class DangerDash {
     if (button.getButtonName() === "UnlockYoshi" && this.earnedCoins >= 50) {
       this.earnedCoins -= 50;
       this.images.push(
-        new YoshiUnlocked(
-          this.canvas.width / 7.9,
-          this.canvas.height / 6
-        )
+        new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6)
       );
       this.DeleteSpecificShopButton("UnlockYoshi");
       this.start.pushYoshi();
       console.log(this.images);
-    } else if (button.getButtonName() === "UnlockAmongUs" && this.earnedCoins >= 100) {
+    } else if (
+      button.getButtonName() === "UnlockAmongUs" &&
+      this.earnedCoins >= 100
+    ) {
       this.earnedCoins -= 100;
       this.images.push(
         new YellowAmongUsUnlocked(
@@ -247,7 +260,10 @@ class DangerDash {
       );
       this.DeleteSpecificShopButton("UnlockAmongUs");
       this.start.pushYellowAmongUs();
-    } else if (button.getButtonName() === "UnlockGirlCharacter" && this.earnedCoins >= 150) {
+    } else if (
+      button.getButtonName() === "UnlockGirlCharacter" &&
+      this.earnedCoins >= 150
+    ) {
       this.earnedCoins -= 150;
       this.images.push(
         new GirlCharacterUnlocked(
@@ -257,14 +273,20 @@ class DangerDash {
       );
       this.DeleteSpecificShopButton("UnlockGirlCharacter");
       this.start.pushGirl();
-    } else if (button.getButtonName() === "UnlockSonic" && this.earnedCoins >= 200) {
+    } else if (
+      button.getButtonName() === "UnlockSonic" &&
+      this.earnedCoins >= 200
+    ) {
       this.earnedCoins -= 200;
       this.images.push(
         new SonicUnlocked(this.canvas.width / 1.29, this.canvas.height / 6)
       );
       this.DeleteSpecificShopButton("UnlockSonic");
       this.start.pushSonic();
-    } else if (button.getButtonName() === "UnlockSwamp" && this.earnedCoins >= 200) {
+    } else if (
+      button.getButtonName() === "UnlockSwamp" &&
+      this.earnedCoins >= 200
+    ) {
       this.earnedCoins -= 200;
       this.images.push(
         new SwampPlanetUnlocked(
@@ -274,7 +296,10 @@ class DangerDash {
       );
       this.DeleteSpecificShopButton("UnlockSwamp");
       this.start.pushSwamp();
-    } else if (button.getButtonName() === "UnlockDesert" && this.earnedCoins >= 100) {
+    } else if (
+      button.getButtonName() === "UnlockDesert" &&
+      this.earnedCoins >= 100
+    ) {
       this.earnedCoins -= 100;
       this.images.push(
         new DesertPlanetUnlocked(
@@ -284,7 +309,10 @@ class DangerDash {
       );
       this.DeleteSpecificShopButton("UnlockDesert");
       this.start.pushDesert();
-    } else if (button.getButtonName() === "UnlockArctic" && this.earnedCoins >= 300) {
+    } else if (
+      button.getButtonName() === "UnlockArctic" &&
+      this.earnedCoins >= 300
+    ) {
       this.earnedCoins -= 300;
       this.images.push(
         new ArcticPlanetUnlocked(
@@ -343,7 +371,7 @@ class DangerDash {
 
     button.logButtonName();
     if (button.getButtonName() === "StartGame") {
-      if(this.screenName === "Endscreen"){
+      if (this.screenName === "Endscreen") {
         this.screenName = "Endscreen";
       }
       this.screenName = "GameScreen";
