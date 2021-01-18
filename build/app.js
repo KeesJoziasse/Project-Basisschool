@@ -17,10 +17,9 @@ class DangerDash {
                 });
             }
             if (this.screenName === "GameScreen") {
-                console.log("GameScreen");
                 this.worldName = this.start.getWorldName();
                 this.characterName = this.start.getCharacterName();
-                if (this.start.getWorldName() === "OceanWorld") {
+                if (this.start.getWorldName() === "OceanWorld" || this.worldName === "OceanWorld") {
                     this.oceanWorld.increaseFrame();
                     this.oceanWorld.draw();
                     this.oceanWorld.forScoringItems();
@@ -44,10 +43,20 @@ class DangerDash {
                 }
             }
             if (this.screenName === "Question") {
+                console.log(this.DangerDashFrame);
                 if (this.DangerDashFrame === 1) {
-                    new InGameQuestionImage(this.canvas.width / 3, 150);
+                    console.log(this.DangerDashFrame);
+                    this.inGameQuestions.randomQuestionGenerator();
                 }
+                console.log(this.screenName);
                 this.inGameQuestions.draw();
+                console.log(this.inGameQuestions.getAnswerCheck());
+                if (this.inGameQuestions.getAnswerCheck() == "GoedAntwoord") {
+                    this.screenName = "GameScreen";
+                }
+                else if (this.inGameQuestions.getAnswerCheck() == "FoutAntwoord") {
+                    this.screenName = "GameScreen";
+                }
             }
             if (this.screenName === "EndScreen") {
                 if (this.DangerDashFrame === 0) {
@@ -116,7 +125,7 @@ class DangerDash {
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.earnedCoins = 0;
+        this.earnedCoins = 50;
         this.screenName = "StartScreen";
         this.worldName = "";
         this.DangerDashFrame = 0;
@@ -135,13 +144,8 @@ class DangerDash {
         document.addEventListener("click", this.mouseHandlerStart);
         this.loop();
     }
-    setscreenName(ScreenName) {
-        this.screenName = ScreenName;
-        console.log(this.screenName);
-        if (this.screenName === "Endscreen") {
-            this.screenName = "ShopScreen";
-        }
-        console.log(this.screenName);
+    getCharacterName() {
+        return this.characterName;
     }
     DrawShop() {
         this.shop.draw();
@@ -936,19 +940,23 @@ class InGameQuestions {
                     event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
                     if (button.getButtonName() === "YesButton" &&
                         this.ingameQuestion.getAnswer() === "yes") {
+                        this.answerCheck = "GoedAntwoord";
                         console.log("Goed antwoord");
                     }
                     if (button.getButtonName() === "YesButton" &&
                         this.ingameQuestion.getAnswer() === "no") {
                         console.log("fout antwoord");
+                        this.answerCheck = "FoutAntwoord";
                     }
                     if (button.getButtonName() === "NoButton" &&
                         this.ingameQuestion.getAnswer() === "no") {
                         console.log("Goed antwoord");
+                        this.answerCheck = "GoedAntwoord";
                     }
                     if (button.getButtonName() === "NoButton" &&
                         this.ingameQuestion.getAnswer() === "yes") {
                         console.log("fout antwoord");
+                        this.answerCheck = "FoutAntwoord";
                     }
                 }
             });
@@ -957,6 +965,7 @@ class InGameQuestions {
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
+        this.answerCheck = "";
         this.buttons = [];
         this.questionBackground = new InGameQuestionImage(this.canvas.width / 3, 150);
         this.buttonMaker();
@@ -974,6 +983,9 @@ class InGameQuestions {
     }
     getButtonImageHeight() {
         return this.image.height;
+    }
+    getAnswerCheck() {
+        return this.answerCheck;
     }
     getButtonName() {
         return this.name;
@@ -1839,8 +1851,7 @@ class OceanWorld {
         }
     }
     randomScoringItems() {
-        console.log(this.scoringItems);
-        const random = GameItem.randomInteger(1, 6);
+        const random = GameItem.randomInteger(10, 10);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }

@@ -36,7 +36,7 @@ class DangerDash {
     this.canvas.height = window.innerHeight;
 
     //Static properties
-    this.earnedCoins = 0;
+    this.earnedCoins = 50;
     this.screenName = "StartScreen";
     this.worldName = "";
     this.DangerDashFrame = 0;
@@ -71,16 +71,9 @@ class DangerDash {
     this.loop();
   }
 
-  /**
-   * Setter for the ScreenName
-   */
-  public setscreenName(ScreenName: string) {
-    this.screenName = ScreenName;
-    console.log(this.screenName);
-    if (this.screenName === "Endscreen") {
-      this.screenName = "ShopScreen";
-    }
-    console.log(this.screenName);
+  //Getter
+  public getCharacterName(): string{
+    return this.characterName;
   }
 
   /**
@@ -104,14 +97,13 @@ class DangerDash {
     }
 
     if (this.screenName === "GameScreen") {
-      console.log("GameScreen");
       //Based on the starstcreen there will be created a new world class
       //with the right character chosen on startscreen
       this.worldName = this.start.getWorldName();
       this.characterName = this.start.getCharacterName();
 
       //Based on the worldName chosen in Startscreen a world will be called.
-      if (this.start.getWorldName() === "OceanWorld") {
+      if (this.start.getWorldName() === "OceanWorld" || this.worldName === "OceanWorld") {
         this.oceanWorld.increaseFrame();
         //draw verwerken in een draw functie
         this.oceanWorld.draw();
@@ -134,14 +126,25 @@ class DangerDash {
 
       }
 
-      //console.log(this.worldName);
     }
 
     if (this.screenName === "Question") {
+      console.log(this.DangerDashFrame)
       if (this.DangerDashFrame === 1) {
-        new InGameQuestionImage(this.canvas.width / 3, 150);
+        console.log(this.DangerDashFrame)
+        //new InGameQuestionImage(this.canvas.width / 3, 150);
+        this.inGameQuestions.randomQuestionGenerator();
       }
+      console.log(this.screenName)
       this.inGameQuestions.draw();
+      console.log(this.inGameQuestions.getAnswerCheck());
+      if(this.inGameQuestions.getAnswerCheck() == "GoedAntwoord"){
+        //+coins
+        this.screenName = "GameScreen";
+      } else if(this.inGameQuestions.getAnswerCheck() == "FoutAntwoord"){
+        //-live
+        this.screenName = "GameScreen";
+      }
     }
 
     if (this.screenName === "EndScreen") {

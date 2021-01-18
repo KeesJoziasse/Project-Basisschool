@@ -8,6 +8,7 @@ class InGameQuestions {
   private yPos: number;
   private image: HTMLImageElement;
 
+  private answerCheck: string;
 
   public getButtonXPos(): number {
     return this.xPos;
@@ -41,6 +42,8 @@ class InGameQuestions {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
+    this.answerCheck = "";
+
     //The button array
     this.buttons = [];
 
@@ -57,29 +60,15 @@ class InGameQuestions {
     this.randomQuestionGenerator();
 
     this.draw();
+  }
 
-    // this.loop();
+  public getAnswerCheck(): string {
+    return this.answerCheck
   }
 
   public getButtonName(): string {
     return this.name;
-  }
-
-  // /**
-  //  * Method for the Game Loop
-  //  */
-  // public loop = () => {
-  //   // console.log(this.score);
-  //   // console.log(this.ingameQuestion.getAnswer()); //TODO deze werkt wel
-  //   this.draw();
-
-  //   // in the first loop no images are loaded
-  //   requestAnimationFrame(this.loop);
-  // };
-
-
-    
-  
+  }    
 
   /**
    * Draws all the necessary elements to the canvas
@@ -101,7 +90,6 @@ class InGameQuestions {
     });
   }
   
-
   private buttonMaker() {
     //Initializing the buttons and pushing them to the array
     //Making the right arrow for level selector
@@ -123,7 +111,6 @@ class InGameQuestions {
   }
 
   //Creates the Questions
-
   public randomQuestionGenerator(): void {
     const random = GameItem.randomInteger(1, 6);
     if (random === 1) {
@@ -187,6 +174,7 @@ class InGameQuestions {
           button.getButtonName() === "YesButton" &&
           this.ingameQuestion.getAnswer() === "yes"
         ) {
+          this.answerCheck = "GoedAntwoord";
           console.log("Goed antwoord");
         }
         if (
@@ -194,18 +182,21 @@ class InGameQuestions {
           this.ingameQuestion.getAnswer() === "no"
         ) {
           console.log("fout antwoord");
+          this.answerCheck = "FoutAntwoord";
         }
         if (
           button.getButtonName() === "NoButton" &&
           this.ingameQuestion.getAnswer() === "no"
         ) {
           console.log("Goed antwoord");
+          this.answerCheck = "GoedAntwoord";
         }
         if (
           button.getButtonName() === "NoButton" &&
           this.ingameQuestion.getAnswer() === "yes"
         ) {
           console.log("fout antwoord");
+          this.answerCheck = "FoutAntwoord";
         }
       }
     });
