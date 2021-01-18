@@ -881,6 +881,10 @@ class OceanImage extends Images {
 }
 class InGameQuestions {
     constructor(canvasId) {
+        this.loop = () => {
+            this.draw();
+            requestAnimationFrame(this.loop);
+        };
         this.mouseHandler = (event) => {
             console.log(`xPos ${event.clientX}, yPos ${event.clientY}`);
             this.buttons.forEach((button) => {
@@ -918,6 +922,7 @@ class InGameQuestions {
         this.buttonMaker();
         this.randomQuestionGenerator();
         this.draw();
+        this.loop();
     }
     getButtonXPos() {
         return this.xPos;
@@ -935,9 +940,11 @@ class InGameQuestions {
         return this.name;
     }
     draw() {
+        console.log("Draw werkt");
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.questionBackground.draw(ctx);
+        this.ingameQuestion.draw(ctx);
         this.ingameQuestion.getImageImage();
         this.buttons.forEach((button) => {
             button.draw();

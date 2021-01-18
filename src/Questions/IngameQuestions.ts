@@ -58,33 +58,31 @@ class InGameQuestions {
 
     this.draw();
 
-    // this.loop();
+    this.loop();
   }
 
   public getButtonName(): string {
     return this.name;
   }
 
-  // /**
-  //  * Method for the Game Loop
-  //  */
-  // public loop = () => {
-  //   // console.log(this.score);
-  //   // console.log(this.ingameQuestion.getAnswer()); //TODO deze werkt wel
-  //   this.draw();
+  /**
+   * Method for the Game Loop
+   */
+  public loop = () => {
+    // console.log(this.score);
+    // console.log(this.ingameQuestion.getAnswer()); //TODO deze werkt wel
+    this.draw();
 
-  //   // in the first loop no images are loaded
-  //   requestAnimationFrame(this.loop);
-  // };
-
-
-    
-  
+    // in the first loop no images are loaded
+    requestAnimationFrame(this.loop);
+  };
 
   /**
    * Draws all the necessary elements to the canvas
    */
   public draw() {
+    console.log("Draw werkt");
+    
     const ctx = this.canvas.getContext("2d");
 
     //Clears the canvas every frame
@@ -92,7 +90,7 @@ class InGameQuestions {
 
     this.questionBackground.draw(ctx);
     // Draws all the images
-    // this.ingameQuestion.draw(ctx);
+    this.ingameQuestion.draw(ctx);
     this.ingameQuestion.getImageImage();
 
     //Drawing the buttons
