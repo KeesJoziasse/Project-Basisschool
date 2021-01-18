@@ -15,6 +15,7 @@ class DangerDash {
   private highScore: HighScore;
   private generalQuestions: GeneralQuestions;
   private inGameQuestions: InGameQuestions;
+  private endscreen: Endscreen;
 
   //worlds
   private oceanWorld: OceanWorld;
@@ -26,6 +27,7 @@ class DangerDash {
   private buttons: Button[];
   private shopButtons: Button[];
   private images: Images[];
+  private highscores: [];
 
   public constructor(canvas: HTMLCanvasElement) {
     //canvas
@@ -57,6 +59,7 @@ class DangerDash {
     this.shopButtons = [];
     this.buttons = [];
     this.images = [];
+    this.highscores = [];
 
     //Methods
     this.buttonMakerShopScreen();
@@ -112,12 +115,13 @@ class DangerDash {
         this.oceanWorld.increaseFrame();
         //draw verwerken in een draw functie
         this.oceanWorld.draw();
-
         this.oceanWorld.forScoringItems();
         this.oceanWorld.scoringItemIndex();
         this.oceanWorld.movePlayer();
-        //playermove
-
+        if(this.oceanWorld.getLives() === -1){
+          this.screenName = "EndScreen";
+          this.resetButtonsAndDangerDashFrame();
+        }
       } else if (this.start.getWorldName() === "ArticWorld") {
 
       } else if (this.start.getWorldName() === "DesertWorld") {
@@ -130,15 +134,23 @@ class DangerDash {
     }
 
     if (this.screenName === "Question") {
-      if ((this.DangerDashFrame = 1)) {
+      if (this.DangerDashFrame === 1) {
         new InGameQuestionImage(this.canvas.width / 3, 150);
       }
       this.inGameQuestions.draw();
     }
 
-    if (this.screenName === "Endscreen") {
-      console.log("been here");
-      new Endscreen(this.canvas, 99999999);
+    if (this.screenName === "EndScreen") {
+      if(this.DangerDashFrame === 0){
+        this.buttonMakerEndScreen();
+        if(this.start.getWorldName() === "OceanWorld"){
+          this.endscreen = new Endscreen(this.canvas, this.oceanWorld.getScore());
+        } // ook voor andere werled maken met andere getter van score
+        
+      }
+      
+      console.log(this.buttons)
+      this.endscreen.draw();
     }
 
     if (this.screenName === "ShopScreen") {
@@ -185,6 +197,11 @@ class DangerDash {
           this.HighScoreScreenDetection(button);
         } else if (this.screenName === "Q&AScreen") {
           this.QAndAScreenDetection(button);
+        } else if (this.screenName === "EndScreen"){
+          if(button.getButtonName() === "RestartButton"){
+            this.screenName = "StartScreen"
+            this.resetButtonsAndDangerDashFrame();
+          }
         }
       } else {
         return null;
@@ -537,6 +554,17 @@ class DangerDash {
       new UnlockSonic(
         this.canvas.width / 1.34,
         this.canvas.height / 2.15,
+        this.canvas
+      )
+    );
+  }
+
+  //Pushing the EndScreen-Buttons to button[]
+  private buttonMakerEndScreen() {
+    this.buttons.push(
+      new RestartButton(
+        this.canvas.width / 2.5,
+        this.canvas.height / 1.5,
         this.canvas
       )
     );

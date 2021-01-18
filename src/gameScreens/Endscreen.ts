@@ -20,10 +20,6 @@ class Endscreen{
 
     // Calls the image
     this.image = [];
-
-    // Calls the background maker
-
-    this.score = 200;
     
     //Draw this screen
     this.draw();

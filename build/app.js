@@ -26,6 +26,10 @@ class DangerDash {
                     this.oceanWorld.forScoringItems();
                     this.oceanWorld.scoringItemIndex();
                     this.oceanWorld.movePlayer();
+                    if (this.oceanWorld.getLives() === -1) {
+                        this.screenName = "EndScreen";
+                        this.resetButtonsAndDangerDashFrame();
+                    }
                 }
                 else if (this.start.getWorldName() === "ArticWorld") {
                 }
@@ -35,14 +39,20 @@ class DangerDash {
                 }
             }
             if (this.screenName === "Question") {
-                if ((this.DangerDashFrame = 1)) {
+                if (this.DangerDashFrame === 1) {
                     new InGameQuestionImage(this.canvas.width / 3, 150);
                 }
                 this.inGameQuestions.draw();
             }
-            if (this.screenName === "Endscreen") {
-                console.log("been here");
-                new Endscreen(this.canvas, 99999999);
+            if (this.screenName === "EndScreen") {
+                if (this.DangerDashFrame === 0) {
+                    this.buttonMakerEndScreen();
+                    if (this.start.getWorldName() === "OceanWorld") {
+                        this.endscreen = new Endscreen(this.canvas, this.oceanWorld.getScore());
+                    }
+                }
+                console.log(this.buttons);
+                this.endscreen.draw();
             }
             if (this.screenName === "ShopScreen") {
                 this.DrawShop();
@@ -75,6 +85,12 @@ class DangerDash {
                     }
                     else if (this.screenName === "Q&AScreen") {
                         this.QAndAScreenDetection(button);
+                    }
+                    else if (this.screenName === "EndScreen") {
+                        if (button.getButtonName() === "RestartButton") {
+                            this.screenName = "StartScreen";
+                            this.resetButtonsAndDangerDashFrame();
+                        }
                     }
                 }
                 else {
@@ -109,6 +125,7 @@ class DangerDash {
         this.shopButtons = [];
         this.buttons = [];
         this.images = [];
+        this.highscores = [];
         this.buttonMakerShopScreen();
         document.addEventListener("click", this.mouseHandlerStart);
         this.loop();
@@ -253,6 +270,9 @@ class DangerDash {
         this.shopButtons.push(new UnlockAmongUs(this.canvas.width / 3.1, this.canvas.height / 2.15, this.canvas));
         this.shopButtons.push(new UnlockGirlCharacter(this.canvas.width / 1.87, this.canvas.height / 2.15, this.canvas));
         this.shopButtons.push(new UnlockSonic(this.canvas.width / 1.34, this.canvas.height / 2.15, this.canvas));
+    }
+    buttonMakerEndScreen() {
+        this.buttons.push(new RestartButton(this.canvas.width / 2.5, this.canvas.height / 1.5, this.canvas));
     }
     resetButtonsAndDangerDashFrame() {
         this.buttons = [];
@@ -1454,7 +1474,6 @@ class Coral2 extends ScoringItem {
 class Fish extends ScoringItem {
     constructor(canvas) {
         super(canvas);
-        this.image = this.loadNewImage("assets/img/GameItems/ocean/oceanFish.png");
         this.image = Utility.loadNewImage("assets/img/obstacles/Ocean/oceanFish.png");
         this.points = 5;
         this.lives = 0;
@@ -1497,7 +1516,7 @@ class Shark extends ScoringItem {
         this.image = Utility.loadNewImage("assets/img/obstacles/Ocean/oceanShark.png");
         this.points = -20;
         this.lives = -1;
-        this.speed = -5;
+        this.earnedCoins = 0;
         this.name = "Shark";
     }
 }
@@ -1787,7 +1806,12 @@ class OceanWorld {
     }
     draw() {
         const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawBackground();
+        this.player.draw(ctx);
+        if (this.frame > 1) {
+            this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+        }
         this.drawScore(ctx);
         this.drawLives(ctx);
     }
@@ -1928,7 +1952,6 @@ class Endscreen {
         this.buttons = [];
         this.buttonMaker();
         this.image = [];
-        this.score = 200;
         this.draw();
     }
     draw() {

@@ -71,11 +71,18 @@ class OceanWorld {
 
   public draw(){
     const ctx = this.canvas.getContext("2d");
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    
     this.drawBackground();
 
-    
+    this.player.draw(ctx);
+    //Draws all the scoring items.
+    if (this.frame > 1) {
+      this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+    }
 
     this.drawScore(ctx);
+    
     this.drawLives(ctx);
   }
 

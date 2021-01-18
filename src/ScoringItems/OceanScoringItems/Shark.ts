@@ -6,7 +6,7 @@ class Shark extends ScoringItem{
     this.image = Utility.loadNewImage("assets/img/obstacles/Ocean/oceanShark.png");
     this.points =-20;
     this.lives = -1;
-    this.speed = -5;
+    this.earnedCoins = 0;
     this.name = "Shark";
     }
 }
