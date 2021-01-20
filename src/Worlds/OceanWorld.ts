@@ -189,7 +189,7 @@ class OceanWorld {
     //After 1 frame the scoringItems will start moving
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => {
-        scoringItem.move();
+        scoringItem.move(this.frame);
       });
 
       //scoringItmeCollision

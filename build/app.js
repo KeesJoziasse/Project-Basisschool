@@ -122,26 +122,7 @@ class DangerDash {
                         this.EndScreenDetection(button);
                     }
                     else if (this.screenName === "Question") {
-                        if (button.getButtonName() === "YesButton") {
-                            if (this.inGameQuestions.getAnswerCheck() === "yes") {
-                                this.resetButtonsAndDangerDashFrame();
-                                this.screenName = "QuestionGoodAnswer";
-                            }
-                            else if (this.inGameQuestions.getAnswerCheck() === "no") {
-                                this.resetButtonsAndDangerDashFrame();
-                                this.screenName = "QuestionBadAnswer";
-                            }
-                        }
-                        else if (button.getButtonName() === "NoButton") {
-                            if (this.inGameQuestions.getAnswerCheck() === "no") {
-                                this.resetButtonsAndDangerDashFrame();
-                                this.screenName = "QuestionGoodAnswer";
-                            }
-                            else if (this.inGameQuestions.getAnswerCheck() === "yes") {
-                                this.resetButtonsAndDangerDashFrame();
-                                this.screenName = "QuestionBadAnswer";
-                            }
-                        }
+                        this.QuestionScreenDetection(button);
                     }
                 }
                 else {
@@ -183,6 +164,28 @@ class DangerDash {
     }
     getCharacterName() {
         return this.characterName;
+    }
+    QuestionScreenDetection(button) {
+        if (button.getButtonName() === "YesButton") {
+            if (this.inGameQuestions.getAnswerCheck() === "yes") {
+                this.resetButtonsAndDangerDashFrame();
+                this.screenName = "QuestionGoodAnswer";
+            }
+            else if (this.inGameQuestions.getAnswerCheck() === "no") {
+                this.resetButtonsAndDangerDashFrame();
+                this.screenName = "QuestionBadAnswer";
+            }
+        }
+        else if (button.getButtonName() === "NoButton") {
+            if (this.inGameQuestions.getAnswerCheck() === "no") {
+                this.resetButtonsAndDangerDashFrame();
+                this.screenName = "QuestionGoodAnswer";
+            }
+            else if (this.inGameQuestions.getAnswerCheck() === "yes") {
+                this.resetButtonsAndDangerDashFrame();
+                this.screenName = "QuestionBadAnswer";
+            }
+        }
     }
     EndScreenDetection(button) {
         if (button.getButtonName() === "RestartButton") {
@@ -1103,9 +1106,6 @@ class ScoringItem {
         if (random === 3) {
             this.yPosition = this.lowerLane;
         }
-        this.speed = -(this.canvas.width / 100);
-        this.speed;
-        this.speed = -12;
         this.xPosition = this.canvas.width;
     }
     getPositionX() {
@@ -1135,8 +1135,48 @@ class ScoringItem {
     getSpeed() {
         return this.speed;
     }
-    move() {
-        this.xPosition += this.speed;
+    move(frame) {
+        this.frame = frame;
+        console.log(this.frame);
+        if (this.frame > 0 && this.frame < 500) {
+            this.xPosition -= 10;
+        }
+        else if (this.frame > 500 && this.frame < 1000) {
+            this.xPosition -= 11;
+        }
+        else if (this.frame > 1000 && this.frame < 1500) {
+            this.xPosition -= 12;
+        }
+        else if (this.frame > 1500 && this.frame < 2000) {
+            this.xPosition -= 13;
+        }
+        else if (this.frame > 2000 && this.frame < 2500) {
+            this.xPosition -= 14;
+        }
+        else if (this.frame > 2500 && this.frame < 3000) {
+            this.xPosition -= 14;
+        }
+        else if (this.frame > 3000 && this.frame < 3500) {
+            this.xPosition -= 15;
+        }
+        else if (this.frame > 3500 && this.frame < 4000) {
+            this.xPosition -= 15;
+        }
+        else if (this.frame > 4000 && this.frame < 4500) {
+            this.xPosition -= 16;
+        }
+        else if (this.frame > 4500 && this.frame < 5000) {
+            this.xPosition -= 16;
+        }
+        else if (this.frame > 5000 && this.frame < 5500) {
+            this.xPosition -= 17;
+        }
+        else if (this.frame > 5500 && this.frame < 6000) {
+            this.xPosition -= 18;
+        }
+        else if (this.frame > 6000) {
+            this.xPosition -= 19;
+        }
     }
     draw(ctx) {
         ctx.drawImage(this.image, this.xPosition, this.yPosition);
@@ -1693,7 +1733,7 @@ class Game extends DangerDash {
     forScoringItems() {
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => {
-                scoringItem.move();
+                scoringItem.move(this.frame);
             });
             for (let i = 0; i < this.scoringItems.length; i++) {
                 if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
@@ -1946,7 +1986,7 @@ class OceanWorld {
     forScoringItems() {
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => {
-                scoringItem.move();
+                scoringItem.move(this.frame);
             });
             for (let i = 0; i < this.scoringItems.length; i++) {
                 if (this.player.collidesWithScoringItem(this.scoringItems[i]) &&

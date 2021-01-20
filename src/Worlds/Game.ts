@@ -125,7 +125,7 @@ class Game extends DangerDash{
   private forScoringItems() {
     if (this.frame > 1) {
       this.scoringItems.forEach((scoringItem) => {
-        scoringItem.move();
+        scoringItem.move(this.frame);
       });
 
       for (let i = 0; i < this.scoringItems.length; i++) {

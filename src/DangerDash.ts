@@ -230,31 +230,7 @@ class DangerDash {
         } else if (this.screenName === "EndScreen"){
           this.EndScreenDetection(button);
         } else if (this.screenName === "Question"){
-          
-
-          if(button.getButtonName() === "YesButton"){
-            if(this.inGameQuestions.getAnswerCheck() === "yes"){
-              //console.log("goed antwoord :)");
-              this.resetButtonsAndDangerDashFrame();
-              this.screenName = "QuestionGoodAnswer";
-            } else if(this.inGameQuestions.getAnswerCheck() === "no"){
-              //console.log("sad wrong asnwer :(");
-              this.resetButtonsAndDangerDashFrame();
-              this.screenName = "QuestionBadAnswer";
-            }
-          } else if (button.getButtonName() === "NoButton"){
-            if(this.inGameQuestions.getAnswerCheck() === "no"){
-              //console.log("goed antwoord :)");
-              this.resetButtonsAndDangerDashFrame();
-              this.screenName = "QuestionGoodAnswer";
-            } else if(this.inGameQuestions.getAnswerCheck() === "yes"){
-              //console.log("sad wrong asnwer :(");
-              this.resetButtonsAndDangerDashFrame();
-              this.screenName = "QuestionBadAnswer";
-            }
-          }
-
-
+          this.QuestionScreenDetection(button);
         }
       } else {
         return null;
@@ -274,6 +250,34 @@ class DangerDash {
       }
     });
   };
+
+  /**
+   * Yes & No Button Detection checks if the answer is correct and changes screenName
+   * @param button 
+   */
+  private QuestionScreenDetection(button: Button) {
+    if (button.getButtonName() === "YesButton") {
+      if (this.inGameQuestions.getAnswerCheck() === "yes") {
+        //console.log("goed antwoord :)");
+        this.resetButtonsAndDangerDashFrame();
+        this.screenName = "QuestionGoodAnswer";
+      } else if (this.inGameQuestions.getAnswerCheck() === "no") {
+        //console.log("sad wrong asnwer :(");
+        this.resetButtonsAndDangerDashFrame();
+        this.screenName = "QuestionBadAnswer";
+      }
+    } else if (button.getButtonName() === "NoButton") {
+      if (this.inGameQuestions.getAnswerCheck() === "no") {
+        //console.log("goed antwoord :)");
+        this.resetButtonsAndDangerDashFrame();
+        this.screenName = "QuestionGoodAnswer";
+      } else if (this.inGameQuestions.getAnswerCheck() === "yes") {
+        //console.log("sad wrong asnwer :(");
+        this.resetButtonsAndDangerDashFrame();
+        this.screenName = "QuestionBadAnswer";
+      }
+    }
+  }
 
 /**
  * Endscreen button detections that if you click on a certain button the screenName will be changed
