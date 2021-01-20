@@ -75,8 +75,6 @@ class OceanWorld {
       this.player = new Girl(this.canvas);
     } else if (this.characterName === "Sonic") {
       this.player = new Sonic(this.canvas);
-    } else if (this.characterName === "") {
-      this.player = new AmongUs(this.canvas);
     }
   }
 
@@ -88,7 +86,7 @@ class OceanWorld {
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     
     this.drawBackground();
-
+    console.log(this.player);
     this.player.draw(ctx);
     //Draws all the scoring items.
     if (this.frame > 1) {

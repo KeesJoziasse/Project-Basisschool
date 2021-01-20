@@ -51,9 +51,9 @@ class DangerDash {
 
     //Worlds
     this.oceanWorld = new OceanWorld(this.canvas);
-    //this.desertWorld = new DesertWorld(this.canvas, "");
-    //this.swampWorld = new SwampWorld(this.canvas, "");
-    //this.articWorld = new ArticWorld(this.canvas, "");
+    this.desertWorld = new DesertWorld(this.canvas);
+    this.swampWorld = new SwampWorld(this.canvas);
+    this.articWorld = new ArticWorld(this.canvas);
 
     //Array's
     this.shopButtons = [];
@@ -99,11 +99,9 @@ class DangerDash {
     if (this.screenName === "GameScreen") {
       //Based on the starstcreen there will be created a new world class
       //with the right character chosen on startscreen
-      this.worldName = this.start.getWorldName();
-      this.characterName = this.start.getCharacterName();
 
       //Based on the worldName chosen in Startscreen a world will be called.
-      if (this.start.getWorldName() === "OceanWorld" || this.worldName === "OceanWorld") {
+      if (this.worldName === "OceanWorld") {
         if(this.DangerDashFrame === 1){
           this.inGameQuestions.randomQuestionGenerator();
         }
@@ -120,12 +118,57 @@ class DangerDash {
           this.resetButtonsAndDangerDashFrame();
           this.screenName = "Question";
         }
-      } else if (this.start.getWorldName() === "ArticWorld") {
-
-      } else if (this.start.getWorldName() === "DesertWorld") {
-
-      } else if (this.start.getWorldName() === "SwampWorld") {
-
+      } else if (this.worldName === "ArticWorld") {
+        if(this.DangerDashFrame === 1){
+          this.inGameQuestions.randomQuestionGenerator();
+        }
+        this.articWorld.increaseFrame();
+        this.articWorld.draw();
+        this.articWorld.forScoringItems();
+        this.articWorld.scoringItemIndex();
+        this.articWorld.movePlayer();
+        if(this.articWorld.getLives() === -1){
+          this.screenName = "EndScreen";
+          this.earnedCoins += this.articWorld.getEarnedCoins();
+          this.resetButtonsAndDangerDashFrame();
+        } else if (this.articWorld.getQuestionStatus() === "Question"){
+          this.resetButtonsAndDangerDashFrame();
+          this.screenName = "Question";
+        }
+      } else if (this.worldName === "DesertWorld") {
+        if(this.DangerDashFrame === 1){
+          this.inGameQuestions.randomQuestionGenerator();
+        }
+        this.desertWorld.increaseFrame();
+        this.desertWorld.draw();
+        this.desertWorld.forScoringItems();
+        this.desertWorld.scoringItemIndex();
+        this.desertWorld.movePlayer();
+        if(this.desertWorld.getLives() === -1){
+          this.screenName = "EndScreen";
+          this.earnedCoins += this.desertWorld.getEarnedCoins();
+          this.resetButtonsAndDangerDashFrame();
+        } else if (this.desertWorld.getQuestionStatus() === "Question"){
+          this.resetButtonsAndDangerDashFrame();
+          this.screenName = "Question";
+        }
+      } else if (this.worldName === "SwampWorld") {
+        if(this.DangerDashFrame === 1){
+          this.inGameQuestions.randomQuestionGenerator();
+        }
+        this.swampWorld.increaseFrame();
+        this.swampWorld.draw();
+        this.swampWorld.forScoringItems();
+        this.swampWorld.scoringItemIndex();
+        this.swampWorld.movePlayer();
+        if(this.swampWorld.getLives() === -1){
+          this.screenName = "EndScreen";
+          this.earnedCoins += this.swampWorld.getEarnedCoins();
+          this.resetButtonsAndDangerDashFrame();
+        } else if (this.oceanWorld.getQuestionStatus() === "Question"){
+          this.resetButtonsAndDangerDashFrame();
+          this.screenName = "Question";
+        }
       }
 
     }
@@ -142,10 +185,21 @@ class DangerDash {
       if(this.DangerDashFrame === 1){
         this.inGameQuestions.drawAfterGoodAnswer();
 
-        //based on world
-        //#TODO ifstatement for worldname
-        this.oceanWorld.clearScoringItems();
-        this.oceanWorld.addTenCoins();
+        //Based on the world
+        if(this.worldName === "OceanWorld"){
+          this.oceanWorld.clearScoringItems();
+          this.oceanWorld.addTenCoins();
+        } else if(this.worldName === "ArticWorld"){
+          this.articWorld.clearScoringItems();
+          this.articWorld.addTenCoins();
+        } else if(this.worldName === "DesertWorld"){
+          this.desertWorld.clearScoringItems();
+          this.desertWorld.addTenCoins();
+        } else if(this.worldName === "SwampWorld"){
+          this.swampWorld.clearScoringItems();
+          this.swampWorld.addTenCoins();
+        } 
+
       }
       if(this.DangerDashFrame === 300){
         this.resetButtonsAndDangerDashFrame();
@@ -157,10 +211,20 @@ class DangerDash {
       if(this.DangerDashFrame === 1){
         this.inGameQuestions.drawAfterBadAnswer();
 
-        //based on world
-        //#TODO ifstatement for worldname
-        this.oceanWorld.clearScoringItems();
-        this.oceanWorld.minusOneLife();
+        //Based on the world
+        if(this.worldName === "OceanWorld"){
+          this.oceanWorld.clearScoringItems();
+          this.oceanWorld.minusOneLife();
+        } else if(this.worldName === "ArticWorld"){
+          this.articWorld.clearScoringItems();
+          this.articWorld.minusOneLife();
+        } else if(this.worldName === "DesertWorld"){
+          this.desertWorld.clearScoringItems();
+          this.desertWorld.minusOneLife();
+        } else if(this.worldName === "SwampWorld"){
+          this.swampWorld.clearScoringItems();
+          this.swampWorld.minusOneLife();
+        } 
       }
       if(this.DangerDashFrame === 300){
         this.resetButtonsAndDangerDashFrame();
@@ -461,10 +525,23 @@ class DangerDash {
       this.start.startLevel(button);
       this.characterName = this.start.getCharacterName();
       this.screenName = "GameScreen";
+      this.worldName = this.start.getWorldName();
       //Based on the world
-      //#TODO fix with ifstatement for other worlds
-      this.oceanWorld.resetGame();
-      this.oceanWorld.createPlayer(this.characterName);
+      if(this.worldName === "OceanWorld"){
+        console.log("been here")
+        this.oceanWorld.resetGame();
+        this.oceanWorld.createPlayer(this.characterName);
+      } else if(this.worldName === "ArticWorld"){
+        this.articWorld.resetGame();
+        this.articWorld.createPlayer(this.characterName);
+      } else if(this.worldName === "DesertWorld"){
+        this.desertWorld.resetGame();
+        this.desertWorld.createPlayer(this.characterName);
+      } else if(this.worldName === "SwampWorld"){
+        this.swampWorld.resetGame();
+        this.swampWorld.createPlayer(this.characterName);
+      } 
+      
       //Clears the ButtonArray
       this.resetButtonsAndDangerDashFrame();
     } else if (button.getButtonName() === "Shop") {
