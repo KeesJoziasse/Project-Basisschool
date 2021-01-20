@@ -20,6 +20,9 @@ class DangerDash {
                 this.worldName = this.start.getWorldName();
                 this.characterName = this.start.getCharacterName();
                 if (this.start.getWorldName() === "OceanWorld" || this.worldName === "OceanWorld") {
+                    if (this.DangerDashFrame === 1) {
+                        this.inGameQuestions.randomQuestionGenerator();
+                    }
                     this.oceanWorld.increaseFrame();
                     this.oceanWorld.draw();
                     this.oceanWorld.forScoringItems();
@@ -56,6 +59,7 @@ class DangerDash {
                     this.oceanWorld.addTenCoins();
                 }
                 if (this.DangerDashFrame === 300) {
+                    this.resetButtonsAndDangerDashFrame();
                     this.screenName = "GameScreen";
                 }
             }
@@ -66,6 +70,7 @@ class DangerDash {
                     this.oceanWorld.minusOneLife();
                 }
                 if (this.DangerDashFrame === 300) {
+                    this.resetButtonsAndDangerDashFrame();
                     this.screenName = "GameScreen";
                 }
             }
