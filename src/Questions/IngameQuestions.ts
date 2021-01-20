@@ -8,6 +8,7 @@ class InGameQuestions {
   private yPos: number;
   private image: HTMLImageElement;
 
+  private answerCheck: string;
 
   public getButtonXPos(): number {
     return this.xPos;
@@ -41,6 +42,8 @@ class InGameQuestions {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
+    this.answerCheck = "";
+
     //The button array
     this.buttons = [];
 
@@ -57,25 +60,15 @@ class InGameQuestions {
     this.randomQuestionGenerator();
 
     this.draw();
+  }
 
-    this.loop();
+  public getAnswerCheck(): string {
+    return this.answerCheck
   }
 
   public getButtonName(): string {
     return this.name;
-  }
-
-  /**
-   * Method for the Game Loop
-   */
-  public loop = () => {
-    // console.log(this.score);
-    // console.log(this.ingameQuestion.getAnswer()); //TODO deze werkt wel
-    this.draw();
-
-    // in the first loop no images are loaded
-    requestAnimationFrame(this.loop);
-  };
+  }    
 
   /**
    * Draws all the necessary elements to the canvas
@@ -98,18 +91,45 @@ class InGameQuestions {
       button.draw();
     });
   }
-  //
-  /**
-   * Loads an image so it doesn't flicker
-   * @param {HTMLImageElement} source
-   * @return HTMLImageElement - returns an image
-   */
-  public static loadNewImage(source: string): HTMLImageElement {
-    const img = new Image();
-    img.src = source;
-    return img;
+
+  public drawAfterGoodAnswer(){
+    const ctx = this.canvas.getContext("2d");
+
+    //Clears the canvas every frame
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.questionBackground.draw(ctx);
+
+    Utility.writeTextToCanvas(
+      ctx,
+      "Goed antwoord! je krijgt 10 coins!",
+      30,
+      this.canvas.width / 2,
+      this.canvas.height / 12 * 5,
+      "center",
+      "black"
+    );
   }
 
+  public drawAfterBadAnswer(){
+    const ctx = this.canvas.getContext("2d");
+
+    //Clears the canvas every frame
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.questionBackground.draw(ctx);
+ 
+    Utility.writeTextToCanvas(
+      ctx,
+      "Fout antwoord, er gaat 1 leven af",
+      30,
+      this.canvas.width / 2,
+      this.canvas.height / 12 * 5,
+      "center",
+      "black"
+    );
+  }
+  
   private buttonMaker() {
     //Initializing the buttons and pushing them to the array
     //Making the right arrow for level selector
@@ -131,7 +151,6 @@ class InGameQuestions {
   }
 
   //Creates the Questions
-
   public randomQuestionGenerator(): void {
     const random = GameItem.randomInteger(1, 6);
     if (random === 1) {
@@ -183,7 +202,7 @@ class InGameQuestions {
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandler = (event: MouseEvent): void => {
-    console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    //console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
     this.buttons.forEach((button) => {
       if (
         event.clientX >= button.getButtonXPos() &&
@@ -195,29 +214,29 @@ class InGameQuestions {
           button.getButtonName() === "YesButton" &&
           this.ingameQuestion.getAnswer() === "yes"
         ) {
-          console.log("Goed het antwoord is Yes");
-          //new Game(document.getElementById("canvas") as HTMLCanvasElement)
+          this.answerCheck = this.ingameQuestion.getAnswer();
+          //this.answerCheck = "GoedAntwoord";
         }
         if (
           button.getButtonName() === "YesButton" &&
           this.ingameQuestion.getAnswer() === "no"
         ) {
-          console.log("Fout het antwoord is Yes");
-          new Start(document.getElementById("canvas") as HTMLCanvasElement);
+          this.answerCheck = this.ingameQuestion.getAnswer();
+          //this.answerCheck = "FoutAntwoord";
         }
         if (
           button.getButtonName() === "NoButton" &&
           this.ingameQuestion.getAnswer() === "no"
         ) {
-          console.log("Goed het antwoord is NO");
-          //new Game(document.getElementById("canvas") as HTMLCanvasElement);
+          this.answerCheck = this.ingameQuestion.getAnswer();
+          //this.answerCheck = "GoedAntwoord";
         }
         if (
           button.getButtonName() === "NoButton" &&
           this.ingameQuestion.getAnswer() === "yes"
         ) {
-          console.log("Fout het antwoord is NO");
-          new Start(document.getElementById("canvas") as HTMLCanvasElement);
+          this.answerCheck = this.ingameQuestion.getAnswer();
+          //this.answerCheck = "FoutAntwoord";
         }
       }
     });

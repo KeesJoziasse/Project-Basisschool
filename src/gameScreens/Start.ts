@@ -9,6 +9,7 @@ class Start {
   private indexCounterWorld: number;
   private indexCounterCharacter: number;
   private characterName:string;
+  private worldName: string;
 
   //Test
   private testPlayer: Player;
@@ -21,6 +22,7 @@ class Start {
     this.canvas.height = window.innerHeight;
 
     this.characterName = "";
+    this.worldName = "";
 
     //The button array
     //this.buttons = [];
@@ -60,6 +62,14 @@ class Start {
 
     //The clickhandler
     // document.addEventListener("click", this.mouseHandler);
+  }
+
+  public getWorldName(): string{
+    return this.worldName;
+  }
+
+  public getCharacterName(): string{
+    return this.characterName;
   }
 
   public getTest(): void {
@@ -235,57 +245,23 @@ class Start {
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Ocean"
     ) {
-      new OceanWorld(this.canvas,`${this.characterName}`);
+      this.worldName = "OceanWorld";
     } else if (
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Artic"
     ) {
-      new ArticWorld(this.canvas,`${this.characterName}`);
+      this.worldName = "ArticWorld";
     } else if (
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Desert"
     ) {
-      new DesertWorld(this.canvas,`${this.characterName}`);
+      this.worldName = "DesertWorld";
     } else if (
       button.getButtonName() == "StartGame" &&
       this.worldImages[this.indexCounterWorld].getImageName() == "Swamp"
     ) {
-      new SwampWorld(this.canvas,`${this.characterName}`);
+      this.worldName = "SwampWorld";
     }
-  }
-
-  public checkCharacterName(button: Button) {
-    if (
-      button.getButtonName() == "StartGame" &&
-      this.characterImages[this.indexCounterCharacter].getImageName() ===
-        "AmongUsLime"
-    ) {
-      new AmongUs(this.canvas);
-    } else if (
-      button.getButtonName() == "StartGame" &&
-      this.characterImages[this.indexCounterCharacter].getImageName() ===
-        "YoshiUnlocked"
-    ) {
-      new Yoshi(this.canvas);
-    } else if (
-      button.getButtonName() == "StartGame" &&
-      this.characterImages[this.indexCounterCharacter].getImageName() ===
-        "UnlockYellowAmongUs"
-    ) {
-      new YellowAmongUs(this.canvas);
-    } else if (
-      button.getButtonName() == "StartGame" &&
-      this.characterImages[this.indexCounterCharacter].getImageName() ===
-        "GirlCharacterUnlocked"
-    ) {
-      new Girl(this.canvas);
-    } else if (
-      button.getButtonName() == "StartGame" &&
-      this.characterImages[this.indexCounterCharacter].getImageName() ==
-        "SonicUnlocked"
-    ) {
-      new Sonic(this.canvas);
-    } 
   }
 
   public CharacterName() {

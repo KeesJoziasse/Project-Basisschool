@@ -87,7 +87,7 @@ class Shop {
     // Price of Yoshi
     Utility.writeTextToCanvas(
       ctx,
-      "50",
+      "15",
       60,
       this.canvas.width / 5.8,
       this.canvas.height / 2.25,
@@ -98,7 +98,7 @@ class Shop {
     // Price for yellow Among Us character
     Utility.writeTextToCanvas(
       ctx,
-      "100",
+      "30",
       60,
       this.canvas.width / 2.49,
       this.canvas.height / 2.25,
@@ -109,7 +109,7 @@ class Shop {
     // Price for Girl
     Utility.writeTextToCanvas(
       ctx,
-      "150",
+      "45",
       60,
       this.canvas.width / 1.63,
       this.canvas.height / 2.25,
@@ -120,7 +120,7 @@ class Shop {
     // Price for Sonic
     Utility.writeTextToCanvas(
       ctx,
-      "200",
+      "60",
       60,
       this.canvas.width / 1.21,
       this.canvas.height / 2.25,
@@ -131,7 +131,7 @@ class Shop {
     // Price for arctic level
     Utility.writeTextToCanvas(
       ctx,
-      "300",
+      "75",
       60,
       this.canvas.width / 1.39,
       this.canvas.height / 1.1,
@@ -142,7 +142,7 @@ class Shop {
     // Price for swamp level
     Utility.writeTextToCanvas(
       ctx,
-      "200",
+      "50",
       60,
       this.canvas.width / 1.95,
       this.canvas.height / 1.1,
@@ -153,7 +153,7 @@ class Shop {
     // Price for desert level
     Utility.writeTextToCanvas(
       ctx,
-      "100",
+      "25",
       60,
       this.canvas.width / 3.4,
       this.canvas.height / 1.1,

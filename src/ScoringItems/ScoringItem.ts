@@ -11,6 +11,7 @@ abstract class ScoringItem {
   protected earnedCoins: number;
   private xPosition: number;
   private yPosition: number;
+  private frame: number;
   
 
   public constructor(canvas: HTMLCanvasElement) {
@@ -32,8 +33,6 @@ abstract class ScoringItem {
     }
 
     //Speed of the scoring objects
-    this.speed = -12;
-
     this.xPosition = this.canvas.width;
   }
 
@@ -72,24 +71,36 @@ abstract class ScoringItem {
    * Moves the scoring items
    */
   public move(frame:number) {
-    console.log(frame);
-    if(frame < 500){
-      this.xPosition -= 4;
-    } else if (frame >= 500){
-      this.xPosition -= 8;
-    } else if (frame >= 1000){
+    this.frame = frame;
+    
+    //Speed changes based on the frames
+    if(this.frame > 0 && this.frame < 500){
+      this.xPosition -= 10;
+    } else if(this.frame > 500 && this.frame < 1000){
+      this.xPosition -= 11;
+    } else if(this.frame > 1000 && this.frame < 1500){
       this.xPosition -= 12;
-    } else if (frame >= 1500){
+    } else if(this.frame > 1500 && this.frame < 2000){
+      this.xPosition -= 13;
+    } else if(this.frame > 2000 && this.frame < 2500){
+      this.xPosition -= 14;
+    } else if(this.frame > 2500 && this.frame < 3000){
+      this.xPosition -= 14;
+    } else if(this.frame > 3000 && this.frame < 3500){
+      this.xPosition -= 15;
+    } else if(this.frame > 3500 && this.frame < 4000){
+      this.xPosition -= 15;
+    } else if(this.frame > 4000 && this.frame < 4500){
       this.xPosition -= 16;
-    } else if (frame >= 2000){
-      this.xPosition -= 20;
-    } else if (frame >= 2500){
-      this.xPosition -= 24;
-    } else if (frame >= 3000){
-      this.xPosition -= 28;
-    } else if (frame >= 3500){
-      this.xPosition -= 32;
-    } 
+    } else if(this.frame > 4500 && this.frame < 5000){
+      this.xPosition -= 16;
+    } else if(this.frame > 5000 && this.frame < 5500){
+      this.xPosition -= 17;
+    } else if(this.frame > 5500 && this.frame < 6000){
+      this.xPosition -= 18;
+    } else if (this.frame > 6000){
+      this.xPosition -= 19;
+    }
     
   }
 

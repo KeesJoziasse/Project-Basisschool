@@ -64,11 +64,41 @@ abstract class Player extends GameItem {
     this.characterAnimation();
   }
 
+
+  //Walking animation of the player
+  private playerAnimation() {
+    const ctx = this.canvas.getContext("2d");
+    //Adds 1 to the frame counter.
+    this.animationFrame++;
+
+    //animated so the images will change at a certain amount of frames
+    if (this.animationFrame <= 10) {
+      ctx.drawImage(
+        Utility.loadNewImage(
+          "./assets/img/Characters/AmongUs/among-us-walk-1.png"
+        ),
+        this.xPos,
+        this.yPos
+      );
+    } else if (this.animationFrame > 5 && this.animationFrame <= 10) {
+      this.image = Utility.loadNewImage(
+        "./assets/img/Characters/AmongUs/among-us-walk-2.png"
+      );
+    } else if (this.animationFrame > 10 && this.animationFrame <= 15) {
+      this.image = Utility.loadNewImage(
+        "./assets/img/Characters/AmongUs/among-us-walk-3.png"
+      );
+    } else if (this.animationFrame > 15 && this.animationFrame <= 20) {
+      this.image = Utility.loadNewImage(
+        "./assets/img/Characters/AmongUs/among-us-walk-2.png"
+      );
+    }
+  }
+
   /*** Method that checks if a gameItem collides with the player    
   ** @param ScoringItem    
-  **/ public collidesWithScoringItem(
-    ScoringItem: ScoringItem
-  ): boolean {
+  **/ 
+  public collidesWithScoringItem(ScoringItem: ScoringItem): boolean {
     if (
       this.xPos + this.image.width > ScoringItem.getPositionX() &&
       this.yPos <
