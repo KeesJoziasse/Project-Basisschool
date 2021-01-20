@@ -1679,75 +1679,52 @@ class SwampTree2 extends ScoringItem {
         this.earnedCoins = 0;
     }
 }
-class Game extends DangerDash {
-    constructor(canvas, characterName) {
-        super(canvas);
-        this.loop = () => {
-            if (this.gameState === "question") {
-            }
-            if (this.gameState === "Running") {
-                this.frame++;
-                this.draw();
-                this.forScoringItems();
-                this.frameIndex();
-                if (this.frame % 10 === 0) {
-                    this.player.move();
-                }
-            }
-            if (this.lives < 0) {
-                this.gameState = "GameOver";
-                this.gameOver();
-            }
-            requestAnimationFrame(this.loop);
-        };
+class ArticWorld {
+    constructor(canvas) {
         this.canvas = canvas;
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-        this.score = 0;
-        this.lives = 3;
-        this.earnedCoins = 0;
+        this.background = Utility.loadNewImage("./assets/img/world/ArticBG.jpg");
+        this.xPos = 0;
+        this.yPos = -100;
         this.frame = 0;
+        this.score = 0;
+        this.earnedCoins = 0;
+        this.lives = 0;
+        this.questionStatus = "";
         this.scoringItems = [];
-        this.gameState = "Running";
     }
-    getGameState() {
-        return this.gameState;
+    getLives() {
+        return this.lives;
     }
-    setGameState(gameState) {
-        this.gameState = gameState;
+    getEarnedCoins() {
+        return this.earnedCoins;
     }
-    randomScoringItems() { }
-    mathRandom() { }
-    frameIndex() {
-        if (this.frame % 10 === 0) {
-            this.score++;
+    getScore() {
+        return this.score;
+    }
+    getQuestionStatus() {
+        return this.questionStatus;
+    }
+    createPlayer(characterName) {
+        this.characterName = characterName;
+        if (this.characterName === "AmongUsLime") {
+            this.player = new AmongUs(this.canvas);
         }
-        if (this.frame % 100 === 0) {
-            this.randomScoringItems();
+        else if (this.characterName === "Yoshi") {
+            this.player = new Yoshi(this.canvas);
         }
-    }
-    checkGameState() {
-        return this.gameState;
-    }
-    forScoringItems() {
-        if (this.frame > 1) {
-            this.scoringItems.forEach((scoringItem) => {
-                scoringItem.move(this.frame);
-            });
-            for (let i = 0; i < this.scoringItems.length; i++) {
-                if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
-                    this.score += this.scoringItems[i].getPoints();
-                    this.lives += this.scoringItems[i].getLives();
-                    this.earnedCoins += this.scoringItems[i].getCoinValue();
-                    this.scoringItems.splice(i, 1);
-                }
-                else if (this.scoringItems[i].outOfCanvas()) {
-                    this.scoringItems.splice(i, 1);
-                }
-            }
+        else if (this.characterName === "YellowAmongUs") {
+            this.player = new YellowAmongUs(this.canvas);
+        }
+        else if (this.characterName === "Girl") {
+            this.player = new Girl(this.canvas);
+        }
+        else if (this.characterName === "Sonic") {
+            this.player = new Sonic(this.canvas);
+        }
+        else if (this.characterName === "") {
+            this.player = new AmongUs(this.canvas);
         }
     }
-    drawBackground() { }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -1759,45 +1736,34 @@ class Game extends DangerDash {
         this.drawScore(ctx);
         this.drawLives(ctx);
     }
-    drawScore(ctx) {
-        Utility.writeTextToCanvas(ctx, `Score: ${this.score}`, 60, this.canvas.width / 2, this.canvas.height / 8, null, "red");
-        ctx.drawImage(Utility.loadNewImage("assets/img/GameItems/coin.png"), this.canvas.width / 20, this.canvas.height / 8);
-        Utility.writeTextToCanvas(ctx, `${this.earnedCoins}`, 60, this.canvas.width / 8, this.canvas.height / 5, null, "red");
-    }
-    drawLives(ctx) {
-        if (this.lives == 3) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-        if (this.lives == 2) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-        if (this.lives == 1) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-        if (this.lives == 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-        if (this.lives < 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
-        }
-    }
-    gameOver() {
-        new Endscreen(this.canvas, this.score);
-    }
-}
-class ArticWorld extends Game {
-    constructor(canvas, characterName) {
-        super(canvas, characterName);
-        this.background = Utility.loadNewImage("./assets/img/world/ArticBG.jpg");
-        this.xPos = 0;
-        this.yPos = -100;
+    resetGame() {
+        this.lives = 3;
+        this.score = 0;
+        this.frame = 0;
+        this.earnedCoins = 0;
     }
     drawBackground() {
         const ctx = this.canvas.getContext("2d");
         ctx.drawImage(this.background, this.xPos, this.yPos);
     }
+    increaseFrame() {
+        this.frame++;
+    }
+    scoringItemIndex() {
+        if (this.frame % 10 === 0) {
+            this.score++;
+        }
+        if (this.frame % 100 === 0) {
+            this.randomScoringItems();
+        }
+    }
+    movePlayer() {
+        if (this.frame % 10 === 0) {
+            this.player.move();
+        }
+    }
     randomScoringItems() {
-        const random = GameItem.randomInteger(1, 10);
+        const random = GameItem.randomInteger(1, 9);
         if (random === 1) {
             this.scoringItems.push(new IceBerg1(this.canvas));
         }
@@ -1823,20 +1789,146 @@ class ArticWorld extends Game {
             this.scoringItems.push(new SeaLion(this.canvas));
         }
     }
+    forScoringItems() {
+        if (this.frame > 1) {
+            this.scoringItems.forEach((scoringItem) => {
+                scoringItem.move(this.frame);
+            });
+            for (let i = 0; i < this.scoringItems.length; i++) {
+                if (this.player.collidesWithScoringItem(this.scoringItems[i]) &&
+                    this.scoringItems[i].getName() === "QuestionBox") {
+                    this.questionStatus = "Question";
+                }
+                if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
+                    this.score += this.scoringItems[i].getPoints();
+                    this.lives += this.scoringItems[i].getLives();
+                    this.earnedCoins += this.scoringItems[i].getCoinValue();
+                    this.scoringItems.splice(i, 1);
+                }
+                else if (this.scoringItems[i].outOfCanvas()) {
+                    this.scoringItems.splice(i, 1);
+                }
+            }
+        }
+    }
+    clearScoringItems() {
+        this.scoringItems = [];
+        this.questionStatus = "";
+    }
+    addTenCoins() {
+        this.earnedCoins += 10;
+    }
+    minusOneLife() {
+        this.lives -= 2;
+    }
+    drawScore(ctx) {
+        Utility.writeTextToCanvas(ctx, `Score: ${this.score}`, 60, this.canvas.width / 2, this.canvas.height / 8, null, "red");
+        ctx.drawImage(Utility.loadNewImage("assets/img/GameItems/coin.png"), this.canvas.width / 20, this.canvas.height / 8);
+        Utility.writeTextToCanvas(ctx, `${this.earnedCoins}`, 60, this.canvas.width / 8, this.canvas.height / 5, null, "red");
+    }
+    drawLives(ctx) {
+        if (this.lives == 3) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives == 2) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives == 1) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives == 0) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives < 0) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+    }
 }
-class DesertWorld extends Game {
-    constructor(canvas, characterName) {
-        super(canvas, characterName);
+class DesertWorld {
+    constructor(canvas) {
+        this.canvas = canvas;
         this.background = Utility.loadNewImage("./assets/img/world/DesertBG.jpg");
         this.xPos = 0;
         this.yPos = -100;
+        this.frame = 0;
+        this.score = 0;
+        this.earnedCoins = 0;
+        this.lives = 0;
+        this.questionStatus = "";
+        this.scoringItems = [];
+    }
+    getLives() {
+        return this.lives;
+    }
+    getEarnedCoins() {
+        return this.earnedCoins;
+    }
+    getScore() {
+        return this.score;
+    }
+    getQuestionStatus() {
+        return this.questionStatus;
+    }
+    createPlayer(characterName) {
+        this.characterName = characterName;
+        if (this.characterName === "AmongUsLime") {
+            this.player = new AmongUs(this.canvas);
+        }
+        else if (this.characterName === "Yoshi") {
+            this.player = new Yoshi(this.canvas);
+        }
+        else if (this.characterName === "YellowAmongUs") {
+            this.player = new YellowAmongUs(this.canvas);
+        }
+        else if (this.characterName === "Girl") {
+            this.player = new Girl(this.canvas);
+        }
+        else if (this.characterName === "Sonic") {
+            this.player = new Sonic(this.canvas);
+        }
+        else if (this.characterName === "") {
+            this.player = new AmongUs(this.canvas);
+        }
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.drawBackground();
+        this.player.draw(ctx);
+        if (this.frame > 1) {
+            this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+        }
+        this.drawScore(ctx);
+        this.drawLives(ctx);
+    }
+    resetGame() {
+        this.lives = 3;
+        this.score = 0;
+        this.frame = 0;
+        this.earnedCoins = 0;
     }
     drawBackground() {
         const ctx = this.canvas.getContext("2d");
         ctx.drawImage(this.background, this.xPos, this.yPos);
     }
+    increaseFrame() {
+        this.frame++;
+    }
+    scoringItemIndex() {
+        if (this.frame % 10 === 0) {
+            this.score++;
+        }
+        if (this.frame % 100 === 0) {
+            this.randomScoringItems();
+        }
+    }
+    movePlayer() {
+        if (this.frame % 10 === 0) {
+            this.player.move();
+        }
+    }
     randomScoringItems() {
-        const random = GameItem.randomInteger(1, 11);
+        const random = GameItem.randomInteger(1, 10);
         if (random === 1) {
             this.scoringItems.push(new Bushes(this.canvas));
         }
@@ -1862,10 +1954,61 @@ class DesertWorld extends Game {
             this.scoringItems.push(new Skull(this.canvas));
         }
         if (random === 10) {
-            this.scoringItems.push(new DesertCoin(this.canvas));
-        }
-        if (random === 11) {
             this.scoringItems.push(new Urn(this.canvas));
+        }
+    }
+    forScoringItems() {
+        if (this.frame > 1) {
+            this.scoringItems.forEach((scoringItem) => {
+                scoringItem.move(this.frame);
+            });
+            for (let i = 0; i < this.scoringItems.length; i++) {
+                if (this.player.collidesWithScoringItem(this.scoringItems[i]) &&
+                    this.scoringItems[i].getName() === "QuestionBox") {
+                    this.questionStatus = "Question";
+                }
+                if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
+                    this.score += this.scoringItems[i].getPoints();
+                    this.lives += this.scoringItems[i].getLives();
+                    this.earnedCoins += this.scoringItems[i].getCoinValue();
+                    this.scoringItems.splice(i, 1);
+                }
+                else if (this.scoringItems[i].outOfCanvas()) {
+                    this.scoringItems.splice(i, 1);
+                }
+            }
+        }
+    }
+    clearScoringItems() {
+        this.scoringItems = [];
+        this.questionStatus = "";
+    }
+    addTenCoins() {
+        this.earnedCoins += 10;
+    }
+    minusOneLife() {
+        this.lives -= 2;
+    }
+    drawScore(ctx) {
+        Utility.writeTextToCanvas(ctx, `Score: ${this.score}`, 60, this.canvas.width / 2, this.canvas.height / 8, null, "red");
+        ctx.drawImage(Utility.loadNewImage("assets/img/GameItems/coin.png"), this.canvas.width / 20, this.canvas.height / 8);
+        Utility.writeTextToCanvas(ctx, `${this.earnedCoins}`, 60, this.canvas.width / 8, this.canvas.height / 5, null, "red");
+    }
+    drawLives(ctx) {
+        if (this.lives == 3) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives == 2) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives == 1) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives == 0) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives < 0) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
     }
 }
@@ -2037,16 +2180,88 @@ class OceanWorld {
         }
     }
 }
-class SwampWorld extends Game {
-    constructor(canvas, characterName) {
-        super(canvas, characterName);
-        this.background = Utility.loadNewImage("./assets/img/world/SwampBG.jpg");
+class SwampWorld {
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.background = Utility.loadNewImage("./assets/img/world/OceanBG.jpg");
         this.xPos = 0;
         this.yPos = -100;
+        this.frame = 0;
+        this.score = 0;
+        this.earnedCoins = 0;
+        this.lives = 0;
+        this.questionStatus = "";
+        this.scoringItems = [];
+    }
+    getLives() {
+        return this.lives;
+    }
+    getEarnedCoins() {
+        return this.earnedCoins;
+    }
+    getScore() {
+        return this.score;
+    }
+    getQuestionStatus() {
+        return this.questionStatus;
+    }
+    createPlayer(characterName) {
+        this.characterName = characterName;
+        if (this.characterName === "AmongUsLime") {
+            this.player = new AmongUs(this.canvas);
+        }
+        else if (this.characterName === "Yoshi") {
+            this.player = new Yoshi(this.canvas);
+        }
+        else if (this.characterName === "YellowAmongUs") {
+            this.player = new YellowAmongUs(this.canvas);
+        }
+        else if (this.characterName === "Girl") {
+            this.player = new Girl(this.canvas);
+        }
+        else if (this.characterName === "Sonic") {
+            this.player = new Sonic(this.canvas);
+        }
+        else if (this.characterName === "") {
+            this.player = new AmongUs(this.canvas);
+        }
+    }
+    draw() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.drawBackground();
+        this.player.draw(ctx);
+        if (this.frame > 1) {
+            this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
+        }
+        this.drawScore(ctx);
+        this.drawLives(ctx);
+    }
+    resetGame() {
+        this.lives = 3;
+        this.score = 0;
+        this.frame = 0;
+        this.earnedCoins = 0;
     }
     drawBackground() {
         const ctx = this.canvas.getContext("2d");
         ctx.drawImage(this.background, this.xPos, this.yPos);
+    }
+    increaseFrame() {
+        this.frame++;
+    }
+    scoringItemIndex() {
+        if (this.frame % 10 === 0) {
+            this.score++;
+        }
+        if (this.frame % 100 === 0) {
+            this.randomScoringItems();
+        }
+    }
+    movePlayer() {
+        if (this.frame % 10 === 0) {
+            this.player.move();
+        }
     }
     randomScoringItems() {
         const random = GameItem.randomInteger(1, 9);
@@ -2056,7 +2271,7 @@ class SwampWorld extends Game {
         if (random === 2) {
             this.scoringItems.push(new SwampStone1(this.canvas));
         }
-        if (random === 3 || random === 8) {
+        if (random === 3) {
             this.scoringItems.push(new SwampStone2(this.canvas));
         }
         if (random === 4) {
@@ -2068,8 +2283,65 @@ class SwampWorld extends Game {
         if (random === 7) {
             this.scoringItems.push(new SwampTree2(this.canvas));
         }
-        if (random === 9) {
+        if (random === 8) {
             this.scoringItems.push(new GoldenFrog(this.canvas));
+        }
+        if (random === 9) {
+            this.scoringItems.push(new QuestionBox(this.canvas));
+        }
+    }
+    forScoringItems() {
+        if (this.frame > 1) {
+            this.scoringItems.forEach((scoringItem) => {
+                scoringItem.move(this.frame);
+            });
+            for (let i = 0; i < this.scoringItems.length; i++) {
+                if (this.player.collidesWithScoringItem(this.scoringItems[i]) &&
+                    this.scoringItems[i].getName() === "QuestionBox") {
+                    this.questionStatus = "Question";
+                }
+                if (this.player.collidesWithScoringItem(this.scoringItems[i])) {
+                    this.score += this.scoringItems[i].getPoints();
+                    this.lives += this.scoringItems[i].getLives();
+                    this.earnedCoins += this.scoringItems[i].getCoinValue();
+                    this.scoringItems.splice(i, 1);
+                }
+                else if (this.scoringItems[i].outOfCanvas()) {
+                    this.scoringItems.splice(i, 1);
+                }
+            }
+        }
+    }
+    clearScoringItems() {
+        this.scoringItems = [];
+        this.questionStatus = "";
+    }
+    addTenCoins() {
+        this.earnedCoins += 10;
+    }
+    minusOneLife() {
+        this.lives -= 2;
+    }
+    drawScore(ctx) {
+        Utility.writeTextToCanvas(ctx, `Score: ${this.score}`, 60, this.canvas.width / 2, this.canvas.height / 8, null, "red");
+        ctx.drawImage(Utility.loadNewImage("assets/img/GameItems/coin.png"), this.canvas.width / 20, this.canvas.height / 8);
+        Utility.writeTextToCanvas(ctx, `${this.earnedCoins}`, 60, this.canvas.width / 8, this.canvas.height / 5, null, "red");
+    }
+    drawLives(ctx) {
+        if (this.lives == 3) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives == 2) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives == 1) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives == 0) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+        }
+        if (this.lives < 0) {
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
     }
 }

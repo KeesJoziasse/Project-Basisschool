@@ -1,5 +1,3 @@
-/// <reference path="./Game.ts" />
-
 class OceanWorld {
   //canvas
   private canvas: HTMLCanvasElement;
