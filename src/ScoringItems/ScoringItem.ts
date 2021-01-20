@@ -72,7 +72,7 @@ abstract class ScoringItem {
    */
   public move(frame:number) {
     this.frame = frame;
-    console.log(this.frame);
+    
     //Speed changes based on the frames
     if(this.frame > 0 && this.frame < 500){
       this.xPosition -= 10;

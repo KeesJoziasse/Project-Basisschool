@@ -230,7 +230,7 @@ class OceanWorld {
    * After the wrong answer is pressed lives goes -1
    */
   public minusOneLife(){
-    this.lives -= 1;
+    this.lives -= 2;
   }
 
   /**

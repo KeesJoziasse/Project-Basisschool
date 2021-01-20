@@ -22,8 +22,6 @@ class DangerDash {
                 if (this.start.getWorldName() === "OceanWorld" || this.worldName === "OceanWorld") {
                     if (this.DangerDashFrame === 1) {
                         this.inGameQuestions.randomQuestionGenerator();
-                        this.oceanWorld.resetGame();
-                        this.oceanWorld.createPlayer(this.characterName);
                     }
                     this.oceanWorld.increaseFrame();
                     this.oceanWorld.draw();
@@ -289,6 +287,8 @@ class DangerDash {
             this.start.startLevel(button);
             this.characterName = this.start.getCharacterName();
             this.screenName = "GameScreen";
+            this.oceanWorld.resetGame();
+            this.oceanWorld.createPlayer(this.characterName);
             this.resetButtonsAndDangerDashFrame();
         }
         else if (button.getButtonName() === "Shop") {
@@ -1137,7 +1137,6 @@ class ScoringItem {
     }
     move(frame) {
         this.frame = frame;
-        console.log(this.frame);
         if (this.frame > 0 && this.frame < 500) {
             this.xPosition -= 10;
         }
@@ -2013,7 +2012,7 @@ class OceanWorld {
         this.earnedCoins += 10;
     }
     minusOneLife() {
-        this.lives -= 1;
+        this.lives -= 2;
     }
     drawScore(ctx) {
         Utility.writeTextToCanvas(ctx, `Score: ${this.score}`, 60, this.canvas.width / 2, this.canvas.height / 8, null, "red");

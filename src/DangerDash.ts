@@ -106,8 +106,6 @@ class DangerDash {
       if (this.start.getWorldName() === "OceanWorld" || this.worldName === "OceanWorld") {
         if(this.DangerDashFrame === 1){
           this.inGameQuestions.randomQuestionGenerator();
-          this.oceanWorld.resetGame();
-          this.oceanWorld.createPlayer(this.characterName);
         }
         this.oceanWorld.increaseFrame();
         this.oceanWorld.draw();
@@ -463,6 +461,10 @@ class DangerDash {
       this.start.startLevel(button);
       this.characterName = this.start.getCharacterName();
       this.screenName = "GameScreen";
+      //Based on the world
+      //#TODO fix with ifstatement for other worlds
+      this.oceanWorld.resetGame();
+      this.oceanWorld.createPlayer(this.characterName);
       //Clears the ButtonArray
       this.resetButtonsAndDangerDashFrame();
     } else if (button.getButtonName() === "Shop") {
