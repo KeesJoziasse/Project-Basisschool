@@ -22,6 +22,8 @@ class DangerDash {
                 if (this.start.getWorldName() === "OceanWorld" || this.worldName === "OceanWorld") {
                     if (this.DangerDashFrame === 1) {
                         this.inGameQuestions.randomQuestionGenerator();
+                        this.oceanWorld.resetGame();
+                        this.oceanWorld.createPlayer(this.characterName);
                     }
                     this.oceanWorld.increaseFrame();
                     this.oceanWorld.draw();
@@ -160,7 +162,7 @@ class DangerDash {
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.earnedCoins = 50;
+        this.earnedCoins = 500;
         this.screenName = "StartScreen";
         this.worldName = "";
         this.DangerDashFrame = 0;
@@ -170,7 +172,7 @@ class DangerDash {
         this.highScore = new HighScore(this.canvas);
         this.generalQuestions = new GeneralQuestions(this.canvas);
         this.inGameQuestions = new InGameQuestions(this.canvas);
-        this.oceanWorld = new OceanWorld(this.canvas, "");
+        this.oceanWorld = new OceanWorld(this.canvas);
         this.shopButtons = [];
         this.buttons = [];
         this.images = [];
@@ -281,8 +283,9 @@ class DangerDash {
             if (this.screenName === "Endscreen") {
                 this.screenName = "Endscreen";
             }
-            this.screenName = "GameScreen";
             this.start.startLevel(button);
+            this.characterName = this.start.getCharacterName();
+            this.screenName = "GameScreen";
             this.resetButtonsAndDangerDashFrame();
         }
         else if (button.getButtonName() === "Shop") {
@@ -1828,7 +1831,7 @@ class DesertWorld extends Game {
     }
 }
 class OceanWorld {
-    constructor(canvas, characterName) {
+    constructor(canvas) {
         this.canvas = canvas;
         this.background = Utility.loadNewImage("./assets/img/world/OceanBG.jpg");
         this.xPos = 0;
@@ -1836,9 +1839,23 @@ class OceanWorld {
         this.frame = 0;
         this.score = 0;
         this.earnedCoins = 0;
-        this.lives = 3;
+        this.lives = 0;
         this.questionStatus = "";
         this.scoringItems = [];
+    }
+    getLives() {
+        return this.lives;
+    }
+    getEarnedCoins() {
+        return this.earnedCoins;
+    }
+    getScore() {
+        return this.score;
+    }
+    getQuestionStatus() {
+        return this.questionStatus;
+    }
+    createPlayer(characterName) {
         this.characterName = characterName;
         if (this.characterName === "AmongUsLime") {
             this.player = new AmongUs(this.canvas);
@@ -1859,18 +1876,6 @@ class OceanWorld {
             this.player = new AmongUs(this.canvas);
         }
     }
-    getLives() {
-        return this.lives;
-    }
-    getEarnedCoins() {
-        return this.earnedCoins;
-    }
-    getScore() {
-        return this.score;
-    }
-    getQuestionStatus() {
-        return this.questionStatus;
-    }
     draw() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -1881,6 +1886,12 @@ class OceanWorld {
         }
         this.drawScore(ctx);
         this.drawLives(ctx);
+    }
+    resetGame() {
+        this.lives = 3;
+        this.score = 0;
+        this.frame = 0;
+        this.earnedCoins = 0;
     }
     drawBackground() {
         const ctx = this.canvas.getContext("2d");
@@ -1903,7 +1914,7 @@ class OceanWorld {
         }
     }
     randomScoringItems() {
-        const random = GameItem.randomInteger(10, 10);
+        const random = GameItem.randomInteger(1, 10);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }
@@ -2372,33 +2383,6 @@ class Start {
         else if (button.getButtonName() == "StartGame" &&
             this.worldImages[this.indexCounterWorld].getImageName() == "Swamp") {
             this.worldName = "SwampWorld";
-        }
-    }
-    checkCharacterName(button) {
-        if (button.getButtonName() == "StartGame" &&
-            this.characterImages[this.indexCounterCharacter].getImageName() ===
-                "AmongUsLime") {
-            new AmongUs(this.canvas);
-        }
-        else if (button.getButtonName() == "StartGame" &&
-            this.characterImages[this.indexCounterCharacter].getImageName() ===
-                "YoshiUnlocked") {
-            new Yoshi(this.canvas);
-        }
-        else if (button.getButtonName() == "StartGame" &&
-            this.characterImages[this.indexCounterCharacter].getImageName() ===
-                "UnlockYellowAmongUs") {
-            new YellowAmongUs(this.canvas);
-        }
-        else if (button.getButtonName() == "StartGame" &&
-            this.characterImages[this.indexCounterCharacter].getImageName() ===
-                "GirlCharacterUnlocked") {
-            new Girl(this.canvas);
-        }
-        else if (button.getButtonName() == "StartGame" &&
-            this.characterImages[this.indexCounterCharacter].getImageName() ==
-                "SonicUnlocked") {
-            new Sonic(this.canvas);
         }
     }
     CharacterName() {

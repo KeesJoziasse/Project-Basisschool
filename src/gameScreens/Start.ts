@@ -264,40 +264,6 @@ class Start {
     }
   }
 
-  public checkCharacterName(button: Button) {
-    if (
-      button.getButtonName() == "StartGame" &&
-      this.characterImages[this.indexCounterCharacter].getImageName() ===
-        "AmongUsLime"
-    ) {
-      new AmongUs(this.canvas);
-    } else if (
-      button.getButtonName() == "StartGame" &&
-      this.characterImages[this.indexCounterCharacter].getImageName() ===
-        "YoshiUnlocked"
-    ) {
-      new Yoshi(this.canvas);
-    } else if (
-      button.getButtonName() == "StartGame" &&
-      this.characterImages[this.indexCounterCharacter].getImageName() ===
-        "UnlockYellowAmongUs"
-    ) {
-      new YellowAmongUs(this.canvas);
-    } else if (
-      button.getButtonName() == "StartGame" &&
-      this.characterImages[this.indexCounterCharacter].getImageName() ===
-        "GirlCharacterUnlocked"
-    ) {
-      new Girl(this.canvas);
-    } else if (
-      button.getButtonName() == "StartGame" &&
-      this.characterImages[this.indexCounterCharacter].getImageName() ==
-        "SonicUnlocked"
-    ) {
-      new Sonic(this.canvas);
-    } 
-  }
-
   public CharacterName() {
     if (
       this.characterImages[this.indexCounterCharacter].getImageName() ===

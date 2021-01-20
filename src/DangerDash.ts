@@ -36,7 +36,7 @@ class DangerDash {
     this.canvas.height = window.innerHeight;
 
     //Static properties
-    this.earnedCoins = 50;
+    this.earnedCoins = 500;
     this.screenName = "StartScreen";
     this.worldName = "";
     this.DangerDashFrame = 0;
@@ -50,7 +50,7 @@ class DangerDash {
     this.inGameQuestions = new InGameQuestions(this.canvas);
 
     //Worlds
-    this.oceanWorld = new OceanWorld(this.canvas, "");
+    this.oceanWorld = new OceanWorld(this.canvas);
     //this.desertWorld = new DesertWorld(this.canvas, "");
     //this.swampWorld = new SwampWorld(this.canvas, "");
     //this.articWorld = new ArticWorld(this.canvas, "");
@@ -106,6 +106,8 @@ class DangerDash {
       if (this.start.getWorldName() === "OceanWorld" || this.worldName === "OceanWorld") {
         if(this.DangerDashFrame === 1){
           this.inGameQuestions.randomQuestionGenerator();
+          this.oceanWorld.resetGame();
+          this.oceanWorld.createPlayer(this.characterName);
         }
         this.oceanWorld.increaseFrame();
         this.oceanWorld.draw();
@@ -454,8 +456,9 @@ class DangerDash {
       if (this.screenName === "Endscreen") {
         this.screenName = "Endscreen";
       }
-      this.screenName = "GameScreen";
       this.start.startLevel(button);
+      this.characterName = this.start.getCharacterName();
+      this.screenName = "GameScreen";
       //Clears the ButtonArray
       this.resetButtonsAndDangerDashFrame();
     } else if (button.getButtonName() === "Shop") {
@@ -490,8 +493,8 @@ class DangerDash {
     //Making the start button
     this.buttons.push(
       new StartGameButton(
-        this.canvas.width / 2 - 329 / 2, //Fix this secton for centering no magic numbers #TODO
-        (this.canvas.height / 5) * 4 - 100 / 2, //Fix this secton for centering no magic numbers #TODO
+        this.canvas.width / 2 - 329 / 2, 
+        (this.canvas.height / 5) * 4 - 100 / 2, 
         this.canvas
       )
     );

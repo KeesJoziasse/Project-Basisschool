@@ -25,7 +25,7 @@ class OceanWorld {
   //Player
   private player: Player;
 
-  constructor(canvas: HTMLCanvasElement, characterName: string) {
+  constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
 
     this.background = Utility.loadNewImage("./assets/img/world/OceanBG.jpg");
@@ -35,25 +35,11 @@ class OceanWorld {
     this.frame = 0;
     this.score = 0;
     this.earnedCoins = 0;
-    this.lives = 3;
+    this.lives = 0;
     this.questionStatus = "";
 
     this.scoringItems = [];
 
-    this.characterName = characterName;
-    if (this.characterName === "AmongUsLime") {
-      this.player = new AmongUs(this.canvas);
-    } else if (this.characterName === "Yoshi") {
-      this.player = new Yoshi(this.canvas);
-    } else if (this.characterName === "YellowAmongUs") {
-      this.player = new YellowAmongUs(this.canvas);
-    } else if (this.characterName === "Girl") {
-      this.player = new Girl(this.canvas);
-    } else if (this.characterName === "Sonic") {
-      this.player = new Sonic(this.canvas);
-    } else if (this.characterName === "") {
-      this.player = new AmongUs(this.canvas);
-    }
   }
 
   //Getters:
@@ -75,6 +61,30 @@ class OceanWorld {
 
   //Methods:
 
+  /**
+   * Create a character that is chosen by startscreen
+   * @param characterName 
+   */
+  public createPlayer(characterName:string){
+    this.characterName = characterName;
+    if (this.characterName === "AmongUsLime") {
+      this.player = new AmongUs(this.canvas);
+    } else if (this.characterName === "Yoshi") {
+      this.player = new Yoshi(this.canvas);
+    } else if (this.characterName === "YellowAmongUs") {
+      this.player = new YellowAmongUs(this.canvas);
+    } else if (this.characterName === "Girl") {
+      this.player = new Girl(this.canvas);
+    } else if (this.characterName === "Sonic") {
+      this.player = new Sonic(this.canvas);
+    } else if (this.characterName === "") {
+      this.player = new AmongUs(this.canvas);
+    }
+  }
+
+  /**
+   * Draws the world and its objects
+   */
   public draw(){
     const ctx = this.canvas.getContext("2d");
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -90,6 +100,16 @@ class OceanWorld {
     this.drawScore(ctx);
 
     this.drawLives(ctx);
+  }
+
+  /**
+   * Resets the game in order to play it multiple times
+   */
+  public resetGame(){
+    this.lives = 3;
+    this.score = 0;
+    this.frame = 0;
+    this.earnedCoins = 0;
   }
 
   /**
@@ -117,7 +137,7 @@ class OceanWorld {
     }
     if (this.frame % 100 === 0) {
       this.randomScoringItems();
-    }
+    } 
   }
 
   /**
@@ -134,7 +154,7 @@ class OceanWorld {
    */
   public randomScoringItems(): void {
     //#TODO terugzetten op 1, 10
-    const random = GameItem.randomInteger(10, 10);
+    const random = GameItem.randomInteger(1, 10);
     if (random === 1) {
       this.scoringItems.push(new Shark(this.canvas));
     }
