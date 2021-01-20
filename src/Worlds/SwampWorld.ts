@@ -26,7 +26,7 @@ class SwampWorld {
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
 
-    this.background = Utility.loadNewImage("./assets/img/world/OceanBG.jpg");
+    this.background = Utility.loadNewImage("./assets/img/world/SwampBG.jpg");
     
     this.xPos = 0;
     this.yPos = -100;

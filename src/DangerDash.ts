@@ -235,9 +235,15 @@ class DangerDash {
     if (this.screenName === "EndScreen") {
       if(this.DangerDashFrame === 0){
         this.buttonMakerEndScreen();
-        if(this.start.getWorldName() === "OceanWorld"){
+        if(this.worldName === "OceanWorld"){
           this.endscreen = new Endscreen(this.canvas, this.oceanWorld.getScore());
-        } // ook voor andere werled maken met andere getter van score
+        } else if(this.worldName === "ArticWorld"){
+          this.endscreen = new Endscreen(this.canvas, this.articWorld.getScore());
+        } else if(this.worldName === "DesertWorld"){
+          this.endscreen = new Endscreen(this.canvas, this.desertWorld.getScore());
+        } else if(this.worldName === "SwampWorld"){
+          this.endscreen = new Endscreen(this.canvas, this.swampWorld.getScore());
+        } 
         
       }
       
