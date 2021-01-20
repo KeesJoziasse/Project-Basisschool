@@ -105,7 +105,6 @@ class DangerDash {
       //Based on the worldName chosen in Startscreen a world will be called.
       if (this.start.getWorldName() === "OceanWorld" || this.worldName === "OceanWorld") {
         this.oceanWorld.increaseFrame();
-        //draw verwerken in een draw functie
         this.oceanWorld.draw();
         this.oceanWorld.forScoringItems();
         this.oceanWorld.scoringItemIndex();
@@ -115,8 +114,8 @@ class DangerDash {
           this.earnedCoins += this.oceanWorld.getEarnedCoins();
           this.resetButtonsAndDangerDashFrame();
         } else if (this.oceanWorld.getQuestionStatus() === "Question"){
-          this.screenName = "Question";
           this.resetButtonsAndDangerDashFrame();
+          this.screenName = "Question";
         }
       } else if (this.start.getWorldName() === "ArticWorld") {
 
@@ -129,20 +128,37 @@ class DangerDash {
     }
 
     if (this.screenName === "Question") {
-      console.log(this.DangerDashFrame)
+      this.DangerDashFrame++;
       if (this.DangerDashFrame === 1) {
-        console.log(this.DangerDashFrame)
-        //new InGameQuestionImage(this.canvas.width / 3, 150);
-        this.inGameQuestions.randomQuestionGenerator();
+        this.buttonMakerQuestionScreen();
+        this.inGameQuestions.draw();
       }
-      console.log(this.screenName)
-      this.inGameQuestions.draw();
-      console.log(this.inGameQuestions.getAnswerCheck());
-      if(this.inGameQuestions.getAnswerCheck() == "GoedAntwoord"){
-        //+coins
+    }
+
+    if(this.screenName === "QuestionGoodAnswer"){
+      if(this.DangerDashFrame === 1){
+        this.inGameQuestions.drawAfterGoodAnswer();
+
+        //based on world
+        //#TODO ifstatement for worldname
+        this.oceanWorld.clearScoringItems();
+        this.oceanWorld.addTenCoins();
+      }
+      if(this.DangerDashFrame === 300){
         this.screenName = "GameScreen";
-      } else if(this.inGameQuestions.getAnswerCheck() == "FoutAntwoord"){
-        //-live
+      }
+    }
+
+    if(this.screenName === "QuestionBadAnswer"){
+      if(this.DangerDashFrame === 1){
+        this.inGameQuestions.drawAfterBadAnswer();
+
+        //based on world
+        //#TODO ifstatement for worldname
+        this.oceanWorld.clearScoringItems();
+        this.oceanWorld.minusOneLife();
+      }
+      if(this.DangerDashFrame === 300){
         this.screenName = "GameScreen";
       }
     }
@@ -205,15 +221,39 @@ class DangerDash {
         } else if (this.screenName === "Q&AScreen") {
           this.QAndAScreenDetection(button);
         } else if (this.screenName === "EndScreen"){
-          if(button.getButtonName() === "RestartButton"){
-            this.screenName = "StartScreen"
-            this.resetButtonsAndDangerDashFrame();
+          this.EndScreenDetection(button);
+        } else if (this.screenName === "Question"){
+          
+
+          if(button.getButtonName() === "YesButton"){
+            if(this.inGameQuestions.getAnswerCheck() === "yes"){
+              //console.log("goed antwoord :)");
+              this.resetButtonsAndDangerDashFrame();
+              this.screenName = "QuestionGoodAnswer";
+            } else if(this.inGameQuestions.getAnswerCheck() === "no"){
+              //console.log("sad wrong asnwer :(");
+              this.resetButtonsAndDangerDashFrame();
+              this.screenName = "QuestionBadAnswer";
+            }
+          } else if (button.getButtonName() === "NoButton"){
+            if(this.inGameQuestions.getAnswerCheck() === "no"){
+              //console.log("goed antwoord :)");
+              this.resetButtonsAndDangerDashFrame();
+              this.screenName = "QuestionGoodAnswer";
+            } else if(this.inGameQuestions.getAnswerCheck() === "yes"){
+              //console.log("sad wrong asnwer :(");
+              this.resetButtonsAndDangerDashFrame();
+              this.screenName = "QuestionBadAnswer";
+            }
           }
+
+
         }
       } else {
         return null;
       }
     });
+    //Special button detection for the shop because the buttons will be pushed to seperate array
     this.shopButtons.forEach((button) => {
       if (
         event.clientX >= button.getButtonXPos() &&
@@ -227,6 +267,17 @@ class DangerDash {
       }
     });
   };
+
+/**
+ * Endscreen button detections that if you click on a certain button the screenName will be changed
+ * @param button 
+ */
+  private EndScreenDetection(button: Button) {
+    if (button.getButtonName() === "RestartButton") {
+      this.resetButtonsAndDangerDashFrame();
+      this.screenName = "StartScreen";
+    }
+  }
 
   /**
    * Draws the Shop (images,buttons, + earnedCoins(Dynamic))
@@ -561,6 +612,25 @@ class DangerDash {
       new UnlockSonic(
         this.canvas.width / 1.34,
         this.canvas.height / 2.15,
+        this.canvas
+      )
+    );
+  }
+
+  //Pushing the yes and no button to buttons[]
+  private buttonMakerQuestionScreen(){
+    this.buttons.push(
+      new YesButton(
+        (this.canvas.width / 3) * 1.05,
+        (this.canvas.height / 2) * 1.5,
+        this.canvas
+      )
+    );
+
+    this.buttons.push(
+      new NoButton(
+        (this.canvas.width / 2) * 1.05,
+        (this.canvas.height / 2) * 1.5,
         this.canvas
       )
     );

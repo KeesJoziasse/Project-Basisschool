@@ -31,8 +31,8 @@ class DangerDash {
                         this.resetButtonsAndDangerDashFrame();
                     }
                     else if (this.oceanWorld.getQuestionStatus() === "Question") {
-                        this.screenName = "Question";
                         this.resetButtonsAndDangerDashFrame();
+                        this.screenName = "Question";
                     }
                 }
                 else if (this.start.getWorldName() === "ArticWorld") {
@@ -43,18 +43,29 @@ class DangerDash {
                 }
             }
             if (this.screenName === "Question") {
-                console.log(this.DangerDashFrame);
+                this.DangerDashFrame++;
                 if (this.DangerDashFrame === 1) {
-                    console.log(this.DangerDashFrame);
-                    this.inGameQuestions.randomQuestionGenerator();
+                    this.buttonMakerQuestionScreen();
+                    this.inGameQuestions.draw();
                 }
-                console.log(this.screenName);
-                this.inGameQuestions.draw();
-                console.log(this.inGameQuestions.getAnswerCheck());
-                if (this.inGameQuestions.getAnswerCheck() == "GoedAntwoord") {
+            }
+            if (this.screenName === "QuestionGoodAnswer") {
+                if (this.DangerDashFrame === 1) {
+                    this.inGameQuestions.drawAfterGoodAnswer();
+                    this.oceanWorld.clearScoringItems();
+                    this.oceanWorld.addTenCoins();
+                }
+                if (this.DangerDashFrame === 300) {
                     this.screenName = "GameScreen";
                 }
-                else if (this.inGameQuestions.getAnswerCheck() == "FoutAntwoord") {
+            }
+            if (this.screenName === "QuestionBadAnswer") {
+                if (this.DangerDashFrame === 1) {
+                    this.inGameQuestions.drawAfterBadAnswer();
+                    this.oceanWorld.clearScoringItems();
+                    this.oceanWorld.minusOneLife();
+                }
+                if (this.DangerDashFrame === 300) {
                     this.screenName = "GameScreen";
                 }
             }
@@ -101,9 +112,28 @@ class DangerDash {
                         this.QAndAScreenDetection(button);
                     }
                     else if (this.screenName === "EndScreen") {
-                        if (button.getButtonName() === "RestartButton") {
-                            this.screenName = "StartScreen";
-                            this.resetButtonsAndDangerDashFrame();
+                        this.EndScreenDetection(button);
+                    }
+                    else if (this.screenName === "Question") {
+                        if (button.getButtonName() === "YesButton") {
+                            if (this.inGameQuestions.getAnswerCheck() === "yes") {
+                                this.resetButtonsAndDangerDashFrame();
+                                this.screenName = "QuestionGoodAnswer";
+                            }
+                            else if (this.inGameQuestions.getAnswerCheck() === "no") {
+                                this.resetButtonsAndDangerDashFrame();
+                                this.screenName = "QuestionBadAnswer";
+                            }
+                        }
+                        else if (button.getButtonName() === "NoButton") {
+                            if (this.inGameQuestions.getAnswerCheck() === "no") {
+                                this.resetButtonsAndDangerDashFrame();
+                                this.screenName = "QuestionGoodAnswer";
+                            }
+                            else if (this.inGameQuestions.getAnswerCheck() === "yes") {
+                                this.resetButtonsAndDangerDashFrame();
+                                this.screenName = "QuestionBadAnswer";
+                            }
                         }
                     }
                 }
@@ -146,6 +176,12 @@ class DangerDash {
     }
     getCharacterName() {
         return this.characterName;
+    }
+    EndScreenDetection(button) {
+        if (button.getButtonName() === "RestartButton") {
+            this.resetButtonsAndDangerDashFrame();
+            this.screenName = "StartScreen";
+        }
     }
     DrawShop() {
         this.shop.draw();
@@ -279,6 +315,10 @@ class DangerDash {
         this.shopButtons.push(new UnlockAmongUs(this.canvas.width / 3.1, this.canvas.height / 2.15, this.canvas));
         this.shopButtons.push(new UnlockGirlCharacter(this.canvas.width / 1.87, this.canvas.height / 2.15, this.canvas));
         this.shopButtons.push(new UnlockSonic(this.canvas.width / 1.34, this.canvas.height / 2.15, this.canvas));
+    }
+    buttonMakerQuestionScreen() {
+        this.buttons.push(new YesButton((this.canvas.width / 3) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
+        this.buttons.push(new NoButton((this.canvas.width / 2) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
     }
     buttonMakerEndScreen() {
         this.buttons.push(new RestartButton(this.canvas.width / 2.5, this.canvas.height / 1.5, this.canvas));
@@ -932,7 +972,6 @@ class OceanImage extends Images {
 class InGameQuestions {
     constructor(canvasId) {
         this.mouseHandler = (event) => {
-            console.log(`xPos ${event.clientX}, yPos ${event.clientY}`);
             this.buttons.forEach((button) => {
                 if (event.clientX >= button.getButtonXPos() &&
                     event.clientX < button.getButtonXPos() + button.getButtonImageWidth() &&
@@ -940,23 +979,19 @@ class InGameQuestions {
                     event.clientY <= button.getButtonYPos() + button.getButtonImageHeight()) {
                     if (button.getButtonName() === "YesButton" &&
                         this.ingameQuestion.getAnswer() === "yes") {
-                        this.answerCheck = "GoedAntwoord";
-                        console.log("Goed antwoord");
+                        this.answerCheck = this.ingameQuestion.getAnswer();
                     }
                     if (button.getButtonName() === "YesButton" &&
                         this.ingameQuestion.getAnswer() === "no") {
-                        console.log("fout antwoord");
-                        this.answerCheck = "FoutAntwoord";
+                        this.answerCheck = this.ingameQuestion.getAnswer();
                     }
                     if (button.getButtonName() === "NoButton" &&
                         this.ingameQuestion.getAnswer() === "no") {
-                        console.log("Goed antwoord");
-                        this.answerCheck = "GoedAntwoord";
+                        this.answerCheck = this.ingameQuestion.getAnswer();
                     }
                     if (button.getButtonName() === "NoButton" &&
                         this.ingameQuestion.getAnswer() === "yes") {
-                        console.log("fout antwoord");
-                        this.answerCheck = "FoutAntwoord";
+                        this.answerCheck = this.ingameQuestion.getAnswer();
                     }
                 }
             });
@@ -999,6 +1034,18 @@ class InGameQuestions {
         this.buttons.forEach((button) => {
             button.draw();
         });
+    }
+    drawAfterGoodAnswer() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.questionBackground.draw(ctx);
+        Utility.writeTextToCanvas(ctx, "Goed antwoord! je krijgt 10 coins!", 30, this.canvas.width / 2, this.canvas.height / 12 * 5, "center", "black");
+    }
+    drawAfterBadAnswer() {
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.questionBackground.draw(ctx);
+        Utility.writeTextToCanvas(ctx, "Fout antwoord, er gaat 1 leven af", 30, this.canvas.width / 2, this.canvas.height / 12 * 5, "center", "black");
     }
     buttonMaker() {
         this.buttons.push(new YesButton((this.canvas.width / 3) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
@@ -1901,6 +1948,16 @@ class OceanWorld {
                 }
             }
         }
+    }
+    clearScoringItems() {
+        this.scoringItems = [];
+        this.questionStatus = "";
+    }
+    addTenCoins() {
+        this.earnedCoins += 10;
+    }
+    minusOneLife() {
+        this.lives -= 1;
     }
     drawScore(ctx) {
         Utility.writeTextToCanvas(ctx, `Score: ${this.score}`, 60, this.canvas.width / 2, this.canvas.height / 8, null, "red");

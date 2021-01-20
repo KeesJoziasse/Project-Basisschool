@@ -192,6 +192,28 @@ class OceanWorld {
   }
 
   /**
+   * Clears the array for the hitdetection and resets questionstatus
+   */
+  public clearScoringItems(){
+    this.scoringItems = [];
+    this.questionStatus = "";
+  }
+
+  /**
+   * After the good answer is pressed we add 10 coins
+   */
+  public addTenCoins(){
+    this.earnedCoins += 10;
+  }
+
+  /**
+   * After the wrong answer is pressed lives goes -1
+   */
+  public minusOneLife(){
+    this.lives -= 1;
+  }
+
+  /**
    * Draw the score on a canvas
    * @param ctx
    */

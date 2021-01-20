@@ -89,6 +89,44 @@ class InGameQuestions {
       button.draw();
     });
   }
+
+  public drawAfterGoodAnswer(){
+    const ctx = this.canvas.getContext("2d");
+
+    //Clears the canvas every frame
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.questionBackground.draw(ctx);
+
+    Utility.writeTextToCanvas(
+      ctx,
+      "Goed antwoord! je krijgt 10 coins!",
+      30,
+      this.canvas.width / 2,
+      this.canvas.height / 12 * 5,
+      "center",
+      "black"
+    );
+  }
+
+  public drawAfterBadAnswer(){
+    const ctx = this.canvas.getContext("2d");
+
+    //Clears the canvas every frame
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.questionBackground.draw(ctx);
+ 
+    Utility.writeTextToCanvas(
+      ctx,
+      "Fout antwoord, er gaat 1 leven af",
+      30,
+      this.canvas.width / 2,
+      this.canvas.height / 12 * 5,
+      "center",
+      "black"
+    );
+  }
   
   private buttonMaker() {
     //Initializing the buttons and pushing them to the array
@@ -162,7 +200,7 @@ class InGameQuestions {
    * @param {MouseEvent} event - mouse event
    */
   public mouseHandler = (event: MouseEvent): void => {
-    console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
+    //console.log(`xPos ${event.clientX}, yPos ${event.clientY}`); //Check what pos is clicked on the screen.
     this.buttons.forEach((button) => {
       if (
         event.clientX >= button.getButtonXPos() &&
@@ -174,29 +212,29 @@ class InGameQuestions {
           button.getButtonName() === "YesButton" &&
           this.ingameQuestion.getAnswer() === "yes"
         ) {
-          this.answerCheck = "GoedAntwoord";
-          console.log("Goed antwoord");
+          this.answerCheck = this.ingameQuestion.getAnswer();
+          //this.answerCheck = "GoedAntwoord";
         }
         if (
           button.getButtonName() === "YesButton" &&
           this.ingameQuestion.getAnswer() === "no"
         ) {
-          console.log("fout antwoord");
-          this.answerCheck = "FoutAntwoord";
+          this.answerCheck = this.ingameQuestion.getAnswer();
+          //this.answerCheck = "FoutAntwoord";
         }
         if (
           button.getButtonName() === "NoButton" &&
           this.ingameQuestion.getAnswer() === "no"
         ) {
-          console.log("Goed antwoord");
-          this.answerCheck = "GoedAntwoord";
+          this.answerCheck = this.ingameQuestion.getAnswer();
+          //this.answerCheck = "GoedAntwoord";
         }
         if (
           button.getButtonName() === "NoButton" &&
           this.ingameQuestion.getAnswer() === "yes"
         ) {
-          console.log("fout antwoord");
-          this.answerCheck = "FoutAntwoord";
+          this.answerCheck = this.ingameQuestion.getAnswer();
+          //this.answerCheck = "FoutAntwoord";
         }
       }
     });
