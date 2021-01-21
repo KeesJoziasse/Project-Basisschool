@@ -889,6 +889,48 @@ class Question1 extends Images {
         this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question1.png");
     }
 }
+class Question10 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "yes";
+        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question10.png");
+    }
+}
+class Question11 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "yes";
+        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question11.png");
+    }
+}
+class Question12 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "no";
+        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question12.png");
+    }
+}
+class Question13 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "yes";
+        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question13.png");
+    }
+}
+class Question14 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "yes";
+        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question14.png");
+    }
+}
+class Question15 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "yes";
+        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question15.png");
+    }
+}
 class Question2 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
@@ -922,6 +964,27 @@ class Question6 extends Images {
         super(xPos, yPos);
         this.answer = "no";
         this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question6.png");
+    }
+}
+class Question7 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "yes";
+        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question7.png");
+    }
+}
+class Question8 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "yes";
+        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question8.png");
+    }
+}
+class Question9 extends Images {
+    constructor(xPos, yPos) {
+        super(xPos, yPos);
+        this.answer = "yes";
+        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question9.png");
     }
 }
 class QuestionBoxText extends Images {
@@ -1087,10 +1150,6 @@ class OceanImage extends Images {
 }
 class InGameQuestions {
     constructor(canvasId) {
-        this.loop = () => {
-            this.draw();
-            requestAnimationFrame(this.loop);
-        };
         this.mouseHandler = (event) => {
             this.buttons.forEach((button) => {
                 if (event.clientX >= button.getButtonXPos() &&
@@ -1126,7 +1185,6 @@ class InGameQuestions {
         this.buttonMaker();
         this.randomQuestionGenerator();
         this.draw();
-        this.loop();
     }
     getButtonXPos() {
         return this.xPos;
@@ -1161,20 +1219,20 @@ class InGameQuestions {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.questionBackground.draw(ctx);
-        Utility.writeTextToCanvas(ctx, "Goed antwoord! je krijgt 10 coins!", 30, this.canvas.width / 2, this.canvas.height / 12 * 5, "center", "black");
+        Utility.writeTextToCanvas(ctx, "Goed antwoord! je krijgt 10 coins!", 30, this.canvas.width / 2, (this.canvas.height / 12) * 5, "center", "black");
     }
     drawAfterBadAnswer() {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.questionBackground.draw(ctx);
-        Utility.writeTextToCanvas(ctx, "Fout antwoord, er gaat 1 leven af", 30, this.canvas.width / 2, this.canvas.height / 12 * 5, "center", "black");
+        Utility.writeTextToCanvas(ctx, "Fout antwoord, er gaat 1 leven af", 30, this.canvas.width / 2, (this.canvas.height / 12) * 5, "center", "black");
     }
     buttonMaker() {
         this.buttons.push(new YesButton((this.canvas.width / 3) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
         this.buttons.push(new NoButton((this.canvas.width / 2) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
     }
     randomQuestionGenerator() {
-        const random = GameItem.randomInteger(1, 6);
+        const random = GameItem.randomInteger(14, 14);
         if (random === 1) {
             console.log("Random was 1 push question 1");
             this.ingameQuestion = new Question1((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
@@ -1198,6 +1256,42 @@ class InGameQuestions {
         if (random === 6) {
             console.log("Random was 6 push question 6");
             this.ingameQuestion = new Question6((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
+        }
+        if (random === 7) {
+            console.log("Random was 7 push question 7");
+            this.ingameQuestion = new Question7((this.canvas.width / 4) * 1.35, this.canvas.height / 2.5);
+        }
+        if (random === 8) {
+            console.log("Random was 8 push question 8");
+            this.ingameQuestion = new Question8((this.canvas.width / 3) * 1.1, this.canvas.height / 2.5);
+        }
+        if (random === 9) {
+            console.log("Random was 9 push question 9");
+            this.ingameQuestion = new Question9((this.canvas.width / 3) * 1.1, this.canvas.height / 2.5);
+        }
+        if (random === 10) {
+            console.log("Random was 10 push question 10");
+            this.ingameQuestion = new Question10((this.canvas.width / 3) * 1.1, this.canvas.height / 2.5);
+        }
+        if (random === 11) {
+            console.log("Random was 11 push question 11");
+            this.ingameQuestion = new Question11((this.canvas.width / 3) * 1.1, this.canvas.height / 2.5);
+        }
+        if (random === 12) {
+            console.log("Random was 12 push question 12");
+            this.ingameQuestion = new Question12((this.canvas.width / 3) * 1.05, this.canvas.height / 2.5);
+        }
+        if (random === 13) {
+            console.log("Random was 13 push question 13");
+            this.ingameQuestion = new Question13((this.canvas.width / 3) * 1.1, this.canvas.height / 2.5);
+        }
+        if (random === 14) {
+            console.log("Random was 14 push question 14");
+            this.ingameQuestion = new Question14((this.canvas.width / 3) * 1.1, this.canvas.height / 2.5);
+        }
+        if (random === 15) {
+            console.log("Random was 15 push question 15");
+            this.ingameQuestion = new Question15((this.canvas.width / 3) * 1.05, this.canvas.height / 2.5);
         }
     }
 }
@@ -1864,7 +1958,7 @@ class ArticWorld {
         if (this.frame % 10 === 0) {
             this.score++;
         }
-        if (this.frame % 75 === 0) {
+        if (this.frame % 100 === 0) {
             this.randomScoringItems();
         }
     }
@@ -1891,7 +1985,6 @@ class ArticWorld {
             this.scoringItems.push(new inGameCoin(this.canvas));
         }
         if (random === 7) {
-            this.scoringItems.push(new QuestionBox(this.canvas));
         }
         if (random === 8) {
             this.scoringItems.push(new Penguin(this.canvas));
@@ -2204,7 +2297,7 @@ class OceanWorld {
         }
     }
     randomScoringItems() {
-        const random = GameItem.randomInteger(1, 9);
+        const random = GameItem.randomInteger(1, 10);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }
@@ -2218,6 +2311,7 @@ class OceanWorld {
             this.scoringItems.push(new Rock1(this.canvas));
         }
         if (random === 5 || random === 6) {
+            this.scoringItems.push(new inGameCoin(this.canvas));
         }
         if (random === 7) {
             this.scoringItems.push(new Coral1(this.canvas));
@@ -2227,6 +2321,9 @@ class OceanWorld {
         }
         if (random === 9) {
             this.scoringItems.push(new Rock2(this.canvas));
+        }
+        if (random === 10) {
+            this.scoringItems.push(new QuestionBox(this.canvas));
         }
     }
     forScoringItems() {
@@ -2627,11 +2724,11 @@ class Shop {
             button.draw();
         });
         Utility.writeTextToCanvas(ctx, "15", 60, this.canvas.width / 5.8, this.canvas.height / 2.25, "center", "white");
-        Utility.writeTextToCanvas(ctx, "30", 60, this.canvas.width / 2.55, this.canvas.height / 2.25, "center", "white");
-        Utility.writeTextToCanvas(ctx, "45", 60, this.canvas.width / 1.68, this.canvas.height / 2.25, "center", "white");
-        Utility.writeTextToCanvas(ctx, "60", 60, this.canvas.width / 1.24, this.canvas.height / 2.25, "center", "white");
-        Utility.writeTextToCanvas(ctx, "75", 60, this.canvas.width / 1.42, this.canvas.height / 1.1, "center", "white");
-        Utility.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 2.01, this.canvas.height / 1.1, "center", "white");
+        Utility.writeTextToCanvas(ctx, "30", 60, this.canvas.width / 2.49, this.canvas.height / 2.25, "center", "white");
+        Utility.writeTextToCanvas(ctx, "45", 60, this.canvas.width / 1.63, this.canvas.height / 2.25, "center", "white");
+        Utility.writeTextToCanvas(ctx, "60", 60, this.canvas.width / 1.21, this.canvas.height / 2.25, "center", "white");
+        Utility.writeTextToCanvas(ctx, "75", 60, this.canvas.width / 1.39, this.canvas.height / 1.1, "center", "white");
+        Utility.writeTextToCanvas(ctx, "50", 60, this.canvas.width / 1.95, this.canvas.height / 1.1, "center", "white");
         Utility.writeTextToCanvas(ctx, "25", 60, this.canvas.width / 3.4, this.canvas.height / 1.1, "center", "white");
         this.shopImages.forEach((shopImage) => {
             shopImage.move(this.canvas);

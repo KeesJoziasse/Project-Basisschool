@@ -63,19 +63,19 @@ class InGameQuestions {
   }
 
   public getAnswerCheck(): string {
-    return this.answerCheck
+    return this.answerCheck;
   }
 
   public getButtonName(): string {
     return this.name;
-  }    
+  }
 
   /**
    * Draws all the necessary elements to the canvas
    */
   public draw() {
     console.log("Draw werkt");
-    
+
     const ctx = this.canvas.getContext("2d");
 
     //Clears the canvas every frame
@@ -92,7 +92,7 @@ class InGameQuestions {
     });
   }
 
-  public drawAfterGoodAnswer(){
+  public drawAfterGoodAnswer() {
     const ctx = this.canvas.getContext("2d");
 
     //Clears the canvas every frame
@@ -105,31 +105,31 @@ class InGameQuestions {
       "Goed antwoord! je krijgt 10 coins!",
       30,
       this.canvas.width / 2,
-      this.canvas.height / 12 * 5,
+      (this.canvas.height / 12) * 5,
       "center",
       "black"
     );
   }
 
-  public drawAfterBadAnswer(){
+  public drawAfterBadAnswer() {
     const ctx = this.canvas.getContext("2d");
 
     //Clears the canvas every frame
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.questionBackground.draw(ctx);
- 
+
     Utility.writeTextToCanvas(
       ctx,
       "Fout antwoord, er gaat 1 leven af",
       30,
       this.canvas.width / 2,
-      this.canvas.height / 12 * 5,
+      (this.canvas.height / 12) * 5,
       "center",
       "black"
     );
   }
-  
+
   private buttonMaker() {
     //Initializing the buttons and pushing them to the array
     //Making the right arrow for level selector
@@ -152,7 +152,7 @@ class InGameQuestions {
 
   //Creates the Questions
   public randomQuestionGenerator(): void {
-    const random = GameItem.randomInteger(1, 6);
+    const random = GameItem.randomInteger(14, 14);
     if (random === 1) {
       console.log("Random was 1 push question 1");
       this.ingameQuestion = new Question1(
@@ -192,6 +192,69 @@ class InGameQuestions {
       console.log("Random was 6 push question 6");
       this.ingameQuestion = new Question6(
         (this.canvas.width / 3) * 1.2,
+        this.canvas.height / 2.5
+      );
+    }
+    if (random === 7) {
+      console.log("Random was 7 push question 7");
+      this.ingameQuestion = new Question7(
+        (this.canvas.width / 4) * 1.35,
+        this.canvas.height / 2.5
+      );
+    }
+    if (random === 8) {
+      console.log("Random was 8 push question 8");
+      this.ingameQuestion = new Question8(
+        (this.canvas.width / 3) * 1.1,
+        this.canvas.height / 2.5
+      );
+    }
+    if (random === 9) {
+      console.log("Random was 9 push question 9");
+      this.ingameQuestion = new Question9(
+        (this.canvas.width / 3) * 1.1,
+        this.canvas.height / 2.5
+      );
+    }
+    if (random === 10) {
+      console.log("Random was 10 push question 10");
+      this.ingameQuestion = new Question10(
+        (this.canvas.width / 3) * 1.1,
+        this.canvas.height / 2.5
+      );
+    }
+    if (random === 11) {
+      console.log("Random was 11 push question 11");
+      this.ingameQuestion = new Question11(
+        (this.canvas.width / 3) * 1.1,
+        this.canvas.height / 2.5
+      );
+    }
+    if (random === 12) {
+      console.log("Random was 12 push question 12");
+      this.ingameQuestion = new Question12(
+        (this.canvas.width / 3) * 1.05,
+        this.canvas.height / 2.5
+      );
+    }
+    if (random === 13) {
+      console.log("Random was 13 push question 13");
+      this.ingameQuestion = new Question13(
+        (this.canvas.width / 3) * 1.1,
+        this.canvas.height / 2.5
+      );
+    }
+    if (random === 14) {
+      console.log("Random was 14 push question 14");
+      this.ingameQuestion = new Question14(
+        (this.canvas.width / 3) * 1.1,
+        this.canvas.height / 2.5
+      );
+    }
+    if (random === 15) {
+      console.log("Random was 15 push question 15");
+      this.ingameQuestion = new Question15(
+        (this.canvas.width / 3) * 1.05,
         this.canvas.height / 2.5
       );
     }
