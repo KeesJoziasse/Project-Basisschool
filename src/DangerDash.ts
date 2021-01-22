@@ -36,7 +36,7 @@ class DangerDash {
     this.canvas.height = window.innerHeight;
 
     //Static properties
-    this.earnedCoins = 500;
+    this.earnedCoins = 10;
     this.screenName = "StartScreen";
     this.worldName = "";
     this.DangerDashFrame = 0;

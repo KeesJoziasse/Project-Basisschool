@@ -152,7 +152,7 @@ class DesertWorld {
    */
   public randomScoringItems(): void {
     //#TODO terugzetten op 1, 10
-    const random = GameItem.randomInteger(1, 10);
+    const random = GameItem.randomInteger(1, 11);
     if (random === 1) {
       this.scoringItems.push(new Bushes(this.canvas));
     }
@@ -178,6 +178,9 @@ class DesertWorld {
     }
     if (random === 10) {
       this.scoringItems.push(new Urn(this.canvas));
+    }
+    if (random === 11) {
+      this.scoringItems.push(new QuestionBox(this.canvas));
     }
   }
 

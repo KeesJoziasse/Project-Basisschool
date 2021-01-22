@@ -152,7 +152,7 @@ class ArticWorld {
    */
   public randomScoringItems(): void {
     //#TODO terugzetten op 1, 10
-    const random = GameItem.randomInteger(1, 9);
+    const random = GameItem.randomInteger(1, 10);
     if (random === 1) {
       this.scoringItems.push(new IceBerg1(this.canvas));
     }
@@ -174,6 +174,9 @@ class ArticWorld {
     }
     if (random === 9) {
       this.scoringItems.push(new SeaLion(this.canvas));
+    }
+    if (random === 10) {
+      this.scoringItems.push(new QuestionBox(this.canvas));
     }
 
   }
