@@ -152,7 +152,7 @@ class InGameQuestions {
 
   //Creates the Questions
   public randomQuestionGenerator(): void {
-    const random = GameItem.randomInteger(14, 14);
+    const random = GameItem.randomInteger(1, 14);
     if (random === 1) {
       console.log("Random was 1 push question 1");
       this.ingameQuestion = new Question1(

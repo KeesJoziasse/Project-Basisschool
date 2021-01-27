@@ -227,7 +227,7 @@ class DangerDash {
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.earnedCoins = 500;
+        this.earnedCoins = 10;
         this.screenName = "StartScreen";
         this.worldName = "";
         this.DangerDashFrame = 0;
@@ -1232,7 +1232,7 @@ class InGameQuestions {
         this.buttons.push(new NoButton((this.canvas.width / 2) * 1.05, (this.canvas.height / 2) * 1.5, this.canvas));
     }
     randomQuestionGenerator() {
-        const random = GameItem.randomInteger(14, 14);
+        const random = GameItem.randomInteger(1, 14);
         if (random === 1) {
             console.log("Random was 1 push question 1");
             this.ingameQuestion = new Question1((this.canvas.width / 3) * 1.2, this.canvas.height / 2.5);
@@ -1968,7 +1968,7 @@ class ArticWorld {
         }
     }
     randomScoringItems() {
-        const random = GameItem.randomInteger(1, 9);
+        const random = GameItem.randomInteger(1, 10);
         if (random === 1) {
             this.scoringItems.push(new IceBerg1(this.canvas));
         }
@@ -1991,6 +1991,9 @@ class ArticWorld {
         }
         if (random === 9) {
             this.scoringItems.push(new SeaLion(this.canvas));
+        }
+        if (random === 10) {
+            this.scoringItems.push(new QuestionBox(this.canvas));
         }
     }
     forScoringItems() {
@@ -2132,7 +2135,7 @@ class DesertWorld {
         }
     }
     randomScoringItems() {
-        const random = GameItem.randomInteger(1, 10);
+        const random = GameItem.randomInteger(1, 11);
         if (random === 1) {
             this.scoringItems.push(new Bushes(this.canvas));
         }
@@ -2158,6 +2161,9 @@ class DesertWorld {
         }
         if (random === 10) {
             this.scoringItems.push(new Urn(this.canvas));
+        }
+        if (random === 11) {
+            this.scoringItems.push(new QuestionBox(this.canvas));
         }
     }
     forScoringItems() {
