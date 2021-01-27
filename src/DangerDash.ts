@@ -1,3 +1,7 @@
+/**
+ * Class DangerDash 
+ * Has main Loop of the game
+ */
 class DangerDash {
   //canvas
   protected canvas: HTMLCanvasElement;
