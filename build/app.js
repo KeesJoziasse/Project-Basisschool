@@ -227,7 +227,7 @@ class DangerDash {
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.earnedCoins = 10;
+        this.earnedCoins = 500;
         this.screenName = "StartScreen";
         this.worldName = "";
         this.DangerDashFrame = 0;
@@ -2303,7 +2303,7 @@ class OceanWorld {
         }
     }
     randomScoringItems() {
-        const random = GameItem.randomInteger(1, 10);
+        const random = GameItem.randomInteger(10, 10);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }
