@@ -269,35 +269,35 @@ class OceanWorld {
   private drawLives(ctx: CanvasRenderingContext2D): void {
     if (this.lives == 3) {
       ctx.drawImage(
-        Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"),
+        Utility.loadNewImage("./assets/img/GameItems/HealthBar/FullHP.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives == 2) {
       ctx.drawImage(
-        Utility.loadNewImage("/assets/img/GameItems/HealthBar/2lives.png"),
+        Utility.loadNewImage("./assets/img/GameItems/HealthBar/2lives.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives == 1) {
       ctx.drawImage(
-        Utility.loadNewImage("/assets/img/GameItems/HealthBar/1live.png"),
+        Utility.loadNewImage("./assets/img/GameItems/HealthBar/1live.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives == 0) {
       ctx.drawImage(
-        Utility.loadNewImage("/assets/img/GameItems/HealthBar/0lives.png"),
+        Utility.loadNewImage("./assets/img/GameItems/HealthBar/0lives.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives < 0) {
       ctx.drawImage(
-        Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"),
+        Utility.loadNewImage("./assets/img/GameItems/HealthBar/Dead.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
