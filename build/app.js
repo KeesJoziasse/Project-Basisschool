@@ -883,105 +883,105 @@ class Question1 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "yes";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question1.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question1.png");
     }
 }
 class Question10 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "yes";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question10.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question10.png");
     }
 }
 class Question11 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "yes";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question11.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question11.png");
     }
 }
 class Question12 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "no";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question12.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question12.png");
     }
 }
 class Question13 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "yes";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question13.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question13.png");
     }
 }
 class Question14 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "yes";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question14.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question14.png");
     }
 }
 class Question15 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "yes";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question15.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question15.png");
     }
 }
 class Question2 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "no";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question2.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question2.png");
     }
 }
 class Question3 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "no";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question3.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question3.png");
     }
 }
 class Question4 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "no";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question4.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question4.png");
     }
 }
 class Question5 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "no";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question5.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question5.png");
     }
 }
 class Question6 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "no";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question6.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question6.png");
     }
 }
 class Question7 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "yes";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question7.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question7.png");
     }
 }
 class Question8 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "yes";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question8.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question8.png");
     }
 }
 class Question9 extends Images {
     constructor(xPos, yPos) {
         super(xPos, yPos);
         this.answer = "yes";
-        this.image = Utility.loadNewImage("/assets/img/QuestionsImages/question9.png");
+        this.image = Utility.loadNewImage("./assets/img/QuestionsImages/question9.png");
     }
 }
 class QuestionBoxText extends Images {
@@ -2031,19 +2031,19 @@ class ArticWorld {
     }
     drawLives(ctx) {
         if (this.lives == 3) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 2) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/2lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 1) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/1live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/0lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives < 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
     }
 }
@@ -2201,19 +2201,19 @@ class DesertWorld {
     }
     drawLives(ctx) {
         if (this.lives == 3) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 2) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/2lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 1) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/1live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/0lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives < 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
     }
 }
@@ -2366,19 +2366,19 @@ class OceanWorld {
     }
     drawLives(ctx) {
         if (this.lives == 3) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 2) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/2lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 1) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/1live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/0lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives < 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
     }
 }
@@ -2531,19 +2531,19 @@ class SwampWorld {
     }
     drawLives(ctx) {
         if (this.lives == 3) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 2) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/2lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 1) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/1live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/0lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives < 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("./assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
     }
 }
