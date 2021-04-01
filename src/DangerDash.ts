@@ -251,7 +251,6 @@ class DangerDash {
         
       }
       
-      console.log(this.buttons)
       this.endscreen.draw();
     }
 
@@ -404,7 +403,7 @@ class DangerDash {
       );
       this.DeleteSpecificShopButton("UnlockYoshi");
       this.start.pushYoshi();
-      console.log(this.images);
+      //console.log(this.images);
     } else if (
       button.getButtonName() === "UnlockAmongUs" &&
       this.earnedCoins >= 30
@@ -538,7 +537,7 @@ class DangerDash {
       this.worldName = this.start.getWorldName();
       //Based on the world
       if(this.worldName === "OceanWorld"){
-        console.log("been here")
+        //console.log("been here")
         this.oceanWorld.resetGame();
         this.oceanWorld.createPlayer(this.characterName);
       } else if(this.worldName === "ArticWorld"){

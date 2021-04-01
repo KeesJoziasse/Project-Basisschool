@@ -276,21 +276,21 @@ class SwampWorld {
     }
     if (this.lives == 2) {
       ctx.drawImage(
-        Utility.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"),
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/2lives.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives == 1) {
       ctx.drawImage(
-        Utility.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"),
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/1live.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );
     }
     if (this.lives == 0) {
       ctx.drawImage(
-        Utility.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"),
+        Utility.loadNewImage("/assets/img/GameItems/HealthBar/0lives.png"),
         (this.canvas.width / 8) * 7,
         this.canvas.height / 8
       );

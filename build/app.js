@@ -167,7 +167,6 @@ class DangerDash {
                         this.endscreen = new Endscreen(this.canvas, this.swampWorld.getScore());
                     }
                 }
-                console.log(this.buttons);
                 this.endscreen.draw();
             }
             if (this.screenName === "ShopScreen") {
@@ -301,7 +300,6 @@ class DangerDash {
             this.images.push(new YoshiUnlocked(this.canvas.width / 7.9, this.canvas.height / 6));
             this.DeleteSpecificShopButton("UnlockYoshi");
             this.start.pushYoshi();
-            console.log(this.images);
         }
         else if (button.getButtonName() === "UnlockAmongUs" &&
             this.earnedCoins >= 30) {
@@ -378,7 +376,6 @@ class DangerDash {
             this.screenName = "GameScreen";
             this.worldName = this.start.getWorldName();
             if (this.worldName === "OceanWorld") {
-                console.log("been here");
                 this.oceanWorld.resetGame();
                 this.oceanWorld.createPlayer(this.characterName);
             }
@@ -1205,7 +1202,6 @@ class InGameQuestions {
         return this.name;
     }
     draw() {
-        console.log("Draw werkt");
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.questionBackground.draw(ctx);
@@ -2038,13 +2034,13 @@ class ArticWorld {
             ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 2) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 1) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives < 0) {
             ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
@@ -2208,13 +2204,13 @@ class DesertWorld {
             ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 2) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 1) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives < 0) {
             ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
@@ -2268,7 +2264,6 @@ class OceanWorld {
         const ctx = this.canvas.getContext("2d");
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawBackground();
-        console.log(this.player);
         this.player.draw(ctx);
         if (this.frame > 1) {
             this.scoringItems.forEach((scoringItem) => scoringItem.draw(ctx));
@@ -2374,13 +2369,13 @@ class OceanWorld {
             ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 2) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 1) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives < 0) {
             ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
@@ -2539,13 +2534,13 @@ class SwampWorld {
             ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/FullHP.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 2) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/2lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 1) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1Live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/1live.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives == 0) {
-            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0Lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
+            ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/0lives.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);
         }
         if (this.lives < 0) {
             ctx.drawImage(Utility.loadNewImage("/assets/img/GameItems/HealthBar/Dead.png"), (this.canvas.width / 8) * 7, this.canvas.height / 8);

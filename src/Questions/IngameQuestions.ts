@@ -74,7 +74,7 @@ class InGameQuestions {
    * Draws all the necessary elements to the canvas
    */
   public draw() {
-    console.log("Draw werkt");
+    //console.log("Draw werkt");
 
     const ctx = this.canvas.getContext("2d");
 
