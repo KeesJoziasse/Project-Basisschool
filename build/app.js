@@ -88,7 +88,7 @@ class DangerDash {
                         this.earnedCoins += this.swampWorld.getEarnedCoins();
                         this.resetButtonsAndDangerDashFrame();
                     }
-                    else if (this.oceanWorld.getQuestionStatus() === "Question") {
+                    else if (this.swampWorld.getQuestionStatus() === "Question") {
                         this.resetButtonsAndDangerDashFrame();
                         this.screenName = "Question";
                     }
@@ -227,7 +227,7 @@ class DangerDash {
         this.canvas = canvas;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.earnedCoins = 500;
+        this.earnedCoins = 0;
         this.screenName = "StartScreen";
         this.worldName = "";
         this.DangerDashFrame = 0;
@@ -2303,7 +2303,7 @@ class OceanWorld {
         }
     }
     randomScoringItems() {
-        const random = GameItem.randomInteger(10, 10);
+        const random = GameItem.randomInteger(1, 10);
         if (random === 1) {
             this.scoringItems.push(new Shark(this.canvas));
         }

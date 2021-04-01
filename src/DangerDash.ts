@@ -164,12 +164,12 @@ class DangerDash {
         this.swampWorld.draw();
         this.swampWorld.forScoringItems();
         this.swampWorld.scoringItemIndex();
-        this.swampWorld.movePlayer();
+        this.swampWorld.movePlayer();       
         if(this.swampWorld.getLives() === -1){
           this.screenName = "EndScreen";
           this.earnedCoins += this.swampWorld.getEarnedCoins();
           this.resetButtonsAndDangerDashFrame();
-        } else if (this.oceanWorld.getQuestionStatus() === "Question"){
+        } else if (this.swampWorld.getQuestionStatus() === "Question"){
           this.resetButtonsAndDangerDashFrame();
           this.screenName = "Question";
         }
